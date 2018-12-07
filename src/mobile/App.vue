@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
+      <h1>我是移动端页面</h1>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>

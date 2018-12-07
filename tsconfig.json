@@ -18,7 +18,9 @@
     "paths": {
       "@/*": [
         "src/*"
-      ]
+      ],
+      "@web/*": ["src/web/*"],
+      "@mobile/*": ["src/mobile/*"],
     },
     "lib": [
       "esnext",
