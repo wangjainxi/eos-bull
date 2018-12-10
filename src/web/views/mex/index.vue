@@ -63,7 +63,7 @@ export default {
   padding-bottom: 10px;
   .mex-head-Info {
     width: 100%;
-    height: 70px;
+    min-height: 70px;
     margin-bottom: 10px;
     background: #142e4d;
     border-radius: 8px;
