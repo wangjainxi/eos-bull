@@ -3,6 +3,7 @@
       <div class="h-controller">
           <a  class="h-logo" @click="changeLangEvent()">
             {{$t('m.homepage')}}
+                    {{$t('m.submenu')}}
           </a>
     <select v-model="selected" @change="selectPamas">
              <option v-for="option in options" v-bind:value="option.value">
