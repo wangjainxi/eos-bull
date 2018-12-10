@@ -38,11 +38,11 @@
 import MexCurrentcyList from "./MexCurrentcyList.vue";
 import MexHeadInfo from "./MexHeadInfo.vue";
 import MexKLineChart from "./MexKLineChart.vue";
-import MexMarketList from "./MexMarketList.vue";
+import MexMarketList from "./MexMarketList/MexMarketList.vue";
 import MexPlaceOrder from "./MexPlaceOrder.vue";
 import MexTableHistory from "./MexTableHistory.vue";
 import MexTableOrder from "./MexTableOrder.vue";
-import MexTranHistoryList from "./MexTranHistoryList.vue";
+import MexTranHistoryList from "./MexTranHistoryList/MexTranHistoryList.vue";
 export default {
   name: "mex",
   components: {
