@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  name: "mex-head-info"
+  name: "mex-head-info",
 };
 </script>
 <style lang="scss">

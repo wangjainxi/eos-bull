@@ -53,7 +53,7 @@ export default {
     MexPlaceOrder,
     MexTableHistory,
     MexTableOrder,
-    MexTranHistoryList
+    MexTranHistoryList,
   }
 };
 </script>

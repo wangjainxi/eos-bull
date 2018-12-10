@@ -4,9 +4,9 @@
   </div>
 </template>
 <script>
-  export default {
-    name:'mex-table-order'
-  }
+export default {
+  name: "mex-table-order",
+};
 </script>
 <style lang="scss">
 </style>

@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  name: "foot"
+  name: "foot",
 };
 </script>
 <style lang="scss">
