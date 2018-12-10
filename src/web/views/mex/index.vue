@@ -53,7 +53,7 @@ export default {
     MexPlaceOrder,
     MexTableHistory,
     MexTableOrder,
-    MexTranHistoryList,
+    MexTranHistoryList
   }
 };
 </script>
@@ -120,6 +120,7 @@ export default {
     min-height: 100px;
     background: #142e4d;
     border-radius: 8px;
+    overflow: hidden;
   }
 }
 </style>
