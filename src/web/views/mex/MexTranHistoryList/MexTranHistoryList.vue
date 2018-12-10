@@ -9,8 +9,7 @@
       <span class="right-text">Time</span>
     </div>
     <div class="list-content">
-      <!-- 买卖 -->
-      <div v-if="shows === 1 ">
+      <div >
         <div class="sell-part">
          <ListItem v-bind:sellData="sellData" class="sell-box"/>
         </div>
@@ -28,6 +27,7 @@ export default {
   name:'mex-tran-history-list',
   data() {
     return {
+      weight:400,
       sellData: [],
       shows: 1
     };

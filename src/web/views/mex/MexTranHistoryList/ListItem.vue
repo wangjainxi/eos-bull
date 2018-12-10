@@ -23,18 +23,15 @@ export default {
  .price-text{
     color:rgba(229,55,87,1);
   }
-
 }
 .buy-box{
  .price-text{
     color:rgba(28,196,102,1);
   }
-
 }
 .item-history-box{
   font-size:12px;
   font-family:PingFangSC-Regular;
-  font-weight:400;
   height: 20px;
   line-height: 20px;
   position: relative;
@@ -44,10 +41,7 @@ export default {
   span{
     height: 20px;
     display: inline-block;
-    overflow: hidden;
   }
-
-
  .left-text{
     width: 75px;
     max-width: 75px;
@@ -58,6 +52,7 @@ export default {
     max-width: 80px;
     color:rgba(103,123,183,1);
     text-align: right;
+     font-weight:bold;
   }
   .right-text{
     width: 100px;
@@ -66,7 +61,6 @@ export default {
     color:rgba(221,221,221,1);
   }
 }
-
 </style>
 
 
