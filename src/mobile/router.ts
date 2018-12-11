@@ -22,7 +22,7 @@ export default new Router({
         {
           path: '/',
           name:'homepage',
-          component: () => import(/* webpackChunkName: "homepage" */ './views/HomePage.vue'),
+          component: () => import(/* webpackChunkName: "homepage" */ './views/HomePage/HomePage.vue'),
         },
         {
           path: '/market',
