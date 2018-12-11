@@ -9,56 +9,56 @@
 </template>
 <script>
 export default {
-  name:'list-item',
-  props:{
-    sellData:{
+  name: "list-item",
+  props: {
+    sellData: {
       type: Array,
       required: true
     }
   }
-}
+};
 </script>
 <style lang="scss">
-.sell-box{
- .price-text{
-    color:rgba(229,55,87,1);
+.sell-box {
+  .price-text {
+    color: rgba(229, 55, 87, 1);
   }
 }
-.buy-box{
- .price-text{
-    color:rgba(28,196,102,1);
+.buy-box {
+  .price-text {
+    color: rgba(28, 196, 102, 1);
   }
 }
-.item-history-box{
-  font-size:12px;
-  font-family:PingFangSC-Regular;
+.item-history-box {
+  font-size: 12px;
+  font-family: PingFangSC-Regular;
   height: 20px;
   line-height: 20px;
   position: relative;
   margin-bottom: 0.6px;
   padding-left: 20px;
   padding-right: 10px;
-  span{
+  span {
     height: 20px;
     display: inline-block;
   }
- .left-text{
+  .left-text {
     width: 75px;
     max-width: 75px;
     text-align: left;
   }
-  .center-text{
+  .center-text {
     width: 80px;
     max-width: 80px;
-    color:rgba(103,123,183,1);
+    color: rgba(103, 123, 183, 1);
     text-align: right;
-     font-weight:bold;
+    font-weight: bold;
   }
-  .right-text{
+  .right-text {
     width: 100px;
     max-width: 100px;
     text-align: right;
-    color:rgba(221,221,221,1);
+    color: rgba(221, 221, 221, 1);
   }
 }
 </style>

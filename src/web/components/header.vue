@@ -1,11 +1,41 @@
 <template>
   <div id="top-page">
-    <div class="top">top</div>
+    <div class="top-view">
+    <div class="tleft-view flex-start">
+      <div class="logo-view">
+       <a href="/"> <img src="../../images/Exchange_svg/logo_eosmex.svg" alt=""></a>
+    </div>
+      <div class="tab-view">
+        <el-tabs v-model="activeName">
+          <el-tab-pane label="Exchange" name="first">
+          </el-tab-pane>
+          <el-tab-pane label="Markets" name="second"></el-tab-pane>
+        </el-tabs>
+      </div>
+    </div>
+    <div class="tright-view">
+      <span class="use-box">
+        <img src="../../images/Exchange_svg/ic_eos.svg" alt="">
+        <span class="text-style">admin11</span>
+      </span>
+      <span class="text-style switch">Switch</span>
+      <span class="text-style exit">Exit</span>
+      <span class="order-box flex-start">
+        <img src="../../images/Exchange_svg/ic_order.svg" alt="">
+        <span class="text-style exit">admin11</span>
+      </span>
+      <span class="language-box">
+        <img class="mark" src="../../images/Exchange_svg/ic_eos.svg" alt="">
+        <span class="text-style">english</span>
+        <img class="arrow" src="../../images/Exchange_svg/ic_arrow_down.svg" alt="">
+      </span>
+    </div>
+  </div>
   </div>
 </template>
 <script>
 export default {
-  name: "top",
+  name: "top"
 };
 </script>
 <style lang="scss">
@@ -13,11 +43,101 @@ export default {
   background: #142e4d;
   height: 50px;
   width: 100%;
-  .top {
-    width: 1200px;
+  .top-view {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     margin: 0 auto;
+    width: 1200px;
+    .tright-view {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .use-box {
+        margin-right: 10px;
+        .text-style {
+          margin-left: 5px;
+        }
+      }
+      .exit {
+        margin-right: 20px;
+        margin-left: 10px;
+      }
+      .language-box {
+        margin-right: 5px;
+        .text-style {
+          margin-left: 5px;
+          margin-right: 5px;
+        }
+      }
+      .order-box {
+        margin-right: 22px;
+        .text-style {
+          margin-left: 5px;
+        }
+      }
+    }
+    .text-style {
+      font-size: 14px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(146, 167, 197, 1);
+    }
+    .logo-view {
+      margin-right: 50px;
+    }
+    .el-tabs__header {
+      margin: 0px;
+      margin-top: 5px;
+    }
+    .tleft-view {
+      height: 50px;
+    }
+    .flex-start {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    .mex-place-order {
+      color: #d6a93b;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 14px;
+    }
+    .el-tabs__nav-wrap::after {
+      height: 0px !important;
+      background: #1e3a5d;
+    }
+    .el-tabs__nav {
+      .is-active {
+        color: #fff;
+      }
+    }
+    .el-tabs__item {
+      color: #92a7c5;
+    }
+    .el-tabs__active-bar {
+      background: #2d7be5;
+    }
+    .el-tabs__nav .is-active {
+      color: rgba(45, 123, 229, 1);
+    }
+    .el-tabs__nav-wrap.is-scrollable {
+      padding: 0px;
+      span {
+        display: none;
+      }
+    }
+  }
+  .top {
     height: 100%;
     color: #fff;
+  }
+  .tab-view {
+    width: 155px;
   }
 }
 </style>
