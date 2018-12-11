@@ -1,9 +1,17 @@
 <template>
   <div class="market-list">
     <div class="list-header">
-     <transition><span :class="{active:shows ===3 }" @click="showView(3)">『卖1』</span></transition>
-     <transition><span :class="{active:shows ===2 }" @click="showView(2)">「买2」</span></transition>
-     <transition><span :class="{active:shows ===1 }" @click="showView(1)">「买卖』</span></transition>
+     <transition>
+       <span :class="{active:shows ===3 }" @click="showView(3)">
+        <img src="../../../../images/Exchange_svg/ic_top.svg" alt="">
+       </span>
+     </transition>
+     <transition>
+       <span :class="{active:shows ===2 }" @click="showView(2)">
+         <img src="../../../../images/Exchange_svg/ic_bottom.svg" alt=""></span></transition>
+     <transition>
+       <span :class="{active:shows ===1 }" @click="showView(1)">
+         <img src="../../../../images/Exchange_svg/ic_middle.svg" alt=""></span></transition>
     </div>
     <div class="list-title">
       <span class="left-text">Price(EOS)</span>
@@ -82,21 +90,21 @@ export default {
   methods: {
     showView: function(type) {
       this.shows = type;
-    let obj = {
-      price: 0.0004,
-      size: 141194.1235,
-      total: 56.3365
-    };
-    this.sellData=[];
-    while (true) {
-      obj.width = Math.random() * 100 + "100%";
-      if(this.shows ===1){
-      if (this.sellData.length > 17) return;
-      }else{
+      let obj = {
+        price: 0.0004,
+        size: 141194.1235,
+        total: 56.3365
+      };
+      this.sellData = [];
+      while (true) {
+        obj.width = Math.random() * 100 + "100%";
+        if (this.shows === 1) {
+          if (this.sellData.length > 17) return;
+        } else {
           if (this.sellData.length > 29) return;
+        }
+        this.sellData.push(obj);
       }
-      this.sellData.push(obj);
-    }
     }
   }
 };

@@ -1,6 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
+import Market from './views/Market.vue';
+import Assets from './views/Assets.vue';
+import More from './views/More.vue';
+import Orders from './views/Orders.vue';
+import About from './views/About..vue';
+
 
 Vue.use(Router);
 
@@ -12,6 +18,28 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home,
+      children:[
+        {
+          path: 'market',
+          name:'market',
+          component: Market,
+        },
+        {
+          path: 'assets',
+          name:'assets',
+          component: Assets,
+        },
+        {
+          path: 'orders',
+          name:'orders',
+          component: Orders,
+        },
+        {
+          path: 'more',
+          name:'more',
+          component: More,
+        },
+      ]
     },
     {
       path: '/about',
