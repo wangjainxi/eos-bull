@@ -22,27 +22,27 @@ export default new Router({
         {
           path: '/',
           name:'homepage',
-          component: HomePage,
+          component: () => import(/* webpackChunkName: "homepage" */ './views/HomePage.vue'),
         },
         {
-          path: 'market',
+          path: '/market',
           name:'market',
-          component: Market,
+          component: () => import(/* webpackChunkName: "market" */ './views/Market.vue'),
         },
         {
-          path: 'assets',
+          path: '/assets',
           name:'assets',
-          component: Assets,
+          component: () => import(/* webpackChunkName: "assets" */ './views/Assets.vue'),
         },
         {
-          path: 'orders',
+          path: '/orders',
           name:'orders',
-          component: Orders,
+          component: () => import(/* webpackChunkName: "orders" */ './views/Orders.vue'),
         },
         {
-          path: 'more',
+          path: '/more',
           name:'more',
-          component: More,
+          component: () => import(/* webpackChunkName: "more" */ './views/More.vue'),
         },
       ]
     },
