@@ -9,7 +9,7 @@
              <option v-for="option in options" v-bind:value="option.value">
                {{ option.text }}
              </option>
-</select>
+   </select>
           <div class="h-search">
               <input type="text" placeholder="音乐/电台/用户">
           </div>
@@ -22,6 +22,7 @@
   </div>
 </template>
 <script>
+ import { increment } from '../store.ts'
 export default {
   data() {
     return {
@@ -48,7 +49,7 @@ export default {
       }
     },
     selectPamas() {
-      console.log(this.selected);
+       store.commit('increment')
        if (this.selected === "english") {
         this.lang = "en-US";
         this.$i18n.locale = this.lang;

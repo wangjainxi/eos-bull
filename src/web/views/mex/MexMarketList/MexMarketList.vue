@@ -1,9 +1,9 @@
 <template>
   <div class="market-list">
     <div class="list-header">
-      <span :class="{active:shows ===3 }" @click="showView(3)">『卖1』</span>
-      <span :class="{active:shows ===2 }" @click="showView(2)">「买2」</span>
-      <span :class="{active:shows ===1 }" @click="showView(1)">「买卖』</span>
+     <transition><span :class="{active:shows ===3 }" @click="showView(3)">『卖1』</span></transition>
+     <transition><span :class="{active:shows ===2 }" @click="showView(2)">「买2」</span></transition>
+     <transition><span :class="{active:shows ===1 }" @click="showView(1)">「买卖』</span></transition>
     </div>
     <div class="list-title">
       <span class="left-text">Price(EOS)</span>

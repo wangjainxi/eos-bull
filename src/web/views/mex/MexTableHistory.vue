@@ -4,9 +4,9 @@
   </div>
 </template>
 <script>
-  export default {
-    name:'mex-table-history'
-  }
+export default {
+  name: "mex-table-history",
+};
 </script>
 <style lang="scss">
 </style>

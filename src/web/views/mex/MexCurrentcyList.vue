@@ -4,9 +4,9 @@
   </div>
 </template>
 <script>
-  export default {
-    name:'mex-currentcy-list'
-  }
+export default {
+  name: "mex-currentcy-list",
+};
 </script>
 <style lang="scss">
 </style>
