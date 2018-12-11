@@ -5,7 +5,7 @@ import Market from './views/Market.vue';
 import Assets from './views/Assets.vue';
 import More from './views/More.vue';
 import Orders from './views/Orders.vue';
-import About from './views/About..vue';
+import HomePage from './views/HomePage.vue';
 
 
 Vue.use(Router);
@@ -19,6 +19,11 @@ export default new Router({
       name: 'home',
       component: Home,
       children:[
+        {
+          path: '/',
+          name:'homepage',
+          component: HomePage,
+        },
         {
           path: 'market',
           name:'market',
