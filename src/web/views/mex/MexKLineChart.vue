@@ -4,9 +4,9 @@
   </div>
 </template>
 <script>
-  export default {
-    name:'mex-k-line-chart'
-  }
+export default {
+  name: "mex-k-line-chart",
+};
 </script>
 <style lang="scss">
 </style>

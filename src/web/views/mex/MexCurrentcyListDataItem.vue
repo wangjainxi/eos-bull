@@ -2,7 +2,7 @@
   <div class="data-list-item">
     <div class="data-market">
       <div :class="['star',{starActive:starStatus}]" @click="addStar($event)"></div>
-      <img src="../../../img/logo_box.png" alt="" class="market-logo">
+      <img src="../../../images/logo_box.png" alt="" class="market-logo">
       <div class="market-content">
         <div class="content-name">{{item.name}}</div>
         <div class="content-dec">{{item.dec}}</div>
@@ -63,7 +63,7 @@ $borderWidth:12px;
       margin-right: 4px;
       background-repeat: no-repeat;
       cursor: pointer;
-      background-image: url(../../../img/ic_fav_normal.png);
+      background-image: url(../../../images/ic_fav_normal.png);
     }
     .market-logo {
       width: auto;
@@ -71,7 +71,7 @@ $borderWidth:12px;
       margin-right: 4px;
     }
     .starActive {
-      background-image: url(../../../img/ic_star_item_fav.png);
+      background-image: url(../../../images/ic_star_item_fav.png);
     }
     .market-content {
       display: flex;

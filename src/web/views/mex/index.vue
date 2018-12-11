@@ -38,11 +38,11 @@
 import MexCurrentcyList from "./MexCurrentcyList.vue";
 import MexHeadInfo from "./MexHeadInfo.vue";
 import MexKLineChart from "./MexKLineChart.vue";
-import MexMarketList from "./MexMarketList.vue";
+import MexMarketList from "./MexMarketList/MexMarketList.vue";
 import MexPlaceOrder from "./MexPlaceOrder.vue";
 import MexTableHistory from "./MexTableHistory.vue";
 import MexTableOrder from "./MexTableOrder.vue";
-import MexTranHistoryList from "./MexTranHistoryList.vue";
+import MexTranHistoryList from "./MexTranHistoryList/MexTranHistoryList.vue";
 export default {
   name: "mex",
   components: {
@@ -63,7 +63,7 @@ export default {
   padding-bottom: 10px;
   .mex-head-Info {
     width: 100%;
-    height: 70px;
+    min-height: 70px;
     margin-bottom: 10px;
     background: #142e4d;
     border-radius: 8px;
@@ -120,6 +120,7 @@ export default {
     min-height: 100px;
     background: #142e4d;
     border-radius: 8px;
+    overflow: hidden;
   }
 }
 </style>

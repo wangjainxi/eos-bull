@@ -4,9 +4,9 @@
   </div>
 </template>
 <script>
-  export default {
-    name:'mex-tran-history-list'
-  }
+export default {
+  name: "mex-tran-history-list",
+};
 </script>
 <style lang="scss">
 </style>

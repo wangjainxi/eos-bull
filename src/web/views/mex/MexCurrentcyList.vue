@@ -80,6 +80,86 @@ let dataList1 = [
     price: 0.002141,
     change: "2.44%",
     goTotop: false
+  },{
+    name: "MAX / EOS",
+    dec: "eosmax1token",
+    price: 0.002141,
+    change: "2.44%",
+    goTotop: false
+  },
+  {
+    name: "DICE / EOS",
+    dec: "betdicetoken",
+    price: 0.002541,
+    change: "5.44%",
+    goTotop: true
+  },
+  {
+    name: "MAX / EOS",
+    dec: "eosmax1token",
+    price: 0.002141,
+    change: "2.44%",
+    goTotop: false
+  },{
+    name: "MAX / EOS",
+    dec: "eosmax1token",
+    price: 0.002141,
+    change: "2.44%",
+    goTotop: false
+  },
+  {
+    name: "DICE / EOS",
+    dec: "betdicetoken",
+    price: 0.002541,
+    change: "5.44%",
+    goTotop: true
+  },
+  {
+    name: "MAX / EOS",
+    dec: "eosmax1token",
+    price: 0.002141,
+    change: "2.44%",
+    goTotop: false
+  },{
+    name: "MAX / EOS",
+    dec: "eosmax1token",
+    price: 0.002141,
+    change: "2.44%",
+    goTotop: false
+  },
+  {
+    name: "DICE / EOS",
+    dec: "betdicetoken",
+    price: 0.002541,
+    change: "5.44%",
+    goTotop: true
+  },
+  {
+    name: "MAX / EOS",
+    dec: "eosmax1token",
+    price: 0.002141,
+    change: "2.44%",
+    goTotop: false
+  },{
+    name: "MAX / EOS",
+    dec: "eosmax1token",
+    price: 0.002141,
+    change: "2.44%",
+    goTotop: false
+  },
+  {
+    name: "DICE / EOS",
+    dec: "betdicetoken",
+    price: 0.002541,
+    change: "5.44%",
+    goTotop: true
+  },
+  {
+    name: "MAX / EOS",
+    dec: "eosmax1token",
+    price: 0.002141,
+    change: "2.44%",
+    goTotop: false
   }
 ];
 export default {
@@ -164,18 +244,19 @@ $marginLeft-width: 24px;
         height: 12px;
         margin-right: 6px;
         background-repeat: no-repeat;
-        background-image: url(../../../img/ic_fav_normal.png);
+        background-image: url(../../../images/ic_fav_normal.png);
       }
     }
     .currentcy-tab:nth-child(2) {
       margin-right: 20px;
       .tab-icon {
         width: 9px;
-        background-image: url(../../../img/ic_eos.png);
+        background-image: url(../../../images/ic_eos.png);
       }
     }
     .active {
       border-bottom: 2px solid rgba(45, 123, 229, 1);
+      color:rgba(45,123,229,1);
     }
     .search-input {
       display: flex;
@@ -188,7 +269,7 @@ $marginLeft-width: 24px;
         width: 12px;
         height: 12px;
         margin: 0 6px 0 11px;
-        background-image: url(../../../img/ic_search.png);
+        background-image: url(../../../images/ic_search.png);
         background-repeat: no-repeat;
       }
       .search {
@@ -235,13 +316,13 @@ $marginLeft-width: 24px;
           margin: 0 6px;
           width: 10px;
           height: 12px;
-          background-image: url(../../../img/ic_sort_normal.png);
+          background-image: url(../../../images/ic_sort_normal.png);
         }
         .sort-down {
-          background-image: url(../../../img/ic_sort_down.png);
+          background-image: url(../../../images/ic_sort_down.png);
         }
         .sort-up {
-          background-image: url(../../../img/ic_sort_up.png);
+          background-image: url(../../../images/ic_sort_up.png);
         }
       }
     }
