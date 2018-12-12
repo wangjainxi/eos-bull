@@ -1,28 +1,41 @@
 {
   "defaultSeverity": "warning",
-  "extends": ["tslint:recommended"],
+  "extends": [
+    "tslint-config-prettier",
+    "tslint-plugin-prettier"
+  ],
   "linterOptions": {
-    "exclude": ["node_modules/**", "src/**"]
+    "exclude": [
+      "node_modules/**"
+    ]
   },
   "rules": {
-    "trailing-comma": [
-      true,
-      {
-        //对尾随逗号的校验
-        "multiline": {
-          "objects": "ignore",
-          "arrays": "never",
-          "functions": "never",
-          "typeLiterals": "ignore"
-        },
-        "esSpecCompliant": true //是否允许尾随逗号出现在剩余变量中
-      }
-    ],
-    "quotemark": [false, "single", "avoid-escape"] //引号的使用规则
-    // "indent": [true, "spaces", 2],
-    // "interface-name": false,
-    // "ordered-imports": false,
-    // "object-literal-sort-keys": false,
-    // "no-consecutive-blank-lines": false
+    "prettier": true,
+    "no-debugger": false,
+    "no-console": [false],
+    "no-eval": true,
+    "no-empty": true,
+    "no-arg": true,
+    "no-var-keyword": true,
+    "no-conditional-assignment": true,
+    "no-duplicate-variable": true,
+    "no-construct": true,
+    "no-duplicate-super": true,
+    "no-invalid-template-strings": true,
+    "no-string-throw": true,
+    "radix": true,
+    "class-name": true,
+    "forin": true,
+    "triple-equals": true,
+    "prefer-const": true,
+    "member-access": false,
+    "max-classes-per-file": [true, 3],
+    "max-file-line-count": [true, 1000],
+    "no-unnecessary-initializer": true,
+    "object-literal-shorthand": true,
+    "one-variable-per-declaration": true,
+    "object-literal-sort-keys": false,
+    "variable-name": [true, "check-format", "allow-pascal-case"],
+    "typedef": [true]
   }
 }

@@ -1,9 +1,9 @@
-import Vue from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "../store";
-import "../registerServiceWorker";
-import VueI18n from "vue-i18n";
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from '../store';
+import '../registerServiceWorker';
+import VueI18n from 'vue-i18n';
 
 import {
   Button,
@@ -16,8 +16,8 @@ import {
   Checkbox,
   Table,
   TableColumn,
-  Pagination
-} from "element-ui";
+  Pagination,
+} from 'element-ui';
 
 Vue.config.productionTip = false;
 
@@ -34,16 +34,16 @@ Vue.use(Table);
 Vue.use(TableColumn);
 Vue.use(Pagination);
 const i18n = new VueI18n({
-  locale: "zh-CN", // 语言标识
+  locale: 'zh-CN', // 语言标识
   messages: {
-    "zh-CN": require("../common/lang/zh"), // 中文语言包
-    "en-US": require("../common/lang/en") // 英文语言包
-  }
+    'zh-CN': require('../common/lang/zh'), // 中文语言包
+    'en-US': require('../common/lang/en'), // 英文语言包
+  },
 });
 
 new Vue({
   router,
   i18n,
   store,
-  render: h => h(App)
-}).$mount("#app");
+  render: h => h(App),
+}).$mount('#app');

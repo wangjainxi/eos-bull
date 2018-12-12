@@ -6,13 +6,13 @@
 </template>
 
 <script lang="ts">
-import TabTypeContainer from "@/components/TabTypeContainer.vue";
-import { Component, Vue } from "vue-property-decorator";
+import TabTypeContainer from '@/components/TabTypeContainer.vue';
+import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
   components: {
-    TabTypeContainer
-  }
+    TabTypeContainer,
+  },
 })
 export default class TabPackage extends Vue {}
 </script>
