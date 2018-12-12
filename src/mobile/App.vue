@@ -3,7 +3,6 @@
     <router-view/>
   </div>
 </template>
-
 <style lang="scss">
 @import "./../style/common.scss";
 #app {
@@ -18,10 +17,6 @@
   margin: 0 auto;
   display: block;
   background: #fff;
-}
-* {
-  padding: 0px;
-  margin: 0px;
 }
 #nav {
   padding: 30px;

@@ -58,22 +58,22 @@ export default {
   position: relative;
   .business-coin-title,
   .business-show-data {
-    border-bottom: 1px solid rgba(242, 245, 251, 1);
-    margin: 0 20px;
+    border-bottom: 0.1rem solid rgba(242, 245, 251, 1);
+    margin: 0 2rem;
     @include flex(flex, center, space-between);
   }
   .business-coin-title {
-    @include wh(auto, 50px);
+    @include wh(auto, 5rem);
     .business-coin-name {
       @include flex(flex, center, flex-start);
       & > span,
       & > i {
-        @include font(500, 16px, 22px, "PingFangSC-Regular");
+        @include font(500, 1.6rem, 2.2rem, "PingFangSC-Regular");
         color: rgba(0, 0, 0, 1);
       }
       i {
-        @include wh(12px, 12px);
-        margin-left: 6px;
+        @include wh(1.2rem, 1.2rem);
+        margin-left: 0.6rem;
         cursor: pointer;
         @include bis("./../../../images/mobile/ic_arrow_under.svg");
       }
@@ -82,7 +82,7 @@ export default {
       display: flex;
       .business-coin-star,
       .business-coin-img1 {
-        @include wh(18px, 18px);
+        @include wh(1.8rem, 1.8rem);
       }
       .business-coin-star {
         @include bis(
@@ -96,16 +96,16 @@ export default {
     }
   }
   .business-tab {
-    @include wh(auto, 54px);
+    @include wh(auto, 5.4rem);
     @include flex(flex, center, center);
     border-bottom: 1px solid rgba(242, 245, 251, 1);
     .business-tab-buy {
       @include wh(50%, auto);
-      @include font(300, 16px, 22px, "PingFangSC-Light");
       span {
+      @include font(300, 1.6rem, 2.2rem, "PingFangSC-Light");
         color: rgba(141, 141, 141, 1);
-        @include wh(auto, 54px);
-        line-height: 54px;
+        @include wh(auto, 5.4rem);
+        line-height: 5.4rem;
         display: inline-block;
       }
     }
@@ -130,10 +130,10 @@ export default {
     .business-show-data-left {
       flex-grow: 1;
       .left-title {
-        padding: 16px 0;
+        padding: 1.6rem 0;
         @include flex(flex, center, flex-start);
         span {
-          @include font(400, 15px, 21px, "PingFangSC-Regular");
+          @include font(400, 1.5rem, 2.1rem, "PingFangSC-Regular");
           color: rgba(0, 0, 0, 1);
         }
         i {

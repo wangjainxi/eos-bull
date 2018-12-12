@@ -46,14 +46,14 @@ export default new Router({
             import(/* webpackChunkName: "more" */ "./views/More.vue")
         },
         {
-          path: "/market-view",
+          path: "market-view",
           name: "market-view",
           component: MarketView
         }
       ]
     },
     {
-      path: "/about",
+      path: "about",
       name: "about",
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
@@ -62,7 +62,7 @@ export default new Router({
         import(/* webpackChunkName: "about" */ "./views/About.vue")
     },
     {
-      path: "/business",
+      path: "business",
       name: "business",
       component: () =>
         import(/* webpackChunkName: "business" */ "./views/HomePage/Business.vue")
