@@ -1,8 +1,14 @@
 <template>
   <div id="bom-container">
+    <mt-navbar v-model="selected"></mt-navbar>
+  <mt-tab-item id="1">option A</mt-tab-item>
+  <mt-tab-item id="2">option B</mt-tab-item>
+  <mt-tab-item id="3">option C</mt-tab-item>
+</mt-navbar>
+
 
     <div id="tab-box" class="flex-row-start">
-        <div class="tab-item">
+        <!-- <div class="tab-item">
           <p class="tab-title">委托订单</p>
           <p class="tab-mark"></p>
         </div>
@@ -13,7 +19,7 @@
          <div class="tab-item">
           <p class="tab-title">最新成交</p>
           <p class="tab-mark"></p>
-        </div>
+        </div> -->
 
     </div>
 
@@ -29,7 +35,7 @@
 <script>
 import Vue from 'vue'
 import Button from "@/components/button.vue";
-import { Navbar, TabItem } from "mint-ui";
+import { Navbar, TabItem,TabContainer } from "mint-ui";
 Vue.component(Navbar.name, Navbar);
 Vue.component(TabItem.name, TabItem);
 export default {
@@ -38,7 +44,7 @@ export default {
     Button
   },
   methods: {
-    onBuy: function() {
+    selected: function() {
       console.log(222);
     }
   }
@@ -48,15 +54,16 @@ export default {
 @import "../../../../style/mixin.scss";
 #bom-container {
   width: 100vw;
+    .mint-tab-item-label{
+      font-size: 0.2rem;
+    }
   #tab-box {
     height: 0.42rem;
     background-color: #ddd;
     line-height: 0.42rem;
     padding-left: 0.2rem;
     font-size: 0.16rem!important;
-    .mint-tab-item-label{
-      font-size: 0.2rem;
-    }
+
     .tab-item {
       margin-right: 0.25rem;
       p {
