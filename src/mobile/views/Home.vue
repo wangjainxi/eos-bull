@@ -1,5 +1,5 @@
 <template>
-  <div class="home" style="width:100%">
+  <div class="home" style="width:100vw">
     <!-- <TabTypeContainer/> -->
     <router-view/>
   </div>

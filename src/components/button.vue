@@ -39,9 +39,7 @@ export default {
     outline: none;
     width: 100%;
 }
-div{
-  display: inline-block;
-}
+
 </style>
 
 
