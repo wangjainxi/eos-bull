@@ -29,4 +29,10 @@
   justify-content: flex-start;
   align-items: center;
 }
+.flex-row-between{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
 </style>

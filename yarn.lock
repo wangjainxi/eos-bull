@@ -112,7 +112,6 @@
 "@babel/helper-module-imports@7.0.0-beta.35":
   version "7.0.0-beta.35"
   resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.0.0-beta.35.tgz#308e350e731752cdb4d0f058df1d704925c64e0a"
-  integrity sha512-vaC1KyIZSuyWb3Lj277fX0pxivyHwuDU4xZsofqgYAbkDxNieMg2vuhzP5AgMweMY7fCQUMTi+BgPqTLjkxXFg==
   dependencies:
     "@babel/types" "7.0.0-beta.35"
     lodash "^4.2.0"
@@ -580,7 +579,6 @@
 "@babel/types@7.0.0-beta.35":
   version "7.0.0-beta.35"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.0.0-beta.35.tgz#cf933a9a9a38484ca724b335b88d83726d5ab960"
-  integrity sha512-y9XT11CozHDgjWcTdxmhSj13rJVXpa5ZXwjjOiTedjaM0ba5ItqdS02t31EhPl7HtOWxsZkYCCUNrSfrOisA6w==
   dependencies:
     esutils "^2.0.2"
     lodash "^4.2.0"
@@ -1189,7 +1187,7 @@ array-filter@~0.0.0:
   version "0.0.1"
   resolved "http://registry.npm.taobao.org/array-filter/download/array-filter-0.0.1.tgz#7da8cf2e26628ed732803581fd21f67cacd2eeec"
 
-array-find-index@^1.0.1:
+array-find-index@^1.0.1, array-find-index@^1.0.2:
   version "1.0.2"
   resolved "http://registry.npm.taobao.org/array-find-index/download/array-find-index-1.0.2.tgz#df010aa1287e164bbda6f9723b0a96a1ec4187a1"
 
@@ -1278,7 +1276,6 @@ async-limiter@~1.0.0:
 async-validator@~1.8.1:
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/async-validator/-/async-validator-1.8.5.tgz#dc3e08ec1fd0dddb67e60842f02c0cd1cec6d7f0"
-  integrity sha512-tXBM+1m056MAX0E8TL2iCjg8WvSyXu0Zc8LNtYqrVeyoL3+esHRZ4SieE9fKQyyU09uONjnMEjrNBMqT0mbvmA==
   dependencies:
     babel-runtime "6.x"
 
@@ -1416,7 +1413,6 @@ babel-messages@^6.23.0:
 babel-plugin-component@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-component/-/babel-plugin-component-1.1.1.tgz#9b023a23ff5c9aae0fd56c5a18b9cab8c4d45eea"
-  integrity sha512-WUw887kJf2GH80Ng/ZMctKZ511iamHNqPhd9uKo14yzisvV7Wt1EckIrb8oq/uCz3B3PpAW7Xfl7AkTLDYT6ag==
   dependencies:
     "@babel/helper-module-imports" "7.0.0-beta.35"
 
@@ -2956,7 +2952,6 @@ elegant-spinner@^1.0.1:
 element-ui@^2.4.11:
   version "2.4.11"
   resolved "https://registry.yarnpkg.com/element-ui/-/element-ui-2.4.11.tgz#db6a2d37001b8fe5fff9f176fb58bb3908cfa9c9"
-  integrity sha512-RtgK0t840NAFTajGMWvylzZRSX1EkZ7V4YgAoBxhv4TtkeMscLuk/IdYOzPdlQq6IN0byx1YVBxCX+u4yYkGvw==
   dependencies:
     async-validator "~1.8.1"
     babel-helper-vue-jsx-merge-props "^2.0.0"
@@ -5584,6 +5579,14 @@ minizlib@^1.1.1:
   dependencies:
     minipass "^2.2.1"
 
+mint-ui@^2.2.13:
+  version "2.2.13"
+  resolved "http://registry.npm.taobao.org/mint-ui/download/mint-ui-2.2.13.tgz#856a2cba9608c6ecf21f0e521ce89ed8ddfe33d3"
+  dependencies:
+    array-find-index "^1.0.2"
+    raf.js "0.0.4"
+    vue-lazyload "^1.0.1"
+
 mississippi@^2.0.0:
   version "2.0.0"
   resolved "http://registry.npm.taobao.org/mississippi/download/mississippi-2.0.0.tgz#3442a508fafc28500486feea99409676e4ee5a6f"
@@ -5889,7 +5892,6 @@ normalize-url@^3.0.0:
 normalize-wheel@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/normalize-wheel/-/normalize-wheel-1.0.1.tgz#aec886affdb045070d856447df62ecf86146ec45"
-  integrity sha1-rsiGr/2wRQcNhWRH32Ls+GFG7EU=
 
 npm-bundled@^1.0.1:
   version "1.0.5"
@@ -6814,6 +6816,10 @@ querystringify@^2.0.0:
   version "2.1.0"
   resolved "http://registry.npm.taobao.org/querystringify/download/querystringify-2.1.0.tgz#7ded8dfbf7879dcc60d0a644ac6754b283ad17ef"
 
+raf.js@0.0.4:
+  version "0.0.4"
+  resolved "http://registry.npm.taobao.org/raf.js/download/raf.js-0.0.4.tgz#f15af445d241b27fa7131a57450b67ef9c402fec"
+
 ramda@0.24.1:
   version "0.24.1"
   resolved "http://registry.npm.taobao.org/ramda/download/ramda-0.24.1.tgz#c3b7755197f35b8dc3502228262c4c91ddb6b857"
@@ -7127,7 +7133,6 @@ requires-port@^1.0.0:
 resize-observer-polyfill@^1.5.0:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
-  integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
 
 resolve-cwd@^2.0.0:
   version "2.0.0"
@@ -7918,7 +7923,6 @@ throat@^4.0.0:
 throttle-debounce@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/throttle-debounce/-/throttle-debounce-1.1.0.tgz#51853da37be68a155cb6e827b3514a3c422e89cd"
-  integrity sha512-XH8UiPCQcWNuk2LYePibW/4qL97+ZQ1AN3FNXwZRBNPPowo/NRU5fAlDCSNBJIYCKbioZfuYtMhG4quqoJhVzg==
 
 throttleit@~0.0.2:
   version "0.0.2"
@@ -8352,6 +8356,10 @@ vue-jest@^3.0.1:
     source-map "^0.5.6"
     tsconfig "^7.0.0"
     vue-template-es2015-compiler "^1.6.0"
+
+vue-lazyload@^1.0.1:
+  version "1.2.6"
+  resolved "http://registry.npm.taobao.org/vue-lazyload/download/vue-lazyload-1.2.6.tgz#baa04c172d52a812608eb12c7a6bfb14f5c91079"
 
 vue-loader@^15.4.2:
   version "15.4.2"
