@@ -3,15 +3,15 @@
     <div class="list-header">
      <transition>
        <span :class="{active:shows ===3 }" @click="showView(3)">
-        <img src="../../../../images/Exchange_svg/ic_top.svg" alt="">
+        <img src="../../../../images/web/ic_top.svg" alt="">
        </span>
      </transition>
      <transition>
        <span :class="{active:shows ===2 }" @click="showView(2)">
-         <img src="../../../../images/Exchange_svg/ic_bottom.svg" alt=""></span></transition>
+         <img src="../../../../images/web/ic_bottom.svg" alt=""></span></transition>
      <transition>
        <span :class="{active:shows ===1 }" @click="showView(1)">
-         <img src="../../../../images/Exchange_svg/ic_middle.svg" alt=""></span></transition>
+         <img src="../../../../images/web/ic_middle.svg" alt=""></span></transition>
     </div>
     <div class="list-title">
       <span class="left-text">Price(EOS)</span>
