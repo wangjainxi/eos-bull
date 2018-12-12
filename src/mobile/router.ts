@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
-import MarketView from './views/HomePage/MarketView.vue'
+import MarketView from './views/Market/MarketView/MarketView.vue'
 
 Vue.use(Router);
 
@@ -21,9 +21,9 @@ export default new Router({
 
         },
         {
-          path: '/market',
+          path: 'market',
           // name:'market',
-          component: () => import(/* webpackChunkName: "market" */ './views/Market.vue'),
+          component: () => import(/* webpackChunkName: "market" */ './views/Market/Market.vue'),
           children:[
 
           ]
@@ -43,6 +43,11 @@ export default new Router({
           name:'more',
           component: () => import(/* webpackChunkName: "more" */ './views/More.vue'),
         },
+        {
+          path:'/market-view',
+          name: 'market-view',
+          component: MarketView,
+        }
       ]
     },
     {
@@ -53,10 +58,6 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
     },
-      {
-        path:'/market-view',
-        name: 'market-view',
-        component: MarketView,
-      }
+
   ],
 });

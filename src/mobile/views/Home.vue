@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <TabTypeContainer/>
+    <!-- <TabTypeContainer/> -->
     <router-view/>
   </div>
 </template>

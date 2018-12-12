@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "element-ui": "^2.4.11",
+    "mint-ui": "^2.2.13",
     "register-service-worker": "^1.5.2",
     "vue": "^2.5.17",
     "vue-class-component": "^6.0.0",
