@@ -1,18 +1,18 @@
 <template>
-  <div class="home">
-    <tab-type-container/>
+  <div>
     <router-view/>
+    <tab-type-container/>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
 import TabTypeContainer from "@/components/TabTypeContainer.vue";
+import { Component, Vue } from "vue-property-decorator";
 
 @Component({
   components: {
     TabTypeContainer
   }
 })
-export default class Home extends Vue {}
+export default class TabPackage extends Vue {}
 </script>

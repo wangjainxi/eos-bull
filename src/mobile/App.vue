@@ -12,11 +12,12 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: 640px;
+  margin: 0 auto;
+  display: block;
+  background: #fff;
 }
 * {
   padding: 0px;
