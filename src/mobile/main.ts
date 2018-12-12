@@ -3,6 +3,8 @@ import App from './App.vue';
 import router from './router';
 import store from '../store';
 import '../registerServiceWorker';
+import Mint from 'mint-ui';
+Vue.use(Mint);
 
 Vue.config.productionTip = false;
 
