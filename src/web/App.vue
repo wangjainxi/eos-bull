@@ -55,6 +55,10 @@ input[type="number"] {
   background: none;
   color: #ddd;
 }
+.el-table .cell {
+  padding-left: 23px;
+  font-size: 12px;
+}
 .el-table td,
 .el-table th.is-leaf {
   border-bottom: 1px solid #1e3a5d;

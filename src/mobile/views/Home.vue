@@ -1,18 +1,18 @@
 <template>
   <div class="home">
-    <TabTypeContainer/>
+    <tab-type-container/>
     <router-view/>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import TabTypeContainer  from '@/components/TabTypeContainer.vue';
+import { Component, Vue } from "vue-property-decorator";
+import TabTypeContainer from "@/components/TabTypeContainer.vue";
 
 @Component({
   components: {
-    TabTypeContainer,
-  },
+    TabTypeContainer
+  }
 })
 export default class Home extends Vue {}
 </script>

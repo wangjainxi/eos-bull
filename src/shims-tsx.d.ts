@@ -1,4 +1,4 @@
-import Vue, { VNode } from 'vue';
+import Vue, { VNode } from "vue";
 
 declare global {
   namespace JSX {
@@ -11,3 +11,4 @@ declare global {
     }
   }
 }
+declare module "mint-ui";
