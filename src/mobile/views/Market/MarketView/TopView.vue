@@ -31,28 +31,28 @@ export default {
   color: rgba(229, 55, 87, 1);
 }
   .view-box-top {
-    height: 168px;
-    padding: 14px 20px;
+    width: 100%;
+    height: 16.8rem;
+    padding: 1.4rem 2rem;
     .currency-box {
-
       .currency-name {
-        font-size: 16px;
+        font-size: 1.6rem;
         font-family: PingFangSC-Medium;
         font-weight: 500;
         color: rgba(0, 0, 0, 1);
       }
     }
     > :nth-child(2) {
-         margin-bottom: 10px;
-         margin-top: 10px;
+         margin-bottom: 1rem;
+         margin-top: 1rem;
       .real-text {
-        font-size: 32px;
+        font-size: 3.2rem;
         font-family: PingFangSC-Semibold;
         font-weight: 600;
-        margin-right: 14px;
+        margin-right: 1.4rem;
       }
       .long-text {
-        font-size: 14px;
+        font-size: 1.4rem;
         font-family: PingFangSC-Regular;
         font-weight: 400;
         color: rgba(7, 199, 78, 1);
@@ -60,17 +60,17 @@ export default {
     }
     .max24-box{
       >div{
-        height: 24px;
-        line-height: 24px;
+        height: 2.4rem;
+        line-height: 2.4rem;
       }
       .real-title{
-        font-size:14px;
+        font-size:1.4rem;
         font-family:PingFangSC-Light;
         font-weight:300;
         color:rgba(141,141,141,1);
       }
       .real-text{
-        font-size:14px;
+        font-size:1.4rem;
         font-family:PingFangSC-Medium;
         font-weight:500;
         color:rgba(0,0,0,1);

@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" style="width:100%">
     <!-- <TabTypeContainer/> -->
     <router-view/>
   </div>
@@ -16,3 +16,5 @@ import TabTypeContainer  from '@/components/TabTypeContainer.vue';
 })
 export default class Home extends Vue {}
 </script>
+
+

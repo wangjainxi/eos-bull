@@ -39,15 +39,16 @@ export default {
 }
 </script>
 <style lang="scss">
+@import '../../../../style/mixin.scss';
  #bom-container{
-   position: relative;
+    // width: 100%;
    #tab-box{
-     height: 42px;
+     height: 4.2rem;
      background-color: #ddd;
-     line-height: 42px;
-     padding-left: 20px;
+     line-height:  4.2rem;
+     padding-left: 2rem;
      .tab-item{
-       margin-right: 25px;
+       margin-right: 2.5rem;
      }
    }
    .transaction-box{

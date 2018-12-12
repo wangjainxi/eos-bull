@@ -1,7 +1,7 @@
 <template>
   <div class="market-view-box">
       <TopView/>
-      <div class="trading-box">trading view</div>
+      <!-- <div class="trading-box">trading view</div> -->
       <BomView/>
   </div>
 </template>
@@ -17,6 +17,8 @@ export default {
 };
 </script>
 <style lang="scss">
+@import '../../../../style/mixin.scss';
+
 .green-color {
   color: rgba(7, 199, 78, 1);
 }
@@ -24,8 +26,10 @@ export default {
   color: rgba(229, 55, 87, 1);
 }
 .market-view-box {
+  @include flexLayout(column,flex-start,flex-start);
+  width: 100%;
   .trading-box{
-    height: 430px;
+    height: 43rem;
   }
 }
 </style>
