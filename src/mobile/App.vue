@@ -5,8 +5,9 @@
 </template>
 
 <style lang="scss">
+@import "./../style/common.scss";
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -22,7 +23,7 @@
     }
   }
 }
-.flex-row-start{
+.flex-row-start {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
