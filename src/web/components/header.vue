@@ -1,36 +1,37 @@
 <template>
   <div id="top-page">
     <div class="top-view">
-    <div class="tleft-view flex-start">
-      <div class="logo-view">
-       <a href="/"> <img src="../../images/Exchange_svg/logo_eosmex.svg" alt=""></a>
-    </div>
-      <div class="tab-view">
-        <el-tabs v-model="activeName">
-          <el-tab-pane label="Exchange" name="first">
-          </el-tab-pane>
-          <el-tab-pane label="Markets" name="second"></el-tab-pane>
-        </el-tabs>
+      <div class="tleft-view flex-start">
+        <div class="logo-view">
+          <a href="/">
+            <img src="@/images/web/logo_eosmex.svg" alt>
+          </a>
+        </div>
+        <div class="tab-view">
+          <el-tabs v-model="activeName">
+            <el-tab-pane label="Exchange" name="first"></el-tab-pane>
+            <el-tab-pane label="Markets" name="second"></el-tab-pane>
+          </el-tabs>
+        </div>
+      </div>
+      <div class="tright-view">
+        <span class="use-box">
+          <img src="@/images/web/ic_eos.svg" alt>
+          <span class="text-style">admin11</span>
+        </span>
+        <span class="text-style switch">Switch</span>
+        <span class="text-style exit">Exit</span>
+        <span class="order-box flex-start">
+          <img src="@/images/web/ic_order.svg" alt>
+          <span class="text-style exit">admin11</span>
+        </span>
+        <span class="language-box">
+          <img class="mark" src="@/images/web/ic_eos.svg" alt>
+          <span class="text-style">english</span>
+          <img class="arrow" src="@/images/web/ic_arrow_down.svg" alt>
+        </span>
       </div>
     </div>
-    <div class="tright-view">
-      <span class="use-box">
-        <img src="../../images/Exchange_svg/ic_eos.svg" alt="">
-        <span class="text-style">admin11</span>
-      </span>
-      <span class="text-style switch">Switch</span>
-      <span class="text-style exit">Exit</span>
-      <span class="order-box flex-start">
-        <img src="../../images/Exchange_svg/ic_order.svg" alt="">
-        <span class="text-style exit">admin11</span>
-      </span>
-      <span class="language-box">
-        <img class="mark" src="../../images/Exchange_svg/ic_eos.svg" alt="">
-        <span class="text-style">english</span>
-        <img class="arrow" src="../../images/Exchange_svg/ic_arrow_down.svg" alt="">
-      </span>
-    </div>
-  </div>
   </div>
 </template>
 <script>

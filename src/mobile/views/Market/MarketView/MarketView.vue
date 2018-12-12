@@ -1,7 +1,7 @@
 <template>
   <div class="market-view-box">
       <TopView/>
-      <!-- <div class="trading-box">trading view</div> -->
+      <div class="trading-box">trading view</div>
       <BomView/>
   </div>
 </template>
@@ -27,9 +27,10 @@ export default {
 }
 .market-view-box {
   @include flexLayout(column,flex-start,flex-start);
-  width: 100%;
+  width:100vw;
   .trading-box{
-    height: 43rem;
+    height: 4.3rem;
+    font-size: 0.14rem;
   }
 }
 </style>

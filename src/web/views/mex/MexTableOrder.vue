@@ -3,15 +3,15 @@
     <div class="table-roder-title">
       <h4>Open Order</h4>
       <div>
-        <img src="../../../images/Exchange_svg/ic_refresh.svg" alt>
+        <img src="../../../images/web/ic_refresh.svg" alt>
         <p>Revoke All</p>
         <el-checkbox v-model="checked">Hide Other Pair</el-checkbox>
-        <img src="../../../images/Exchange_svg/ic_refresh.svg" alt>
+        <img src="../../../images/web/ic_refresh.svg" alt>
       </div>
     </div>
     <div class="table-box">
       <el-table :data="tableData" style="width: 100%" empty-text="There's no data yet">
-        <el-table-column prop="coin" label="Coin">
+        <el-table-column prop="coin" label="Coin" width="200">
           <template slot-scope="props">
             <div class="coin-box">
               <h4>{{props.row.coin}} / EOS</h4>
@@ -25,7 +25,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="time" label="Entrusted Time" align="center" width="200"></el-table-column>
-        <el-table-column prop="price" label="Price" align="right">
+        <el-table-column prop="price" label="Price" align="right" width="120">
           <template slot-scope="props">
             <p class="props-box">
               {{props.row.price}}
@@ -113,6 +113,10 @@ export default {
     width: 100%;
     height: 42px;
     padding: 0 16px;
+    > h4 {
+      font-size: 14px;
+      color: #fff;
+    }
     > div {
       display: flex;
       color: #2d7be5;
@@ -133,6 +137,7 @@ export default {
       }
     }
   }
+
   .table-box {
     color: #ddd;
     .coin-box {

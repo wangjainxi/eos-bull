@@ -3,7 +3,6 @@
     <router-view/>
   </div>
 </template>
-
 <style lang="scss">
 @import "./../style/common.scss";
 #app {
@@ -12,11 +11,12 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  width: 100%;
-}
-*{
-  padding: 0px;
-  margin: 0px;
+  width: 100vw;
+  height: 100vh;
+  max-width: 640px;
+  margin: 0 auto;
+  display: block;
+  background: #fff;
 }
 #nav {
   padding: 30px;
@@ -34,19 +34,19 @@
   justify-content: flex-start;
   align-items: center;
 }
-.flex-row-between{
+.flex-row-between {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
 }
-.flex-row-between-center{
+.flex-row-between-center {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.flex-column-start-start{
+.flex-column-start-start {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

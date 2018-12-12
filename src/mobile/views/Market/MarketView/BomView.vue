@@ -1,5 +1,6 @@
 <template>
   <div id="bom-container">
+
     <div id="tab-box" class="flex-row-start">
         <div class="tab-item">
           <p class="tab-title">委托订单</p>
@@ -15,46 +16,65 @@
         </div>
 
     </div>
+
     <div class="container-box">
 
-    </div class="transaction-box flex-row-between-center" >
-    <div>
+    </div>
+    <!-- <div class="btn-box">
        <div><Button text="买入" type="sell38" @onclick="onBuy"/></div>
        <div><Button text="卖出" type="sell38" @onclick="onBuy"/></div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
-import Button from '@/components/button.vue'
+import Vue from 'vue'
+import Button from "@/components/button.vue";
+import { Navbar, TabItem } from "mint-ui";
+Vue.component(Navbar.name, Navbar);
+Vue.component(TabItem.name, TabItem);
 export default {
-  name:'bom-view',
-  components:{
-    Button,
+  name: "bom-view",
+  components: {
+    Button
   },
-  methods:{
-    onBuy: function(){
+  methods: {
+    onBuy: function() {
       console.log(222);
     }
   }
-}
+};
 </script>
 <style lang="scss">
-@import '../../../../style/mixin.scss';
- #bom-container{
-    // width: 100%;
-   #tab-box{
-     height: 4.2rem;
-     background-color: #ddd;
-     line-height:  4.2rem;
-     padding-left: 2rem;
-     .tab-item{
-       margin-right: 2.5rem;
-     }
-   }
-   .transaction-box{
-
-   }
- }
+@import "../../../../style/mixin.scss";
+#bom-container {
+  width: 100vw;
+  #tab-box {
+    height: 0.42rem;
+    background-color: #ddd;
+    line-height: 0.42rem;
+    padding-left: 0.2rem;
+    font-size: 0.16rem!important;
+    .mint-tab-item-label{
+      font-size: 0.2rem;
+    }
+    .tab-item {
+      margin-right: 0.25rem;
+      p {
+        font-size: 0.14rem;
+      }
+    }
+  }
+  .btn-box {
+    @include flexLayout(row, space-between, center);
+    width: 100%;
+    height: 0.62rem;
+    > div {
+      flex: 1;
+    }
+  }
+  .transaction-box {
+  }
+}
 </style>
 
 
