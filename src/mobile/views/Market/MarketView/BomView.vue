@@ -13,10 +13,7 @@
           <p class="tab-title">最新成交</p>
           <p class="tab-mark"></p>
         </div>
-          <div class="tab-item">
-          <p class="tab-title">简介</p>
-          <p class="tab-mark"></p>
-        </div>
+
     </div>
     <div class="container-box">
 
