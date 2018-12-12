@@ -11,4 +11,3 @@ declare global {
     }
   }
 }
-declare module "mint-ui";

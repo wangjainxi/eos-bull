@@ -3,10 +3,10 @@
     <div class="table-roder-title">
       <h4>Open Order</h4>
       <div>
-        <img src="../../../images/Exchange_svg/ic_refresh.svg" alt>
+        <img src="../../../images/web/ic_refresh.svg" alt>
         <p>Revoke All</p>
         <el-checkbox v-model="checked">Hide Other Pair</el-checkbox>
-        <img src="../../../images/Exchange_svg/ic_refresh.svg" alt>
+        <img src="../../../images/web/ic_refresh.svg" alt>
       </div>
     </div>
     <div class="table-box">

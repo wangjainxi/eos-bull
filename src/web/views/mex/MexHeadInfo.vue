@@ -4,7 +4,7 @@
       <el-collapse-item>
         <div slot="title" class="head-info-title">
           <div class="head-info-title-logo">
-            <img src="../../../images/Exchange_svg/logo_box.svg" alt>
+            <img src="../../../images/web/logo_box.svg" alt>
             <div>
               <h4>
                 <span>MAX</span>
@@ -126,7 +126,7 @@ export default {
       }
       p {
         padding-left: 15px;
-        background-image: url("../../../images/Exchange_svg/ic_order.svg");
+        background-image: url("../../../images/web/ic_order.svg");
         background-repeat: no-repeat;
         background-size: 10px 12px;
         background-position: 0 2px;

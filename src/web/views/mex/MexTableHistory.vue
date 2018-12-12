@@ -5,7 +5,7 @@
       <div>
         <el-checkbox v-model="OrdeChecked">Hide Revoked Orde</el-checkbox>
         <el-checkbox v-model="PairChecked">Hide Other Pair</el-checkbox>
-        <img src="../../../images/Exchange_svg/ic_refresh.svg" alt>
+        <img src="../../../images/web/ic_refresh.svg" alt>
       </div>
     </div>
     <div class="table-box">
@@ -64,7 +64,7 @@
         <el-table-column prop="coin" label="Coin" width="155">
           <template slot-scope="props">
             <div class="coin-box">
-              <img src="../../../images/Exchange_svg/logo_box.svg" alt>
+              <img src="../../../images/web/logo_box.svg" alt>
               <p>{{props.row.coin}} / EOS</p>
             </div>
           </template>

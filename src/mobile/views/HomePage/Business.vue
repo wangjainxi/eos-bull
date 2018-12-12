@@ -51,7 +51,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "./../../../style/mixin.scss";
+@import "../../../style/mixin.scss";
 .business {
   @include wh(100%, 100%);
   box-sizing: border-box;
@@ -75,7 +75,7 @@ export default {
         @include wh(12px, 12px);
         margin-left: 6px;
         cursor: pointer;
-        @include bis("./../../../images/mobile/homepage/ic_arrow_under.svg");
+        @include bis("./../../../images/mobile/ic_arrow_under.svg");
       }
     }
     .business-coin-image {
@@ -86,12 +86,12 @@ export default {
       }
       .business-coin-star {
         @include bis(
-          "./../../../images/mobile/homepage/ic_collection_normal.svg"
+          "./../../../images/mobile/ic_collection_normal.svg"
         );
       }
       .business-coin-img1 {
         margin-left: 15px;
-        @include bis("./../../../images/mobile/homepage/ic_chart.svg");
+        @include bis("./../../../images/mobile/ic_chart.svg");
       }
     }
   }
@@ -139,7 +139,7 @@ export default {
         i {
           margin-left: 6px;
           @include wh(12px, 12px);
-          @include bis("./../../../images/mobile/homepage/ic_arrow_under.svg");
+          @include bis("./../../../images/mobile/ic_arrow_under.svg");
         }
       }
       .business-price {

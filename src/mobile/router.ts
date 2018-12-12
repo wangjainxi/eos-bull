@@ -1,12 +1,7 @@
-import Vue from "vue";
-import Router from "vue-router";
-import Home from "./views/Home.vue";
-import Market from "./views/Market.vue";
-import Assets from "./views/Assets.vue";
-import More from "./views/More.vue";
-import Orders from "./views/Orders.vue";
-import HomePage from "./views/HomePage.vue";
-import Business from "./views/HomePage/Business.vue";
+import Vue from 'vue';
+import Router from 'vue-router';
+import Home from './views/Home.vue';
+import MarketView from './views/Market/MarketView/MarketView.vue'
 
 Vue.use(Router);
 
@@ -20,34 +15,38 @@ export default new Router({
       component: Home,
       children: [
         {
-          path: "/",
-          name: "homepage",
-          component: () =>
-            import(/* webpackChunkName: "homepage" */ "./views/HomePage/HomePage.vue")
+          path: '/',
+          name:'homepage',
+          component: () => import(/* webpackChunkName: "homepage" */ './views/HomePage/HomePage.vue'),
+
         },
         {
-          path: "/market",
-          name: "market",
-          component: () =>
-            import(/* webpackChunkName: "market" */ "./views/Market.vue")
+          path: 'market',
+          // name:'market',
+          component: () => import(/* webpackChunkName: "market" */ './views/Market/Market.vue'),
+          children:[
+
+          ]
         },
         {
-          path: "/assets",
-          name: "assets",
-          component: () =>
-            import(/* webpackChunkName: "assets" */ "./views/Assets.vue")
+          path: 'assets',
+          name:'assets',
+          component: () => import(/* webpackChunkName: "assets" */ './views/Assets.vue'),
         },
         {
-          path: "/orders",
-          name: "orders",
-          component: () =>
-            import(/* webpackChunkName: "orders" */ "./views/Orders.vue")
+          path: 'orders',
+          name:'orders',
+          component: () => import(/* webpackChunkName: "orders" */ './views/Orders.vue'),
         },
         {
-          path: "/more",
-          name: "more",
-          component: () =>
-            import(/* webpackChunkName: "more" */ "./views/More.vue")
+          path: 'more',
+          name:'more',
+          component: () => import(/* webpackChunkName: "more" */ './views/More.vue'),
+        },
+        {
+          path:'/market-view',
+          name: 'market-view',
+          component: MarketView,
         }
       ]
     },
