@@ -26,7 +26,21 @@
           <span>限价</span>
           <i></i>
         </div>
-        <div class="business-price"></div>
+        <div class="business-price">
+          <div class="business-price-down" @click="businessPrice--">-</div>
+          <div class="business-price-show">{{businessPrice}}</div>
+          <div class="business-price-up" @click="businessPrice++">+</div>
+        </div>
+        <div class="business-mount">
+          <input type="text" v-model="inputVal">
+          <span>WIZBOX</span>
+        </div>
+        <div class="business-change-eos">{{`≈${changeEos}EOS`}}</div>
+        <div class="business-range">带填充</div>
+        <div
+          id="goBusiness"
+          :class="currrentTab === '买入' || currrentTab === 'buy' ? 'businessBuy' : 'businessSell'"
+        >{{currrentTab}}</div>
       </div>
       <div class="business-show-data-right">daff</div>
     </div>
@@ -37,6 +51,9 @@ export default {
   name: "business-box",
   data() {
     return {
+      businessPrice: 3422.02,
+      inputVal: 0,
+      changeEos: 0.00001,
       currrentTab: "买入",
       tabs: ["买入", "卖出"]
     };
@@ -54,7 +71,6 @@ export default {
 @import "./../../../style/mixin.scss";
 .business {
   @include wh(100%, 100%);
-  box-sizing: border-box;
   position: relative;
   .business-coin-title,
   .business-show-data {
@@ -102,7 +118,7 @@ export default {
     .business-tab-buy {
       @include wh(50%, auto);
       span {
-      @include font(300, 1.6rem, 2.2rem, "PingFangSC-Light");
+        @include font(300, 1.6rem, 2.2rem, "PingFangSC-Light");
         color: rgba(141, 141, 141, 1);
         @include wh(auto, 5.4rem);
         line-height: 5.4rem;
@@ -127,10 +143,13 @@ export default {
   .business-show-data {
     @include wh(auto, auto);
     @include flex(flex, center, flex-start);
+    .business-show-data-left,.business-show-data-right{
+      margin-bottom: 1.8rem;
+    }
     .business-show-data-left {
-      flex-grow: 1;
+      width: 50%;
       .left-title {
-        padding: 1.6rem 0;
+        padding: 1.6rem 0 0.3rem;
         @include flex(flex, center, flex-start);
         span {
           @include font(400, 1.5rem, 2.1rem, "PingFangSC-Regular");
@@ -142,12 +161,79 @@ export default {
           @include bis("./../../../images/mobile/homepage/ic_arrow_under.svg");
         }
       }
+      .business-price,
+      .business-mount {
+        margin: 1.3rem 0;
+        @include wh(95%, 3.4rem);
+        @include borderRadius(0.2rem);
+        border: 1px solid rgba(141, 141, 141, 1);
+        @include flex(flex, center, space-between);
+        flex-direction: row;
+      }
       .business-price {
-        @include wh(100%,auto);
+        .business-price-down,
+        .business-price-up {
+          @include flex(flex, center, center);
+          @include wh(2.4rem, 100%);
+          @include font(400, 1.5rem, 2.1rem, "PingFangSC-Light");
+          color: rgba(141, 141, 141, 1);
+          &:active {
+            background-color: rgb(235, 235, 235);
+          }
+        }
+        .business-price-show {
+          @include font(400, 1.5rem, 2.1rem, "PingFangSC-Light");
+          color: rgba(0, 0, 0, 1);
+        }
+        .business-price-down {
+          border-right: 2px solid rgba(141, 141, 141, 0.7);
+        }
+        .business-price-up {
+          border-left: 2px solid rgba(141, 141, 141, 0.7);
+        }
+      }
+      .business-mount {
+        padding: 0 0.8rem;
+        margin: 2.6rem 0 0;
+        input,
+        span {
+          @include font(400, 1.5rem, 2.1rem, "PingFangSC-Light");
+        }
+        input {
+          width: 55%;
+          border: none;
+          color: rgba(0, 0, 0, 1);
+        }
+        span {
+          color: rgba(141, 141, 141, 1);
+        }
+      }
+      .business-change-eos {
+        margin-top: 0.6rem;
+        @include font(400, 1.2rem, 1.7rem, "PingFangSC-Light");
+        text-align: left;
+        color: rgba(141, 141, 141, 1);
+      }
+      .business-range {
+        margin: 2.6rem 0;
+      }
+      #goBusiness {
+        height: 3.4rem;
+        width: 95%;
+        @include flex(flex, center, center);
+        @include font(500, 1.6rem, 2.2rem, "PingFangSC-Medium");
+        color: rgba(255, 255, 255, 1);
+        border-radius: 2px;
+      }
+      .businessBuy {
+        background-color: rgba(7, 199, 78, 1);
+      }
+      .businessSell {
+        background-color: rgba(255, 0, 0, 1);
       }
     }
     .business-show-data-right {
-      flex-grow: 1;
+      width: 50%;
     }
   }
 }
