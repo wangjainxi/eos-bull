@@ -16,9 +16,13 @@
         <OrderTab/>
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
+          深度图
         </mt-tab-container-item>
         <mt-tab-container-item id="3">
          <DealTab/>
+        </mt-tab-container-item>
+           <mt-tab-container-item id="4">
+         <Introduction/>
         </mt-tab-container-item>
       </mt-tab-container>
       </div>
@@ -32,6 +36,7 @@
 import Vue from 'vue';
 import OrderTab from './component/OrderTab.vue';
 import DealTab from './component/DealTab.vue';
+import Introduction from './component/Introduction.vue';
 export default {
   name: 'bom-view',
   data: function() {
@@ -47,6 +52,7 @@ export default {
   components: {
     OrderTab,
     DealTab,
+    Introduction,
   },
 };
 </script>
