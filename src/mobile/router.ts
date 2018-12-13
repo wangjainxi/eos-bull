@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import TabPackage from './TabPackage.vue';
-import MarketView from './views/Market/MarketView/MarketView.vue';
+import MarketView from './views/Market/MarketView/index.vue';
 
 Vue.use(Router);
 

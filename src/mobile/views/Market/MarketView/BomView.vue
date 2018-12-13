@@ -1,82 +1,115 @@
 <template>
   <div id="bom-container">
-
-<mt-button type="default">default</mt-button>
-<mt-button type="danger">danger</mt-button>
-    <div id="tab-box" class="flex-row-start">
-      <Button>dddd</Button>
-        <!-- <div class="tab-item">
-          <p class="tab-title">委托订单</p>
-          <p class="tab-mark"></p>
-        </div>
-        <div class="tab-item">
-          <p class="tab-title">深度</p>
-          <p class="tab-mark"></p>
-        </div>
-         <div class="tab-item">
-          <p class="tab-title">最新成交</p>
-          <p class="tab-mark"></p>
-        </div> -->
-      <mt-navbar v-model="selected">
-  <mt-tab-item id="1">选项一</mt-tab-item>
-  <mt-tab-item id="2">选项二</mt-tab-item>
-  <mt-tab-item id="3">选项三</mt-tab-item>
-</mt-navbar>
-
+    <div id="tab-box-container" class="flex-row-start">
+      <div class="type-select-box">
+        <mt-navbar v-model="selected">
+          <mt-tab-item id="1">委托订单</mt-tab-item>
+          <mt-tab-item id="2">深度</mt-tab-item>
+          <mt-tab-item id="3">最新成交</mt-tab-item>
+          <mt-tab-item id="4">简介</mt-tab-item>
+        </mt-navbar>
+      </div>
 <!-- tab-container -->
-<mt-tab-container v-model="selected">
-  <mt-tab-container-item id="1">
-    <mt-cell v-for="n in 10" :title="'内容 ' + n" />
-  </mt-tab-container-item>
-  <mt-tab-container-item id="2">
-    <mt-cell v-for="n in 4" :title="'测试 ' + n" />
-  </mt-tab-container-item>
-  <mt-tab-container-item id="3">
-    <mt-cell v-for="n in 6" :title="'选项 ' + n" />
-  </mt-tab-container-item>
-</mt-tab-container>
+     <div>
+      <mt-tab-container v-model="selected">
+        <mt-tab-container-item id="1">
+        <OrderTab/>
+        </mt-tab-container-item>
+        <mt-tab-container-item id="2">
+        </mt-tab-container-item>
+        <mt-tab-container-item id="3">
+         <DealTab/>
+        </mt-tab-container-item>
+      </mt-tab-container>
+      </div>
     </div>
-
     <div class="container-box">
-
     </div>
-    <!-- <div class="btn-box">
-       <div><Button text="买入" type="sell38" @onclick="onBuy"/></div>
-       <div><Button text="卖出" type="sell38" @onclick="onBuy"/></div>
-    </div> -->
+
   </div>
 </template>
 <script>
-import Vue from 'vue'
+import Vue from 'vue';
+import OrderTab from './component/OrderTab.vue';
+import DealTab from './component/DealTab.vue';
 export default {
-  name: "bom-view",
+  name: 'bom-view',
+  data: function() {
+    return {
+      selected: '1',
+    };
+  },
   methods: {
-    selected: function() {
-      console.log(222);
-    }
-  }
+    // selected: function() {
+    //   console.log(222);
+    // },
+  },
+  components: {
+    OrderTab,
+    DealTab,
+  },
 };
 </script>
-<style lang="scss">
-@import "../../../../style/mixin.scss";
+<style lang="scss" >
+@import '../../../../style/mixin.scss';
 #bom-container {
   width: 100vw;
-    .mint-tab-item-label{
-      font-size: 0.2rem;
+  background-color: #fff;
+  .mint-tab-item-label {
+    font-size: 0.2rem;
+  }
+    .type-select-box{
+      background-color: #ddd;
+      width: 100%;
     }
-  #tab-box {
-    height: 0.42rem;
-    background-color: #ddd;
-    line-height: 0.42rem;
-    padding-left: 0.2rem;
-    font-size: 0.16rem!important;
-
+  #tab-box-container {
+    // height: 0.42rem;
+    // line-height: 0.42rem;
+    // padding-left: 0.2rem;
+    // padding-right: 0.2rem;
+    font-size: 0.16rem !important;
+    > div {
+      width: 100%;
+    }
+    @include flexLayout(column, flex-start, flex-start);
+  .mint-navbar{
+      border-bottom: 0.01rem solid rgba(242,245,251,1);
+      border-top: 0.01rem solid rgba(242,245,251,1);
+    }
+    .mint-tab-item-label{
+      height:0.16rem;
+      font-size:0.14rem;
+      font-family:PingFangSC-Semibold;
+      font-weight:600;
+      color:rgba(141,141,141,1);
+      line-height:0.16rem;
+    }
     .tab-item {
       margin-right: 0.25rem;
       p {
         font-size: 0.14rem;
       }
     }
+
+  .mint-navbar .mint-tab-item{
+    padding: 0px;
+    margin: 0.1rem;
+  }
+  .mint-navbar .mint-tab-item.is-selected{
+    border-bottom: none;
+    color:rgba(0,122,255,1);
+  }
+  .mint-navbar .mint-tab-item.is-selected::after{
+    content: "1";
+    background-color: red;
+    color:transparent;
+    display: inline-block;
+    width:0.15rem;
+    height:0.03rem;
+    background:rgba(0,122,255,1);
+    border-radius:0.03rem;
+    margin-top: 0.09rem;
+  }
   }
   .btn-box {
     @include flexLayout(row, space-between, center);

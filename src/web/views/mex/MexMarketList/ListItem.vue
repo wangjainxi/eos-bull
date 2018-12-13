@@ -4,7 +4,7 @@
       <span class="total-bg-mark" :style='{width:item.width}'></span>
       <span class="left-text price-text">{{item.price}}</span>
       <span class="center-text">{{item.size}}</span>
-      <span class="right-text">{{item.total}}</span>
+      <!-- <span class="right-text">{{item.total}}</span> -->
     </div>
   </div>
 </template>
@@ -20,6 +20,7 @@ export default {
 }
 </script>
 <style lang="scss">
+@import '@/style/mixin.scss';
 .sell-box{
  .price-text{
     color:rgba(229,55,87,1);
@@ -52,6 +53,7 @@ export default {
   line-height: 20px;
   position: relative;
   margin-bottom: 0.6px;
+  @include flexLayout(row,space-between,center);
   .total-mark{
     position: absolute;
     right: 0px;
