@@ -3,12 +3,10 @@ export default {
     count: 0,
   },
   mutations: {
-    increment(state: any){
-      state.count++
+    increment(state: any) {
+      state.count++;
       console.log(state);
-    }
+    },
   },
-  actions: {
-
-  },
-}
+  actions: {},
+};
