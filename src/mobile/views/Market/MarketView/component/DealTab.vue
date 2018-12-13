@@ -2,9 +2,9 @@
    <div class="deal-box">
      <div class="order-top">
         <div class="tab-box">
-          <span class="tab-title">时间</span>
-          <span class="tab-title">价格(EOS)</span>
-          <span class="tab-title">数量(WIZBOX)</span>
+          <span class="tab-title time-mark" >时间</span>
+          <span class="tab-title price-mark">价格(EOS)</span>
+          <span class="tab-title size-mark">数量(WIZBOX)</span>
         </div>
      </div>
      <div class="order-content">
@@ -53,6 +53,19 @@ export default {
         @include flexLayout(row,space-between, center);
         border-bottom: 0.01rem solid rgba(242,245,251,1);
         font-size: 0.12rem;
+        >span{
+          flex:1;
+        }
+        .time-mark{
+          text-align:left;
+        }
+        .price-mark{
+          text-align:center;
+          width:0.6rem;
+        }
+        .size-mark{
+          text-align:right;
+        }
         .buy-text{
           color:rgba(7,199,78,1);
           font-weight:400;

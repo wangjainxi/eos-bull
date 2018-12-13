@@ -97,7 +97,9 @@ export default {
   }
   .mint-navbar .mint-tab-item.is-selected{
     border-bottom: none;
+    .mint-tab-item-label{
     color:rgba(0,122,255,1);
+    }
   }
   .mint-navbar .mint-tab-item.is-selected::after{
     content: "1";
