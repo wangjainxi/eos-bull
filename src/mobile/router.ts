@@ -63,7 +63,14 @@ export default new Router({
       path: "/business",
       name: "business",
       component: () =>
-        import(/* webpackChunkName: "business" */ "./views/HomePage/Business.vue")
-    }
+        import(/* webpackChunkName: "business" */ "./views/business/Business.vue")
+    },
+
+    {
+      path: "/businessHistory",
+      name: "businessHistory",
+      component: () =>
+        import(/* webpackChunkName: "businessHistory" */ "./views/business/businessHistory.vue")
+    },
   ]
 });
