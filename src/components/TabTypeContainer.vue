@@ -35,8 +35,10 @@ export default {
   left: 0px;
   width: 100%;
   height: 0.5rem;
-  border-top: 1px solid rgba(92, 102, 119, 0.2);
+  border-top: 1px solid #f2f5fb;
   padding-top: 0.1rem;
+  background: #fff;
+  z-index: 1000;
   a {
     display: flex;
     width: 20%;
