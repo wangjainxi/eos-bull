@@ -15,8 +15,8 @@
 
 <script>
 export default {
-  name: "list-child",
-  props: ["item"]
+  name: 'list-child',
+  props: ['item'],
 };
 </script>
 

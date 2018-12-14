@@ -27,83 +27,85 @@
       </mt-navbar>
     </div>
     <!-- tab-container -->
-    <div class="home-list-package-box">
-      <mt-tab-container v-model="selected">
-        <mt-tab-container-item id="1">
+    <mt-tab-container v-model="selected">
+      <mt-tab-container-item id="1">
+        <div class="home-list-page-box">
           <ListChild v-for="(item, index) in dealList" :item="item" :key="index"></ListChild>
-          <div class="home-link-to-market-box">
-            <router-link to="market">查看更多</router-link>
-            <img src="../../../images/mobile/ic_arrow_under.svg" alt>
-          </div>
-        </mt-tab-container-item>
-        <mt-tab-container-item id="2">
+        </div>
+        <div class="home-link-to-market-box">
+          <router-link to="market">查看更多</router-link>
+          <img src="../../../images/mobile/ic_arrow_under.svg" alt>
+        </div>
+      </mt-tab-container-item>
+      <mt-tab-container-item id="2">
+        <div class="home-list-page-box">
           <ListChild v-for="(item, index) in growList" :item="item" :key="index"></ListChild>
-          <div class="home-link-to-market-box">
-            <router-link to="market">查看更多</router-link>
-            <img src="../../../images/mobile/ic_arrow_under.svg" alt>
-          </div>
-        </mt-tab-container-item>
-      </mt-tab-container>
-    </div>
+        </div>
+        <div class="home-link-to-market-box">
+          <router-link to="market">查看更多</router-link>
+          <img src="../../../images/mobile/ic_arrow_under.svg" alt>
+        </div>
+      </mt-tab-container-item>
+    </mt-tab-container>
   </div>
 </template>
 <script>
 const dealList = [
   {
-    currency: "EOS",
+    currency: 'EOS',
     dealSize: 3333,
     price: 0.0023,
     statu: 1,
     Percentage: 10,
-    id: 1
+    id: 1,
   },
   {
-    currency: "EOS",
+    currency: 'EOS',
     dealSize: 3333,
     price: 0.0023,
     statu: 0,
     Percentage: 10,
-    id: 2
+    id: 2,
   },
   {
-    currency: "EOS",
+    currency: 'EOS',
     dealSize: 3333,
     price: 0.0023,
     statu: 2,
     Percentage: 10,
-    id: 3
-  }
+    id: 3,
+  },
 ];
 const growList = [
   {
-    currency: "EOS",
+    currency: 'EOS',
     dealSize: 3333,
     price: 0.0023,
     statu: 1,
     Percentage: 10,
-    id: 1
+    id: 1,
   },
   {
-    currency: "EOS",
+    currency: 'EOS',
     dealSize: 3333,
     price: 0.0023,
     statu: 0,
     Percentage: 10,
-    id: 2
-  }
+    id: 2,
+  },
 ];
 
-import ListChild from "./components/ListChild.vue";
+import ListChild from './components/ListChild.vue';
 export default {
   data: function() {
     return {
-      selected: "1",
+      selected: '1',
       dealList: [],
-      growList: []
+      growList: [],
     };
   },
   components: {
-    ListChild
+    ListChild,
   },
   methods: {
     setDealList: function(list) {
@@ -114,12 +116,12 @@ export default {
     },
     modifyGrowList: function() {
       this.growList = growList;
-    }
+    },
   },
   created() {
     this.setDealList(dealList);
     this.setGrowList(growList);
-  }
+  },
 };
 </script>
 <style lang="scss">
@@ -128,7 +130,7 @@ export default {
   .home-banner-box {
     width: 100%;
     height: 1.7rem;
-    background-image: url("../../../images/mobile/bg_banner.svg");
+    background-image: url('../../../images/mobile/bg_banner.svg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: 0 0;
@@ -216,7 +218,7 @@ export default {
     }
     .mint-navbar .mint-tab-item.is-selected::after {
       position: absolute;
-      content: "";
+      content: '';
       height: 0.03rem;
       width: 0.24rem;
       left: 50%;
@@ -225,9 +227,6 @@ export default {
       background: #007aff;
       border-radius: 0.02rem;
     }
-  }
-  .home-list-package-box {
-    padding: 0 0.2rem;
   }
 
   .home-link-to-market-box {
@@ -247,6 +246,10 @@ export default {
       transform: rotate(-90deg);
       margin-left: 5px;
     }
+  }
+  .home-list-page-box {
+    padding: 0 0.2rem;
+    background: #fff;
   }
 }
 </style>
