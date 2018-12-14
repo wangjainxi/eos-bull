@@ -131,7 +131,7 @@ export default {
     width: 100%;
     height: 1.7rem;
     background-image: url('../../../images/mobile/bg_banner.svg');
-    background-size: 100% 100%;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: 0 0;
     padding-top: 0.5rem;
