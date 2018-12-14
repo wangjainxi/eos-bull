@@ -9,7 +9,7 @@
       </div>
       <p>总估值</p>
     </div>
-    <div class="about-CPU-info-box">
+    <div class="about-CPU-info-box" v-on:click="onpopupState">
       <div>
         <h4>CPU</h4>
         <p>已用 5048.2%</p>
