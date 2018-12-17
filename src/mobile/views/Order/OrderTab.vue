@@ -30,7 +30,7 @@ export default {
   name: 'bom-view',
   data: function() {
     return {
-      showPopup:true,
+      showPopup:false,
       selected: '1',
       transData:[
         {
