@@ -1,63 +1,60 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
-import MarketView from './views/Market/MarketView/MarketView.vue'
+import TabPackage from './TabPackage.vue';
+import MarketView from './views/Market/MarketView/MarketView.vue';
 
 Vue.use(Router);
 
 export default new Router({
-  mode: "hash",
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes: [
     {
-      path: "/",
-      name: "home",
-      component: Home,
+      path: '/',
+      name: 'TabPackage',
+      component: TabPackage,
       children: [
         {
           path: '/',
-          name:'homepage',
-          component: () => import(/* webpackChunkName: "homepage" */ './views/HomePage/HomePage.vue'),
-
+          name: 'homepage',
+          component: () =>
+            import(/* webpackChunkName: "homepage" */ './views/HomePage/HomePage.vue'),
         },
         {
           path: 'market',
           // name:'market',
           component: () => import(/* webpackChunkName: "market" */ './views/Market/Market.vue'),
-          children:[
-
-          ]
+          children: [],
         },
         {
           path: 'assets',
-          name:'assets',
+          name: 'assets',
           component: () => import(/* webpackChunkName: "assets" */ './views/Assets.vue'),
         },
         {
           path: 'orders',
-          name:'orders',
+          name: 'orders',
           component: () => import(/* webpackChunkName: "orders" */ './views/Orders.vue'),
         },
         {
           path: 'more',
-          name:'more',
+          name: 'more',
           component: () => import(/* webpackChunkName: "more" */ './views/More.vue'),
         },
         {
-          path:'/market-view',
+          path: 'market-view',
           name: 'market-view',
           component: MarketView,
-        }
-      ]
+        },
+      ],
     },
     {
-      path: "/about",
-      name: "about",
+      path: 'about',
+      name: 'about',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue")
+      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
     },
     {
       path: "/business",
@@ -70,7 +67,7 @@ export default new Router({
       path: "/businessHistory",
       name: "businessHistory",
       component: () =>
-        import(/* webpackChunkName: "businessHistory" */ "./views/business/businessHistory.vue")
+        import(/* webpackChunkName: "businessHistory" */ "./views/business/businessSellDetails.vue")
     },
   ]
 });

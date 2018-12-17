@@ -17,6 +17,8 @@ export default {
 };
 </script>
 <style lang="scss">
+@import '../../../../style/mixin.scss';
+
 .green-color {
   color: rgba(7, 199, 78, 1);
 }
@@ -24,8 +26,11 @@ export default {
   color: rgba(229, 55, 87, 1);
 }
 .market-view-box {
+  @include flexLayout(column,flex-start,flex-start);
+  width:100vw;
   .trading-box{
-    height: 430px;
+    height: 4.3rem;
+    font-size: 0.14rem;
   }
 }
 </style>

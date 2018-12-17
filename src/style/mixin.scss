@@ -74,3 +74,10 @@ $fc:#fff;
 	justify-content: $type;
 
 }
+//flex 布局和 对其方式
+@mixin flexLayout($direction,$justContent,$alignItems){
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justContent;
+  align-items: $alignItems;
+}

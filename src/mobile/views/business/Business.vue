@@ -1,7 +1,7 @@
 <template>
-  <div class="business" id="businesss">
+  <div class="business" id="business">
     <div class="business-coin-title">
-      <div class="business-coin-name">
+      <div class="business-coin-name" @click="showCoinData">
         <span>LTC/EOS</span>
         <i></i>
       </div>
@@ -20,8 +20,8 @@
             :key="tab"
           >{{tab}}</div>
         </div>
-        <div class="left-title" @click="changeNowPrice">
-          <span>限价</span>
+        <div class="left-title" @click="showNowPrice">
+          <span>{{showSheetName}}</span>
           <i></i>
         </div>
         <div class="business-price">
@@ -34,18 +34,12 @@
           <span>WIZBOX</span>
         </div>
         <div class="business-change-eos">{{`≈${changeEos}EOS`}}</div>
-        <div class="business-range">
-          <i
-            class="cricle"
-            @click="changeRangeValue(item)"
-            v-for="(item, index) in cricleMount"
-            :key="index"
-          ></i>
-          <mt-range v-model="rangeValue" :min="0" :max="100" :step="1" :bar-height="5">
-            <!-- <div slot="start">0</div>
-            <div slot="end">100</div>-->
-          </mt-range>
-        </div>
+        <business-range
+          :currrentTab="currrentTab"
+          @getRangeValue="getRangeValue"
+          :rangeValue="rangeValue"
+          :cricleMount="cricleMount"
+        ></business-range>
         <div class="use-mount">
           <div class="use-mount-left">{{`可用EOS：${getUseMount}`}}</div>
           <div class="use-mount-right">{{`${rangeValue}%`}}</div>
@@ -53,6 +47,7 @@
         <div
           id="goBusiness"
           :class="currrentTab === '买入' || currrentTab === 'buy' ? 'businessBuy' : 'businessSell'"
+          @click="goBusiness"
         >{{currrentTab}}</div>
       </div>
       <div class="business-show-data-right">
@@ -72,7 +67,9 @@
             ></business-trade-item>
           </div>
         </div>
-        <div class="right-middle">
+        <div
+          :class="['right-middle',{'middle-active':currrentTab === '买入' || currrentTab === 'buy'}]"
+        >
           <span>0.0200</span>
           <i></i>
         </div>
@@ -115,81 +112,239 @@
       </div>
       <div :class="['business-entrust-body',{'show-item':entrustData.length !== 0}]">
         <show-message-img v-if="entrustData.length === 0" :imgUrl="imgUrl" :imgMsg="imgMsg"></show-message-img>
-        <business-entrust-item v-else v-for="(item,index) in entrustData" :key="index"></business-entrust-item>
+        <business-entrust-item
+          v-else
+          v-for="(item,index) in entrustData"
+          :entrustType="entrustType"
+          :key="index"
+        ></business-entrust-item>
       </div>
     </div>
+    <mt-actionsheet :actions="sheetActions" v-model="sheetVisible"></mt-actionsheet>
+    <show-coin-list
+      :popupVisible="popupVisible"
+      :dataCoinList="dataCoinList"
+      @changePopupVisible="changePopupVisible"
+    ></show-coin-list>
+    <!-- <mt-popup v-model="popupVisible" popup-transition="popup-fade"></mt-popup> -->
   </div>
 </template>
 <script>
-import showMessageImg from "./../../../components/messageImage.vue";
-import businessTradeItem from "./businessTrade.vue";
-import businessEntrustItem from "./businessEntrust.vue";
-import { MessageBox } from "mint-ui";
+import showMessageImg from './../../../components/messageImage.vue';
+import businessTradeItem from './components/businessTrade.vue';
+import businessEntrustItem from './components/businessEntrust.vue';
+import businessRange from './components/businessRange.vue';
+import showCoinList from './components/businessCoin.vue';
+import { MessageBox, Toast } from 'mint-ui';
 let tradeData = [
   {
     price: 0.00231,
-    mount: 12
+    mount: 12,
   },
   {
     price: 0.00231,
-    mount: 122
+    mount: 122,
   },
   {
     price: 0.10231,
-    mount: 1
+    mount: 1,
   },
   {
     price: 0.00231,
-    mount: 34
+    mount: 34,
   },
   {
     price: 0.00231,
-    mount: 132
+    mount: 132,
   },
   {
     price: 0.10231,
-    mount: 1
+    mount: 1,
   },
   {
     price: 0.00231,
-    mount: 34
+    mount: 34,
   },
   {
     price: 0.00231,
-    mount: 132
-  }
+    mount: 132,
+  },
+];
+let dataList = [
+  //币种及价格
+  {
+    name: 'LTC/EOS',
+    price: 0.0000094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.0002094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.02333094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.0000094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.0000094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.0000094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.0002094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.02333094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.0000094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.0000094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.0000094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.0002094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.02333094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.0000094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.0000094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.0000094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.0002094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.02333094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.0000094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.0000094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.0000094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.0002094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.02333094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.0000094,
+    change: '+ 104.019%',
+  },
+  {
+    name: 'LTC/EOS',
+    price: 0.0000094,
+    change: '+ 104.019%',
+  },
 ];
 let entrustData = [{}];
 export default {
-  name: "business-box",
+  name: 'business-box',
   data() {
     return {
       cricleMount: [0, 1, 2, 3, 4],
       rangeValue: 0,
       entrustType: 0,
+      popupVisible: false, //币种弹框
+      sheetVisible: false, //价格弹框
       businessPrice: 3422.02, //交易价格
       inputVal: 0, //交易量
       changeEos: 0.00001,
-      currrentTab: "买入",
-      tabs: ["买入", "卖出"],
+      currrentTab: '买入',
+      tabs: ['买入', '卖出'],
       entrustData: entrustData,
-      imgUrl: "noMsg",
-      imgMsg: "暂无数据",
+      imgUrl: require('./../../../images/mobile/ic_nodata.png'),
+      imgMsg: '暂无数据',
       tradeData: tradeData,
       tradeDataMountSum: 0,
-      useMount: 0
+      useMount: 0,
+      showSheetName: '限价',
+      dataCoinList: dataList,
+      sheetActions: [
+        {
+          name: '限价',
+          method: this.changeNowPrice1,
+        },
+        {
+          name: '市价',
+          method: this.changeNowPrice2,
+        },
+      ],
     };
   },
   components: {
     showMessageImg,
     businessTradeItem,
-    businessEntrustItem
+    businessEntrustItem,
+    businessRange,
+    showCoinList,
   },
   computed: {
     getUseMount() {
       this.useMount -= this.rangeValue / 100;
       return this.useMount.toFixed(5);
-    }
+    },
   },
   methods: {
     changeTab(val) {
@@ -205,29 +360,56 @@ export default {
         this.tradeDataMountSum += item.mount;
       });
     },
-    changeRangeValue(num) {
-      this.rangeValue = num * 25;
-      return this.rangeValue;
-    },
     changePriceAndMount(obj1, obj2) {
       this.businessPrice = obj1;
       this.inputVal = obj2;
     },
     showMsg() {
       MessageBox(
-        "提示",
-        "EOSmex 是去中心化交易平台，不对任何项目作主观判断，亦不对投资结果负责。因此强烈建议您在详细了解项目后再做投资决定。"
+        '提示',
+        'EOSmex 是去中心化交易平台，不对任何项目作主观判断，亦不对投资结果负责。因此强烈建议您在详细了解项目后再做投资决定。'
       );
     },
-    changeNowPrice() {}
+    changeNowPrice1() {
+      this.showSheetName = '限价';
+      this.sheetVisible = false;
+    },
+    changeNowPrice2() {
+      this.showSheetName = '市价';
+      this.sheetVisible = false;
+    },
+    showNowPrice() {
+      this.sheetVisible = true;
+    },
+    getRangeValue(obj) {
+      this.rangeValue = obj;
+    },
+    changePopupVisible(obj) {
+      this.popupVisible = obj;
+    },
+    goBusiness() {
+      //交易
+      Toast({
+        message: '已提交，待区块确认',
+        iconClass: 'ic_correct',
+        duration: 2000,
+      });
+
+      // Toast({
+      //   message: 'EOS余额不足',
+      // });
+    },
+    showCoinData() {
+      this.popupVisible = true;
+    },
   },
   created() {
     this.getSumMount();
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
-@import "../../../style/mixin.scss";
+@import '../../../style/mixin.scss';
 $marginwidth: 0.12rem;
 .business {
   @include wh(100%, 100%);
@@ -245,14 +427,14 @@ $marginwidth: 0.12rem;
     @include flex(flex, center, flex-start);
     & > span,
     & > i {
-      @include font(500, 0.16rem, 0.22rem, "PingFangSC-Regular");
+      @include font(500, 0.16rem, 0.22rem, 'PingFangSC-Regular');
       color: rgba(0, 0, 0, 1);
     }
     i {
       @include wh(0.12rem, 0.12rem);
       margin-left: 0.06rem;
       cursor: pointer;
-      @include bis("./../../../images/mobile/ic_arrow_under.svg");
+      @include bis('./../../../images/mobile/ic_arrow_under.svg');
     }
   }
   .business-coin-image {
@@ -262,266 +444,244 @@ $marginwidth: 0.12rem;
       @include wh(0.18rem, 0.18rem);
     }
     .business-coin-star {
-      @include bis("./../../../images/mobile/ic_collection_normal.svg");
+      @include bis('./../../../images/mobile/ic_collection_normal.svg');
     }
     .business-coin-img1 {
       margin-left: 0.15rem;
-      @include bis("./../../../images/mobile/ic_chart.svg");
+      @include bis('./../../../images/mobile/ic_chart.svg');
     }
   }
 }
 
 .business-show-data {
+  border-bottom: none;
   @include wh(auto, auto);
   @include flex(flex, center, flex-start);
   .business-show-data-left,
   .business-show-data-right {
     margin-bottom: 0.18rem;
   }
-  .business-show-data-left {
-    width: calc(50% - #{$marginwidth});
-    margin-right: $marginwidth;
-    .business-tab {
-      @include wh(auto, 0.34rem);
-      margin: 0.24rem 0 0.2rem;
+}
+.business-show-data-left {
+  width: calc(50% - #{$marginwidth});
+  margin-right: $marginwidth;
+  .business-tab {
+    @include wh(auto, 0.34rem);
+    margin: 0.24rem 0 0.2rem;
+    @include flex(flex, center, center);
+    .business-tab-buy {
       @include flex(flex, center, center);
-      .business-tab-buy {
-        @include flex(flex, center, center);
-        // @include wh(50%, 0.34rem);
-        @include font(300, 0.16rem, 0.22rem, "PingFangSC-Regular");
-        color: rgba(141, 141, 141, 1);
-        @include wh(50%, 0.34rem);
-        // line-height: 0.34rem;
-        // display: inline-block;
-        border: 1px solid rgba(242, 245, 251, 1);
-      }
-      .active {
-        background-color: rgba(7, 199, 78, 1);
-        color: #fff;
-        border: none;
-        @include borderRadius(2px);
-      }
-      .active.tab2 {
-        background-color: rgba(255, 0, 0, 1);
-        border: none;
-      }
-    }
-    .left-title {
-      margin: 0 0 0.2rem;
-      padding: 0 0.08rem;
-      @include wh(100%, 0.34rem);
-      border: 1px solid rgba(242, 245, 251, 1);
-      @include borderRadius(2px);
-      @include flex(flex, center, space-between);
-      span {
-        @include font(400, 0.15rem, 0.21rem, "PingFangSC-Regular");
-        color: rgba(0, 0, 0, 1);
-      }
-      i {
-        margin-left: 0.06rem;
-        @include wh(0.12rem, 0.12rem);
-        @include bis("./../../../images/mobile/ic_arrow_under.svg");
-      }
-    }
-    .business-price,
-    .business-mount {
-      margin: 0.13rem 0;
-      @include wh(100%, 0.34rem);
-      @include borderRadius(0.02rem);
-      border: 1px solid rgba(216, 216, 216, 1);
-      @include flex(flex, center, space-between);
-      flex-direction: row;
-    }
-    .business-price {
-      .business-price-down,
-      .business-price-up {
-        @include flex(flex, center, center);
-        @include wh(0.24rem, 100%);
-        @include font(400, 0.15rem, 0.21rem, "PingFangSC-Light");
-        color: rgba(141, 141, 141, 1);
-        &:active {
-          background-color: rgb(235, 235, 235);
-        }
-      }
-      .business-price-show {
-        @include font(400, 0.15rem, 0.21rem, "PingFangSC-Light");
-        color: rgba(0, 0, 0, 1);
-      }
-      .business-price-down {
-        border-right: 1px solid rgba(216, 216, 215, 1);
-      }
-      .business-price-up {
-        border-left: 1px solid rgba(216, 216, 215, 1);
-      }
-    }
-    .business-mount {
-      padding: 0 0.08rem;
-      margin: 0.26rem 0 0;
-      input,
-      span {
-        @include font(400, 0.15rem, 0.21rem, "PingFangSC-Light");
-      }
-      input {
-        width: 55%;
-        border: none;
-        color: rgba(0, 0, 0, 1);
-      }
-      span {
-        color: rgba(141, 141, 141, 1);
-      }
-    }
-    .business-change-eos {
-      margin-top: 0.06rem;
-      @include font(400, 0.12rem, 0.17rem, "PingFangSC-Light");
-      display: flex;
-      text-align: left;
+      // @include wh(50%, 0.34rem);
+      @include font(300, 0.16rem, 0.22rem, 'PingFangSC-Regular');
       color: rgba(141, 141, 141, 1);
+      @include wh(50%, 0.34rem);
+      // line-height: 0.34rem;
+      // display: inline-block;
+      border: 1px solid rgba(242, 245, 251, 1);
     }
-    .business-range {
-      position: relative;
-      margin: 0.19rem 0 0.07rem;
-      display: flex;
-      @include font(400, 0.12rem, 0.17rem, "PingFangSC-Light");
-      .mt-range {
-        width: 100%;
-      }
-      i {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 1;
-        left: -1px;
-        @include wh(0.15rem, 0.15rem);
-        background: rgba(255, 255, 255, 1);
-        @include borderRadius(50%);
-        border: 2px solid rgba(216, 215, 216, 1);
-      }
-      .cricle:nth-child(2) {
-        left: 23%;
-      }
-      .cricle:nth-child(3) {
-        left: 46%;
-      }
-      .cricle:nth-child(4) {
-        left: 69%;
-      }
-      .cricle:nth-child(5) {
-        left: 92%;
-      }
-    }
-    .use-mount {
-      margin-bottom: 0.24rem;
-      @include flex(flex, center, space-between);
-      .use-mount-left,
-      .use-mount-right {
-        @include font(400, 0.12rem, 0.17rem, "PingFangSC-Regular");
-        color: rgba(0, 0, 0, 1);
-      }
-      .use-mount-right {
-        color: rgba(141, 141, 141, 1);
-      }
-    }
-    #goBusiness {
-      height: 0.34rem;
-      width: 100%;
-      @include flex(flex, center, center);
-      @include font(500, 0.16rem, 0.22rem, "PingFangSC-Medium");
-      color: rgba(255, 255, 255, 1);
-      border-radius: 2px;
-    }
-    .businessBuy {
+    .active {
       background-color: rgba(7, 199, 78, 1);
+      color: #fff;
+      border: none;
+      @include borderRadius(2px);
     }
-    .businessSell {
+    .active.tab2 {
       background-color: rgba(255, 0, 0, 1);
+      border: none;
     }
   }
-  .business-show-data-right {
-    width: calc(50% - #{$marginwidth});
-    margin-left: $marginwidth;
-    margin-top: 0.24rem;
-    font-size: 0.12rem;
+  .left-title {
+    margin: 0 0 0.2rem;
+    padding: 0 0.08rem;
+    @include wh(100%, 0.34rem);
+    border: 1px solid rgba(242, 245, 251, 1);
+    @include borderRadius(2px);
+    @include flex(flex, center, space-between);
+    span {
+      @include font(400, 0.15rem, 0.21rem, 'PingFangSC-Regular');
+      color: rgba(0, 0, 0, 1);
+    }
+    i {
+      margin-left: 0.06rem;
+      @include wh(0.12rem, 0.12rem);
+      @include bis('./../../../images/mobile/ic_arrow_under.svg');
+    }
+  }
+  .business-price,
+  .business-mount {
+    margin: 0.13rem 0;
+    @include wh(100%, 0.34rem);
+    @include borderRadius(0.02rem);
+    border: 1px solid rgba(216, 216, 216, 1);
+    @include flex(flex, center, space-between);
+    flex-direction: row;
+  }
+  .business-price {
+    .business-price-down,
+    .business-price-up {
+      @include flex(flex, center, center);
+      @include wh(0.24rem, 100%);
+      @include font(400, 0.15rem, 0.21rem, 'PingFangSC-Light');
+      color: rgba(141, 141, 141, 1);
+      &:active {
+        background-color: rgb(235, 235, 235);
+      }
+    }
+    .business-price-show {
+      @include font(400, 0.15rem, 0.21rem, 'PingFangSC-Light');
+      color: rgba(0, 0, 0, 1);
+    }
+    .business-price-down {
+      border-right: 1px solid rgba(216, 216, 215, 1);
+    }
+    .business-price-up {
+      border-left: 1px solid rgba(216, 216, 215, 1);
+    }
+  }
+  .business-mount {
+    padding: 0 0.08rem;
+    margin: 0.26rem 0 0;
+    input,
+    span {
+      @include font(400, 0.15rem, 0.21rem, 'PingFangSC-Light');
+    }
+    input {
+      width: 55%;
+      border: none;
+      color: rgba(0, 0, 0, 1);
+    }
+    span {
+      color: rgba(141, 141, 141, 1);
+    }
+  }
+  .business-change-eos {
+    margin-top: 0.06rem;
+    @include font(400, 0.12rem, 0.17rem, 'PingFangSC-Light');
+    display: flex;
+    text-align: left;
+    color: rgba(141, 141, 141, 1);
+  }
+  .use-mount {
+    margin-bottom: 0.24rem;
+    @include flex(flex, center, space-between);
+    .use-mount-left,
+    .use-mount-right {
+      @include font(400, 0.12rem, 0.17rem, 'PingFangSC-Regular');
+      color: rgba(0, 0, 0, 1);
+    }
+    .use-mount-right {
+      color: rgba(141, 141, 141, 1);
+    }
+  }
+  #goBusiness {
+    height: 0.34rem;
+    width: 100%;
+    @include flex(flex, center, center);
+    @include font(500, 0.16rem, 0.22rem, 'PingFangSC-Medium');
+    color: rgba(255, 255, 255, 1);
+    border-radius: 2px;
+  }
+  .businessBuy {
+    background-color: rgba(7, 199, 78, 1);
+  }
+  .businessSell {
+    background-color: rgba(255, 0, 0, 1);
+  }
+}
+.business-show-data-right {
+  width: calc(50% - #{$marginwidth});
+  margin-left: $marginwidth;
+  margin-top: 0.24rem;
+  font-size: 0.12rem;
+  display: flex;
+  flex-direction: column;
+  .right-top,
+  .right-middle,
+  .right-bottom {
+    width: 100%;
+    height: auto;
+    display: flex;
+    height: 1.635rem;
+  }
+  .right-top {
     display: flex;
     flex-direction: column;
-    .right-top,
-    .right-middle,
-    .right-bottom {
-      width: 100%;
-      height: auto;
+    overflow: hidden;
+    .coin-item-box {
+      overflow-y: scroll;
+    }
+    .coin-items {
       display: flex;
-      height: 1.635rem;
-    }
-    .right-top {
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      .coin-item-box {
-        overflow-y: scroll;
-      }
-      .coin-items {
-        display: flex;
-        @include wh(100%, auto);
-        position: relative;
-        & > div {
-          width: 50%;
-          color: rgba(255, 0, 0, 1);
-          @include font(400, 0.12rem, 0.26rem, "PingFangSC-Regular");
-        }
-        .coin-price {
-          text-align: left;
-        }
-        .coin-mount {
-          text-align: right;
-        }
-        i {
-          height: 50%;
-          position: absolute;
-          top: 26%;
-          left: 0;
-          background: rgba(255, 0, 0, 0.1);
-        }
-      }
-      .header {
-        height: 0.375rem;
-        & > div {
-          color: rgba(141, 141, 141, 1);
-          @include font(400, 0.15rem, 0.21rem, "PingFangSC-Regular");
-        }
-      }
-    }
-    .right-middle {
-      height: 0.23rem;
-      border: 1px solid rgba(238, 238, 238, 1);
-      border-left: none;
-      border-right: none;
-      margin: 0.03rem 0;
-      @include flex(flex, center, center);
-      span,
-      i {
-        color: rgba(7, 199, 78, 1);
-        @include font(400, 0.14rem, 0.2rem, "PingFangSC-Regular");
-      }
-      i {
-        @include wh(5px, 12px);
-        margin-left: 0.04rem;
-        @include bis("./../../../images/mobile/ic_rise_s.svg");
-      }
-    }
-    .middle-red {
-      span {
+      @include wh(100%, auto);
+      position: relative;
+      & > div {
+        width: 50%;
         color: rgba(255, 0, 0, 1);
+        @include font(400, 0.12rem, 0.26rem, 'PingFangSC-Regular');
+      }
+      .coin-price {
+        text-align: left;
+      }
+      .coin-mount {
+        text-align: right;
       }
       i {
-        @include bis("./../../../images/mobile/ic_rise_s.svg");
+        height: 50%;
+        position: absolute;
+        top: 26%;
+        left: 0;
+        background: rgba(255, 0, 0, 0.1);
       }
     }
-    .right-bottom {
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      .coin-item-box {
-        overflow-y: scroll;
+    .header {
+      height: 0.375rem;
+      & > div {
+        color: rgba(141, 141, 141, 1);
+        @include font(400, 0.15rem, 0.21rem, 'PingFangSC-Regular');
       }
+    }
+  }
+  .right-middle {
+    height: 0.23rem;
+    border: 1px solid rgba(238, 238, 238, 1);
+    border-left: none;
+    border-right: none;
+    margin: 0.03rem 0;
+    @include flex(flex, center, center);
+    span,
+    i {
+      color: rgba(255, 0, 0, 1);
+      @include font(400, 0.14rem, 0.2rem, 'PingFangSC-Regular');
+    }
+    i {
+      @include wh(5px, 12px);
+      margin-left: 0.04rem;
+      @include bis('./../../../images/mobile/ic_Fall_s.svg');
+    }
+  }
+  .middle-active {
+    span,
+    i {
+      color: rgba(7, 199, 78, 1);
+    }
+    i {
+      @include bis('./../../../images/mobile/ic_rise_s.svg');
+    }
+  }
+  .middle-red {
+    span {
+      color: rgba(255, 0, 0, 1);
+    }
+    i {
+      @include bis('./../../../images/mobile/ic_rise_s.svg');
+    }
+  }
+  .right-bottom {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    .coin-item-box {
+      overflow-y: scroll;
     }
   }
 }
@@ -531,63 +691,61 @@ $marginwidth: 0.12rem;
   background-color: rgba(242, 245, 251, 1);
   @include flex(flex, center, space-between);
   flex-direction: column;
-  .business-entrust-header {
-    padding: 0 0.2rem;
-    background-color: rgba(255, 255, 255, 1);
-    @include flex(flex, center, space-between);
-    height: 0.5rem;
-    width: 100%;
-    border-bottom: 1px solid rgba(242, 245, 251, 1);
-    .entrust-tabs {
-      display: flex;
-      flex-direction: row;
-      .entrust-tab-item {
-        @include flex(flex, center, space-between);
-        flex-direction: column;
-        margin-right: 0.36rem;
-      }
-      span {
-        @include flex(flex, center, center);
-        height: 0.47rem;
-        color: rgba(141, 141, 141, 1);
-        @include font(300, 0.13rem, 0.18rem, "PingFangSC-Light");
-      }
-      .entrust-active {
-        span {
-          color: rgba(0, 122, 255, 1);
-          @include font(600, 0.13rem, 0.18rem, "PingFangSC-Semibold");
-        }
-        i {
-          @include wh(24px, 3px);
-          background: rgba(0, 122, 255, 1);
-          border-radius: 2px;
-        }
-      }
+}
+.business-entrust-header {
+  padding: 0 0.2rem;
+  background-color: rgba(255, 255, 255, 1);
+  @include flex(flex, center, space-between);
+  height: 0.5rem;
+  width: 100%;
+  border-bottom: 1px solid rgba(242, 245, 251, 1);
+  .entrust-tabs {
+    display: flex;
+    flex-direction: row;
+    .entrust-tab-item {
+      @include flex(flex, center, space-between);
+      flex-direction: column;
+      margin-right: 0.36rem;
     }
-    .entrust-img {
-      @include flex(flex, center, flex-end);
+    span {
+      @include flex(flex, center, center);
+      height: 0.47rem;
+      color: rgba(141, 141, 141, 1);
+      @include font(300, 0.13rem, 0.18rem, 'PingFangSC-Light');
+    }
+    .entrust-active {
+      span {
+        color: rgba(0, 122, 255, 1);
+        @include font(600, 0.13rem, 0.18rem, 'PingFangSC-Semibold');
+      }
       i {
-        @include wh(0.12rem, 0.12rem);
-        @include bis("./../../../images/mobile/ic_prompt.svg");
-      }
-      span {
-        @include flex(flex, center, center);
-        margin-left: 0.04rem;
-        @include font(300, 0.12rem, 0.17rem, "PingFangSC-Light");
+        @include wh(24px, 3px);
+        background: rgba(0, 122, 255, 1);
+        border-radius: 2px;
       }
     }
   }
-  .business-entrust-body {
-    @include wh(100%, 2rem);
-    background: rgba(247, 247, 247, 1);
-    @include flex(flex, center, center);
-    max-height: inherit;
-  }
-  .show-item {
-    @include flex(flex, flex-start, flex-start);
+  .entrust-img {
+    @include flex(flex, center, flex-end);
+    i {
+      @include wh(0.12rem, 0.12rem);
+      @include bis('./../../../images/mobile/ic_prompt.svg');
+    }
+    span {
+      @include flex(flex, center, center);
+      margin-left: 0.04rem;
+      @include font(300, 0.12rem, 0.17rem, 'PingFangSC-Light');
+    }
   }
 }
-#business .mt-range-runway {
-  border-top-color: rgba(7, 199, 78, 1) !important;
+.business-entrust-body {
+  @include wh(100%, 1.85rem);
+  background: rgba(247, 247, 247, 1);
+  @include flex(flex, center, center);
+  max-height: inherit;
+}
+.show-item {
+  @include flex(flex, flex-start, flex-start);
+  background: rgba(255, 255, 255, 1);
 }
 </style>

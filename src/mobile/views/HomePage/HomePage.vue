@@ -1,9 +1,8 @@
 <template>
-  <div class="about">
-    <router-link to="/">Home</router-link>
-    <p></p>
-    <router-link to="/about">About</router-link>
-    <h1>This is an about page homepage homepagehomepage</h1>
-    <router-link to="/business">business</router-link>
-  </div>
+  <div id="home-page">homePage</div>
 </template>
+<style lang="scss">
+#home-page {
+  padding-bottom: 0.5rem;
+}
+</style>

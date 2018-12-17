@@ -24,7 +24,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "../../../style/mixin.scss";
+@import "../../../../style/mixin.scss";
 .coin-items {
   display: flex;
   @include wh(100%, auto);
