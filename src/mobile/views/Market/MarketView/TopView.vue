@@ -36,6 +36,7 @@ export default {
     width: 100%;
     height: 1.68rem;
     padding: 0.14rem 0.2rem;
+    background-color: #fff;
     .currency-box {
       .currency-name {
         font-size: 0.16rem;
