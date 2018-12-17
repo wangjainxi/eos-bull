@@ -25,7 +25,7 @@
           <img src="@/images/web/ic_order.svg" alt>
           <span class="text-style exit">admin11</span>
         </span>
-         <!-- {{$t('m.homepage')}} -->
+         <!-- {{$t('m.transaction.homepage')}} -->
         <span class="language-box">
           <img class="mark" src="@/images/web/ic_eos.svg" alt>
              <select class="text-style" v-model="selected" @change="selectPamas">
