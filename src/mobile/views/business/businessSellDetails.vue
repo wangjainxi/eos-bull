@@ -73,15 +73,15 @@
           </div>
           <div class="item-body-bottom">
             <div class="entrust-box1">
-              <div class="box-title">成交均价(EOS)</div>
-              <div class="box-data">0.000150</div>
+              <div class="box-title">成交对象</div>
+              <div class="box-data blue-color">WantLine</div>
             </div>
             <div class="entrust-box2">
-              <div class="box-title">成交总额(EOS)</div>
-              <div class="box-data">64274.6666</div>
+              <div class="box-title">成交时间</div>
+              <div class="box-data">12/07 15:29</div>
             </div>
             <div class="entrust-box3">
-              <div class="box-title">成交总额(EOS)</div>
+              <div class="box-title">手续费(EOS)</div>
               <div class="box-data">0.0085</div>
             </div>
           </div>
@@ -100,9 +100,8 @@ export default {
   components: {
     fixHeader,
   },
-  methods: {
-  },
-  computed:{
+  methods: {},
+  computed: {
     getParams() {
       // 取到路由带过来的参数
       let routerParams = this.$route.params;
@@ -211,6 +210,9 @@ export default {
     margin-top: 0.02rem;
     @include font(500, 0.14rem, 0.2rem, 'PingFangSC-Medium');
     color: rgba(0, 0, 0, 1);
+  }
+  .blue-color {
+    color: rgba(0, 122, 255, 1);
   }
 }
 </style>
