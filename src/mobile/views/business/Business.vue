@@ -444,7 +444,7 @@ $marginwidth: 0.12rem;
       @include wh(0.18rem, 0.18rem);
     }
     .business-coin-star {
-      @include bis('./../../../images/mobile/ic_collection_normal.svg');
+      @include bis('./../../../images/mobile/ic_collection_s.svg');
     }
     .business-coin-img1 {
       margin-left: 0.15rem;
