@@ -213,6 +213,8 @@ const growList = [
   },
 ];
 import ListChild from '../HomePage/components/ListChild';
+import store from '../../../store/language.ts';
+console.log(store);
 export default {
   data: function() {
     return {

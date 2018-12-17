@@ -2,7 +2,7 @@
   <div class="tab-type-box flex-row-start">
     <router-link to="/">
       <img src="../images/mobile/ic_nav_assets_normal.svg" alt>
-      <p>首页</p>
+      <p>{{count}}</p>
     </router-link>
     <router-link to="/market">
       <img src="../images/mobile/ic_nav_home_normal.svg" alt>
@@ -24,7 +24,12 @@
 </template>
 <script>
 export default {
-  name: "tab-type-container"
+  name: 'tab-type-container',
+  data: function() {
+    return {
+      count: 1,
+    };
+  },
 };
 </script>
 
