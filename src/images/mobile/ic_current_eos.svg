@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="11px" height="16px" viewBox="0 0 11 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_current_eos</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="16" height="16"></rect>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="行情-EOS-交易对" transform="translate(-237.000000, -83.000000)">
+            <g id="ic_current_eos" transform="translate(234.000000, 83.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="矩形"></g>
+                <path d="M8.26322743,0 L4.97473523,4.40203264 L5.90952618,7.16685234 L8.26322743,3.20570703 L8.26322743,0 Z M8.8073416,3.22157725 L11.1102218,7.13470146 L12.0135946,4.40539431 L8.8073416,0.0201504935 L8.8073416,3.22157725 Z M6.13675966,7.8389915 L8.532575,14.9235219 L10.8852209,7.81471709 L10.885302,7.81471709 L8.52953061,3.81225447 L6.13675966,7.8389915 Z M3,12.0632854 L5.54501089,7.78043584 L4.62761357,5.06738982 L3,12.0632854 Z M11.4757722,7.75569237 L14,12.0445813 L12.358504,5.08877162 L11.4757722,7.75569237 Z M8.75002583,15.9913026 L13.9324551,12.9923581 L11.250548,8.43572755 L8.75002583,15.9913026 Z M3.07531828,12.991459 L8.32433854,16 L5.77214288,8.45271181 L3.07531828,12.991459 Z" id="Fill-1" fill="#007AFF" mask="url(#mask-2)"></path>
+            </g>
+        </g>
+    </g>
+</svg>

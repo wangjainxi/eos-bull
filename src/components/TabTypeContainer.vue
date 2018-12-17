@@ -2,7 +2,7 @@
   <div class="tab-type-box flex-row-start">
     <router-link to="/">
       <img src="../images/mobile/ic_nav_assets_normal.svg" alt>
-      <p>首页</p>
+      <p>{{count}}</p>
     </router-link>
     <router-link to="/market">
       <img src="../images/mobile/ic_nav_home_normal.svg" alt>
@@ -24,7 +24,12 @@
 </template>
 <script>
 export default {
-  name: "tab-type-container"
+  name: 'tab-type-container',
+  data: function() {
+    return {
+      count: 1,
+    };
+  },
 };
 </script>
 
@@ -35,8 +40,10 @@ export default {
   left: 0px;
   width: 100%;
   height: 0.5rem;
-  border-top: 1px solid rgba(92, 102, 119, 0.2);
+  border-top: 1px solid #f2f5fb;
   padding-top: 0.1rem;
+  background: #fff;
+  z-index: 1000;
   a {
     display: flex;
     width: 20%;

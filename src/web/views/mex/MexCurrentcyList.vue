@@ -80,7 +80,8 @@ let dataList1 = [
     price: 0.002141,
     change: "2.44%",
     goTotop: false
-  },{
+  },
+  {
     name: "MAX / EOS",
     dec: "eosmax1token",
     price: 0.002141,
@@ -100,7 +101,8 @@ let dataList1 = [
     price: 0.002141,
     change: "2.44%",
     goTotop: false
-  },{
+  },
+  {
     name: "MAX / EOS",
     dec: "eosmax1token",
     price: 0.002141,
@@ -120,7 +122,8 @@ let dataList1 = [
     price: 0.002141,
     change: "2.44%",
     goTotop: false
-  },{
+  },
+  {
     name: "MAX / EOS",
     dec: "eosmax1token",
     price: 0.002141,
@@ -140,7 +143,8 @@ let dataList1 = [
     price: 0.002141,
     change: "2.44%",
     goTotop: false
-  },{
+  },
+  {
     name: "MAX / EOS",
     dec: "eosmax1token",
     price: 0.002141,
@@ -167,7 +171,7 @@ export default {
   components: {
     MexCurrentcyListDataItem
   },
-  data() {
+  data: function() {
     return {
       items: [],
       sort: "",
@@ -256,7 +260,7 @@ $marginLeft-width: 24px;
     }
     .active {
       border-bottom: 2px solid rgba(45, 123, 229, 1);
-      color:rgba(45,123,229,1);
+      color: rgba(45, 123, 229, 1);
     }
     .search-input {
       display: flex;

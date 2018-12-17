@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import TabPackage from './TabPackage.vue';
-import MarketView from './views/Market/MarketView/index.vue';
+// import MarketView from './views/Market/MarketView/index.vue';
+import MarketSearch from './views/Market/MarketSearch.vue';
+import MarketOptional from './views/Market/MarketOptional.vue';
 
 Vue.use(Router);
 
 export default new Router({
-  mode: 'hash',
-  base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
@@ -20,15 +20,19 @@ export default new Router({
           component: () =>
             import(/* webpackChunkName: "homepage" */ './views/HomePage/HomePage.vue'),
         },
-
         {
-          path: 'assets',
+          path: '/market',
+          // name:'market',
+          component: () => import(/* webpackChunkName: "market" */ './views/Market/Market.vue'),
+          children: [],
+        },
+        {
+          path: '/assets',
           name: 'assets',
           component: () => import(/* webpackChunkName: "assets" */ './views/Assets.vue'),
         },
-
         {
-          path: 'more',
+          path: '/more',
           name: 'more',
           component: () => import(/* webpackChunkName: "more" */ './views/More.vue'),
         },
@@ -43,24 +47,32 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
     },
     {
+      path: '/market-search',
+      name: 'market-search',
+      component: MarketSearch,
+    },
+    {
+      path: '/market-optional',
+      name: 'market-optional',
+      component: MarketOptional,
+    },
+    {
       path: '/business',
       name: 'business',
       component: () => import(/* webpackChunkName: "business" */ './views/HomePage/Business.vue'),
     },
     {
       path: '/market',
-      name:'market',
+      name: 'market',
       // component:MarketView,
       component: () => import(/* webpackChunkName: "market" */ './views/Market/Market.vue'),
-      children: [
-
-      ],
+      children: [],
     },
-    {
-      path: '/market-view',
-      name: 'market-view',
-      component: MarketView,
-    },
+    // {
+    //   path: '/market-view',
+    //   name: 'market-view',
+    //   component: MarketView,
+    // },
     {
       path: '/orders',
       name: 'orders',

@@ -9,27 +9,23 @@
           <mt-tab-item id="4">简介</mt-tab-item>
         </mt-navbar>
       </div>
-<!-- tab-container -->
-     <div>
-      <mt-tab-container v-model="selected">
-        <mt-tab-container-item id="1">
-        <OrderTab/>
-        </mt-tab-container-item>
-        <mt-tab-container-item id="2">
-          深度图
-        </mt-tab-container-item>
-        <mt-tab-container-item id="3">
-         <DealTab/>
-        </mt-tab-container-item>
-           <mt-tab-container-item id="4">
-         <Introduction/>
-        </mt-tab-container-item>
-      </mt-tab-container>
+      <!-- tab-container -->
+      <div>
+        <mt-tab-container v-model="selected">
+          <mt-tab-container-item id="1">
+            <OrderTab/>
+          </mt-tab-container-item>
+          <mt-tab-container-item id="2">深度图</mt-tab-container-item>
+          <mt-tab-container-item id="3">
+            <DealTab/>
+          </mt-tab-container-item>
+          <mt-tab-container-item id="4">
+            <Introduction/>
+          </mt-tab-container-item>
+        </mt-tab-container>
       </div>
     </div>
-    <div class="container-box">
-    </div>
-
+    <div class="container-box"></div>
   </div>
 </template>
 <script>
@@ -122,8 +118,6 @@ export default {
     > div {
       flex: 1;
     }
-  }
-  .transaction-box {
   }
 }
 </style>

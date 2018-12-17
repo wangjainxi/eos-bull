@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="tab-package-box">
     <router-view/>
     <tab-type-container/>
   </div>
@@ -16,3 +16,9 @@ import { Component, Vue } from 'vue-property-decorator';
 })
 export default class TabPackage extends Vue {}
 </script>
+<style lang="scss">
+.tab-package-box {
+  width: 100%;
+  height: 100%;
+}
+</style>
