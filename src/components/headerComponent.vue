@@ -22,7 +22,6 @@
   </div>
 </template>
 <script>
- import { increment } from '../store.ts'
 export default {
   data() {
     return {
@@ -49,7 +48,6 @@ export default {
       }
     },
     selectPamas() {
-       store.commit('increment')
        if (this.selected === "english") {
         this.lang = "en-US";
         this.$i18n.locale = this.lang;

@@ -1,12 +1,11 @@
 <template>
   <div id="order-container">
-    <OrderTab/>
-    ddd
+    <OrderTab/>ddd
   </div>
 </template>
 <script>
-import Vue from 'vue';
 import OrderTab from './OrderTab.vue';
+import store from '@/store';
 export default {
   name: 'bom-view',
   data: function() {
@@ -19,6 +18,9 @@ export default {
     //   console.log(222);
     // },
   },
+  created() {
+    store.commit('setCurrentNum', '3');
+  },
   components: {
     OrderTab,
   },
@@ -29,7 +31,6 @@ export default {
 #order-container {
   width: 100vw;
   background-color: #fff;
-
 }
 </style>
 

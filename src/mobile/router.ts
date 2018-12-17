@@ -36,6 +36,11 @@ export default new Router({
           name: 'more',
           component: () => import(/* webpackChunkName: "more" */ './views/More.vue'),
         },
+        {
+          path: '/orders',
+          name: 'orders',
+          component: () => import(/* webpackChunkName: "orders" */ './views/Order/index.vue'),
+        },
       ],
     },
     {
@@ -73,10 +78,5 @@ export default new Router({
     //   name: 'market-view',
     //   component: MarketView,
     // },
-    {
-      path: '/orders',
-      name: 'orders',
-      component: () => import(/* webpackChunkName: "orders" */ './views/Order/index.vue'),
-    },
   ],
 });
