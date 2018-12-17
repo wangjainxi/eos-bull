@@ -1,24 +1,37 @@
 <template>
   <div class="market-view-box">
+    <TransactionDetail v-if="showAlert" :onTransaction="onTransaction"/>
     <div class="market-container">
         <TopView/>
         <div class="trading-box">trading view</div>
         <BomView/>
     </div>
     <div class="btn-box">
-      <div><mt-button style="background:rgba(7,199,78,1);color:#fff" type="default">买入</mt-button></div>
+      <div><mt-button @click="onTransaction" style="background:rgba(7,199,78,1);color:#fff" type="default">买入</mt-button></div>
       <div><mt-button  style="background:rgba(255,0,0,1);color:#fff"  type="default">卖出</mt-button></div>
     </div>
   </div>
 </template>
 <script>
 import TopView from './TopView';
-import BomView from './BomView'
+import BomView from './BomView';
+import TransactionDetail from './TransactionDetail'
 export default {
   name: "market-view",
   components:{
     TopView,
-    BomView
+    BomView,
+    TransactionDetail,
+  },
+  data(){
+    return{
+      showAlert:false,
+    }
+  },
+  methods:{
+    onTransaction:function(){
+      this.showAlert=!this.showAlert
+    }
   }
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-view/>
-    <!-- <tab-type-container/> -->
+    <tab-type-container/>
   </div>
 </template>
 

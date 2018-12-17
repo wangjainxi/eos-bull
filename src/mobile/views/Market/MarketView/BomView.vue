@@ -64,31 +64,27 @@ export default {
   .mint-tab-item-label {
     font-size: 0.2rem;
   }
-    .type-select-box{
-      background-color: #ddd;
-      width: 100%;
-    }
+  .type-select-box {
+    background-color: #ddd;
+    width: 100%;
+  }
   #tab-box-container {
-    // height: 0.42rem;
-    // line-height: 0.42rem;
-    // padding-left: 0.2rem;
-    // padding-right: 0.2rem;
     font-size: 0.16rem !important;
     > div {
       width: 100%;
     }
     @include flexLayout(column, flex-start, flex-start);
-  .mint-navbar{
-      border-bottom: 0.01rem solid rgba(242,245,251,1);
-      border-top: 0.01rem solid rgba(242,245,251,1);
+    .mint-navbar {
+      border-bottom: 0.01rem solid rgba(242, 245, 251, 1);
+      border-top: 0.01rem solid rgba(242, 245, 251, 1);
     }
-    .mint-tab-item-label{
-      height:0.16rem;
-      font-size:0.14rem;
-      font-family:PingFangSC-Semibold;
-      font-weight:600;
-      color:rgba(141,141,141,1);
-      line-height:0.16rem;
+    .mint-tab-item-label {
+      height: 0.16rem;
+      font-size: 0.14rem;
+      font-family: PingFangSC-Semibold;
+      font-weight: 600;
+      color: rgba(141, 141, 141, 1);
+      line-height: 0.16rem;
     }
     .tab-item {
       margin-right: 0.25rem;
@@ -97,27 +93,27 @@ export default {
       }
     }
 
-  .mint-navbar .mint-tab-item{
-    padding: 0px;
-    margin: 0.1rem;
-  }
-  .mint-navbar .mint-tab-item.is-selected{
-    border-bottom: none;
-    .mint-tab-item-label{
-    color:rgba(0,122,255,1);
+    .mint-navbar .mint-tab-item {
+      padding: 0px;
+      margin: 0.1rem;
     }
-  }
-  .mint-navbar .mint-tab-item.is-selected::after{
-    content: "1";
-    background-color: red;
-    color:transparent;
-    display: inline-block;
-    width:0.15rem;
-    height:0.03rem;
-    background:rgba(0,122,255,1);
-    border-radius:0.03rem;
-    margin-top: 0.09rem;
-  }
+    .mint-navbar .mint-tab-item.is-selected {
+      border-bottom: none;
+      .mint-tab-item-label {
+        color: rgba(0, 122, 255, 1);
+      }
+    }
+    .mint-navbar .mint-tab-item.is-selected::after {
+      content: '1';
+      background-color: red;
+      color: transparent;
+      display: inline-block;
+      width: 0.15rem;
+      height: 0.03rem;
+      background: rgba(0, 122, 255, 1);
+      border-radius: 0.03rem;
+      margin-top: 0.09rem;
+    }
   }
   .btn-box {
     @include flexLayout(row, space-between, center);
