@@ -601,7 +601,13 @@ $marginwidth: 0.12rem;
     width: 100%;
     height: auto;
     display: flex;
-    height: 1.635rem;
+    height: 1.45rem;
+  }
+  .right-top {
+    width: 100%;
+    height: auto;
+    display: flex;
+    height: 1.765rem;
   }
   .right-top {
     display: flex;

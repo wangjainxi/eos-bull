@@ -1,5 +1,9 @@
 <template>
-  <mt-popup v-model="thisPopupVisible"  popup-transition="popup-fade" :getPopupVisible="getPopupVisible">
+  <mt-popup
+    v-model="thisPopupVisible"
+    popup-transition="popup-fade"
+    :getPopupVisible="getPopupVisible"
+  >
     <div class="coin-body">
       <div class="coin-tab">
         <div
@@ -25,7 +29,7 @@
 <script>
 export default {
   name: 'show-coin-list',
-  props: ['popupVisible', 'dataCoinList','changePopupVisible'],
+  props: ['popupVisible', 'dataCoinList', 'changePopupVisible'],
   data() {
     return {
       currentTab: 'EOS',
@@ -46,13 +50,13 @@ export default {
   },
   computed: {
     getPopupVisible() {
-      this.$emit('changePopupVisible',this.thisPopupVisible);
+      this.$emit('changePopupVisible', this.thisPopupVisible);
     },
   },
-  watch:{
-    popupVisible:function(newVal){
+  watch: {
+    popupVisible: function(newVal) {
       this.thisPopupVisible = newVal;
-    }
+    },
   },
   created() {},
 };
@@ -83,7 +87,7 @@ $tabHeight: 44px;
   i {
     @include wh(0.16rem, 0.16rem);
     margin-right: 0.08rem;
-    @include bis('./../../../../images/mobile/ic_collection_normal.svg');
+    @include bis('./../../../../images/mobile/ic_collection_s.svg');
   }
   span {
     display: flex;
@@ -95,9 +99,9 @@ $tabHeight: 44px;
     color: rgba(141, 141, 141, 1);
   }
 }
-.coin-tab:nth-child(2) {
+.coin-tab-item:nth-child(2) {
   i {
-    @include bis('./../../../../images/mobile/ic_chart.svg');
+    @include bis('./../../../../images/mobile/ic_normal_eos.svg');
   }
 }
 .active {
@@ -106,6 +110,16 @@ $tabHeight: 44px;
     color: rgba(0, 122, 255, 1);
     border-bottom: 0.03rem solid rgba(0, 122, 255, 1);
     @include borderRadius(0.02rem);
+  }
+}
+.active.coin-tab-item:nth-child(1) {
+  i {
+    @include bis('./../../../../images/mobile/ic_collection_current_s.svg');
+  }
+}
+.active.coin-tab-item:nth-child(2) {
+  i {
+    @include bis('./../../../../images/mobile/ic_current_eos.svg');
   }
 }
 .coin-body-list {

@@ -26,7 +26,7 @@
           <div class="box-data">—</div>
         </div>
       </div>
-      <div class="item-body-bottom">
+      <div class="item-body-bottom" v-show="entrustType !== 0">
         <div class="entrust-box1">
           <div class="box-title">成交均价(EOS)</div>
           <div class="box-data">0.000150</div>
