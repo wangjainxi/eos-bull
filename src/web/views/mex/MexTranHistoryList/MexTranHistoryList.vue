@@ -66,7 +66,7 @@ export default {
       }
       this.sellData.push(obj);
     }
-    }
+    },
   }
 };
 </script>
