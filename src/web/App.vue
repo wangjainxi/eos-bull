@@ -18,7 +18,9 @@ export default {
   components: {
     Top,
     Foot
-  }
+  },
+
+
 };
 </script>
 <style lang="scss">

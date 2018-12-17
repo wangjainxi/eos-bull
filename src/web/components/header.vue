@@ -25,9 +25,14 @@
           <img src="@/images/web/ic_order.svg" alt>
           <span class="text-style exit">admin11</span>
         </span>
+         <!-- {{$t('m.transaction.homepage')}} -->
         <span class="language-box">
           <img class="mark" src="@/images/web/ic_eos.svg" alt>
-          <span class="text-style">english</span>
+             <select class="text-style" v-model="selected" @change="selectPamas">
+             <option v-for="option in options" v-bind:value="option.value">
+               {{ option.text }}
+             </option>
+          </select>
           <img class="arrow" src="@/images/web/ic_arrow_down.svg" alt>
         </span>
       </div>
@@ -36,7 +41,36 @@
 </template>
 <script>
 export default {
-  name: "top"
+name: "top",
+    data() {
+    return {
+      lang:'en-US',
+      selected: "en-US",
+      options: [
+        { text: "chinese", value: "zh-CN" },
+        { text: "english", value: "en-US" }
+      ]
+    };
+  },
+ methods: {
+    /**
+     * 切换语言
+     */
+     selectPamas() {
+      this.$store.dispatch('onSetLanguage',this.lang);
+       if (this.selected === "en-US") {
+        this.lang = "en-US";
+        this.$i18n.locale = this.lang;
+      } else {
+        this.lang = "zh-CN";
+        this.$i18n.locale = this.lang;
+      }
+    },
+    created:function created(){
+      this.selectPamas();
+    }
+  },
+
 };
 </script>
 <style lang="scss">
@@ -68,8 +102,10 @@ export default {
       .language-box {
         margin-right: 5px;
         .text-style {
-          margin-left: 5px;
-          margin-right: 5px;
+         margin-left: 5px;
+         margin-right: 5px;
+         background:rgba(20,46,77,1);
+         border:none;
         }
       }
       .order-box {
