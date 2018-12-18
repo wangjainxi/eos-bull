@@ -1,7 +1,7 @@
 <template>
   <div id="order-container">
     <OrderTab/>
-    ddd
+    <div @click="setCurency">ddd</div>
   </div>
 </template>
 <script>
@@ -15,13 +15,21 @@ export default {
     };
   },
   methods: {
-    // selected: function() {
-    //   console.log(222);
-    // },
+    setCurency:function(){
+      this.$store.dispatch('onSetCurrency','eth');
+      this.test();
+    },
+    test:function(){
+       console.log(this.$store);
+      console.log(this.$store.getters.geCurrency);
+    }
   },
   components: {
     OrderTab,
   },
+  mounted(){
+    this.test();
+}
 };
 </script>
 <style lang="scss" >

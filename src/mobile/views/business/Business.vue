@@ -351,16 +351,12 @@ export default {
     },
   },
   methods: {
-
-
     getOrderHistory:async function(){
       try{
         const res= await orderHistory('admin',{
         page:1,
         pageSize:10,
       })
-      console.log(res);
-
       }catch(err){
         console.log(err);
       }
