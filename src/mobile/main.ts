@@ -14,7 +14,6 @@ Vue.component(TabContainerItem.name, TabContainerItem);
 Vue.component(Popup.name, Popup);
 Vue.use(Mint);
 Vue.config.productionTip = false;
-
 new Vue({
   router,
   store,

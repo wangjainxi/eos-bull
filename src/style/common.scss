@@ -42,38 +42,46 @@ figcaption {
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
   font-size: 14px;
+
   &:hover {
     outline: none;
   }
 }
+
 html {
   font-size: 100px;
 }
+
 @media only screen and (min-width: 401px) {
   html {
     font-size: 401px * 100px/375px !important;
   }
 }
+
 @media only screen and (min-width: 428px) {
   html {
     font-size: 428px * 100px/375px !important;
   }
 }
+
 @media only screen and (min-width: 481px) {
   html {
     font-size: 481px * 100px/375px !important;
   }
 }
+
 @media only screen and (min-width: 569px) {
   html {
     font-size: 569px * 100px/375px !important;
   }
 }
+
 @media only screen and (min-width: 641px) {
   html {
     font-size: 641px * 100px/375px !important;
   }
 }
+
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
 ::-webkit-scrollbar {
   width: 0px;
@@ -162,15 +170,19 @@ body {
   0% {
     opacity: 1;
   }
+
   25% {
     opacity: 0.5;
   }
+
   50% {
     opacity: 1;
   }
+
   75% {
     opacity: 0.5;
   }
+
   100% {
     opacity: 1;
   }
@@ -178,4 +190,56 @@ body {
 
 .animation_opactiy {
   animation: backOpacity 2s ease-in-out infinite;
+}
+
+.ic_correct {
+  background-image: url(./../images/mobile/ic_correct.svg);
+  width: 20px;
+  height: 20px;
+  background-size: 100% 100%;
+}
+
+
+
+.mint-msgbox {
+  border-radius: 8px;
+}
+.mint-msgbox-content {
+  border: none !important;
+}
+.mint-msgbox-btns {
+  height: 45px !important;
+}
+.mint-msgbox-btn {
+  width: 124px !important;
+  height: 30px;
+  flex: none !important;
+  margin: 0px auto 10px !important;
+  border: 1px solid rgba(141, 141, 141, 1) !important;
+  line-height: 30px !important;
+  border-radius: 2px;
+}
+.mint-msgbox-confirm {
+  color: rgba(255, 255, 255, 1) !important;
+  background-color: rgba(0, 122, 255, 1) !important;
+}
+.mint-msgbox-message {
+  font-size: 14px;
+  font-family: PingFangSC-Light;
+  font-weight: 300;
+  line-height: 21px !important;
+}
+
+// toast
+.mint-toast-text {
+  font-size: 0.12rem;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(249, 249, 249, 1);
+  line-height: 0.17rem;
+}
+.mint-toast.is-placemiddle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

@@ -57,15 +57,23 @@ export default new Router({
       component: MarketOptional,
     },
     {
-      path: '/business',
-      name: 'business',
-      component: () => import(/* webpackChunkName: "business" */ './views/HomePage/Business.vue'),
+      path: "/business",
+      name: "business",
+      component: () =>
+        import(/* webpackChunkName: "business" */ "./views/business/Business.vue")
     },
+
     {
-      path: '/market-view',
-      name: 'market-view',
-      component: MarketView,
+      path: "/businessHistory",
+      name: "businessHistory",
+      component: () =>
+        import(/* webpackChunkName: "businessHistory" */ "./views/business/businessSellDetails.vue")
     },
+    // {
+    //   path: '/market-view',
+    //   name: 'market-view',
+    //   component: MarketView,
+    // },
     {
       path: '/orders',
       name: 'orders',
