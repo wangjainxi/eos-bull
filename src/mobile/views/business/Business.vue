@@ -136,6 +136,7 @@ import businessEntrustItem from './components/businessEntrust.vue';
 import businessRange from './components/businessRange.vue';
 import showCoinList from './components/businessCoin.vue';
 import { MessageBox, Toast } from 'mint-ui';
+import { orderHistory } from '../../../utils/restful.ts';
 let tradeData = [
   {
     price: 0.00231,
@@ -340,6 +341,9 @@ export default {
     businessRange,
     showCoinList,
   },
+  mounted(){
+    this.getOrderHistory();
+  },
   computed: {
     getUseMount() {
       this.useMount -= this.rangeValue / 100;
@@ -347,6 +351,20 @@ export default {
     },
   },
   methods: {
+
+
+    getOrderHistory:async function(){
+      try{
+        const res= await orderHistory('admin',{
+        page:1,
+        pageSize:10,
+      })
+      console.log(res);
+
+      }catch(err){
+        console.log(err);
+      }
+    },
     changeTab(val) {
       this.currrentTab = val;
       this.getShowTabData();
