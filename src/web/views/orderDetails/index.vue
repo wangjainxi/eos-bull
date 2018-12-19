@@ -1,12 +1,45 @@
 <template>
-  <div id="mex-table-history-page">
+  <div id="web-table-details-page">
     <div class="table-roder-title">
-      <h4>Order History</h4>
-      <div>
-        <el-checkbox v-model="OrdeChecked">Hide Revoked Orde</el-checkbox>
-        <el-checkbox v-model="PairChecked">Hide Other Pair</el-checkbox>
-        <img src="../../../images/web/ic_refresh.svg" alt>
-      </div>
+      <p>Order Details</p>
+    </div>
+    <div class="list-query-condition-box">
+      <el-form :model="formInline" :inline="true">
+        <el-form-item label="Sort by">
+          <el-select v-model="formInline.region" placeholder="活动区域">
+            <el-option label="区域一" value="shanghai"></el-option>
+            <el-option label="区域二" value="beijing"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="Coin">
+          <el-input v-model="formInline.user" placeholder="审批人"></el-input>
+        </el-form-item>
+        <el-form-item label="Type">
+          <el-select v-model="formInline.region" placeholder="活动区域">
+            <el-option label="区域一" value="shanghai"></el-option>
+            <el-option label="区域二" value="beijing"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="Status">
+          <el-select v-model="formInline.region" placeholder="活动区域">
+            <el-option label="区域一" value="shanghai"></el-option>
+            <el-option label="区域二" value="beijing"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="Status">
+          <el-date-picker
+            v-model="dateValue"
+            type="datetimerange"
+            start-placeholder="endDate"
+            end-placeholder="End Date"
+            :default-time="['12:00:00']"
+            @change="ondateValue"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">search</el-button>
+        </el-form-item>
+      </el-form>
     </div>
     <div class="table-box">
       <el-table :data="tableData" style="width: 100%" empty-text="There's no data yet">
@@ -53,22 +86,14 @@
                 </el-table-column>
                 <el-table-column label="Action" align="right">
                   <template slot-scope="props">
-                    <p class="action-box" @click="showdialogVisible(props.row.id)">Details</p>
+                    <p class="action-box" @click="greet(props.row.id)">Details</p>
                   </template>
                 </el-table-column>
               </el-table>
             </div>
-            <el-dialog
-              title="提示"
-              :visible.sync="dialogVisible"
-              width="30%"
-              :before-close="handleClose"
-            >
-              <span>这是一段信息{{props.row.coin}}</span>
-            </el-dialog>
+            <!-- 下拉详情 -->
           </template>
         </el-table-column>
-        <!-- 下拉详情 -->
         <el-table-column prop="coin" label="Coin" width="155">
           <template slot-scope="props">
             <div class="coin-box">
@@ -132,14 +157,22 @@
 </template>
 <script>
 export default {
-  name: 'mex-table-history',
+  methods: {
+    greet(id) {
+      console.log(id);
+    },
+  },
   data() {
     return {
-      dialogVisible: false,
       OrdeChecked: false,
       PairChecked: false,
-      currentPage4: 1,
       total: 200,
+      currentPage4: 1,
+      dateValue: '',
+      formInline: {
+        user: '',
+        region: '',
+      },
       tableData: [
         {
           coin: 'ZKS',
@@ -164,7 +197,7 @@ export default {
               id: 101,
             },
             {
-              coin: 'ZKS2',
+              coin: 'ZKS',
               dealTime: '2018-12-07 14:15:55',
               price: 0.00008,
               amount: 21,
@@ -197,7 +230,7 @@ export default {
               id: 201,
             },
             {
-              coin: 'ZKS2',
+              coin: 'ZKS',
               dealTime: '2018-12-07 14:15:55',
               price: 0.00008,
               amount: 21,
@@ -217,21 +250,20 @@ export default {
     handleCurrentChange(val) {
       console.log(val);
     },
-    greet(id) {
-      console.log(id);
+    onSubmit() {
+      console.log(11);
     },
-    showdialogVisible(id) {
-      console.log(id);
-      this.dialogVisible = true;
+    setDate() {
+      console.log(11);
     },
-    handleClose(done) {
-      done();
+    ondateValue() {
+      console.log(this.dateValue);
     },
   },
 };
 </script>
 <style lang="scss">
-#mex-table-history-page {
+#web-table-details-page {
   .el-table__expanded-cell[class*='cell'] {
     padding: 5px 77px;
   }
@@ -247,45 +279,21 @@ export default {
       padding: 5px 0;
       height: 36px;
     }
-    .el-table__row {
-      background: #142e4d;
-    }
+  }
+  .el-table__row {
+    background: #142e4d;
   }
   .el-table .cell {
     padding-left: 10px;
   }
   .table-roder-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 42px;
-    padding: 0 16px;
-    .el-checkbox + .el-checkbox {
-      margin-left: 10px;
-    }
-    > h4 {
-      font-size: 14px;
-      color: #fff;
-    }
-    > div {
-      display: flex;
-      color: #2d7be5;
-      span {
-        color: #ddd;
-      }
-      p {
-        margin: 0 10px;
-        font-size: 12px;
-        line-height: 22px;
-      }
-      img {
-        margin-left: 10px;
-      }
-      .el-checkbox__label {
-        line-height: 22px;
-        font-size: 12px;
-      }
+    border-bottom: 1px solid #1e3a5d;
+    padding: 40px 0 10px;
+    margin-bottom: 20px;
+    text-align: left;
+    p {
+      font-size: 20px;
+      color: #92a7c5;
     }
   }
   .table-box {
@@ -324,6 +332,8 @@ export default {
   }
   .pagination-box {
     padding: 30px 0;
+    background: #142e4d;
+    border-radius: 0 0 8px 8px;
     .el-input__inner {
       background: #142e4d;
       border-color: #1e3a5d;
@@ -353,6 +363,61 @@ export default {
     }
     .el-pagination__jump {
       color: #ddd;
+    }
+  }
+  .el-form {
+    .el-input__inner {
+      background: #1e3a5d;
+      border-color: #1e3a5d;
+      color: #ddd;
+    }
+    .el-form-item:nth-child(5) {
+      .el-form-item__content {
+        width: 250px;
+        input {
+          background: #142e4d;
+          border-color: #142e4d;
+        }
+        .el-date-editor--datetimerange.el-input__inner {
+          width: 100%;
+        }
+        .el-input__inner {
+          border-radius: 20px;
+          border-color: #244166;
+          background: #142e4d;
+        }
+      }
+      .el-date-editor .el-range-input {
+        color: #ddd;
+      }
+    }
+    .el-form-item:nth-child(6) {
+      margin: 0;
+      .el-form-item__content {
+        width: 80px;
+      }
+      .el-button {
+        width: 100%;
+        background: none;
+        border-color: #6e84a3;
+      }
+    }
+  }
+  .el-form-item__label,
+  .el-button--primary {
+    color: #92a7c5;
+  }
+
+  .list-query-condition-box {
+    background: #142e4d;
+    padding: 20px 10px;
+    border-radius: 8px 8px 0 0;
+    .el-form-item {
+      margin-bottom: 0;
+      margin-right: 25px;
+    }
+    .el-form-item__content {
+      width: 120px;
     }
   }
 }

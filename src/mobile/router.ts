@@ -36,6 +36,11 @@ export default new Router({
           name: 'more',
           component: () => import(/* webpackChunkName: "more" */ './views/More/More.vue'),
         },
+        {
+          path: '/orders',
+          name: 'orders',
+          component: () => import(/* webpackChunkName: "orders" */ './views/Order/index.vue'),
+        },
       ],
     },
     {

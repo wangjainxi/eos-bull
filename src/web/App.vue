@@ -10,22 +10,20 @@
   </div>
 </template>
 <script>
-import Top from "./components/header.vue";
-import Foot from "./components/footer";
-import "./element-variables.scss";
+import Top from './components/header.vue';
+import Foot from './components/footer';
+import './element-variables.scss';
 export default {
-  name: "app",
+  name: 'app',
   components: {
     Top,
-    Foot
+    Foot,
   },
-
-
 };
 </script>
 <style lang="scss">
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -48,7 +46,7 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-input[type="number"] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 .el-table th,
@@ -96,6 +94,7 @@ input[type="number"] {
   .outermost-mex-body-page {
     width: 1200px;
     margin: 0 auto;
+    min-height: 800px;
   }
 }
 </style>

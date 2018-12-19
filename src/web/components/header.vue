@@ -25,13 +25,11 @@
           <img src="@/images/web/ic_order.svg" alt>
           <span class="text-style exit">admin11</span>
         </span>
-         <!-- {{$t('m.transaction.homepage')}} -->
+        <!-- {{$t('m.transaction.homepage')}} -->
         <span class="language-box">
           <img class="mark" src="@/images/web/ic_eos.svg" alt>
-             <select class="text-style" v-model="selected" @change="selectPamas">
-             <option v-for="option in options" v-bind:value="option.value">
-               {{ option.text }}
-             </option>
+          <select class="text-style" v-model="selected" @change="selectPamas">
+            <option v-for="option in options" v-bind:value="option.value">{{ option.text }}</option>
           </select>
           <img class="arrow" src="@/images/web/ic_arrow_down.svg" alt>
         </span>
@@ -43,18 +41,16 @@
 import {mapActions} from 'vuex';
 import {SET_LANGUAGE_MUTATION}  from '../../store/modules/mutations-types';
 export default {
-name: "top",
-    data() {
+  name: 'top',
+  data() {
     return {
-      lang:'en-US',
-      selected: "en-US",
-      options: [
-        { text: "chinese", value: "zh-CN" },
-        { text: "english", value: "en-US" }
-      ]
+      lang: 'en-US',
+      selected: 'en-US',
+      activeName: 'first',
+      options: [{ text: 'chinese', value: 'zh-CN' }, { text: 'english', value: 'en-US' }],
     };
   },
- methods: {
+  methods: {
     /**
      * 切换语言
      */
@@ -65,18 +61,17 @@ name: "top",
         this.lang = "en-US";
         this.$i18n.locale = this.lang;
       } else {
-        this.lang = "zh-CN";
+        this.lang = 'zh-CN';
         this.$i18n.locale = this.lang;
       }
       console.log(this.$store);
       console.log(this.$store.state.language.language);
       this.SET_LANGUAGE_MUTATION(this.lang);
     },
-    created:function created(){
+    created: function created() {
       this.selectPamas();
-    }
+    },
   },
-
 };
 </script>
 <style lang="scss">
@@ -108,10 +103,10 @@ name: "top",
       .language-box {
         margin-right: 5px;
         .text-style {
-         margin-left: 5px;
-         margin-right: 5px;
-         background:rgba(20,46,77,1);
-         border:none;
+          margin-left: 5px;
+          margin-right: 5px;
+          background: rgba(20, 46, 77, 1);
+          border: none;
         }
       }
       .order-box {

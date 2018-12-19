@@ -34,7 +34,6 @@ export default {
   },
 
   beforeMount: function() {
-    console.log(this.sellData.length);
     let obj = {
       price: 0.0004,
       size: 141194.1235,

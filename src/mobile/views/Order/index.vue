@@ -26,6 +26,9 @@ export default {
       console.log(this.$store.getters.geCurrency);
     }
   },
+  created() {
+    store.commit('setCurrentNum', '3');
+  },
   components: {
     OrderTab,
   },
@@ -39,7 +42,6 @@ export default {
 #order-container {
   width: 100vw;
   background-color: #fff;
-
 }
 </style>
 
