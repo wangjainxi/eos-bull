@@ -161,27 +161,23 @@
 </template>
 
 <script lang="ts">
-export default {
-  name: 'home',
-  data() {
-    return {
-      bgClass: 'bg-img-box-s1',
-    };
-  },
-  methods: {
-    scrollEvent() {
-      const scrollPackage = document.getElementById('scrollPackage');
-      if (!scrollPackage) {
-        return;
-      }
-      if (scrollPackage.scrollTop > 1500) {
-        this.bgClass = 'bg-img-box-s2';
-      } else {
-        this.bgClass = 'bg-img-box-s1';
-      }
-    },
-  },
-};
+import { Component, Vue } from 'vue-property-decorator';
+
+@Component
+export default class extends Vue {
+  bgClass = 'bg-img-box-s1';
+  scrollEvent() {
+    const scrollPackage = document.getElementById('scrollPackage');
+    if (!scrollPackage) {
+      return;
+    }
+    if (scrollPackage.scrollTop > 1500) {
+      this.bgClass = 'bg-img-box-s2';
+    } else {
+      this.bgClass = 'bg-img-box-s1';
+    }
+  }
+}
 </script>
 <style lang="scss">
 #home-page {
