@@ -95,23 +95,25 @@ const currendcrInfo = [
     id: 3,
   },
 ];
+import store from '@/store';
 export default {
-  data: function() {
+  data() {
     return {
       popupVisible: false,
       currendcrInfo: [],
     };
   },
   methods: {
-    onpopupState: function() {
+    onpopupState() {
       this.popupVisible = !this.popupVisible;
     },
-    setCurrendcrInfo: function(list) {
+    setCurrendcrInfo(list) {
       this.currendcrInfo = list;
     },
   },
   created() {
     this.setCurrendcrInfo(currendcrInfo);
+    store.commit('setCurrentNum', '4');
   },
 };
 </script>

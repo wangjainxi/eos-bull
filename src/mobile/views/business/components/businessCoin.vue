@@ -54,11 +54,10 @@ export default {
     },
   },
   watch: {
-    popupVisible: function(newVal) {
+    popupVisible(newVal) {
       this.thisPopupVisible = newVal;
     },
   },
-  created() {},
 };
 </script>
 <style lang="scss">

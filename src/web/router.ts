@@ -3,6 +3,8 @@ import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Mex from './views/mex/index.vue';
 import myWallet from './views/mex/myWallet/myWallet.vue';
+import Market from './views/market/index.vue';
+import OrderDetails from './views/orderDetails/index.vue';
 
 Vue.use(Router);
 
@@ -19,6 +21,16 @@ export default new Router({
       path: '/mex',
       name: 'mex',
       component: Mex,
+    },
+    {
+      path: '/market',
+      name: 'market',
+      component: Market,
+    },
+    {
+      path: '/order-details',
+      name: 'orderDetails',
+      component: OrderDetails,
     },
     {
       path: '/about',

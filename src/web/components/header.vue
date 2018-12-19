@@ -25,9 +25,16 @@
           <img src="@/images/web/ic_order.svg" alt>
           <span class="text-style exit">admin11</span>
         </span>
+        <!-- {{$t('m.transaction.homepage')}} -->
         <span class="language-box">
           <img class="mark" src="@/images/web/ic_eos.svg" alt>
-          <span class="text-style">english</span>
+          <select class="text-style" v-model="selected" @change="selectPamas">
+            <option
+              v-for="option in options"
+              :key="option.text"
+              v-bind:value="option.value"
+            >{{ option.text }}</option>
+          </select>
           <img class="arrow" src="@/images/web/ic_arrow_down.svg" alt>
         </span>
       </div>
@@ -35,16 +42,45 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex';
+import { SET_LANGUAGE_MUTATION } from '../../store/modules/mutations-types';
 export default {
-  name: "top",
-  methods:{
-    goWallet(){
+  name: 'top',
+  data() {
+    return {
+      lang: 'en-US',
+      selected: 'en-US',
+      activeName: 'first',
+      options: [{ text: 'chinese', value: 'zh-CN' }, { text: 'english', value: 'en-US' }],
+    };
+  },
+  methods: {
+    /**
+     * 切换语言
+     */
+    ...mapActions([SET_LANGUAGE_MUTATION]),
+    selectPamas() {
+      if (this.selected === 'en-US') {
+        this.lang = 'en-US';
+        this.$i18n.locale = this.lang;
+      } else {
+        this.lang = 'zh-CN';
+        this.$i18n.locale = this.lang;
+      }
+      console.log(this.$store);
+      console.log(this.$store.state.language.language);
+      this.SET_LANGUAGE_MUTATION(this.lang);
+    },
+    created: function created() {
+      this.selectPamas();
+    },
+    goWallet() {
       this.$router.push({
-        path:'/myWallet',
-        name:'myWallet'
-      })
-    }
-  }
+        path: '/myWallet',
+        name: 'myWallet',
+      });
+    },
+  },
 };
 </script>
 <style lang="scss">
@@ -79,6 +115,8 @@ export default {
         .text-style {
           margin-left: 5px;
           margin-right: 5px;
+          background: rgba(20, 46, 77, 1);
+          border: none;
         }
       }
       .order-box {

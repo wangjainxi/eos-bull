@@ -1,0 +1,67 @@
+.chartPage{
+  width: 100%;
+  border: 1px solid #010713;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.chartPage div{
+  color:#fff;
+}
+.chartPage .ant-tabs-content{
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style:none;
+}
+.chartPage .ant-tabs-content::-webkit-scrollbar{
+  display: none;
+}
+.chartPage .ant-tabs{
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+.chartPage .ant-tabs>div{
+  flex: 1 1 auto;
+}
+.chartPage .ant-tabs-extra-content{
+  line-height: 23px;
+  height: 23px;
+  margin-top: 7px;
+}
+
+.chartPage .ant-tabs-bar{
+  border-color: #010713;
+  background: #242A33;
+  margin: 0;
+  padding: 0 10px 0 20px;
+  max-height: 40px;
+}
+.chartPage .ant-tabs.ant-tabs-card >.ant-tabs-bar .ant-tabs-tab{
+background: #242A33;
+border: none;
+opacity: 0.3;
+}
+.chartPage .ant-tabs.ant-tabs-card > .ant-tabs-bar .ant-tabs-tab-active{
+  color: #fff;
+  opacity: 0.9;
+  position: relative;
+  padding-bottom: 0;
+}
+.chartPage .ant-tabs.ant-tabs-card >.ant-tabs-bar .ant-tabs-tab:hover{
+  color: #fff;
+  opacity: 0.9;
+}
+.chartPage .ant-tabs.ant-tabs-card > .ant-tabs-bar .ant-tabs-tab-active::before{
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.ant-tabs-content{
+  display: flex;
+}

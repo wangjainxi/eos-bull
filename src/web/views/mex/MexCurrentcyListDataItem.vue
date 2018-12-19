@@ -16,36 +16,36 @@
 </template>
 <script>
 export default {
-  name: "mex-currentcy-list-data-item",
+  name: 'mex-currentcy-list-data-item',
   data() {
     return {
       starStatus: false,
     };
   },
-  props: ["item"],
+  props: ['item'],
   methods: {
     addStar($event) {
       $event.stopPropagation();
       $event.stopImmediatePropagation();
       this.starStatus = !this.starStatus;
       if (this.starStatus) {
-        console.log("添加");
+        console.log('添加');
       } else {
-        console.log("取消");
+        console.log('取消');
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" >
-$borderWidth:12px;
+$borderWidth: 12px;
 .data-list-item {
   height: 41px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 0 7px;
-  border-bottom:1px solid rgba(36,65,102,1);
+  border-bottom: 1px solid rgba(36, 65, 102, 1);
   & > div {
     text-align: left;
     font-size: 12px;

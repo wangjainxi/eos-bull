@@ -213,10 +213,9 @@ const growList = [
   },
 ];
 import ListChild from '../HomePage/components/ListChild';
-import store from '../../../store/language.ts';
-console.log(store);
+import store from '@/store';
 export default {
-  data: function() {
+  data() {
     return {
       isOptional: '2',
       dealList: [],
@@ -229,16 +228,16 @@ export default {
     ListChild,
   },
   methods: {
-    setDealList: function(list) {
+    setDealList(list) {
       this.dealList = list;
     },
-    setGrowList: function(list) {
+    setGrowList(list) {
       this.growList = list;
     },
-    modifyGrowList: function(value) {
+    modifyGrowList(value) {
       this.isOptional = value;
     },
-    onTypeTable: function(id) {
+    onTypeTable(id) {
       this.typeTableState = id;
       if (this.upOrDown === '0' || this.upOrDown === '2') {
         this.upOrDown = '1';
@@ -251,6 +250,7 @@ export default {
   created() {
     this.setDealList(dealList);
     this.setGrowList(growList);
+    store.commit('setCurrentNum', '2');
   },
 };
 </script>

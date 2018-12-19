@@ -24,7 +24,7 @@ export default {
       rangeVal: this.rangeValue,
     };
   },
-  props: ['rangeValue', 'cricleMount', 'getRangeValue','currrentTab'],
+  props: ['rangeValue', 'cricleMount', 'getRangeValue', 'currrentTab'],
   methods: {
     changeRangeValue(num) {
       this.rangeVal = num * 25;
@@ -80,12 +80,12 @@ export default {
 }
 .business-range-buy {
   .mt-range-progress {
-    background-color: rgba(7, 199, 78, 1) ;
+    background-color: rgba(7, 199, 78, 1);
   }
 }
 .business-range-sell {
   .mt-range-progress {
-    background-color: rgba(255, 0, 0, 1) ;
+    background-color: rgba(255, 0, 0, 1);
   }
 }
 </style>

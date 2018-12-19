@@ -53,14 +53,22 @@
                 </el-table-column>
                 <el-table-column label="Action" align="right">
                   <template slot-scope="props">
-                    <p class="action-box" @click="greet(props.row.id)">Details</p>
+                    <p class="action-box" @click="showdialogVisible(props.row.id)">Details</p>
                   </template>
                 </el-table-column>
               </el-table>
             </div>
-            <!-- 下拉详情 -->
+            <el-dialog
+              title="提示"
+              :visible.sync="dialogVisible"
+              width="30%"
+              :before-close="handleClose"
+            >
+              <span>这是一段信息{{props.row.coin}}</span>
+            </el-dialog>
           </template>
         </el-table-column>
+        <!-- 下拉详情 -->
         <el-table-column prop="coin" label="Coin" width="155">
           <template slot-scope="props">
             <div class="coin-box">
@@ -117,98 +125,114 @@
         :page-sizes="[10, 20, 30, 40]"
         :page-size="10"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400"
+        :total="total"
       ></el-pagination>
     </div>
   </div>
 </template>
 <script>
 export default {
-  name: "mex-table-history",
-  methods: {
-    greet(id) {
-      console.log(id);
-    }
-  },
+  name: 'mex-table-history',
   data() {
     return {
+      dialogVisible: false,
       OrdeChecked: false,
       PairChecked: false,
+      currentPage4: 1,
+      total: 200,
       tableData: [
         {
-          coin: "ZKS",
-          type: "Buy",
-          time: "2018-12-07 14:15:55",
+          coin: 'ZKS',
+          type: 'Buy',
+          time: '2018-12-07 14:15:55',
           price: 0.00008,
           average: 0,
           amount: 21,
           dealt: 0,
           entrusted: 0.003,
-          status: "Not deal",
-          odd: "eosdkeigjndlie",
+          status: 'Not deal',
+          odd: 'eosdkeigjndlie',
           id: 1,
           dealData: [
             {
-              coin: "ZKS",
-              dealTime: "2018-12-07 14:15:55",
+              coin: 'ZKS',
+              dealTime: '2018-12-07 14:15:55',
               price: 0.00008,
               amount: 21,
               total: 3333,
               fee: 2,
-              id: 101
+              id: 101,
             },
             {
-              coin: "ZKS",
-              dealTime: "2018-12-07 14:15:55",
+              coin: 'ZKS2',
+              dealTime: '2018-12-07 14:15:55',
               price: 0.00008,
               amount: 21,
               total: 3333,
               fee: 2,
-              id: 102
-            }
-          ]
+              id: 102,
+            },
+          ],
         },
         {
-          coin: "ZKS",
-          type: "Sell",
-          time: "2018-12-07 14:15:55",
+          coin: 'ZKS',
+          type: 'Sell',
+          time: '2018-12-07 14:15:55',
           price: 0.00008,
           average: 0,
           amount: 21,
           dealt: 0,
           entrusted: 0.003,
-          status: "Not deal",
-          odd: "eosdkeigjndlie",
+          status: 'Not deal',
+          odd: 'eosdkeigjndlie',
           id: 2,
           dealData: [
             {
-              coin: "ZKS",
-              dealTime: "2018-12-07 14:15:55",
+              coin: 'ZKS',
+              dealTime: '2018-12-07 14:15:55',
               price: 0.00008,
               amount: 21,
               total: 3333,
               fee: 2,
-              id: 201
+              id: 201,
             },
             {
-              coin: "ZKS",
-              dealTime: "2018-12-07 14:15:55",
+              coin: 'ZKS2',
+              dealTime: '2018-12-07 14:15:55',
               price: 0.00008,
               amount: 21,
               total: 3333,
               fee: 2,
-              id: 202
-            }
-          ]
-        }
-      ]
+              id: 202,
+            },
+          ],
+        },
+      ],
     };
-  }
+  },
+  methods: {
+    handleSizeChange(val) {
+      console.log(val);
+    },
+    handleCurrentChange(val) {
+      console.log(val);
+    },
+    greet(id) {
+      console.log(id);
+    },
+    showdialogVisible(id) {
+      console.log(id);
+      this.dialogVisible = true;
+    },
+    handleClose(done) {
+      done();
+    },
+  },
 };
 </script>
 <style lang="scss">
 #mex-table-history-page {
-  .el-table__expanded-cell[class*="cell"] {
+  .el-table__expanded-cell[class*='cell'] {
     padding: 5px 77px;
   }
   .el-table__expanded-cell {
@@ -300,6 +324,40 @@ export default {
   }
   .pagination-box {
     padding: 30px 0;
+    .el-input__inner {
+      background: #142e4d;
+      border-color: #1e3a5d;
+      color: #ddd;
+    }
+    .el-pagination button:disabled {
+      background: #142e4d;
+      color: #ddd;
+    }
+    .el-pager li {
+      background: #142e4d;
+      color: #ddd;
+    }
+    .el-pager li.active {
+      color: #2d7be5;
+    }
+    .el-pagination .btn-prev {
+      background: #142e4d;
+      color: #ddd;
+    }
+    .el-pagination .btn-next {
+      background: #142e4d;
+      color: #ddd;
+    }
+    .el-pagination__total {
+      color: #ddd;
+    }
+    .el-pagination__jump {
+      color: #ddd;
+    }
   }
+}
+.el-select-dropdown__item.hover,
+.el-select-dropdown__item:hover {
+  background: rgba(45, 123, 229, 0.3);
 }
 </style>

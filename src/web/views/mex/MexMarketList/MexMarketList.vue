@@ -60,44 +60,44 @@
   </div>
 </template>
 <script>
-import ListItem from "./ListItem.vue";
+import ListItem from './ListItem.vue';
 
 export default {
-  name: "mex-market-list",
+  name: 'mex-market-list',
   data() {
     return {
       sellData: [],
-      shows: 1
+      shows: 1,
     };
   },
 
-  beforeMount: function() {
+  beforeMount() {
     console.log(this.sellData.length);
-    let obj = {
+    const obj = {
       price: 0.0004,
       size: 141194.1235,
-      total: 56.3365
+      total: 56.3365,
     };
     while (true) {
-      obj.width = Math.random() * 100 + "100%";
+      obj.width = Math.random() * 100 + '100%';
       this.sellData.push(obj);
       if (this.sellData.length > 17) return;
     }
   },
   components: {
-    ListItem
+    ListItem,
   },
   methods: {
-    showView: function(type) {
+    showView(type) {
       this.shows = type;
-      let obj = {
+      const obj = {
         price: 0.0004,
         size: 141194.1235,
-        total: 56.3365
+        total: 56.3365,
       };
       this.sellData = [];
       while (true) {
-        obj.width = Math.random() * 100 + "100%";
+        obj.width = Math.random() * 100 + '100%';
         if (this.shows === 1) {
           if (this.sellData.length > 17) return;
         } else {
@@ -105,8 +105,8 @@ export default {
         }
         this.sellData.push(obj);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss">

@@ -11,7 +11,7 @@
       </div>
       <div class="mex-keynote-second">
         <div class="mex-k-line-page">
-          <mex-k-line-chart></mex-k-line-chart>
+          <MexKLineChart/>
         </div>
         <div class="mex-plact-order-page">
           <mex-place-order></mex-place-order>
@@ -35,16 +35,16 @@
   </div>
 </template>
 <script>
-import MexCurrentcyList from "./MexCurrentcyList.vue";
-import MexHeadInfo from "./MexHeadInfo.vue";
-import MexKLineChart from "./MexKLineChart.vue";
-import MexMarketList from "./MexMarketList/MexMarketList.vue";
-import MexPlaceOrder from "./MexPlaceOrder.vue";
-import MexTableHistory from "./MexTableHistory.vue";
-import MexTableOrder from "./MexTableOrder.vue";
-import MexTranHistoryList from "./MexTranHistoryList/MexTranHistoryList.vue";
+import MexCurrentcyList from './MexCurrentcyList.vue';
+import MexHeadInfo from './MexHeadInfo.vue';
+import MexKLineChart from './tradingView/index.vue';
+import MexMarketList from './MexMarketList/MexMarketList.vue';
+import MexPlaceOrder from './MexPlaceOrder.vue';
+import MexTableHistory from './MexTableHistory.vue';
+import MexTableOrder from './MexTableOrder.vue';
+import MexTranHistoryList from './MexTranHistoryList/MexTranHistoryList.vue';
 export default {
-  name: "mex",
+  name: 'mex',
   components: {
     MexCurrentcyList,
     MexHeadInfo,
@@ -53,8 +53,8 @@ export default {
     MexPlaceOrder,
     MexTableHistory,
     MexTableOrder,
-    MexTranHistoryList
-  }
+    MexTranHistoryList,
+  },
 };
 </script>
 <style lang="scss">
