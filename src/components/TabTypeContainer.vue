@@ -25,7 +25,7 @@
 <script>
 export default {
   name: 'tab-type-container',
-  data: function() {
+  data() {
     return {
       count: 1,
     };

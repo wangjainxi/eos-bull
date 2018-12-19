@@ -20,7 +20,7 @@
 <script>
 export default {
   computed: {
-    langs: function() {
+    langs() {
       return this.$store.getters.getLanguage;
     },
   },
