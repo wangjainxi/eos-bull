@@ -97,17 +97,17 @@ const currendcrInfo = [
 ];
 import store from '@/store';
 export default {
-  data: function() {
+  data() {
     return {
       popupVisible: false,
       currendcrInfo: [],
     };
   },
   methods: {
-    onpopupState: function() {
+    onpopupState() {
       this.popupVisible = !this.popupVisible;
     },
-    setCurrendcrInfo: function(list) {
+    setCurrendcrInfo(list) {
       this.currendcrInfo = list;
     },
   },

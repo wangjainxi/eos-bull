@@ -7,24 +7,24 @@
 </template>
 <script>
 export default {
-  name: "business-trade-item",
-  props: ["item", "tradeType", "tradeDataMountSum","changePriceAndMount"],
+  name: 'business-trade-item',
+  props: ['item', 'tradeType', 'tradeDataMountSum', 'changePriceAndMount'],
   data() {
     return {
-      itemWidth: 0
+      itemWidth: 0,
     };
   },
   computed: {
     getItemWidth() {
-      let width = ((this.item.mount / this.tradeDataMountSum) * 100).toFixed(2);
+      const width = ((this.item.mount / this.tradeDataMountSum) * 100).toFixed(2);
       this.itemWidth = `${width}%`;
       return this.itemWidth;
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss">
-@import "../../../../style/mixin.scss";
+@import '../../../../style/mixin.scss';
 .coin-items {
   display: flex;
   @include wh(100%, auto);
@@ -32,7 +32,7 @@ export default {
   & > div {
     width: 50%;
     color: rgba(7, 199, 78, 1);
-    @include font(400, 0.12rem, 0.26rem, "PingFangSC-Regular");
+    @include font(400, 0.12rem, 0.26rem, 'PingFangSC-Regular');
   }
   .coin-price {
     text-align: left;

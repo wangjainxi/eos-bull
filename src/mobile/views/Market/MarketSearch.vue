@@ -56,13 +56,13 @@ const growList = [
   },
 ];
 export default {
-  date: function() {
+  date() {
     return {
       growList: [],
     };
   },
   methods: {
-    setGrowList: function(list) {
+    setGrowList(list) {
       this.growList = list;
     },
   },

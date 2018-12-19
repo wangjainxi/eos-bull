@@ -215,7 +215,7 @@ const growList = [
 import ListChild from '../HomePage/components/ListChild';
 import store from '@/store';
 export default {
-  data: function() {
+  data() {
     return {
       isOptional: '2',
       dealList: [],

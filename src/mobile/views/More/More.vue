@@ -69,7 +69,7 @@ export default {
     };
   },
   methods: {
-    onClick: function(type) {
+    onClick(type) {
       this.popupVisible = true;
     },
   },

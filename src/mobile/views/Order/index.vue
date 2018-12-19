@@ -5,26 +5,26 @@
   </div>
 </template>
 <script>
-import {mapActions} from 'vuex';
+import { mapActions } from 'vuex';
 import OrderTab from './OrderTab.vue';
 import { SET_CURRENCY_MUTATION } from '../../../store/modules/mutations-types.ts';
 export default {
   name: 'bom-view',
-  data: function() {
+  data() {
     return {
       selected: '1',
     };
   },
   methods: {
     ...mapActions([SET_CURRENCY_MUTATION]),
-    setCurency:function(){
+    setCurency() {
       this.SET_CURRENCY_MUTATION('eth');
       this.test();
     },
-    test:function(){
-       console.log(this.$store);
+    test() {
+      console.log(this.$store);
       console.log(this.$store.getters.geCurrency);
-    }
+    },
   },
   created() {
     store.commit('setCurrentNum', '3');
@@ -32,9 +32,9 @@ export default {
   components: {
     OrderTab,
   },
-  mounted(){
+  mounted() {
     this.test();
-}
+  },
 };
 </script>
 <style lang="scss" >

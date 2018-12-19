@@ -19,43 +19,41 @@
 </template>
 <script>
 export default {
-
-  computed:{
-    langs:function(){
-     return this.$store.getters.getLanguage;
-    }
+  computed: {
+    langs() {
+      return this.$store.getters.getLanguage;
+    },
   },
   methods: {
     /**
      * 切换语言
      */
     changeLangEvent() {
-      if (this.lang === "zh-CN") {
-        this.lang = "en-US";
+      if (this.lang === 'zh-CN') {
+        this.lang = 'en-US';
         this.$i18n.locale = this.lang;
       } else {
-        this.lang = "zh-CN";
+        this.lang = 'zh-CN';
         this.$i18n.locale = this.lang;
       }
     },
     selectPamas() {
       console.log(this.$store.state.language.language);
-      this.$store.dispatch('onSetLanguage',this.lang);
-       if (this.selected === "english") {
-        this.lang = "en-US";
+      this.$store.dispatch('onSetLanguage', this.lang);
+      if (this.selected === 'english') {
+        this.lang = 'en-US';
         this.$i18n.locale = this.lang;
       } else {
-        this.lang = "zh-CN";
+        this.lang = 'zh-CN';
         this.$i18n.locale = this.lang;
       }
     },
-    created:function created(){
+    created: function created() {
       this.selectPamas();
-    }
+    },
   },
 };
 </script>
 <style scoped>
-
 </style>
 

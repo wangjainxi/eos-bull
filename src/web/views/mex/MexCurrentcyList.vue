@@ -33,7 +33,7 @@
 </template>
 <script>
 import MexCurrentcyListDataItem from './MexCurrentcyListDataItem.vue';
-let tabs = [
+const tabs = [
   {
     id: 1,
     name: 'Favorite',
@@ -43,7 +43,7 @@ let tabs = [
     name: 'EOS',
   },
 ];
-let dataList = [
+const dataList = [
   {
     name: 'DICE / EOS',
     dec: 'betdicetoken',
@@ -59,7 +59,7 @@ let dataList = [
     goTotop: false,
   },
 ];
-let dataList1 = [
+const dataList1 = [
   {
     name: 'MAX / EOS',
     dec: 'eosmax1token',
@@ -171,13 +171,13 @@ export default {
   components: {
     MexCurrentcyListDataItem,
   },
-  data: function() {
+  data() {
     return {
       items: [],
       sort: '',
       inputValue: '',
       currentTab: tabs[1],
-      tabs: tabs,
+      tabs,
     };
   },
   created() {

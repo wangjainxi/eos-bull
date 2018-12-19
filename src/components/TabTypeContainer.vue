@@ -60,6 +60,11 @@
 import store from '@/store';
 export default {
   name: 'tab-type-container',
+  data() {
+    return {
+      count: 1,
+    };
+  },
   methods: {
     setCurrentNum(num) {
       sessionStorage.setItem('currentNum', num);

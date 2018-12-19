@@ -25,7 +25,7 @@ import OrderItem from './OrderItem.vue';
 import FilterPopup from './FilterPopup.vue';
 export default {
   name: 'bom-view',
-  data: function() {
+  data() {
     return {
       showPopup: false,
       selected: '1',
@@ -61,7 +61,7 @@ export default {
     };
   },
   methods: {
-    showFilter: function() {
+    showFilter() {
       this.showPopup = !this.showPopup;
     },
   },

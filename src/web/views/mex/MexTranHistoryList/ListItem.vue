@@ -9,13 +9,13 @@
 </template>
 <script>
 export default {
-  name: "list-item",
+  name: 'list-item',
   props: {
     sellData: {
       type: Array,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>
 <style lang="scss">

@@ -64,14 +64,14 @@
 </template>
 <script>
 export default {
-  name: "mex-place-order",
+  name: 'mex-place-order',
   data() {
     return {
-      activeName: "first",
+      activeName: 'first',
       sliderValueBuy: 0,
-      sliderValueSell: 0
+      sliderValueSell: 0,
     };
-  }
+  },
 };
 </script>
 <style lang="scss">
