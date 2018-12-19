@@ -37,7 +37,7 @@ figcaption {
   border: none;
   color: #333;
   font-weight: normal;
-  font-family: "Microsoft Yahei";
+  font-family: 'Microsoft Yahei';
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
@@ -47,9 +47,12 @@ figcaption {
     outline: none;
   }
 }
-
-html {
+html,
+body {
   font-size: 100px;
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
 }
 
 @media only screen and (min-width: 401px) {
@@ -103,10 +106,10 @@ html {
   background-color: #555;
 }
 
-input[type="button"],
-input[type="submit"],
-input[type="search"],
-input[type="reset"] {
+input[type='button'],
+input[type='submit'],
+input[type='search'],
+input[type='reset'] {
   -webkit-appearance: none;
 }
 
@@ -114,15 +117,8 @@ textarea {
   -webkit-appearance: none;
 }
 
-html,
-body {
-  height: 100%;
-  width: 100%;
-  background-color: #fff;
-}
-
 .clear:after {
-  content: "";
+  content: '';
   display: block;
   clear: both;
 }
@@ -198,8 +194,6 @@ body {
   height: 20px;
   background-size: 100% 100%;
 }
-
-
 
 .mint-msgbox {
   border-radius: 8px;

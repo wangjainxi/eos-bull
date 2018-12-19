@@ -40,7 +40,7 @@ export default {
 <style lang="scss" >
 @import '@/style/mixin.scss';
 #order-container {
-  width: 100vw;
+  width: 100%;
   background-color: #fff;
 }
 </style>
