@@ -40,6 +40,8 @@
   </div>
 </template>
 <script>
+import {mapActions} from 'vuex';
+import {SET_LANGUAGE_MUTATION}  from '../../store/modules/mutations-types';
 export default {
 name: "top",
     data() {
@@ -56,8 +58,9 @@ name: "top",
     /**
      * 切换语言
      */
+    ...mapActions([SET_LANGUAGE_MUTATION]),
      selectPamas() {
-      this.$store.dispatch('onSetLanguage',this.lang);
+
        if (this.selected === "en-US") {
         this.lang = "en-US";
         this.$i18n.locale = this.lang;
@@ -65,6 +68,9 @@ name: "top",
         this.lang = "zh-CN";
         this.$i18n.locale = this.lang;
       }
+      console.log(this.$store);
+      console.log(this.$store.state.language.language);
+      this.SET_LANGUAGE_MUTATION(this.lang);
     },
     created:function created(){
       this.selectPamas();

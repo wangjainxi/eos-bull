@@ -1,4 +1,5 @@
 import { Action, ActionContext } from 'vuex';
+import { SET_CURRENCY_MUTATION } from './mutations-types';
 
 interface State {
   currency: string;
@@ -17,14 +18,15 @@ const getters = {
 };
 
 const mutations = {
-  setCurrency(state: any, type: string) {
+  [SET_CURRENCY_MUTATION](state: any, type: string) {
+    console.log(type);
     state.currency = type;
   },
 };
 
 const actions = {
-  onSetCurrency({ commit, state }: ActionContext<State, {}>, type: string) {
-    commit('setCurrency', type);
+  [SET_CURRENCY_MUTATION]({ commit }: ActionContext<State, {}>, type: string) {
+    commit(SET_CURRENCY_MUTATION, type);
   },
 };
 
