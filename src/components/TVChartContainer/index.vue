@@ -9,10 +9,10 @@
 export default {
   name: 'HelloWorld',
   mounted() {
-    //this_vue.getChartData();//todo: do odkomentowania na feedzie
+    //thisVue.getChartData();//todo: do odkomentowania na feedzie
 
     // if(window.localStorage.getItem("chart_settings")) //todo: do sprawdzenia w bardziej zaawansowanym stanie
-    //     this_vue.saved_chart = JSON.parse(window.localStorage.getItem("chart_settings"));
+    //     thisVue.saved_chart = JSON.parse(window.localStorage.getItem("chart_settings"));
     this.loadChart();
   },
   updated() {
@@ -20,17 +20,17 @@ export default {
   },
   methods: {
     loadChart() {
-      const this_vue = this;
-      this_vue.feed = this_vue.createFeed();
+      const thisVue = this;
+      thisVue.feed = thisVue.createFeed();
 
       TradingView.onready(function(configurationData) {
         console.log('1');
-        this_vue.chart = window.tvWidget = new TradingView.widget({
+        thisVue.chart = window.tvWidget = new TradingView.widget({
           fullscreen: false,
           autosize: true,
-          symbol: this_vue.currency1 + ':' + this_vue.currency2,
+          symbol: thisVue.currency1 + ':' + thisVue.currency2,
           container_id: 'chart_container',
-          datafeed: this_vue.feed,
+          datafeed: thisVue.feed,
           library_path: 'static/custom_scripts/chart_main/',
           locale: 'zh',
           timezone: 'Etc/UTC', //todo: ustawianie timezone'a po strefie usera
@@ -42,7 +42,7 @@ export default {
           interval: '60',
           // timeframe:'',//todo: na koncu
           toolbar_bg: '#20334d',
-          // saved_data: this_vue.savedData,
+          // saved_data: thisVue.savedData,
           allow_symbol_change: true,
           time_frames: [
             { text: '1y', resolution: '1W' },
@@ -203,21 +203,21 @@ export default {
           },
           custom_css_url: 'chart.css',
         });
-        this_vue.chart.onChartReady(function() {
-          this_vue.chart
+        thisVue.chart.onChartReady(function() {
+          thisVue.chart
             .createButton()
             .attr('title', 'test')
             .attr('class', 'button')
             .on('click', function(e) {
-              this_vue.chart.load(referenceChart2);
+              thisVue.chart.load(referenceChart2);
             })
             .append('<span>k线图</span>');
-          this_vue.chart
+          thisVue.chart
             .createButton()
             .attr('title', 'test')
             .attr('class', 'button')
             .on('click', function(e) {
-              this_vue.chart.load(referenceChart2);
+              thisVue.chart.load(referenceChart2);
             })
             .append('<span>深度图</span>');
         });
@@ -251,17 +251,17 @@ export default {
       );
     },
     changePair() {
-      let this_vue = this;
+      const thisVue = this;
       if (this.chart && this.feed) {
         this.feed._fireEvent('pair_change');
         this.chart.activeChart().resetData();
         this.chart.activeChart().setSymbol(this.currency1 + ':' + this.currency2, function() {
-          console.log('GOWNO :: proba zmiany', this_vue.currency1, this_vue.currency2);
+          console.log('GOWNO :: proba zmiany', thisVue.currency1, thisVue.currency2);
         });
       }
     },
     createFeed() {
-      let this_vue = this;
+      const thisVue = this;
       let Datafeed = {};
 
       Datafeed.DataPulseUpdater = function(datafeed, updateFrequency) {
@@ -279,7 +279,7 @@ export default {
           for (const listenerGUID in that._subscribers) {
             const subscriptionRecord = that._subscribers[listenerGUID];
             const resolution = subscriptionRecord.resolution;
-
+            // eslint:disable-next-line
             const datesRangeRight = parseInt(new Date().valueOf() / 1000);
 
             //	BEWARE: please note we really need 2 bars, not the only last one
@@ -489,20 +489,20 @@ export default {
         this._logMessage('GOWNO :: resolve symbol ' + symbolName);
         Promise.resolve().then(() => {
           function adjustScale() {
-            if (this_vue.last_price > 1000) return 100;
+            if (thisVue.last_price > 1000) return 100;
             else return 100000000;
           }
 
           this._logMessage(
-            'GOWNO :: onResultReady inject ' + this_vue.currency1 + ':' + this_vue.currency2
+            'GOWNO :: onResultReady inject ' + thisVue.currency1 + ':' + thisVue.currency2
           );
           onSymbolResolvedCallback({
-            name: this_vue.currency1 + ':' + this_vue.currency2,
+            name: thisVue.currency1 + ':' + thisVue.currency2,
             timezone: 'Europe/Warsaw',
             pricescale: adjustScale(),
             minmov: 1,
             minmov2: 0,
-            ticker: this_vue.currency1 + ':' + this_vue.currency2,
+            ticker: thisVue.currency1 + ':' + thisVue.currency2,
             description: '',
             session: '24x7',
             type: 'bitcoin',
@@ -539,7 +539,7 @@ export default {
         listenerGUID,
         onResetCacheNeededCallback
       ) {
-        this_vue.bars.forEach(function(bar) {
+        thisVue.bars.forEach(function(bar) {
           // in subscribeBars
           onRealtimeCallback(bar);
         });
