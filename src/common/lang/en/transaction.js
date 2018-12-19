@@ -1,3 +1,3 @@
 export default{
-  'submenu': 'submenu',
+  homepage: 'homepage',
 }

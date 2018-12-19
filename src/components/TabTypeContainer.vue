@@ -64,7 +64,6 @@ export default {
     setCurrentNum(num) {
       sessionStorage.setItem('currentNum', num);
       store.commit('setCurrentNum', num);
-      console.log(store.state.tabnum.currentNum);
     },
   },
   created() {

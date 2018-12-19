@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="12px" viewBox="0 0 10 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_sort_up</title>
+    <desc>Created with Sketch.</desc>
+    <g id="PC-币币交易所" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Market" transform="translate(-1155.000000, -172.000000)" fill-rule="nonzero">
+            <g id="Open-Orders" transform="translate(120.000000, 90.000000)">
+                <g id="Title" transform="translate(0.000000, 60.000000)">
+                    <g id="ic_sort_up" transform="translate(1035.000000, 22.000000)">
+                        <polygon id="ic_sort-copy" fill="#6E84A3" points="5 7 10 12 0 12"></polygon>
+                        <polygon id="Triangle" fill="#2D7BE5" points="5 0 10 5 0 5"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

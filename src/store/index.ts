@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-Vue.use(Vuex);
+import language from './modules/languages';
 
+Vue.use(Vuex);
 const tabnum = {
   state: {
     currentNum: '1',
@@ -12,8 +13,14 @@ const tabnum = {
     },
   },
 };
-export default new Vuex.Store({
+const debug = process.env.NODE_ENV !== 'production';
+
+const store = new Vuex.Store({
   modules: {
+    language,
     tabnum,
   },
+  strict: debug,
+  // plugins: debug ? [createLogger()] : []
 });
+export default store;

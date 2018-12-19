@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import TabPackage from './TabPackage.vue';
-// import MarketView from './views/Market/MarketView/index.vue';
+import MarketView from './views/Market/MarketView/index.vue';
 import MarketSearch from './views/Market/MarketSearch.vue';
 import MarketOptional from './views/Market/MarketOptional.vue';
 
@@ -34,7 +34,7 @@ export default new Router({
         {
           path: '/more',
           name: 'more',
-          component: () => import(/* webpackChunkName: "more" */ './views/More.vue'),
+          component: () => import(/* webpackChunkName: "more" */ './views/More/More.vue'),
         },
         {
           path: '/orders',
@@ -62,16 +62,17 @@ export default new Router({
       component: MarketOptional,
     },
     {
-      path: '/business',
-      name: 'business',
-      component: () => import(/* webpackChunkName: "business" */ './views/HomePage/Business.vue'),
+      path: "/business",
+      name: "business",
+      component: () =>
+        import(/* webpackChunkName: "business" */ "./views/business/Business.vue")
     },
+
     {
-      path: '/market',
-      name: 'market',
-      // component:MarketView,
-      component: () => import(/* webpackChunkName: "market" */ './views/Market/Market.vue'),
-      children: [],
+      path: "/businessHistory",
+      name: "businessHistory",
+      component: () =>
+        import(/* webpackChunkName: "businessHistory" */ "./views/business/businessSellDetails.vue")
     },
     // {
     //   path: '/market-view',

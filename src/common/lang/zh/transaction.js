@@ -1,3 +1,3 @@
 export default{
-  'submenu': '侧边栏',
+  homepage: '首页',
 }
