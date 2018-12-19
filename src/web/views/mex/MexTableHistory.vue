@@ -222,6 +222,7 @@ export default {
     },
     showdialogVisible(id) {
       console.log(id);
+      this.dialogVisible = true;
     },
     handleClose(done) {
       done();

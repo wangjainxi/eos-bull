@@ -1,11 +1,13 @@
 <template>
   <div id="order-container">
-    <OrderTab/>ddd
+    <OrderTab/>
+    <div @click="setCurency">ddd</div>
   </div>
 </template>
 <script>
+import {mapActions} from 'vuex';
 import OrderTab from './OrderTab.vue';
-import store from '@/store';
+import { SET_CURRENCY_MUTATION } from '../../../store/modules/mutations-types.ts';
 export default {
   name: 'bom-view',
   data: function() {
@@ -14,9 +16,15 @@ export default {
     };
   },
   methods: {
-    // selected: function() {
-    //   console.log(222);
-    // },
+    ...mapActions([SET_CURRENCY_MUTATION]),
+    setCurency:function(){
+      this.SET_CURRENCY_MUTATION('eth');
+      this.test();
+    },
+    test:function(){
+       console.log(this.$store);
+      console.log(this.$store.getters.geCurrency);
+    }
   },
   created() {
     store.commit('setCurrentNum', '3');
@@ -24,6 +32,9 @@ export default {
   components: {
     OrderTab,
   },
+  mounted(){
+    this.test();
+}
 };
 </script>
 <style lang="scss" >

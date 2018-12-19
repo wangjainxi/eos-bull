@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import language from './modules/languages';
+import user from './modules/user';
 
 Vue.use(Vuex);
 const tabnum = {
@@ -19,6 +20,7 @@ const store = new Vuex.Store({
   modules: {
     language,
     tabnum,
+    user,
   },
   strict: debug,
   // plugins: debug ? [createLogger()] : []

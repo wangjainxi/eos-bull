@@ -32,152 +32,152 @@
   </div>
 </template>
 <script>
-import MexCurrentcyListDataItem from "./MexCurrentcyListDataItem.vue";
+import MexCurrentcyListDataItem from './MexCurrentcyListDataItem.vue';
 let tabs = [
   {
     id: 1,
-    name: "Favorite"
+    name: 'Favorite',
   },
   {
     id: 2,
-    name: "EOS"
-  }
+    name: 'EOS',
+  },
 ];
 let dataList = [
   {
-    name: "DICE / EOS",
-    dec: "betdicetoken",
+    name: 'DICE / EOS',
+    dec: 'betdicetoken',
     price: 0.002541,
-    change: "5.44%",
-    goTotop: true
+    change: '5.44%',
+    goTotop: true,
   },
   {
-    name: "MAX / EOS",
-    dec: "eosmax1token",
+    name: 'MAX / EOS',
+    dec: 'eosmax1token',
     price: 0.002141,
-    change: "2.44%",
-    goTotop: false
-  }
+    change: '2.44%',
+    goTotop: false,
+  },
 ];
 let dataList1 = [
   {
-    name: "MAX / EOS",
-    dec: "eosmax1token",
+    name: 'MAX / EOS',
+    dec: 'eosmax1token',
     price: 0.002141,
-    change: "2.44%",
-    goTotop: false
+    change: '2.44%',
+    goTotop: false,
   },
   {
-    name: "DICE / EOS",
-    dec: "betdicetoken",
+    name: 'DICE / EOS',
+    dec: 'betdicetoken',
     price: 0.002541,
-    change: "5.44%",
-    goTotop: true
+    change: '5.44%',
+    goTotop: true,
   },
   {
-    name: "MAX / EOS",
-    dec: "eosmax1token",
+    name: 'MAX / EOS',
+    dec: 'eosmax1token',
     price: 0.002141,
-    change: "2.44%",
-    goTotop: false
+    change: '2.44%',
+    goTotop: false,
   },
   {
-    name: "MAX / EOS",
-    dec: "eosmax1token",
+    name: 'MAX / EOS',
+    dec: 'eosmax1token',
     price: 0.002141,
-    change: "2.44%",
-    goTotop: false
+    change: '2.44%',
+    goTotop: false,
   },
   {
-    name: "DICE / EOS",
-    dec: "betdicetoken",
+    name: 'DICE / EOS',
+    dec: 'betdicetoken',
     price: 0.002541,
-    change: "5.44%",
-    goTotop: true
+    change: '5.44%',
+    goTotop: true,
   },
   {
-    name: "MAX / EOS",
-    dec: "eosmax1token",
+    name: 'MAX / EOS',
+    dec: 'eosmax1token',
     price: 0.002141,
-    change: "2.44%",
-    goTotop: false
+    change: '2.44%',
+    goTotop: false,
   },
   {
-    name: "MAX / EOS",
-    dec: "eosmax1token",
+    name: 'MAX / EOS',
+    dec: 'eosmax1token',
     price: 0.002141,
-    change: "2.44%",
-    goTotop: false
+    change: '2.44%',
+    goTotop: false,
   },
   {
-    name: "DICE / EOS",
-    dec: "betdicetoken",
+    name: 'DICE / EOS',
+    dec: 'betdicetoken',
     price: 0.002541,
-    change: "5.44%",
-    goTotop: true
+    change: '5.44%',
+    goTotop: true,
   },
   {
-    name: "MAX / EOS",
-    dec: "eosmax1token",
+    name: 'MAX / EOS',
+    dec: 'eosmax1token',
     price: 0.002141,
-    change: "2.44%",
-    goTotop: false
+    change: '2.44%',
+    goTotop: false,
   },
   {
-    name: "MAX / EOS",
-    dec: "eosmax1token",
+    name: 'MAX / EOS',
+    dec: 'eosmax1token',
     price: 0.002141,
-    change: "2.44%",
-    goTotop: false
+    change: '2.44%',
+    goTotop: false,
   },
   {
-    name: "DICE / EOS",
-    dec: "betdicetoken",
+    name: 'DICE / EOS',
+    dec: 'betdicetoken',
     price: 0.002541,
-    change: "5.44%",
-    goTotop: true
+    change: '5.44%',
+    goTotop: true,
   },
   {
-    name: "MAX / EOS",
-    dec: "eosmax1token",
+    name: 'MAX / EOS',
+    dec: 'eosmax1token',
     price: 0.002141,
-    change: "2.44%",
-    goTotop: false
+    change: '2.44%',
+    goTotop: false,
   },
   {
-    name: "MAX / EOS",
-    dec: "eosmax1token",
+    name: 'MAX / EOS',
+    dec: 'eosmax1token',
     price: 0.002141,
-    change: "2.44%",
-    goTotop: false
+    change: '2.44%',
+    goTotop: false,
   },
   {
-    name: "DICE / EOS",
-    dec: "betdicetoken",
+    name: 'DICE / EOS',
+    dec: 'betdicetoken',
     price: 0.002541,
-    change: "5.44%",
-    goTotop: true
+    change: '5.44%',
+    goTotop: true,
   },
   {
-    name: "MAX / EOS",
-    dec: "eosmax1token",
+    name: 'MAX / EOS',
+    dec: 'eosmax1token',
     price: 0.002141,
-    change: "2.44%",
-    goTotop: false
-  }
+    change: '2.44%',
+    goTotop: false,
+  },
 ];
 export default {
-  name: "mex-currentcy-list",
+  name: 'mex-currentcy-list',
   components: {
-    MexCurrentcyListDataItem
+    MexCurrentcyListDataItem,
   },
   data: function() {
     return {
       items: [],
-      sort: "",
-      inputValue: "",
+      sort: '',
+      inputValue: '',
       currentTab: tabs[1],
-      tabs: tabs
+      tabs: tabs,
     };
   },
   created() {
@@ -186,22 +186,22 @@ export default {
   methods: {
     updateTab(obj) {
       this.currentTab = obj;
-      this.sort = "";
+      this.sort = '';
       this.updateDataList(obj.id);
     },
     updateDataList(num) {
       num === 1 ? (this.items = dataList) : (this.items = dataList1);
     },
     sortDataList() {
-      if (this.sort === "" || this.sort === "sort-down") {
-        this.sort = "sort-up";
+      if (this.sort === '' || this.sort === 'sort-down') {
+        this.sort = 'sort-up';
         this.updateDataList(1);
       } else {
-        this.sort = "sort-down";
+        this.sort = 'sort-down';
         this.updateDataList(0);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
