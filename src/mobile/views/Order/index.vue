@@ -5,8 +5,9 @@
   </div>
 </template>
 <script>
-import Vue from 'vue';
+import {mapActions} from 'vuex';
 import OrderTab from './OrderTab.vue';
+import { SET_CURRENCY_MUTATION } from '../../../store/modules/mutations-types.ts';
 export default {
   name: 'bom-view',
   data: function() {
@@ -15,8 +16,9 @@ export default {
     };
   },
   methods: {
+    ...mapActions([SET_CURRENCY_MUTATION]),
     setCurency:function(){
-      this.$store.dispatch('onSetCurrency','eth');
+      this.SET_CURRENCY_MUTATION('eth');
       this.test();
     },
     test:function(){

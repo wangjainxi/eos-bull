@@ -1,3 +1,10 @@
+import { ActionContext } from 'vuex';
+import { SET_LANGUAGE_MUTATION } from './mutations-types';
+
+interface State {
+  language: string;
+}
+
 const lang = localStorage.getItem('langguage');
 const state = {
   language: lang || 'en-US',
@@ -9,17 +16,15 @@ const getters = {
   },
 };
 
-const actions = {
-  //@ts-ignore
-  onSetLanguage({ commit, state }, name) {
-    commit('setLanguage', name);
+const mutations = {
+  [SET_LANGUAGE_MUTATION](state: State, type: string) {
+    state.language = type;
   },
 };
 
-const mutations = {
-  //@ts-ignore
-  setLanguage(state, type) {
-    state.language = type;
+const actions = {
+  [SET_LANGUAGE_MUTATION]({ commit }: ActionContext<State, {}>, type: string) {
+    commit(SET_LANGUAGE_MUTATION, type);
   },
 };
 
