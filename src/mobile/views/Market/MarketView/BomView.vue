@@ -32,7 +32,7 @@
 <script>
   import OrderTab from './component/OrderTab.vue';
   import DealTab from './component/DealTab.vue';
-  import Introduction from './component/Introduction.vue';
+  import Introduction from './component/introduction.vue';
   export default {
     name: 'bom-view',
     data() {
