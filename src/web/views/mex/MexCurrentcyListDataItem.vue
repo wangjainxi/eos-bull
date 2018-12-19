@@ -80,12 +80,12 @@ $borderWidth:12px;
   }
   .market-price,
   .market-change {
-    width: 24.5%;
+    width: 29.5%;
     text-align: right;
     color: rgba(229, 55, 87, 1);
   }
   .market-change{
-    padding-right: 16px;
+    padding-right: 9px;
   }
   .green {
     color: rgba(28, 196, 102, 1);

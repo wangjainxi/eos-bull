@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Mex from './views/mex/index.vue';
+import myWallet from './views/mex/myWallet/myWallet.vue';
 
 Vue.use(Router);
 
@@ -31,6 +32,11 @@ export default new Router({
       path: '/markets',
       name: 'markets',
       // component: markets
+    },
+    {
+      path: '/myWallet',
+      name: 'myWallet',
+      component: myWallet,
     },
   ],
 });

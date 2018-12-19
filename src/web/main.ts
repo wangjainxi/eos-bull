@@ -12,11 +12,14 @@ import {
   Radio,
   Tabs,
   TabPane,
+  Input,
   Slider,
   Checkbox,
   Table,
   TableColumn,
   Pagination,
+  Tooltip,
+  Popover,
 } from 'element-ui';
 
 Vue.config.productionTip = false;
@@ -28,11 +31,14 @@ Vue.use(CollapseItem);
 Vue.use(Radio);
 Vue.use(Tabs);
 Vue.use(TabPane);
+Vue.use(Input);
 Vue.use(Slider);
 Vue.use(Checkbox);
 Vue.use(Table);
 Vue.use(TableColumn);
 Vue.use(Pagination);
+Vue.use(Tooltip);
+Vue.use(Popover);
 const i18n = new VueI18n({
   locale: 'zh-CN', // 语言标识
   messages: {

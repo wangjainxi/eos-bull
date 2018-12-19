@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="tright-view">
-        <span class="use-box">
+        <span class="use-box" @click="goWallet">
           <img src="@/images/web/ic_eos.svg" alt>
           <span class="text-style">admin11</span>
         </span>
@@ -36,7 +36,15 @@
 </template>
 <script>
 export default {
-  name: "top"
+  name: "top",
+  methods:{
+    goWallet(){
+      this.$router.push({
+        path:'/myWallet',
+        name:'myWallet'
+      })
+    }
+  }
 };
 </script>
 <style lang="scss">
@@ -56,6 +64,7 @@ export default {
       flex-direction: row;
       align-items: center;
       .use-box {
+        cursor: pointer;
         margin-right: 10px;
         .text-style {
           margin-left: 5px;
