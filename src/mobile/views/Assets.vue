@@ -95,6 +95,7 @@ const currendcrInfo = [
     id: 3,
   },
 ];
+import store from '@/store';
 export default {
   data() {
     return {
@@ -112,6 +113,7 @@ export default {
   },
   created() {
     this.setCurrendcrInfo(currendcrInfo);
+    store.commit('setCurrentNum', '4');
   },
 };
 </script>

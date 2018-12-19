@@ -25,13 +25,11 @@
           <img src="@/images/web/ic_order.svg" alt>
           <span class="text-style exit">admin11</span>
         </span>
-         <!-- {{$t('m.transaction.homepage')}} -->
+        <!-- {{$t('m.transaction.homepage')}} -->
         <span class="language-box">
           <img class="mark" src="@/images/web/ic_eos.svg" alt>
-             <select class="text-style" v-model="selected" @change="selectPamas">
-             <option v-for="option in options" v-bind:value="option.value">
-               {{ option.text }}
-             </option>
+          <select class="text-style" v-model="selected" @change="selectPamas">
+            <option v-for="option in options" v-bind:value="option.value">{{ option.text }}</option>
           </select>
           <img class="arrow" src="@/images/web/ic_arrow_down.svg" alt>
         </span>
@@ -48,6 +46,7 @@ export default {
     return {
       lang: 'en-US',
       selected: 'en-US',
+      activeName: 'first',
       options: [{ text: 'chinese', value: 'zh-CN' }, { text: 'english', value: 'en-US' }],
     };
   },

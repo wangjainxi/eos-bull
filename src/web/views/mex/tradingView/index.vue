@@ -1,10 +1,10 @@
 
 
  <template>
-   <div>
-     <TVChartContainer/>
-   </div>
- </template>
+  <div>
+    <TVChartContainer/>
+  </div>
+</template>
  <script>
 import TVChartContainer from '../../../../components/TVChartContainer/index.vue';
 export default {

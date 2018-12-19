@@ -213,7 +213,7 @@ const growList = [
   },
 ];
 import ListChild from '../HomePage/components/ListChild';
-
+import store from '@/store';
 export default {
   data() {
     return {
@@ -250,6 +250,7 @@ export default {
   created() {
     this.setDealList(dealList);
     this.setGrowList(growList);
+    store.commit('setCurrentNum', '2');
   },
 };
 </script>

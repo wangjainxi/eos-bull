@@ -96,6 +96,7 @@ const growList = [
 ];
 
 import ListChild from './components/ListChild.vue';
+import store from '@/store';
 export default {
   data() {
     return {
@@ -121,6 +122,7 @@ export default {
   created() {
     this.setDealList(dealList);
     this.setGrowList(growList);
+    store.commit('setCurrentNum', '1');
   },
 };
 </script>

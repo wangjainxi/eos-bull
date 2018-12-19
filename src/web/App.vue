@@ -94,6 +94,7 @@ input[type='number'] {
   .outermost-mex-body-page {
     width: 1200px;
     margin: 0 auto;
+    min-height: 800px;
   }
 }
 </style>

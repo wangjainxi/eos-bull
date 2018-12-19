@@ -1,26 +1,23 @@
 <template>
-    <div id="order-tab-container" class="flex-row-start">
-      <FilterPopup class="filterPopup" @onClose="showFilter" v-if="showPopup"/>
-      <div class="type-select-box">
-        <mt-navbar v-model="selected">
-          <mt-tab-item id="1">委托订单</mt-tab-item>
-          <mt-tab-item id="2">深度
-          </mt-tab-item>
-          <img @click="showFilter" src="@/images/mobile/ic_filter.svg" alt="">
-        </mt-navbar>
-      </div>
-<!-- tab-container -->
-     <div class="order-container-box">
+  <div id="order-tab-container" class="flex-row-start">
+    <FilterPopup class="filterPopup" @onClose="showFilter" v-if="showPopup"/>
+    <div class="type-select-box">
+      <mt-navbar v-model="selected">
+        <mt-tab-item id="1">委托订单</mt-tab-item>
+        <mt-tab-item id="2">深度</mt-tab-item>
+        <img @click="showFilter" src="@/images/mobile/ic_filter.svg" alt>
+      </mt-navbar>
+    </div>
+    <!-- tab-container -->
+    <div class="order-container-box">
       <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
           <OrderItem :data="transData"/>
         </mt-tab-container-item>
-        <mt-tab-container-item id="2">
-          深度图
-        </mt-tab-container-item>
+        <mt-tab-container-item id="2">深度图</mt-tab-container-item>
       </mt-tab-container>
-      </div>
     </div>
+  </div>
 </template>
 <script>
 import Vue from 'vue';
@@ -64,7 +61,7 @@ export default {
     };
   },
   methods: {
-    showFilter() {
+    showFilter: function() {
       this.showPopup = !this.showPopup;
     },
   },

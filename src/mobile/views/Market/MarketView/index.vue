@@ -13,9 +13,9 @@
   </div>
 </template>
 <script>
-import TopView from './TopView';
-import BomView from './BomView';
-import TransactionDetail from './TransactionDetail';
+import TopView from './TopView.vue';
+import BomView from './BomView.vue';
+import TransactionDetail from './TransactionDetail.vue';
 export default {
   name: 'market-view',
   components: {
