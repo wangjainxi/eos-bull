@@ -62,7 +62,7 @@ export default new Router({
       component: MarketOptional,
     },
     {
-      path: '/business',
+      path: '/business/:id',
       name: 'business',
       component: () => import(/* webpackChunkName: "business" */ './views/business/Business.vue'),
     },

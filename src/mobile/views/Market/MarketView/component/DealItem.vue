@@ -1,13 +1,14 @@
 <template>
   <div  class="item-out-box">
     <div class="item-box" v-for="item in data">
-      <span class="time-mark time">{{item.time}}</span>
+      <span class="time-mark time">{{item.time|formatTime}}</span>
       <span class="price-mark price">{{item.price}}</span>
       <span class="size-mark size" >{{item.size}}</span>
     </div>
   </div>
 </template>
 <script>
+import { formatTimes } from '@/utils/formatTime';
 export default {
   name: 'deal-item',
   props: {
@@ -16,6 +17,12 @@ export default {
       required: true,
     },
   },
+  filters:{
+    formatTime:function(time){
+      return formatTimes(time)
+    }
+  }
+
 };
 </script>
 <style lang="scss" scoped>
