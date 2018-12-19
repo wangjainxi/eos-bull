@@ -7,7 +7,7 @@ interface HistoryParams {
 }
 
 export async function orderHistory(account: string, params: HistoryParams) {
-  const res = await instance.get('/v1/orders/history/' + account, {
+  const res = await instance.get('/orders/history/' + account, {
     params,
   });
   return resWrapper(res);

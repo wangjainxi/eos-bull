@@ -4,7 +4,7 @@ import router from './router';
 import store from '../store/index';
 import '../registerServiceWorker';
 import Mint from 'mint-ui';
-import { Button, Navbar, TabItem, TabContainer, TabContainerItem,Popup } from 'mint-ui';
+import { Button, Navbar, TabItem, TabContainer, TabContainerItem, Popup } from 'mint-ui';
 import 'mint-ui/lib/style.css';
 Vue.component(Button.name, Button);
 Vue.component(Navbar.name, Navbar);

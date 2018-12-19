@@ -4,17 +4,23 @@ import { SET_CURRENCY_MUTATION } from './mutations-types';
 interface State {
   currency: string;
   account: string;
+  marketId: number;
 }
 
 const state: State = {
   currency: 'BTC',
   account: 'admin',
+  marketId: 1,
 };
 
 const getters = {
   geCurrency(state: any) {
     return state.currency;
   },
+
+  getMarket(state:any){
+    return state.marketId
+  }
 };
 
 const mutations = {

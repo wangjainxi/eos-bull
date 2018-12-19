@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  name: "mex-tran-history-list",
+  name: 'mex-tran-history-list',
 };
 </script>
 <style lang="scss">
