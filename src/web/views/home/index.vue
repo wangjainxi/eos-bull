@@ -327,7 +327,7 @@ export default class extends Vue {
     background: #0c2641;
   }
   .advantage-box {
-    width: 772px;
+    width: 932px;
     margin: 0 auto;
     padding-top: 80px;
     padding-bottom: 56px;
