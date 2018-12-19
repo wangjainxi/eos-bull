@@ -229,8 +229,7 @@ export default {
   .top-box {
     width: 1440px;
     margin: 0 auto;
-    padding-top: 55px;
-    padding: 55px 120px 15px;
+    padding: 20px 120px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
