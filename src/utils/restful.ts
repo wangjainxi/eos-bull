@@ -6,8 +6,8 @@ interface HistoryParams {
   pageSize: number;
 }
 
-interface marketOrderParams{
-  marketId:number;
+interface MarketOrderParams {
+  marketId: number;
 }
 
 export async function orderHistory(account: string, params: HistoryParams) {
@@ -17,12 +17,12 @@ export async function orderHistory(account: string, params: HistoryParams) {
   return resWrapper(res);
 }
 
-export async function marketOrderList(params: marketOrderParams){
-  const res = await instance.get('/markets/'+params.marketId+'/orderbook');
-  return  resWrapper(res);
+export async function marketOrderList(params: MarketOrderParams) {
+  const res = await instance.get('/markets/' + params.marketId + '/orderbook');
+  return resWrapper(res);
 }
 
-export async function marketRecentDeal(params: marketOrderParams){
-    const res =await  instance.get('/markets/'+params.marketId+'/trades');
-    return resWrapper(res);
+export async function marketRecentDeal(params: MarketOrderParams) {
+  const res = await instance.get('/markets/' + params.marketId + '/trades');
+  return resWrapper(res);
 }
