@@ -354,7 +354,7 @@ export default {
           }
         };
 
-        if (typeof updateFrequency != 'undefined' && updateFrequency > 0) {
+        if (typeof updateFrequency !== 'undefined' && updateFrequency > 0) {
           setInterval(update, updateFrequency);
         }
       };
@@ -388,8 +388,8 @@ export default {
 
         if (!this._subscribers.hasOwnProperty(listenerGUID)) {
           this._subscribers[listenerGUID] = {
-            symbolInfo: symbolInfo,
-            resolution: resolution,
+            symbolInfo,
+            resolution,
             lastBarTime: NaN,
             listeners: [],
           };
@@ -469,7 +469,7 @@ export default {
       };
 
       Datafeed.Container.prototype.onReady = function(callback) {
-        let that = this;
+        const that = this;
         if (this._configuration) {
           setTimeout(function() {
             callback(that._configuration);
