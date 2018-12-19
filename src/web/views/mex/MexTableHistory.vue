@@ -124,11 +124,11 @@
 </template>
 <script>
 export default {
-  name: "mex-table-history",
+  name: 'mex-table-history',
   methods: {
     greet(id) {
       console.log(id);
-    }
+    },
   },
   data() {
     return {
@@ -136,79 +136,79 @@ export default {
       PairChecked: false,
       tableData: [
         {
-          coin: "ZKS",
-          type: "Buy",
-          time: "2018-12-07 14:15:55",
+          coin: 'ZKS',
+          type: 'Buy',
+          time: '2018-12-07 14:15:55',
           price: 0.00008,
           average: 0,
           amount: 21,
           dealt: 0,
           entrusted: 0.003,
-          status: "Not deal",
-          odd: "eosdkeigjndlie",
+          status: 'Not deal',
+          odd: 'eosdkeigjndlie',
           id: 1,
           dealData: [
             {
-              coin: "ZKS",
-              dealTime: "2018-12-07 14:15:55",
+              coin: 'ZKS',
+              dealTime: '2018-12-07 14:15:55',
               price: 0.00008,
               amount: 21,
               total: 3333,
               fee: 2,
-              id: 101
+              id: 101,
             },
             {
-              coin: "ZKS",
-              dealTime: "2018-12-07 14:15:55",
+              coin: 'ZKS',
+              dealTime: '2018-12-07 14:15:55',
               price: 0.00008,
               amount: 21,
               total: 3333,
               fee: 2,
-              id: 102
-            }
-          ]
+              id: 102,
+            },
+          ],
         },
         {
-          coin: "ZKS",
-          type: "Sell",
-          time: "2018-12-07 14:15:55",
+          coin: 'ZKS',
+          type: 'Sell',
+          time: '2018-12-07 14:15:55',
           price: 0.00008,
           average: 0,
           amount: 21,
           dealt: 0,
           entrusted: 0.003,
-          status: "Not deal",
-          odd: "eosdkeigjndlie",
+          status: 'Not deal',
+          odd: 'eosdkeigjndlie',
           id: 2,
           dealData: [
             {
-              coin: "ZKS",
-              dealTime: "2018-12-07 14:15:55",
+              coin: 'ZKS',
+              dealTime: '2018-12-07 14:15:55',
               price: 0.00008,
               amount: 21,
               total: 3333,
               fee: 2,
-              id: 201
+              id: 201,
             },
             {
-              coin: "ZKS",
-              dealTime: "2018-12-07 14:15:55",
+              coin: 'ZKS',
+              dealTime: '2018-12-07 14:15:55',
               price: 0.00008,
               amount: 21,
               total: 3333,
               fee: 2,
-              id: 202
-            }
-          ]
-        }
-      ]
+              id: 202,
+            },
+          ],
+        },
+      ],
     };
-  }
+  },
 };
 </script>
 <style lang="scss">
 #mex-table-history-page {
-  .el-table__expanded-cell[class*="cell"] {
+  .el-table__expanded-cell[class*='cell'] {
     padding: 5px 77px;
   }
   .el-table__expanded-cell {

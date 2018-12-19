@@ -40,43 +40,38 @@
   </div>
 </template>
 <script>
-import {mapActions} from 'vuex';
-import {SET_LANGUAGE_MUTATION}  from '../../store/modules/mutations-types';
+import { mapActions } from 'vuex';
+import { SET_LANGUAGE_MUTATION } from '../../store/modules/mutations-types';
 export default {
-name: "top",
-    data() {
+  name: 'top',
+  data() {
     return {
-      lang:'en-US',
-      selected: "en-US",
-      options: [
-        { text: "chinese", value: "zh-CN" },
-        { text: "english", value: "en-US" }
-      ]
+      lang: 'en-US',
+      selected: 'en-US',
+      options: [{ text: 'chinese', value: 'zh-CN' }, { text: 'english', value: 'en-US' }],
     };
   },
- methods: {
+  methods: {
     /**
      * 切换语言
      */
     ...mapActions([SET_LANGUAGE_MUTATION]),
-     selectPamas() {
-
-       if (this.selected === "en-US") {
-        this.lang = "en-US";
+    selectPamas() {
+      if (this.selected === 'en-US') {
+        this.lang = 'en-US';
         this.$i18n.locale = this.lang;
       } else {
-        this.lang = "zh-CN";
+        this.lang = 'zh-CN';
         this.$i18n.locale = this.lang;
       }
       console.log(this.$store);
       console.log(this.$store.state.language.language);
       this.SET_LANGUAGE_MUTATION(this.lang);
     },
-    created:function created(){
+    created: function created() {
       this.selectPamas();
-    }
+    },
   },
-
 };
 </script>
 <style lang="scss">
@@ -108,10 +103,10 @@ name: "top",
       .language-box {
         margin-right: 5px;
         .text-style {
-         margin-left: 5px;
-         margin-right: 5px;
-         background:rgba(20,46,77,1);
-         border:none;
+          margin-left: 5px;
+          margin-right: 5px;
+          background: rgba(20, 46, 77, 1);
+          border: none;
         }
       }
       .order-box {

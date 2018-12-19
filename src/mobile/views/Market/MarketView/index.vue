@@ -15,24 +15,24 @@
 <script>
 import TopView from './TopView';
 import BomView from './BomView';
-import TransactionDetail from './TransactionDetail'
+import TransactionDetail from './TransactionDetail';
 export default {
-  name: "market-view",
-  components:{
+  name: 'market-view',
+  components: {
     TopView,
     BomView,
     TransactionDetail,
   },
-  data(){
-    return{
-      showAlert:false,
-    }
+  data() {
+    return {
+      showAlert: false,
+    };
   },
-  methods:{
-    onTransaction:function(){
-      this.showAlert=!this.showAlert
-    }
-  }
+  methods: {
+    onTransaction() {
+      this.showAlert = !this.showAlert;
+    },
+  },
 };
 </script>
 <style lang="scss">
@@ -45,42 +45,42 @@ export default {
   color: rgba(229, 55, 87, 1);
 }
 .market-view-box {
-  background:rgba(242,245,251,1);
+  background: rgba(242, 245, 251, 1);
   position: relative;
-  @include flexLayout(column,flex-start,flex-start);
+  @include flexLayout(column, flex-start, flex-start);
   height: 100vh;
   box-sizing: border-box;
-  width:100vw;
-  .market-container{
+  width: 100vw;
+  .market-container {
     padding-bottom: 0.62rem;
   }
-  .mint-navbar{
+  .mint-navbar {
     height: 40px;
   }
-  .trading-box{
+  .trading-box {
     height: 4.3rem;
     font-size: 0.14rem;
   }
-  .btn-box{
+  .btn-box {
     height: 0.62rem;
     padding-left: 0.2rem;
     padding-right: 0.2rem;
     width: 100%;
     background-color: #fff;
-    box-shadow:0px 0 1px 0px rgba(92,102,119,0.2);
+    box-shadow: 0px 0 1px 0px rgba(92, 102, 119, 0.2);
     position: fixed;
-    bottom: 0;;
+    bottom: 0;
     left: 0;
-    @include flexLayout(row,space-between,center);
-    >div{
+    @include flexLayout(row, space-between, center);
+    > div {
       flex: 1;
-      >button{
+      > button {
         width: 100%;
       }
-}
-div:nth-child(1){
-        margin-right: 0.09rem;
-      }
+    }
+    div:nth-child(1) {
+      margin-right: 0.09rem;
+    }
   }
 }
 </style>

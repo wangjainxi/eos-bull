@@ -45,7 +45,7 @@
 </template>
 <script>
 import { MessageBox } from 'mint-ui';
-let data = [{}];
+const data = [{}];
 export default {
   name: 'business-entrust-item',
   props: ['item', 'entrustType'],

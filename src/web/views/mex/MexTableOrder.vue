@@ -63,45 +63,45 @@
 </template>
 <script>
 export default {
-  name: "mex-table-order",
+  name: 'mex-table-order',
   methods: {
     greet(id) {
       console.log(id);
-    }
+    },
   },
   data() {
     return {
       checked: false,
       tableData: [
         {
-          coin: "ZKS",
-          type: "Buy",
-          time: "2018-12-07 14:15:5",
+          coin: 'ZKS',
+          type: 'Buy',
+          time: '2018-12-07 14:15:5',
           price: 0.00008,
           average: 0,
           amount: 21,
           dealt: 0,
           entrusted: 0.003,
-          status: "Not deal",
-          odd: "eosdkeigjndlie",
-          id: 1
+          status: 'Not deal',
+          odd: 'eosdkeigjndlie',
+          id: 1,
         },
         {
-          coin: "ZKS",
-          type: "Sell",
-          time: "2018-12-07 14:15:5",
+          coin: 'ZKS',
+          type: 'Sell',
+          time: '2018-12-07 14:15:5',
           price: 0.00008,
           average: 0,
           amount: 21,
           dealt: 0,
           entrusted: 0.003,
-          status: "Not deal",
-          odd: "eosdkeigjndlie",
-          id: 2
-        }
-      ]
+          status: 'Not deal',
+          odd: 'eosdkeigjndlie',
+          id: 2,
+        },
+      ],
     };
-  }
+  },
 };
 </script>
 <style lang="scss">

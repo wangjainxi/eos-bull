@@ -94,7 +94,7 @@
 </template>
 <script>
 export default {
-  name: "mex-head-info"
+  name: 'mex-head-info',
 };
 </script>
 <style lang="scss">
@@ -126,7 +126,7 @@ export default {
       }
       p {
         padding-left: 15px;
-        background-image: url("../../../images/web/ic_order.svg");
+        background-image: url('../../../images/web/ic_order.svg');
         background-repeat: no-repeat;
         background-size: 10px 12px;
         background-position: 0 2px;

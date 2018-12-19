@@ -137,7 +137,7 @@ import businessRange from './components/businessRange.vue';
 import showCoinList from './components/businessCoin.vue';
 import { MessageBox, Toast } from 'mint-ui';
 import { orderHistory } from '../../../utils/restful.ts';
-let tradeData = [
+const tradeData = [
   {
     price: 0.00231,
     mount: 12,
@@ -171,7 +171,7 @@ let tradeData = [
     mount: 132,
   },
 ];
-let dataList = [
+const dataList = [
   //币种及价格
   {
     name: 'LTC/EOS',
@@ -299,7 +299,7 @@ let dataList = [
     change: '+ 104.019%',
   },
 ];
-let entrustData = [{}];
+const entrustData = [{}];
 export default {
   name: 'business-box',
   data() {
@@ -314,10 +314,10 @@ export default {
       changeEos: 0.00001,
       currrentTab: '买入',
       tabs: ['买入', '卖出'],
-      entrustData: entrustData,
+      entrustData,
       imgUrl: require('./../../../images/mobile/ic_nodata.png'),
       imgMsg: '暂无数据',
-      tradeData: tradeData,
+      tradeData,
       tradeDataMountSum: 0,
       useMount: 0,
       showSheetName: '限价',
@@ -341,7 +341,7 @@ export default {
     businessRange,
     showCoinList,
   },
-  mounted(){
+  mounted() {
     this.getOrderHistory();
   },
   computed: {
@@ -351,13 +351,13 @@ export default {
     },
   },
   methods: {
-    getOrderHistory:async function(){
-      try{
-        const res= await orderHistory('admin',{
-        page:1,
-        pageSize:10,
-      })
-      }catch(err){
+    async getOrderHistory() {
+      try {
+        const res = await orderHistory('admin', {
+          page: 1,
+          pageSize: 10,
+        });
+      } catch (err) {
         console.log(err);
       }
     },
@@ -365,7 +365,6 @@ export default {
       this.currrentTab = val;
       this.getShowTabData();
     },
-    getShowTabData() {},
     changeEntrustType(type) {
       this.entrustType = type;
     },

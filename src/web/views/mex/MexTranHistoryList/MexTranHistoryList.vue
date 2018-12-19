@@ -21,53 +21,53 @@
   </div>
 </template>
 <script>
-import ListItem from "./ListItem.vue";
+import ListItem from './ListItem.vue';
 
 export default {
-  name:'mex-tran-history-list',
+  name: 'mex-tran-history-list',
   data() {
     return {
-      weight:400,
+      weight: 400,
       sellData: [],
-      shows: 1
+      shows: 1,
     };
   },
 
-  beforeMount: function() {
+  beforeMount() {
     console.log(this.sellData.length);
-    let obj = {
+    const obj = {
       price: 0.0004,
       size: 141194.1235,
-      time: '12-06 20:28:37'
+      time: '12-06 20:28:37',
     };
     while (true) {
-      obj.width = Math.random() * 100 + "100%";
+      obj.width = Math.random() * 100 + '100%';
       this.sellData.push(obj);
       if (this.sellData.length > 17) return;
     }
   },
   components: {
-    ListItem
+    ListItem,
   },
   methods: {
-    showView: function(type) {
+    showView(type) {
       this.shows = type;
-    let obj = {
-      price: 0.0004,
-      size: 141194.1235,
-      time: 56.3365
-    };
-    this.sellData=[];
-    while (true) {
-      if(this.shows ===1){
-      if (this.sellData.length > 17) return;
-      }else{
+      const obj = {
+        price: 0.0004,
+        size: 141194.1235,
+        time: 56.3365,
+      };
+      this.sellData = [];
+      while (true) {
+        if (this.shows === 1) {
+          if (this.sellData.length > 17) return;
+        } else {
           if (this.sellData.length > 29) return;
+        }
+        this.sellData.push(obj);
       }
-      this.sellData.push(obj);
-    }
     },
-  }
+  },
 };
 </script>
 <style lang="scss">
@@ -84,37 +84,37 @@ export default {
     text-align: left;
     line-height: 42px;
     padding-left: 12px;
-    font-size:14px;
-    font-family:PingFangSC-Regular;
-    font-weight:400;
-    color:rgba(255,255,255,1);
+    font-size: 14px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 1);
   }
 
- .left-text{
+  .left-text {
     width: 75px;
     max-width: 75px;
     text-align: left;
   }
-  .center-text{
+  .center-text {
     width: 80px;
     max-width: 80px;
-    color:rgba(103,123,183,1);
+    color: rgba(103, 123, 183, 1);
     text-align: right;
   }
-  .right-text{
+  .right-text {
     width: 100px;
     max-width: 100px;
     text-align: right;
-    color:rgba(221,221,221,1);
+    color: rgba(221, 221, 221, 1);
   }
-  .list-content{
+  .list-content {
     height: 310px;
-       overflow-x: hidden;
-    overflow-y:scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
   .list-content::-webkit-scrollbar {
     display: none;
-}
+  }
   .list-title {
     padding-left: 12px;
     padding-right: 9px;
