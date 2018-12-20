@@ -25,37 +25,36 @@
 </template>
 
 <script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
 import OrderItem from './OrderItem.vue';
 import { marketOrderList } from '@/utils/restful.ts';
-export default {
-  name: 'orderTab',
+
+@Component({
   components: {
     OrderItem,
   },
-  data() {
-    return {
-      asks: [],
-      bids: [],
-    };
-  },
-  methods: {
-    async getMarketOrder() {
-      try {
-        const res = await marketOrderList({
-          marketId: 1,
-        });
-        this.asks = res.asks;
-        this.bids = res.bids;
-        console.log(res);
-      } catch (err) {
-        console.log(err);
-      }
-    },
-  },
+})
+export default class extends Vue {
+  asks: any[] = [];
+  bids: any[] = [];
+
   mounted() {
     this.getMarketOrder();
-  },
-};
+  }
+
+  async getMarketOrder() {
+    try {
+      const res = await marketOrderList({
+        marketId: 1,
+      });
+      this.asks = res.asks;
+      this.bids = res.bids;
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

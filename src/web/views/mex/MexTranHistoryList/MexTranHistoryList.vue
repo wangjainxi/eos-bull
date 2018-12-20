@@ -34,37 +34,13 @@ export default class extends Vue {
   shows = 1;
 
   beforeMount() {
-    console.log(this.sellData.length);
-    const obj = {
-      price: 0.0004,
-      size: 141194.1235,
-      time: '12-06 20:28:37',
-    };
-    while (true) {
-      obj.width = Math.random() * 100 + '100%';
-      this.sellData.push(obj);
-      if (this.sellData.length > 17) return;
-    }
+    //
   }
 
   showView(type: any) {
-    this.shows = type;
-    const obj = {
-      price: 0.0004,
-      size: 141194.1235,
-      time: 56.3365,
-    };
-    this.sellData = [];
-    while (true) {
-      if (this.shows === 1) {
-        if (this.sellData.length > 17) return;
-      } else {
-        if (this.sellData.length > 29) return;
-      }
-      this.sellData.push(obj);
-    }
+    //
   }
-};
+}
 </script>
 <style lang="scss">
 .mex-tran-history-list {
