@@ -8,7 +8,9 @@
             <img src="./home-page-img/logo_eosmex01.svg" alt>
           </div>
           <div class="nav">
-            <p>首页</p>
+            <p>
+              <Language resource="transaction.homepage" />
+            </p>
             <p>币币交易</p>
             <p>白皮书</p>
             <!-- <select name id="ch">

@@ -1,52 +1,47 @@
 <template>
-<div class="deal-box">
-  <div class="order-top">
-    <div class="tab-box">
-      <span class="tab-title time-mark">时间</span>
-      <span class="tab-title price-mark">价格(EOS)</span>
-      <span class="tab-title size-mark">数量(WIZBOX)</span>
+  <div class="deal-box">
+    <div class="order-top">
+      <div class="tab-box">
+        <span class="tab-title time-mark">时间</span>
+        <span class="tab-title price-mark">价格(EOS)</span>
+        <span class="tab-title size-mark">数量(WIZBOX)</span>
+      </div>
+    </div>
+    <div class="order-content">
+      <div class="buy-part">
+        <DealItem :data="dealData"/>
+      </div>
     </div>
   </div>
-  <div class="order-content">
-    <div class="buy-part">
-      <DealItem :data="dealData" />
-    </div>
-  </div>
-</div>
 </template>
 
-<script>
-import {
-  marketRecentDeal
-} from '@/utils/restful.ts';
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+import { marketRecentDeal } from '@/utils/restful.ts';
 import DealItem from './DealItem.vue';
-export default {
-  name: 'deal-tab',
+
+@Component({
   components: {
     DealItem,
   },
-  data() {
-    return {
-      dealData: [],
-    };
-  },
+})
+export default class extends Vue {
+  dealData: any[] = [];
+
   mounted() {
     this.getDealData();
-  },
-  methods: {
-    async getDealData() {
-      try {
-        const res = await marketRecentDeal({
-          marketId: 1,
-        })
-        this.dealData = res;
-      } catch (err) {
-        console.log(err);
-      }
-
+  }
+  async getDealData() {
+    try {
+      const res = await marketRecentDeal({
+        marketId: 1,
+      });
+      this.dealData = res;
+    } catch (err) {
+      console.log(err);
     }
-  },
-};
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -64,7 +59,7 @@ export default {
       border-bottom: 0.01rem solid rgba(242, 245, 251, 1);
       font-size: 0.12rem;
 
-      >span {
+      > span {
         flex: 1;
       }
 
@@ -107,20 +102,20 @@ export default {
     padding-left: 0.2rem;
     padding-right: 0.2rem;
 
-    >div {
+    > div {
       flex: 1;
     }
 
     .buy-part {
       margin-right: 0.07rem;
 
-      >div {
+      > div {
         width: 100%;
       }
     }
 
     .sell-part {
-      >div {
+      > div {
         width: 100%;
       }
     }
