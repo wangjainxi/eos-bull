@@ -92,7 +92,7 @@
 <script>
 export default {
   name: 'mex-head-info',
-  data: function() {
+  data() {
     return {
       InfoTitleState: 0,
     };
