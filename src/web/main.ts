@@ -1,11 +1,10 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
-import store from '../store';
-import '../registerServiceWorker';
 import VueI18n from 'vue-i18n';
 import locale from 'element-ui/lib/locale';
 import lang from 'element-ui/lib/locale/lang/en';
+import '../registerServiceWorker';
 
 import {
   Button,
@@ -60,6 +59,5 @@ const i18n = new VueI18n({
 new Vue({
   router,
   i18n,
-  store,
   render: h => h(App),
 }).$mount('#app');

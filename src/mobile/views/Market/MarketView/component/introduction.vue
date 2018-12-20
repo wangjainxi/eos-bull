@@ -14,11 +14,13 @@
    </div>
  </div>
 </template>
-<script>
+
+<script lang="ts">
 export default {
   name: 'introduction',
 };
 </script>
+
 <style lang="scss" scoped>
 @import '@/style/mixin.scss';
 .intro-box {

@@ -312,7 +312,7 @@ export default {
       businessPrice: 3422.02, //交易价格
       inputVal: 0, //交易量
       changeEos: 0.00001,
-      currrentTab: '买入',
+      currrentTab: '卖出',
       tabs: ['买入', '卖出'],
       entrustData,
       imgUrl: require('./../../../images/mobile/ic_nodata.png'),
@@ -342,7 +342,7 @@ export default {
     showCoinList,
   },
   mounted() {
-    this.getOrderHistory();
+   this.currrentTab=this.$route.params.type==='buy'?'买入':'卖出';
   },
   computed: {
     getUseMount() {

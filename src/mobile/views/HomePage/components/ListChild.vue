@@ -13,11 +13,14 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'list-child',
-  props: ['item'],
-};
+<script lang="ts">
+import { Vue, Component, Prop } from 'vue-property-decorator';
+
+@Component
+export default class extends Vue {
+  @Prop()
+  item: any;
+}
 </script>
 
 <style lang="scss">
