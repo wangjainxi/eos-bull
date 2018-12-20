@@ -155,13 +155,8 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 export default {
-  methods: {
-    greet(id) {
-      console.log(id);
-    },
-  },
   data() {
     return {
       OrdeChecked: false,
@@ -244,10 +239,13 @@ export default {
     };
   },
   methods: {
-    handleSizeChange(val) {
+    greet(id: any) {
+      console.log(id);
+    },
+    handleSizeChange(val: any) {
       console.log(val);
     },
-    handleCurrentChange(val) {
+    handleCurrentChange(val: any) {
       console.log(val);
     },
     onSubmit() {

@@ -1,4 +1,4 @@
 import transaction from './transaction'
-export const m = {
+export const lang = {
   transaction,
 }
