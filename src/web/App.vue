@@ -5,10 +5,12 @@
 </template>
 <script lang="ts">
 import './element-variables.scss';
+
 export default {
   name: 'app',
 };
 </script>
+
 <style lang="scss">
 html,
 body {

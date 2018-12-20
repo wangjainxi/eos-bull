@@ -37,6 +37,7 @@
   </div>
 </div>
 </template>
+<<<<<<< HEAD
 
 <script lang="ts">
 import { mapActions } from 'vuex';
@@ -77,6 +78,34 @@ export default {
     },
   },
 };
+=======
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+import language from '@/stores/language';
+
+@Component
+export default class extends Vue {
+  lang = 'en-US';
+  selected = 'en-US';
+  activeName = 'first';
+  options = [{ text: 'chinese', value: 'zh-CN' }, { text: 'english', value: 'en-US' }];
+
+  selectPamas() {
+    if (this.selected === 'en-US') {
+      this.lang = 'en-US';
+      this.$i18n.locale = this.lang;
+    } else {
+      this.lang = 'zh-CN';
+      this.$i18n.locale = this.lang;
+    }
+    language.changeLanguage(this.lang);
+  }
+
+  created() {
+    this.selectPamas();
+  }
+}
+>>>>>>> 3120ab5217a5e848b1615d771d26924ceb0bae29
 </script>
 
 <style lang="scss">

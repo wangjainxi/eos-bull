@@ -20,63 +20,60 @@
     </mt-popup>
   </div>
 </template>
-<script>
-import store from '@/store';
 
-export default {
-  name: 'more-page',
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+import userStore from '@/stores/user';
 
-  data() {
-    return {
-      popupVisible: false,
-      accountData: [
-        {
-          icon: require('../../../images/mobile/ic_account.svg'),
-          text: '账户委托',
-          common: '',
-          rightIcon: require('../../../images/mobile/ic_arrow_right.svg'),
-          type: 1,
-        },
-        {
-          icon: require('../../../images/mobile/ic_Language.svg'),
-          text: '切换语言',
-          common: '',
-          rightIcon: require('../../../images/mobile/ic_arrow_right.svg'),
-          type: 2,
-        },
-        {
-          icon: require('../../../images/mobile/ic_help.svg'),
-          text: '帮助中心',
-          common: '常见问题与在线客服',
-          rightIcon: require('../../../images/mobile/ic_arrow_right.svg'),
-          type: 3,
-        },
-        {
-          icon: require('../../../images/mobile/ic_submit.svg'),
-          text: '提交工单',
-          common: '问题反馈',
-          rightIcon: require('../../../images/mobile/ic_arrow_right.svg'),
-          type: 4,
-        },
-        {
-          icon: require('../../../images/mobile/ic_aboutus.svg'),
-          text: '关于我们',
-          common: '',
-          rightIcon: require('../../../images/mobile/ic_arrow_right.svg'),
-          type: 5,
-        },
-      ],
-    };
-  },
-  methods: {
-    onClick(type) {
-      this.popupVisible = true;
+@Component
+export default class extends Vue {
+  popupVisible = false;
+  accountData = [
+    {
+      icon: require('../../../images/mobile/ic_account.svg'),
+      text: '账户委托',
+      common: '',
+      rightIcon: require('../../../images/mobile/ic_arrow_right.svg'),
+      type: 1,
     },
-  },
+    {
+      icon: require('../../../images/mobile/ic_Language.svg'),
+      text: '切换语言',
+      common: '',
+      rightIcon: require('../../../images/mobile/ic_arrow_right.svg'),
+      type: 2,
+    },
+    {
+      icon: require('../../../images/mobile/ic_help.svg'),
+      text: '帮助中心',
+      common: '常见问题与在线客服',
+      rightIcon: require('../../../images/mobile/ic_arrow_right.svg'),
+      type: 3,
+    },
+    {
+      icon: require('../../../images/mobile/ic_submit.svg'),
+      text: '提交工单',
+      common: '问题反馈',
+      rightIcon: require('../../../images/mobile/ic_arrow_right.svg'),
+      type: 4,
+    },
+    {
+      icon: require('../../../images/mobile/ic_aboutus.svg'),
+      text: '关于我们',
+      common: '',
+      rightIcon: require('../../../images/mobile/ic_arrow_right.svg'),
+      type: 5,
+    },
+  ];
+
+  onClick() {
+    this.popupVisible = true;
+  }
+
   created() {
-    store.commit('setCurrentNum', '5');
-  },
-};
+    userStore.setCurrency('5');
+  }
+}
 </script>
 
 <style lang="scss" scoped>

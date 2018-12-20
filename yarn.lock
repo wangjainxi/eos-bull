@@ -5679,6 +5679,18 @@ mkdirp@0.5.x, mkdirp@0.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp
   dependencies:
     minimist "0.0.8"
 
+mobx-vue@^2.0.8:
+  version "2.0.8"
+  resolved "http://registry.npm.taobao.org/mobx-vue/download/mobx-vue-2.0.8.tgz#db7e9807248332cc3383886fd39c75fa4d5b6f5b"
+  integrity sha1-236YBySDMswzg4hv05x1+k1bb1s=
+  dependencies:
+    tslib "^1.9.0"
+
+mobx@^5.8.0:
+  version "5.8.0"
+  resolved "http://registry.npm.taobao.org/mobx/download/mobx-5.8.0.tgz#cf59eae4baa2fde4387ffb6462b7ccf3b497b03c"
+  integrity sha1-z1nq5Lqi/eQ4f/tkYrfM87SXsDw=
+
 moment@2.22.2:
   version "2.22.2"
   resolved "http://registry.npm.taobao.org/moment/download/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"

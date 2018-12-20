@@ -16,6 +16,7 @@ import { Component, Vue } from 'vue-property-decorator';
 })
 export default class TabPackage extends Vue {}
 </script>
+
 <style lang="scss">
 .tab-package-box {
   width: 100%;
