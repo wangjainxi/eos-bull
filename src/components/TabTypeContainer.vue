@@ -74,7 +74,7 @@ export default {
   created() {
     store.commit('setCurrentNum', sessionStorage.getItem('currentNum'));
   },
-}
+};
 </script>
 
 <style lang="scss">

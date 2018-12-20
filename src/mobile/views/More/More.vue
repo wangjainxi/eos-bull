@@ -1,5 +1,5 @@
 <template>
-   <div id="more-page">
+  <div id="more-page">
     <div class="home-banner-box">
       <img src="../../../images/mobile/logo_eosmex.svg" alt>
       <p>全球首家EOS去中心化交易所</p>
@@ -7,21 +7,22 @@
     <div class="action-box">
       <div class="account-item" v-for="(item,index1) in accountData" @click="onClick(item.type)">
         <div class="left-part">
-          <img :src="item.icon" alt=""><span>{{item.text}}</span><span>{{item.common}}</span>
+          <img :src="item.icon" alt>
+          <span>{{item.text}}</span>
+          <span>{{item.common}}</span>
         </div>
-        <img :src="item.rightIcon" alt="">
+        <img :src="item.rightIcon" alt>
       </div>
     </div>
-      <mt-popup
-             :visible.sync="popupVisible"
-             position="bottom">
-            <div>dddd</div>
-            <div>dddd</div>
-      </mt-popup>
-   </div>
-
+    <mt-popup :visible.sync="popupVisible" position="bottom">
+      <div>dddd</div>
+      <div>dddd</div>
+    </mt-popup>
+  </div>
 </template>
 <script>
+import store from '@/store';
+
 export default {
   name: 'more-page',
 
@@ -71,6 +72,9 @@ export default {
     onClick(type) {
       this.popupVisible = true;
     },
+  },
+  created() {
+    store.commit('setCurrentNum', '5');
   },
 };
 </script>
