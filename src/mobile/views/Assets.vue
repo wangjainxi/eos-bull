@@ -71,7 +71,11 @@
     </mt-popup>
   </div>
 </template>
-<script>
+
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+import userStore from '@/stores/user';
+
 const currendcrInfo = [
   {
     name: 'DPY',
@@ -95,27 +99,22 @@ const currendcrInfo = [
     id: 3,
   },
 ];
-import store from '@/store';
-export default {
-  data() {
-    return {
-      popupVisible: false,
-      currendcrInfo: [],
-    };
-  },
-  methods: {
-    onpopupState() {
-      this.popupVisible = !this.popupVisible;
-    },
-    setCurrendcrInfo(list) {
-      this.currendcrInfo = list;
-    },
-  },
+export default class extends Vue {
+  popupVisible = false;
+  currendcrInfo = [];
+
+  onpopupState() {
+    this.popupVisible = !this.popupVisible;
+  }
+  setCurrendcrInfo(list: any) {
+    this.currendcrInfo = list;
+  }
+
   created() {
     this.setCurrendcrInfo(currendcrInfo);
-    store.commit('setCurrentNum', '4');
-  },
-};
+    userStore.setCurrency('4');
+  }
+}
 </script>
 <style lang="scss">
 #about-page {

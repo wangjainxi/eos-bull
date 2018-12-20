@@ -49,7 +49,12 @@
     </mt-tab-container>
   </div>
 </template>
-<script>
+
+<script lang="ts">
+import ListChild from './components/ListChild.vue';
+import userStore from '@/stores/user';
+import { Vue, Component } from 'vue-property-decorator';
+
 const dealList = [
   {
     currency: 'EOS',
@@ -95,36 +100,32 @@ const growList = [
   },
 ];
 
-import ListChild from './components/ListChild.vue';
-import store from '@/store';
-export default {
-  data() {
-    return {
-      selected: '1',
-      dealList: [],
-      growList: [],
-    };
-  },
+@Component({
   components: {
     ListChild,
   },
-  methods: {
-    setDealList(list) {
-      this.dealList = list;
-    },
-    setGrowList(list) {
-      this.growList = list;
-    },
-    modifyGrowList() {
-      this.growList = growList;
-    },
-  },
+})
+export default class extends Vue {
+  selected = '1';
+  dealList: any[] = [];
+  growList: any[] = [];
+
+  setDealList(list: any) {
+    this.dealList = list;
+  }
+  setGrowList(list: any) {
+    this.growList = list;
+  }
+  modifyGrowList() {
+    this.growList = growList;
+  }
+
   created() {
     this.setDealList(dealList);
     this.setGrowList(growList);
-    store.commit('setCurrentNum', '1');
-  },
-};
+    userStore.setCurrency('1');
+  }
+}
 </script>
 <style lang="scss">
 #home-page {

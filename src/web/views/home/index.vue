@@ -157,13 +157,19 @@
         </div>
       </div>
     </div>
+    <custom-input v-bind:value="searchText" v-on:input="searchText = $event"></custom-input>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import CustomInput from './CustomInput.vue';
 
-@Component
+@Component({
+  components: {
+    CustomInput,
+  },
+})
 export default class extends Vue {
   bgClass = 'bg-img-box-s1';
   scrollEvent() {
@@ -179,6 +185,7 @@ export default class extends Vue {
   }
 }
 </script>
+
 <style lang="scss">
 #home-page {
   background: #0d1f35;

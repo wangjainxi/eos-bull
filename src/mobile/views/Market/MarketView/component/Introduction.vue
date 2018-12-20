@@ -1,20 +1,32 @@
 <template>
- <div class="intro-box">
-   <div class="intro-top">
-     <img src="@/images/mobile/logo_eosmex.svg" alt="">
-     <p>这是一个由这是一个由这是一个由这是一个由这是一个由这是一个由这是一个由</p>
-   </div>
-   <div class="intro-bom">
-     <p class="base-info">基本信息</p>
-    <p class="info-title"><span>流通总量</span><span>info-title</span></p>
-    <p class="info-title"><span>发行总量</span><span>info-title</span></p>
-    <p class="info-title"><span>合约名称</span><span>info-title</span></p>
-    <p class="info-title"><span>官    网</span><span>info-title</span></p>
-
-   </div>
- </div>
+  <div class="intro-box">
+    <div class="intro-top">
+      <img src="@/images/mobile/logo_eosmex.svg" alt>
+      <p>这是一个由这是一个由这是一个由这是一个由这是一个由这是一个由这是一个由</p>
+    </div>
+    <div class="intro-bom">
+      <p class="base-info">基本信息</p>
+      <p class="info-title">
+        <span>流通总量</span>
+        <span>info-title</span>
+      </p>
+      <p class="info-title">
+        <span>发行总量</span>
+        <span>info-title</span>
+      </p>
+      <p class="info-title">
+        <span>合约名称</span>
+        <span>info-title</span>
+      </p>
+      <p class="info-title">
+        <span>官 网</span>
+        <span>info-title</span>
+      </p>
+    </div>
+  </div>
 </template>
-<script>
+
+<script lang="ts">
 export default {
   name: 'introduction',
 };
