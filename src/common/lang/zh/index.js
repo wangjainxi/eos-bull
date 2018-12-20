@@ -1,4 +1,6 @@
-import transaction from './transaction'
-export const m = {
+import transaction from './transaction';
+import homePage from './homePage';
+export const lang = {
   transaction,
-}
+  homePage
+};

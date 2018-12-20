@@ -11,10 +11,10 @@
             <p>首页</p>
             <p>币币交易</p>
             <p>白皮书</p>
-            <!-- <select name id="ch">
+            <select name id="ch">
               <option value="ch">简体中文</option>
               <option value="en">English</option>
-            </select>-->
+            </select>
           </div>
         </div>
       </div>

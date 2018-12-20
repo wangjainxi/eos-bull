@@ -1,4 +1,4 @@
-import { Action, ActionContext } from 'vuex';
+import { ActionContext } from 'vuex';
 import { SET_CURRENCY_MUTATION } from './mutations-types';
 
 interface State {
