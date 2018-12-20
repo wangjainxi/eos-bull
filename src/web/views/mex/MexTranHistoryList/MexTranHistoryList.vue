@@ -1,37 +1,37 @@
 <template>
   <div class="mex-tran-history-list">
-    <div class="list-header">
-      Latest Deal
-    </div>
+    <div class="list-header">Latest Deal</div>
     <div class="list-title">
       <span class="left-text">Price(EOS)</span>
       <span class="center-text">Amount(MAX)</span>
       <span class="right-text">Time</span>
     </div>
     <div class="list-content">
-      <div >
+      <div>
         <div class="sell-part">
-         <ListItem v-bind:sellData="sellData" class="sell-box"/>
+          <ListItem v-bind:sellData="sellData" class="sell-box"/>
         </div>
-      <div class="buy-part">
-         <ListItem v-bind:sellData="sellData" class="buy-box"/>
-      </div>
+        <div class="buy-part">
+          <ListItem v-bind:sellData="sellData" class="buy-box"/>
+        </div>
       </div>
     </div>
   </div>
 </template>
-<script>
+
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
 import ListItem from './ListItem.vue';
 
-export default {
-  name: 'mex-tran-history-list',
-  data() {
-    return {
-      weight: 400,
-      sellData: [],
-      shows: 1,
-    };
+@Component({
+  components: {
+    ListItem,
   },
+})
+export default class extends Vue {
+  weight = 400;
+  sellData = [];
+  shows = 1;
 
   beforeMount() {
     console.log(this.sellData.length);
@@ -45,29 +45,25 @@ export default {
       this.sellData.push(obj);
       if (this.sellData.length > 17) return;
     }
-  },
-  components: {
-    ListItem,
-  },
-  methods: {
-    showView(type) {
-      this.shows = type;
-      const obj = {
-        price: 0.0004,
-        size: 141194.1235,
-        time: 56.3365,
-      };
-      this.sellData = [];
-      while (true) {
-        if (this.shows === 1) {
-          if (this.sellData.length > 17) return;
-        } else {
-          if (this.sellData.length > 29) return;
-        }
-        this.sellData.push(obj);
+  }
+
+  showView(type: any) {
+    this.shows = type;
+    const obj = {
+      price: 0.0004,
+      size: 141194.1235,
+      time: 56.3365,
+    };
+    this.sellData = [];
+    while (true) {
+      if (this.shows === 1) {
+        if (this.sellData.length > 17) return;
+      } else {
+        if (this.sellData.length > 29) return;
       }
-    },
-  },
+      this.sellData.push(obj);
+    }
+  }
 };
 </script>
 <style lang="scss">

@@ -155,112 +155,106 @@
     </div>
   </div>
 </template>
-<script>
-export default {
-  methods: {
-    greet(id) {
-      console.log(id);
-    },
-  },
-  data() {
-    return {
-      OrdeChecked: false,
-      PairChecked: false,
-      total: 200,
-      currentPage4: 1,
-      dateValue: '',
-      formInline: {
-        user: '',
-        region: '',
-      },
-      tableData: [
+
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+
+@Component
+export default class extends Vue {
+  OrdeChecked = false;
+  PairChecked = false;
+  total = 200;
+  currentPage4 = 1;
+  dateValue = '';
+  formInline = {
+    user: '',
+    region: '',
+  };
+  tableData = [
+    {
+      coin: 'ZKS',
+      type: 'Buy',
+      time: '2018-12-07 14:15:55',
+      price: 0.00008,
+      average: 0,
+      amount: 21,
+      dealt: 0,
+      entrusted: 0.003,
+      status: 'Not deal',
+      odd: 'eosdkeigjndlie',
+      id: 1,
+      dealData: [
         {
           coin: 'ZKS',
-          type: 'Buy',
-          time: '2018-12-07 14:15:55',
+          dealTime: '2018-12-07 14:15:55',
           price: 0.00008,
-          average: 0,
           amount: 21,
-          dealt: 0,
-          entrusted: 0.003,
-          status: 'Not deal',
-          odd: 'eosdkeigjndlie',
-          id: 1,
-          dealData: [
-            {
-              coin: 'ZKS',
-              dealTime: '2018-12-07 14:15:55',
-              price: 0.00008,
-              amount: 21,
-              total: 3333,
-              fee: 2,
-              id: 101,
-            },
-            {
-              coin: 'ZKS',
-              dealTime: '2018-12-07 14:15:55',
-              price: 0.00008,
-              amount: 21,
-              total: 3333,
-              fee: 2,
-              id: 102,
-            },
-          ],
+          total: 3333,
+          fee: 2,
+          id: 101,
         },
         {
           coin: 'ZKS',
-          type: 'Sell',
-          time: '2018-12-07 14:15:55',
+          dealTime: '2018-12-07 14:15:55',
           price: 0.00008,
-          average: 0,
           amount: 21,
-          dealt: 0,
-          entrusted: 0.003,
-          status: 'Not deal',
-          odd: 'eosdkeigjndlie',
-          id: 2,
-          dealData: [
-            {
-              coin: 'ZKS',
-              dealTime: '2018-12-07 14:15:55',
-              price: 0.00008,
-              amount: 21,
-              total: 3333,
-              fee: 2,
-              id: 201,
-            },
-            {
-              coin: 'ZKS',
-              dealTime: '2018-12-07 14:15:55',
-              price: 0.00008,
-              amount: 21,
-              total: 3333,
-              fee: 2,
-              id: 202,
-            },
-          ],
+          total: 3333,
+          fee: 2,
+          id: 102,
         },
       ],
-    };
-  },
-  methods: {
-    handleSizeChange(val) {
-      console.log(val);
     },
-    handleCurrentChange(val) {
-      console.log(val);
+    {
+      coin: 'ZKS',
+      type: 'Sell',
+      time: '2018-12-07 14:15:55',
+      price: 0.00008,
+      average: 0,
+      amount: 21,
+      dealt: 0,
+      entrusted: 0.003,
+      status: 'Not deal',
+      odd: 'eosdkeigjndlie',
+      id: 2,
+      dealData: [
+        {
+          coin: 'ZKS',
+          dealTime: '2018-12-07 14:15:55',
+          price: 0.00008,
+          amount: 21,
+          total: 3333,
+          fee: 2,
+          id: 201,
+        },
+        {
+          coin: 'ZKS',
+          dealTime: '2018-12-07 14:15:55',
+          price: 0.00008,
+          amount: 21,
+          total: 3333,
+          fee: 2,
+          id: 202,
+        },
+      ],
     },
-    onSubmit() {
-      console.log(11);
-    },
-    setDate() {
-      console.log(11);
-    },
-    ondateValue() {
-      console.log(this.dateValue);
-    },
-  },
-};
+  ];
+
+  handleSizeChange(val: any) {
+    console.log(val);
+  }
+  handleCurrentChange(val: any) {
+    console.log(val);
+  }
+  onSubmit() {
+    console.log(11);
+  }
+  setDate() {
+    console.log(11);
+  }
+  ondateValue() {
+    console.log(this.dateValue);
+  }
+}
 </script>
 <style lang="scss">
 #web-table-details-page {

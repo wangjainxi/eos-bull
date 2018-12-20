@@ -29,7 +29,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import OrderTab from './component/OrderTab.vue';
 import DealTab from './component/DealTab.vue';
 import Introduction from './component/Introduction.vue';

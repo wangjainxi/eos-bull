@@ -167,7 +167,12 @@
     </mt-tab-container>
   </div>
 </template>
-<script>
+
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+import userStore from '@/stores/user';
+import ListChild from '../HomePage/components/ListChild.vue';
+
 const dealList = [
   {
     currency: 'EOS',
@@ -194,6 +199,7 @@ const dealList = [
     id: 3,
   },
 ];
+
 const growList = [
   {
     currency: 'EOS',
@@ -212,48 +218,49 @@ const growList = [
     id: 2,
   },
 ];
-import ListChild from '../HomePage/components/ListChild';
-import store from '@/store';
-export default {
-  data() {
-    return {
-      isOptional: '2',
-      dealList: [],
-      growList: [],
-      typeTableState: '1',
-      upOrDown: '0',
-    };
-  },
+
+@Component({
   components: {
     ListChild,
   },
-  methods: {
-    setDealList(list) {
-      this.dealList = list;
-    },
-    setGrowList(list) {
-      this.growList = list;
-    },
-    modifyGrowList(value) {
-      this.isOptional = value;
-    },
-    onTypeTable(id) {
-      this.typeTableState = id;
-      if (this.upOrDown === '0' || this.upOrDown === '2') {
-        this.upOrDown = '1';
-      } else if (this.upOrDown === '1') {
-        this.upOrDown = '2';
-      }
-      //获取数据时 根据this.isOptional结合this.typeTableState来判断应该调取的借口
-    },
-  },
+})
+export default class extends Vue {
+  isOptional = '2';
+  dealList = [];
+  growList = [];
+  typeTableState = '1';
+  upOrDown = '0';
+
   created() {
     this.setDealList(dealList);
     this.setGrowList(growList);
-    store.commit('setCurrentNum', '2');
-  },
-};
+    userStore.setCurrency('2');
+  }
+
+  setDealList(list: any) {
+    this.dealList = list;
+  }
+
+  setGrowList(list: any) {
+    this.growList = list;
+  }
+
+  modifyGrowList(value: any) {
+    this.isOptional = value;
+  }
+
+  onTypeTable(id: any) {
+    this.typeTableState = id;
+    if (this.upOrDown === '0' || this.upOrDown === '2') {
+      this.upOrDown = '1';
+    } else if (this.upOrDown === '1') {
+      this.upOrDown = '2';
+    }
+    //获取数据时 根据this.isOptional结合this.typeTableState来判断应该调取的借口
+  }
+}
 </script>
+
 <style lang="scss">
 #market-page {
   width: 100%;
