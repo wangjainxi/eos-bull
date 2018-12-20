@@ -151,4 +151,54 @@ input[type='number'] {
     }
   }
 }
+.current-node {
+  width: 680px;
+  border: none;
+  .show-select-item {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    justify-content: space-between;
+    font-size: 14px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    .green {
+      color: rgba(28, 196, 102, 1);
+    }
+    & > div:nth-child(1) {
+      width: 36%;
+    }
+    & > div:nth-child(3) {
+      width: 27%;
+    }
+    & > div:nth-child(4) {
+      width: 15%;
+      display: flex;
+      align-items: baseline;
+    }
+    & > div {
+      width: 22%;
+      i {
+        width: 10px;
+        height: 6px;
+        margin-left: 14px;
+        font-size: 16px;
+        color: rgba(28, 196, 102, 1);
+      }
+    }
+  }
+  .bacolor {
+    color: rgba(255, 255, 255, 1);
+    background-color: #142e4d;
+  }
+  .el-select-dropdown__item {
+    padding: 0 !important;
+  }
+  .red {
+    color: rgba(229, 55, 87, 1) !important;
+  }
+  .yellow {
+    color: rgba(246, 194, 68, 1) !important;
+  }
+}
 </style>

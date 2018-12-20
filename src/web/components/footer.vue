@@ -24,28 +24,38 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
+import { Component, Vue, Prop } from 'vue-property-decorator';
 import { MessageBox } from 'element-ui';
-import chooseNode from './chooseNode.vue';
-export default {
-  name: 'foot',
-  components:{
-    chooseNode,
+import ChooseNode from './chooseNode.vue';
+
+@Component({
+  components: {
+    ChooseNode,
   },
-  methods: {
-    showAddress() {
-      MessageBox({
-        title: 'EOSmex',
-        message: <choose-node />,
-        showCancelButton: false,
-        showConfirmButton: false,
-        customClass: 'foot-choose-node',
-      });
-    },
-  },
-};
+})
+// export default class Footer extends Vue {
+//   @Prop() private msg!: string;
+// }
+export default class Footer extends Vue {
+  // data
+  pValue: number = 1;
+  propVal: number = 1;
+  boxKey: number = 10;
+  // methods
+  showAddress(): void {
+    const h = this.$createElement;
+    MessageBox({
+      title: 'EOSmex',
+      message: h(ChooseNode, { key: this.boxKey++ }),
+      showCancelButton: false,
+      showConfirmButton: false,
+      customClass: 'foot-choose-node',
+    });
+  }
+}
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 #foot-page {
   width: 100%;
   height: 110px;
