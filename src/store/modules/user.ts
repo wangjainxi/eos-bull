@@ -18,9 +18,9 @@ const getters = {
     return state.currency;
   },
 
-  getMarket(state:any){
-    return state.marketId
-  }
+  getMarket(state: any) {
+    return state.marketId;
+  },
 };
 
 const mutations = {

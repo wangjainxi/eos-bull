@@ -262,7 +262,7 @@ export default {
     },
     createFeed() {
       const thisVue = this;
-      let Datafeed = {};
+      const Datafeed = {};
 
       Datafeed.DataPulseUpdater = function(datafeed, updateFrequency) {
         this._datafeed = datafeed;
