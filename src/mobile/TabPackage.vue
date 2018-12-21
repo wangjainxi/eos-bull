@@ -1,20 +1,24 @@
 <template>
   <div class="tab-package-box">
     <router-view/>
-    <tab-type-container/>
+    <mobile-tabs/>
   </div>
 </template>
 
 <script lang="ts">
-import TabTypeContainer from '@/components/TabTypeContainer.vue';
 import { Component, Vue } from 'vue-property-decorator';
+import MobileTabs from './components/mobileTabs.vue';
 
 @Component({
   components: {
-    TabTypeContainer,
+    MobileTabs,
   },
 })
-export default class TabPackage extends Vue {}
+export default class TabPackage extends Vue {
+  created() {
+    console.log(MobileTabs);
+  }
+}
 </script>
 
 <style lang="scss">

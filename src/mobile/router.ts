@@ -1,10 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import TabPackage from './TabPackage.vue';
+import TabPackage from '@/mobile/TabPackage.vue';
 import MarketView from './views/Market/MarketView/index.vue';
 import MarketSearch from './views/Market/MarketSearch.vue';
 import MarketOptional from './views/Market/MarketOptional.vue';
-import Assets from './views/Assets.vue';
 
 Vue.use(Router);
 
@@ -40,7 +39,7 @@ export default new Router({
         {
           path: '/assets',
           name: 'assets',
-          component: Assets,
+          component: () => import(/* webpackChunkName: "more" */ './views/Assets/Assets.vue'),
         },
       ],
     },

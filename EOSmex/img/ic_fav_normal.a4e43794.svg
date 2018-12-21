@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="11px" viewBox="0 0 12 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_fav_normal</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Exchange" transform="translate(-1042.000000, -155.000000)" fill-rule="nonzero" stroke="#92A7C5" stroke-width="0.8">
+            <g id="market_right" transform="translate(1035.000000, 140.000000)">
+                <g id="header">
+                    <g id="Favorites" transform="translate(4.000000, 12.000000)">
+                        <path d="M11.9954591,13.1228958 L11.4233773,9.78740302 L13.8467546,7.42519395 L10.4977296,6.93855212 L9,3.90382058 L7.50227045,6.93855212 L4.15324536,7.42519395 L6.57662268,9.78740302 L6.0045409,13.1228958 L9,11.5480897 L11.9954591,13.1228958 Z" id="ic_fav_normal"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

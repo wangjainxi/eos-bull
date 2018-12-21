@@ -1,7 +1,7 @@
 <template>
   <div id="about-page">
     <div class="about-banner-box">
-      <img src="../../images/mobile/ic_correct.svg" alt>
+      <img src="@/images/mobile/ic_correct.svg" alt>
       <h3>WantLine</h3>
       <div>
         <h4>8888.93</h4>
@@ -26,7 +26,7 @@
     <div class="currency-input-box">
       <div>
         <p>非小额资产</p>
-        <img src="../../images/mobile/ic_arrow_under.svg" alt>
+        <img src="@/images/mobile/ic_arrow_under.svg" alt>
       </div>
       <div>
         <input type="text" placeholder="搜索">
@@ -76,43 +76,41 @@
 import { Vue, Component } from 'vue-property-decorator';
 import userStore from '@/stores/user';
 
-const currendcrInfo = [
-  {
-    name: 'DPY',
-    available: 3333,
-    value: 3333,
-    Frozen: 3333,
-    id: 1,
-  },
-  {
-    name: 'DPY',
-    available: 3333,
-    value: 3333,
-    Frozen: 3333,
-    id: 2,
-  },
-  {
-    name: 'DPY',
-    available: 3333,
-    value: 3333,
-    Frozen: 3333,
-    id: 3,
-  },
-];
-export default class extends Vue {
+@Component
+export default class Assets extends Vue {
   popupVisible = false;
-  currendcrInfo = [];
+  currendcrInfo = [
+    {
+      name: 'DPY',
+      available: 3333,
+      value: 3333,
+      Frozen: 3333,
+      id: 1,
+    },
+    {
+      name: 'DPY',
+      available: 3333,
+      value: 3333,
+      Frozen: 3333,
+      id: 2,
+    },
+    {
+      name: 'DPY',
+      available: 3333,
+      value: 3333,
+      Frozen: 3333,
+      id: 3,
+    },
+  ];
 
   onpopupState() {
+    console.log(this);
     this.popupVisible = !this.popupVisible;
   }
-  setCurrendcrInfo(list: any) {
-    this.currendcrInfo = list;
-  }
-
   created() {
-    this.setCurrendcrInfo(currendcrInfo);
     userStore.setCurrency('4');
+
+    console.log(userStore);
   }
 }
 </script>
@@ -123,7 +121,7 @@ export default class extends Vue {
     height: 2rem;
     width: 100%;
     padding-top: 0.4rem;
-    background-image: url('../../images/mobile/bg_banner.svg');
+    background-image: url('../../../images/mobile/bg_banner.svg');
     background-repeat: no-repeat;
     background-size: cover;
     color: #fff;
@@ -211,7 +209,7 @@ export default class extends Vue {
         padding-left: 0.16rem;
         line-height: 0.22rem;
         border-radius: 0.11rem;
-        background-image: url('../../images/mobile/ic_find.svg');
+        background-image: url('../../../images/mobile/ic_find.svg');
         background-repeat: no-repeat;
         background-size: 0.12rem 0.12rem;
         background-position: 1.38rem 0.06rem;

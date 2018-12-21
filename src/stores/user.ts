@@ -2,7 +2,7 @@ import { observable, action } from 'mobx';
 
 class UserStore {
   @observable
-  currency = 'BTC';
+  currency = '1';
   account = 'admin';
   marketId = 1;
 

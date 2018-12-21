@@ -350,6 +350,7 @@ export default class extends Vue {
     width: 100%;
     padding-top: 123px;
     background: #0c1f35;
+    min-width: 1200px;
   }
   .banner-box {
     width: 1200px;
@@ -382,6 +383,7 @@ export default class extends Vue {
   }
   .introduce-box-page {
     width: 100%;
+    min-width: 1200px;
   }
   .introduce-box {
     width: 1200px;
@@ -407,6 +409,7 @@ export default class extends Vue {
   }
   .advantage-box-page {
     width: 100%;
+    min-width: 1200px;
     background: #0c2641;
   }
   .advantage-box {
@@ -454,6 +457,7 @@ export default class extends Vue {
   }
   .programme-box-page {
     width: 100%;
+    min-width: 1200px;
     padding-top: 80px;
     padding-bottom: 70px;
     background: #0c1f35;
@@ -473,13 +477,13 @@ export default class extends Vue {
     padding-top: 80px;
     padding-bottom: 70px;
     background: #142e4d;
-
+    min-width: 1200px;
     .roadmap-box {
       width: 1200px;
       height: 645px;
       margin: 0 auto;
       background: url('./home-page-img/bg_time.png') no-repeat;
-      background-position: 293px 314px;
+      background-position: 173px 314px;
       position: relative;
       h3 {
         color: #fff;
@@ -489,7 +493,7 @@ export default class extends Vue {
         color: #bbccff;
         position: absolute;
         top: 324px;
-        left: 295px;
+        left: 175px;
       }
       > div::after {
         content: '';
@@ -505,39 +509,39 @@ export default class extends Vue {
       }
       div:nth-child(2) {
         top: 289px;
-        left: 450px;
+        left: 330px;
       }
       div:nth-child(3) {
         top: 274px;
-        left: 635px;
+        left: 515px;
       }
       div:nth-child(4) {
         top: 234px;
-        left: 820px;
+        left: 700px;
       }
       div:nth-child(5) {
         top: 175px;
-        left: 1006px;
+        left: 886px;
       }
       div:nth-child(6) {
         top: 543px;
-        left: 301px;
+        left: 181px;
       }
       div:nth-child(7) {
         top: 499px;
-        left: 484px;
+        left: 364px;
       }
       div:nth-child(8) {
         top: 462px;
-        left: 670px;
+        left: 550px;
       }
       div:nth-child(9) {
         top: 420px;
-        left: 857px;
+        left: 737px;
       }
       div:nth-child(10) {
         top: 398px;
-        left: 1045px;
+        left: 925px;
       }
     }
     .roadmap-box_en {
@@ -612,6 +616,7 @@ export default class extends Vue {
     padding-top: 80px;
     padding-bottom: 20px;
     background: #fff;
+    min-width: 1200px;
     .cooperation-box {
       width: 1200px;
       margin: 0 auto;
@@ -640,6 +645,7 @@ export default class extends Vue {
     width: 100%;
     height: 188px;
     background: #001936;
+    min-width: 1200px;
     .foot-box {
       width: 1200px;
       height: 100%;
