@@ -19,7 +19,7 @@
         <span>info-title</span>
       </p>
       <p class="info-title">
-        <span>官 网</span>
+        <span>官<span class="hidden">约名</span>网</span>
         <span>info-title</span>
       </p>
     </div>
@@ -46,6 +46,10 @@ export default {
     }
     text-align: left;
   }
+  .hidden{
+    color: transparent;
+    font-size: 12px;
+  }
   .intro-bom {
     padding-top: 0.13rem;
     @include flexLayout(column, flex-start, flex-start);
@@ -66,6 +70,7 @@ export default {
         color: rgba(141, 141, 141, 1);
         margin-right: 0.14rem;
       }
+
       > span:nth-child(2) {
         font-size: 12px;
         font-family: PingFangSC-Medium;

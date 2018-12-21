@@ -7,13 +7,6 @@
             <img src="@/images/web/logo_eosmex.svg" alt>
           </a>
       </div>
-<<<<<<< HEAD
-      <div class="tab-view">
-        <el-tabs v-model="activeName">
-          <el-tab-pane label="Exchange" name="first"></el-tab-pane>
-          <el-tab-pane label="Markets" name="second"></el-tab-pane>
-        </el-tabs>
-=======
       <div class="tright-view">
         <span class="use-box">
           <img src="@/images/web/ic_eos.svg" alt>
@@ -32,7 +25,6 @@
           </select>
           <img class="arrow" src="@/images/web/ic_arrow_down.svg" alt>
         </span>
->>>>>>> 0acc2a283a0a5c2f3741e0fee8d8b24f43c5d3ab
       </div>
     </div>
     <div class="tright-view">
@@ -72,10 +64,8 @@ export default class extends Vue {
   selectPamas() {
     if (this.selected === 'en-US') {
       this.lang = 'en-US';
-      this.$i18n.locale = this.lang;
     } else {
       this.lang = 'zh-CN';
-      this.$i18n.locale = this.lang;
     }
     language.changeLanguage(this.lang);
   }
