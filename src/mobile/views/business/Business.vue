@@ -129,14 +129,16 @@
     <!-- <mt-popup v-model="popupVisible" popup-transition="popup-fade"></mt-popup> -->
   </div>
 </template>
-<script>
+
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
 import showMessageImg from './../../../components/messageImage.vue';
 import businessTradeItem from './components/businessTrade.vue';
 import businessEntrustItem from './components/businessEntrust.vue';
 import businessRange from './components/businessRange.vue';
 import showCoinList from './components/businessCoin.vue';
 import { MessageBox, Toast } from 'mint-ui';
-import { orderHistory } from '../../../utils/restful.ts';
+import { orderHistory } from '../../../utils/restful';
 const tradeData = [
   {
     price: 0.00231,
@@ -300,40 +302,8 @@ const dataList = [
   },
 ];
 const entrustData = [{}];
-export default {
-  name: 'business-box',
-  data() {
-    return {
-      cricleMount: [0, 1, 2, 3, 4],
-      rangeValue: 0,
-      entrustType: 0,
-      popupVisible: false, //币种弹框
-      sheetVisible: false, //价格弹框
-      businessPrice: 3422.02, //交易价格
-      inputVal: 0, //交易量
-      changeEos: 0.00001,
-      currrentTab: '买入',
-      tabs: ['买入', '卖出'],
-      entrustData,
-      imgUrl: require('./../../../images/mobile/ic_nodata.png'),
-      imgMsg: '暂无数据',
-      tradeData,
-      tradeDataMountSum: 0,
-      useMount: 0,
-      showSheetName: '限价',
-      dataCoinList: dataList,
-      sheetActions: [
-        {
-          name: '限价',
-          method: this.changeNowPrice1,
-        },
-        {
-          name: '市价',
-          method: this.changeNowPrice2,
-        },
-      ],
-    };
-  },
+
+@Component({
   components: {
     showMessageImg,
     businessTradeItem,
@@ -341,85 +311,115 @@ export default {
     businessRange,
     showCoinList,
   },
-  mounted() {
-    this.getOrderHistory();
-  },
-  computed: {
-    getUseMount() {
-      this.useMount -= this.rangeValue / 100;
-      return this.useMount.toFixed(5);
-    },
-  },
-  methods: {
-    async getOrderHistory() {
-      try {
-        const res = await orderHistory('admin', {
-          page: 1,
-          pageSize: 10,
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    changeTab(val) {
-      this.currrentTab = val;
-      this.getShowTabData();
-    },
-    changeEntrustType(type) {
-      this.entrustType = type;
-    },
-    getSumMount() {
-      this.tradeData.forEach(item => {
-        this.tradeDataMountSum += item.mount;
-      });
-    },
-    changePriceAndMount(obj1, obj2) {
-      this.businessPrice = obj1;
-      this.inputVal = obj2;
-    },
-    showMsg() {
-      MessageBox(
-        '提示',
-        'EOSmex 是去中心化交易平台，不对任何项目作主观判断，亦不对投资结果负责。因此强烈建议您在详细了解项目后再做投资决定。'
-      );
-    },
-    changeNowPrice1() {
-      this.showSheetName = '限价';
-      this.sheetVisible = false;
-    },
-    changeNowPrice2() {
-      this.showSheetName = '市价';
-      this.sheetVisible = false;
-    },
-    showNowPrice() {
-      this.sheetVisible = true;
-    },
-    getRangeValue(obj) {
-      this.rangeValue = obj;
-    },
-    changePopupVisible(obj) {
-      this.popupVisible = obj;
-    },
-    goBusiness() {
-      //交易
-      Toast({
-        message: '已提交，待区块确认',
-        iconClass: 'ic_correct',
-        duration: 2000,
-      });
+})
+export default class extends Vue {
+  cricleMount = [0, 1, 2, 3, 4];
+  rangeValue = 0;
+  entrustType = 0;
+  popupVisible = false; //币种弹
+  sheetVisible = false; //价格弹
+  businessPrice = 3422.02; //交易价
+  inputVal = 0; //交易
+  changeEos = 0.00001;
+  currrentTab = '卖出';
+  tabs = ['买入', '卖出'];
+  entrustData = entrustData;
+  imgUrl = require('./../../../images/mobile/ic_nodata.png');
+  imgMsg = '暂无数据';
+  tradeData = tradeData;
+  tradeDataMountSum = 0;
+  useMount = 0;
+  showSheetName = '限价';
+  dataCoinList = dataList;
 
-      // Toast({
-      //   message: 'EOS余额不足',
-      // });
+  sheetActions = [
+    {
+      name: '限价',
+      method: this.changeNowPrice1,
     },
-    showCoinData() {
-      this.popupVisible = true;
+    {
+      name: '市价',
+      method: this.changeNowPrice2,
     },
-  },
+  ];
+
+  get getUseMount() {
+    this.useMount -= this.rangeValue / 100;
+    return this.useMount.toFixed(5);
+  }
+
   created() {
     this.getSumMount();
-  },
-};
+  }
+
+  mounted() {
+    this.currrentTab = this.$route.params.type === 'buy' ? '买入' : '卖出';
+  }
+
+  async getOrderHistory() {
+    try {
+      const res = await orderHistory('admin', {
+        page: 1,
+        pageSize: 10,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  changeTab(val: any) {
+    this.currrentTab = val;
+  }
+  changeEntrustType(type: any) {
+    this.entrustType = type;
+  }
+  getSumMount() {
+    this.tradeData.forEach(item => {
+      this.tradeDataMountSum += item.mount;
+    });
+  }
+  changePriceAndMount(obj1: any, obj2: any) {
+    this.businessPrice = obj1;
+    this.inputVal = obj2;
+  }
+  showMsg() {
+    MessageBox(
+      '提示',
+      'EOSmex 是去中心化交易平台，不对任何项目作主观判断，亦不对投资结果负责。因此强烈建议您在详细了解项目后再做投资决定。'
+    );
+  }
+  changeNowPrice1() {
+    this.showSheetName = '限价';
+    this.sheetVisible = false;
+  }
+  changeNowPrice2() {
+    this.showSheetName = '市价';
+    this.sheetVisible = false;
+  }
+  showNowPrice() {
+    this.sheetVisible = true;
+  }
+  getRangeValue(obj: any) {
+    this.rangeValue = obj;
+  }
+  changePopupVisible(obj: any) {
+    this.popupVisible = obj;
+  }
+  goBusiness() {
+    //交易
+    Toast({
+      message: '已提交，待区块确认',
+      iconClass: 'ic_correct',
+      duration: 2000,
+    });
+
+    // Toast({
+    //   message: 'EOS余额不足',
+    // });
+  }
+  showCoinData() {
+    this.popupVisible = true;
+  }
+}
 </script>
 <style lang="scss" scoped>
 @import '../../../style/mixin.scss';

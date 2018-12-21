@@ -1,6 +1,8 @@
 <template>
-  <div class="choose-node" id="choose-node">
-    <div class="node-title">Current Node</div>
+  <div class="choose-node">
+    <div class="node-title">
+      <Language resource="myWallet.Current_Node"/>
+    </div>
     <!-- <el-popover placement="bottom-start" width="680" trigger="click" :value="showFlag">
       <el-table :data="gridData">
         <el-table-column width="150" property="date" label="日期"></el-table-column>
@@ -39,10 +41,14 @@
       </el-option>
     </el-select>
     <div class="show-change" v-show="propsVal !== value">
-      <span>Are you sure to switch node?</span>
+      <Language resource="myWallet.Are_node"/>
       <div class="show-botton">
-        <button>Cancel</button>
-        <button>OK</button>
+        <button>
+          <Language resource="myWallet.Cancel"/>
+        </button>
+        <button>
+          <Language resource="myWallet.OK"/>
+        </button>
       </div>
     </div>
   </div>
@@ -97,7 +103,6 @@ export default class ChooseNode extends Vue {
   value: number = 1;
   propsVal: number = 1;
   options: Array<any> = option;
-
   // props: ['propVal'],
   // methods
   changePopUp() {
@@ -113,11 +118,13 @@ export default class ChooseNode extends Vue {
     }
   }
   getShowOptionVal(label: string, name: string, website: string, address: string) {
+    // const h: any = this.$createElement;
+    // return h('p', '', [h('span', '', '内容可以是 '), h('i', { style: 'color: teal' }, label)]);
     return `${label}             ${address}                ${website}             ${name}   `;
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import './../../style/mixin.scss';
 .choose-node {
   margin: 0 60px;

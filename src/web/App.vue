@@ -1,27 +1,23 @@
 <template>
   <div id="app">
-    <top></top>
-    <div class="outermost-mex-body">
-      <div class="outermost-mex-body-page">
-        <router-view/>
-      </div>
-    </div>
-    <foot></foot>
+    <router-view/>
   </div>
 </template>
-<script>
-import Top from './components/header.vue';
-import Foot from './components/footer';
+
+<script lang="ts">
 import './element-variables.scss';
+
 export default {
   name: 'app',
-  components: {
-    Top,
-    Foot,
-  },
 };
 </script>
+
 <style lang="scss">
+html,
+body {
+  height: 100vh;
+  width: 100vw;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -29,6 +25,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   height: 100%;
+  width: 100%;
 }
 * {
   margin: 0;
@@ -150,6 +147,58 @@ input[type='number'] {
       color: rgba(255, 255, 255, 1);
     }
   }
+}
+#myWallet {
+  .assets-th-right {
+    .el-input {
+      input {
+        border-radius: 20px;
+        border: 1px solid rgba(36, 65, 102, 1);
+      }
+    }
+  }
+  .el-input {
+    height: 38px;
+    background: rgba(20, 46, 77, 1);
+    input {
+      border: none;
+      background: rgba(20, 46, 77, 1);
+      font-size: 14px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(110, 132, 163, 1);
+    }
+  }
+  .el-table th {
+    padding: 7px 0;
+  }
+  .el-table td:nth-child(1) {
+    .cell {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      img {
+        width: 25px;
+        height: 25px;
+        margin-right: 13px;
+      }
+    }
+  }
+  .el-table th:nth-child(6) {
+    display: flex;
+    & > .cell {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      text-align: right;
+      i {
+        margin: 0 5px 0 55px;
+        cursor: pointer;
+      }
+    }
+  }
+
 }
 .current-node {
   width: 680px;

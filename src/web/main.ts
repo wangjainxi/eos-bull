@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
-import store from '../store';
-import '../registerServiceWorker';
 import VueI18n from 'vue-i18n';
 import locale from 'element-ui/lib/locale';
+import Language from '@/components/Language';
 import lang from 'element-ui/lib/locale/lang/en';
+import '../registerServiceWorker';
 
 import {
   Button,
@@ -54,17 +54,9 @@ Vue.use(Select);
 Vue.use(Option);
 Vue.use(Input);
 Vue.use(DatePicker);
-const i18n = new VueI18n({
-  locale: 'en-US', // 语言标识
-  messages: {
-    'zh-CN': require('../common/lang/zh'), // 中文语言包
-    'en-US': require('../common/lang/en'), // 英文语言包
-  },
-});
+Vue.component('Language', Language);
 
 new Vue({
   router,
-  i18n,
-  store,
   render: h => h(App),
 }).$mount('#app');

@@ -3,17 +3,29 @@
     <div class="foot">
       <div class="foot-top">
         <div class="foot-dec-left">
-          <a href>FAQ</a>
-          <a href>Bulletin</a>
-          <a href>Rate standard</a>
-          <a href>Submit Request</a>
+          <a href>
+            <Language resource="myWallet.FAQ"/>
+          </a>
+          <a href>
+            <Language resource="myWallet.Bulletin"/>
+          </a>
+          <a href>
+            <Language resource="myWallet.Rate_standard"/>
+          </a>
+          <a href>
+            <Language resource="myWallet.Submit_Request"/>
+          </a>
         </div>
-        <div class="foot-dec-right">Cryptocurrency investment is risky, please be cautious.</div>
+        <div class="foot-dec-right">
+          <Language resource="myWallet.risky"/>
+        </div>
       </div>
       <div class="foot-bottom">
         <div class="foot-dec-left">Copyright © 2018 EOSmex Inc. All rights reserved.</div>
         <div class="foot-dec-right">
-          <div>24H Total：265172.3326 EOS</div>
+          <div>
+            <Language resource="myWallet.H_Total"/>&nbsp; 265172.3326 EOS
+          </div>
           <div>GBI：3980.3</div>
           <div class="wifi" @click="showAddress">
             <img src="@/images/web/ic_wifi.svg" alt>
@@ -25,33 +37,30 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
 import { MessageBox } from 'element-ui';
+import { Component, Vue, Prop } from 'vue-property-decorator';
 import ChooseNode from './chooseNode.vue';
 
 @Component({
   components: {
-    ChooseNode,
+    // ChooseNode,
   },
 })
-// export default class Footer extends Vue {
-//   @Prop() private msg!: string;
-// }
 export default class Footer extends Vue {
   // data
   pValue: number = 1;
   propVal: number = 1;
   boxKey: number = 10;
   // methods
-  showAddress(): void {
-    const h = this.$createElement;
-    MessageBox({
-      title: 'EOSmex',
-      message: h(ChooseNode, { key: this.boxKey++ }),
-      showCancelButton: false,
-      showConfirmButton: false,
-      customClass: 'foot-choose-node',
-    });
+  showAddress() {
+    // const h = this.$createElement;
+    // MessageBox({
+    //   title: 'EOSmex',
+    //   message: h(ChooseNode, { key: this.boxKey++ }),
+    //   showCancelButton: false,
+    //   showConfirmButton: false,
+    //   customClass: 'foot-choose-node',
+    // });
   }
 }
 </script>

@@ -92,7 +92,7 @@
 <script>
 export default {
   name: 'mex-head-info',
-  data: function() {
+  data() {
     return {
       InfoTitleState: 0,
     };
@@ -170,7 +170,7 @@ export default {
     justify-content: flex-start;
     color: #677bb7;
     padding: 20px 26px;
-    border-top: 1px solid #2A4A72;
+    border-top: 1px solid #2a4a72;
     > div:nth-child(1) {
       width: 60%;
       margin-right: 60px;

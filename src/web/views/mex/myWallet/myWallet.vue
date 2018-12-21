@@ -1,6 +1,8 @@
 <template>
   <div id="myWallet">
-    <div class="wallet-header">My Wallet</div>
+    <div class="wallet-header">
+      <Language resource="myWallet.My_Wallet"/>
+    </div>
     <div class="eallet-body">
       <div class="my-info">
         <img src="@/images/web/ic_eos.svg" alt>
@@ -9,27 +11,34 @@
       <div class="wallet-assets">
         <div class="assets-left">
           <span>5.8814 EOS</span>
-          <span>Current Estimated Value</span>
+          <Language resource="myWallet.Current_Value"/>
         </div>
         <span></span>
-        <div class="assets-right" @click="showModel">Receipt</div>
+        <div class="assets-right" @click="showModel">
+          <Language resource="myWallet.Receipt"/>
+        </div>
       </div>
       <div class="wallet-table">
         <div class="table-item">
-          <div class="item-name">Redeeming</div>
+          <div class="item-name">
+            <Language resource="myWallet.Redeeming"/>
+          </div>
           <div class="item-content">
             <span>0.0000</span>EOS
           </div>
         </div>
         <div class="table-item">
-          <div class="item-name">Available</div>
+          <div class="item-name">
+            <Language resource="myWallet.Available"/>
+          </div>
           <div class="item-content">
             <span>100.8501</span>EOS
           </div>
         </div>
         <div class="table-item">
-          <div class="item-name">RAM</div>
-          <div class="item-content">Remain
+          <div class="item-name">&nbsp;RAM</div>
+          <div class="item-content">
+            <Language resource="myWallet.Remain"/>
             <el-tooltip
               class="item"
               effect="light"
@@ -53,7 +62,8 @@
               placement="bottom"
             >
               <div>
-                <span>Used 100%</span>
+                <Language resource="myWallet.Used"/>
+                <span>100%</span>
                 <i></i>
               </div>
             </el-tooltip>
@@ -69,7 +79,8 @@
               placement="bottom"
             >
               <div>
-                <span>Used 2%</span>
+                <Language resource="myWallet.Used"/>
+                <span>2%</span>
                 <i></i>
               </div>
             </el-tooltip>
@@ -79,8 +90,16 @@
       <div class="assets-table">
         <div class="assets-table-header">
           <div class="assets-th-left">
-            <span>Tradable Assets</span>
-            <i></i>
+            <!-- <span>Tradable Assets</span>
+            <i></i>-->
+            <el-select v-model="value" placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
           </div>
           <div class="assets-th-right">
             <el-input placeholder="Search" v-model="inputVal" clearable>
@@ -90,35 +109,53 @@
         </div>
         <div class="assets-table-body">
           <el-table :data="tableData" style="width: 100%" empty-text="There's no data yet">
-            <el-table-column prop="coin" label="Coin">
+            <el-table-column prop="coin">
+              <template slot="header" slot-scope="scope">
+                <Language resource="myWallet.Coin"/>
+              </template>
               <template slot-scope="scope">
                 <img :src="scope.row.imgurl" alt>
                 <span>{{scope.row.coin}}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="contract" label="Contract">
+            <el-table-column prop="contract">
+              <template slot="header" slot-scope="scope">
+                <Language resource="myWallet.Contract"/>
+              </template>
               <template slot-scope="scope">
-                <span>{{scope.row.contract}}</span>
+                <span class="span2">{{scope.row.contract}}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="available" label="Available" width="100" align="right">
+            <el-table-column prop="available" width="100" align="right">
+              <template slot="header" slot-scope="scope">
+                <Language resource="myWallet.Available"/>
+              </template>
               <template slot-scope="scope">
-                <span>{{scope.row.available}}</span>
+                <span class="span3">{{scope.row.available}}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="frozen" label="Frozen" width="280" align="center"></el-table-column>
-            <el-table-column prop="valuation" label="EOS valuation" width="130" align="right">
+            <el-table-column prop="frozen" width="280" align="center">
+              <template slot="header" slot-scope="scope">
+                <Language resource="myWallet.Frozen"/>
+              </template>
+            </el-table-column>
+            <el-table-column prop="valuation" width="130" align="right">
+              <template slot="header" slot-scope="scope">
+                <Language resource="myWallet.EOS_Valuation"/>
+              </template>
               <template slot-scope="scope">
                 <span>{{scope.row.valuation}}EOS</span>
               </template>
             </el-table-column>
             <el-table-column align="center">
               <template slot="header" slot-scope="scope">
-                <span>Action</span>
+                <Language resource="myWallet.Action"/>
                 <i slot="prefix" class="el-input__icon el-icon-refresh"></i>
               </template>
               <template slot-scope="scope">
-                <el-button size="small" @click="handleEdit(scope.row)">refresh</el-button>
+                <el-button size="small" @click="handleEdit(scope.row)">
+                  <Language resource="myWallet.Exchange"/>
+                </el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -127,57 +164,93 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 import { MessageBox } from 'element-ui';
-import myWalletModel from './myWalletModel.vue';
-export default {
-  name: 'my-wallet',
-  data() {
-    return {
-      inputVal: '',
-      loading: false,
-      tableData: [
-        {
-          coin: 'DICE',
-          contract: 0.004293,
-          time: '2018-12-07 14:15:55',
-          available: 5.8501,
-          frozen: 0.0,
-          valuation: 5.8501,
-          imgurl: require('@/images/web/ic_eos.svg'),
-        },
-        {
-          coin: 'DICE',
-          contract: 0.004293,
-          time: '2018-12-07 14:15:55',
-          available: 5.8501,
-          frozen: 0.0,
-          valuation: 5.8501,
-          imgurl: require('@/images/web/ic_eos.svg'),
-        },
-      ],
-    };
-  },
+import { Component, Vue } from 'vue-property-decorator';
+import { Observer } from 'mobx-vue';
+import languageStore from '@/stores/language';
+import MyWalletModel from './myWalletModel.vue';
+
+@Observer
+@Component({
   components: {
-    myWalletModel,
+    MyWalletModel,
   },
-  methods: {
-    showModel() {
-      MessageBox({
-        title: '',
-        message: <my-wallet-model />,
-        showCancelButton: false,
-        showConfirmButton: false,
-        customClass: 'my-wallet-model',
-      });
+})
+export default class MyWallet extends Vue {
+  // data
+  inputVal: string = '';
+  loading: boolean = false;
+  thisBoxKey: number = 1;
+  tableData: Array<any> = [
+    {
+      coin: 'DICE',
+      contract: 0.004293,
+      time: '2018-12-07 14:15:55',
+      available: 5.8501,
+      frozen: 0.0,
+      valuation: 5.8501,
+      imgurl: require('@/images/web/ic_eos.svg'),
     },
-    handleEdit(obj){
-      console.log(obj);
-    }
-  },
-};
+    {
+      coin: 'DICE',
+      contract: 0.004293,
+      time: '2018-12-07 14:15:55',
+      available: 5.8501,
+      frozen: 0.0,
+      valuation: 5.8501,
+      imgurl: require('@/images/web/ic_eos.svg'),
+    },
+  ];
+  options: Array<any> = [
+    {
+      value: 1,
+      label: languageStore.getIntlText('myWallet.Tradable_Assets'),
+    },
+    {
+      value: 2,
+      label: languageStore.getIntlText('myWallet.Total_Asset'),
+    },
+    {
+      value: 3,
+      label: languageStore.getIntlText('myWallet.Value_EOS'),
+    },
+    {
+      value: 4,
+      label: languageStore.getIntlText('myWallet.Following'),
+    },
+  ];
+  value: number = 1;
+  showModel() {
+    const h = this.$createElement;
+    MessageBox({
+      title: '',
+      message: h(MyWalletModel),
+      showCancelButton: false,
+      showConfirmButton: false,
+      customClass: 'my-wallet-model',
+    });
+  }
+  handleEdit(obj: Object) {
+    console.log(obj);
+  }
+  // methods: {
+  //   showModel() {
+  //     MessageBox({
+  //       title: '',
+  //       message: <my-wallet-model />,
+  //       showCancelButton: false,
+  //       showConfirmButton: false,
+  //       customClass: 'my-wallet-model',
+  //     });
+  //   },
+  //   handleEdit(obj){
+  //     console.log(obj);
+  //   }
+  // },
+}
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import './../../../../style/mixin.scss';
 $height: 100%;
 #myWallet {
@@ -185,6 +258,12 @@ $height: 100%;
   min-height: 779px;
   display: flex;
   flex-direction: column;
+  .span2 {
+    color: rgba(229, 55, 87, 1);
+  }
+  .span3 {
+    color: rgba(45, 123, 229, 1);
+  }
   .wallet-header {
     @include font(400, 20px, 28px, 'PingFangSC-Regular');
     border-bottom: 1px solid rgba(30, 58, 93, 1);
@@ -341,48 +420,6 @@ $height: 100%;
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(45, 123, 229, 1);
-  }
-  .el-input {
-    height: 38px;
-    background: rgba(20, 46, 77, 1);
-    input {
-      border-radius: 20px;
-      border: 1px solid rgba(36, 65, 102, 1);
-      background: rgba(20, 46, 77, 1);
-      font-size: 14px;
-      font-family: PingFangSC-Regular;
-      font-weight: 400;
-      color: rgba(110, 132, 163, 1);
-    }
-  }
-  .el-table th {
-    padding: 7px 0;
-  }
-  .el-table td:nth-child(1) {
-    .cell {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      img {
-        width: 25px;
-        height: 25px;
-        margin-right: 13px;
-      }
-    }
-  }
-  .el-table th:nth-child(6) {
-    display: flex;
-    & > .cell {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      text-align: right;
-      i {
-        margin: 0 5px 0 55px;
-        cursor: pointer;
-      }
-    }
   }
 }
 </style>

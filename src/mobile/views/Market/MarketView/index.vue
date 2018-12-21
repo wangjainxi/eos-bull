@@ -2,42 +2,61 @@
   <div class="market-view-box">
     <TransactionDetail v-if="showAlert" :onTransaction="onTransaction"/>
     <div class="market-container">
-        <TopView/>
-        <div class="trading-box">trading view</div>
-        <BomView/>
+      <TopView/>
+      <div class="trading-box">trading view</div>
+      <BomView/>
     </div>
     <div class="btn-box">
-      <div><mt-button @click="onTransaction" style="background:rgba(7,199,78,1);color:#fff" type="default">买入</mt-button></div>
-      <div><mt-button  style="background:rgba(255,0,0,1);color:#fff"  type="default">卖出</mt-button></div>
+      <div>
+        <mt-button
+          @click="onTransaction('buy')"
+          style="background:rgba(7,199,78,1);color:#fff"
+          type="default"
+        >买入</mt-button>
+      </div>
+      <div>
+        <mt-button
+          @click="onTransaction('sell')"
+          style="background:rgba(255,0,0,1);color:#fff"
+          type="default"
+        >卖出</mt-button>
+      </div>
     </div>
   </div>
 </template>
-<script>
+
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+import userStore from '@/stores/user';
+
 import TopView from './TopView.vue';
 import BomView from './BomView.vue';
 import TransactionDetail from './TransactionDetail.vue';
-export default {
-  name: 'market-view',
+
+@Component({
   components: {
     TopView,
     BomView,
     TransactionDetail,
   },
-  data() {
-    return {
-      showAlert: false,
+})
+export default class extends Vue {
+  showAlert = false;
+  onTransaction(t: any) {
+    const data = {
+      name: 'business',
+      params: {
+        id: String(userStore.marketId),
+        type: t,
+      },
     };
-  },
-  methods: {
-    onTransaction() {
-      this.showAlert = !this.showAlert;
-    },
-  },
-};
+    this.$router.push(data);
+  }
+}
 </script>
-<style lang="scss">
-@import '../../../../style/mixin.scss';
 
+<style lang="scss" scoped>
+@import '../../../../style/mixin.scss';
 .green-color {
   color: rgba(7, 199, 78, 1);
 }

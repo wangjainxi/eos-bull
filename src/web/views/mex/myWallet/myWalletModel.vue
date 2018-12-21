@@ -1,33 +1,48 @@
 <template>
-  <div class="wallet-model">
+  <div class="wallet-model" id="wallet-model">
     <div class="model-top">
-      <div class="model-inf">Your EOS account information</div>
+      <div class="model-inf">
+        <Language resource="myWallet.account_information"/>
+      </div>
       <div class="model-name">Adminadm1111</div>
       <img class="model-img" src="@/images/web/ic_eos.svg" alt>
       <div class="model-action">
-        <div class="action-l">Copy account</div>
-        <div class="action-l">Download QR code</div>
+        <div class="action-l">
+          <Language resource="myWallet.Copy_account"/>
+        </div>
+        <div class="action-l" @click="goAction">
+          <Language resource="myWallet.Download_code"/>
+        </div>
       </div>
-      <div
-        class="model-dec"
-      >Provide your account name to others so that they can transfer coin to you.</div>
+      <div class="model-dec">
+        <Language resource="myWallet.Provide_you"/>
+      </div>
     </div>
     <div class="model-bottom">
-      <div class="tip-title">Tips</div>
-      <p>1.You will transfer the Token that listed on the EOS main chain. Ensure you fill in the correct EOS account number</p>
-      <p>2.If you fill in an incorrect EOS account number , you would not be able to retrieve your assets</p>
+      <div class="tip-title">
+        <Language resource="myWallet.Tips"/>
+      </div>
+      <p>
+        <Language resource="myWallet.You_trans"/>
+      </p>
+      <p>
+        <Language resource="myWallet.you_fill"/>
+      </p>
     </div>
   </div>
 </template>
-<script>
-export default {
-  name: 'my-wallet-model',
-  data() {
-    return {};
-  },
-};
+
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+
+export default class MyWalletModel extends Vue {
+  goAction() {
+    console.log(121);
+  }
+}
 </script>
-<style lang="scss">
+
+<style lang="scss" scoped>
 @import './../../../../style/mixin.scss';
 .wallet-model {
   @include wh(100%, auto);
@@ -61,6 +76,7 @@ export default {
       & > div {
         background: rgba(45, 123, 229, 1);
         border-radius: 4px;
+        cursor: pointer;
         font-size: 16px;
         font-family: PingFangSC-Medium;
         font-weight: 500;
@@ -87,6 +103,13 @@ export default {
     p {
       color: rgba(102, 102, 102, 1);
     }
+  }
+  .model-dec {
+    font-size: 14px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(221, 221, 221, 1);
+    margin-bottom: 9px;
   }
 }
 </style>

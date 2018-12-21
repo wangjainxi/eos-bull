@@ -85,7 +85,7 @@
 </template>
 <script>
 export default {
-  data: function() {
+  data() {
     return {
       activeName: 'second',
       tableData: [

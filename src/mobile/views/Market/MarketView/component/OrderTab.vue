@@ -1,57 +1,62 @@
 <template>
-   <div class="order-box">
-     <div class="order-top">
-        <div class="tab-box">
-          <span >
-            <span class="buy-text">买</span>
-            <span class="tab-title">数量(WIZBOX)</span>
-          </span>
-          <span class="tab-title">价格(EOS)</span>
-          <span >
-            <span class="tab-title">数量(WIZBOX)</span>
-            <span class="sell-text">卖</span>
-          </span>
-        </div>
-     </div>
-     <div class="order-content">
+  <div class="order-box">
+    <div class="order-top">
+      <div class="tab-box">
+        <span>
+          <span class="buy-text">买</span>
+          <span class="tab-title">数量(WIZBOX)</span>
+        </span>
+        <span class="tab-title">价格(EOS)</span>
+        <span>
+          <span class="tab-title">数量(WIZBOX)</span>
+          <span class="sell-text">卖</span>
+        </span>
+      </div>
+    </div>
+    <div class="order-content">
       <div class="buy-part">
-       <OrderItem  :data="buyData"/>
+        <OrderItem :data="asks"/>
       </div>
-       <div class="sell-part">
-        <OrderItem  :data="sellData"/>
+      <div class="sell-part">
+        <OrderItem :data="bids"/>
       </div>
-     </div>
-   </div>
+    </div>
+  </div>
 </template>
-<script>
+
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
 import OrderItem from './OrderItem.vue';
-export default {
-  name: 'orderTab',
+import { marketOrderList } from '@/utils/restful.ts';
+
+@Component({
   components: {
     OrderItem,
   },
-  data() {
-    return {
-      buyData: [],
-      sellData: [],
-    };
-  },
-  beforeMount() {
-    const obj = {
-      price: 0.015,
-      size: 2,
-      total: 10,
-    };
-    while (true) {
-      this.buyData.push(obj);
-      this.sellData.push(obj);
-      if (this.buyData.length > 29) {
-        break;
-      }
+})
+export default class extends Vue {
+  asks: any[] = [];
+  bids: any[] = [];
+
+  mounted() {
+    this.getMarketOrder();
+  }
+
+  async getMarketOrder() {
+    try {
+      const res = await marketOrderList({
+        marketId: 1,
+      });
+      this.asks = res.asks;
+      this.bids = res.bids;
+      console.log(res);
+    } catch (err) {
+      console.log(err);
     }
-  },
-};
+  }
+}
 </script>
+
 <style lang="scss" scoped>
 @import '@/style/mixin.scss';
 .order-box {

@@ -56,8 +56,10 @@
     </div>
   </div>
 </template>
-<script>
-import store from '@/store';
+
+<script lang="ts">
+import store from '@/stores/user';
+import userStore from '@/stores/user';
 export default {
   name: 'tab-type-container',
   data() {
@@ -66,15 +68,15 @@ export default {
     };
   },
   methods: {
-    setCurrentNum(num) {
+    setCurrentNum(num: string) {
       sessionStorage.setItem('currentNum', num);
-      store.commit('setCurrentNum', num);
+      userStore.setCurrency(num);
     },
   },
   created() {
-    store.commit('setCurrentNum', sessionStorage.getItem('currentNum'));
+    userStore.setCurrency(sessionStorage.getItem('currentNum') || '');
   },
-}
+};
 </script>
 
 <style lang="scss">

@@ -4,6 +4,7 @@ import TabPackage from './TabPackage.vue';
 import MarketView from './views/Market/MarketView/index.vue';
 import MarketSearch from './views/Market/MarketSearch.vue';
 import MarketOptional from './views/Market/MarketOptional.vue';
+import Assets from './views/Assets.vue';
 
 Vue.use(Router);
 
@@ -37,9 +38,9 @@ export default new Router({
           component: () => import(/* webpackChunkName: "more" */ './views/More/More.vue'),
         },
         {
-          path: '/orders',
-          name: 'orders',
-          component: () => import(/* webpackChunkName: "orders" */ './views/Order/index.vue'),
+          path: '/assets',
+          name: 'assets',
+          component: Assets,
         },
       ],
     },
@@ -62,7 +63,7 @@ export default new Router({
       component: MarketOptional,
     },
     {
-      path: '/business',
+      path: '/business/:id',
       name: 'business',
       component: () => import(/* webpackChunkName: "business" */ './views/business/Business.vue'),
     },
