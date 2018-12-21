@@ -13,12 +13,12 @@
       </div>
       <div  class="max24-box">
         <div><span class="real-title">24H最高价：</span><span class="real-text">0.000000373</span></div>
-        <div><span class="real-title">24H最低价：</span><span class="real-text">0.000000147</span></div>
+        <div><span class="real-title">2ß4H最低价：</span><span class="real-text">0.000000147</span></div>
         <div><span class="real-title">24H成交量：</span><span class="real-text">8584584.134</span></div>
       </div>
     </div>
 </template>
-<script>
+<script lang="ts">
 export default {
   name: 'top-view',
 };

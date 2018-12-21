@@ -4,7 +4,6 @@ import TabPackage from './TabPackage.vue';
 import MarketView from './views/Market/MarketView/index.vue';
 import MarketSearch from './views/Market/MarketSearch.vue';
 import MarketOptional from './views/Market/MarketOptional.vue';
-import Assets from './views/Assets.vue';
 
 Vue.use(Router);
 
@@ -37,20 +36,7 @@ export default new Router({
           name: 'more',
           component: () => import(/* webpackChunkName: "more" */ './views/More/More.vue'),
         },
-        {
-          path: '/assets',
-          name: 'assets',
-          component: Assets,
-        },
       ],
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
     },
     {
       path: '/market-search',

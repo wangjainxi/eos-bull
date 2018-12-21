@@ -28,7 +28,6 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import userStore from '@/stores/user';
-
 import TopView from './TopView.vue';
 import BomView from './BomView.vue';
 import TransactionDetail from './TransactionDetail.vue';
@@ -42,6 +41,9 @@ import TransactionDetail from './TransactionDetail.vue';
 })
 export default class extends Vue {
   showAlert = false;
+  created() {
+    userStore.getData();
+  }
   onTransaction(t: any) {
     const data = {
       name: 'business',

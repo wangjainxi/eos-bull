@@ -18,10 +18,14 @@
     </div>
     <div class="currentcy-data-list">
       <div class="data-list-title">
-        <div class="data-name">Market</div>
-        <div class="data-price">Last price</div>
+        <div class="data-name">
+          <Language resource="home.Market"/>
+        </div>
+        <div class="data-price">
+          <Language resource="home.Last_price"/>
+        </div>
         <div class="data-change">
-          <span>Change</span>
+          <Language resource="home.Change"/>
           <span :class="['data-change-icon',sort]" @click="sortDataList"></span>
         </div>
       </div>
@@ -31,12 +35,20 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import { Observer } from 'mobx-vue';
+import languageStore from '@/stores/language';
 import MexCurrentcyListDataItem from './MexCurrentcyListDataItem.vue';
+
+interface ObjectData {
+  id: number;
+  name: string;
+}
 const tabs = [
   {
     id: 1,
-    name: 'Favorite',
+    name: languageStore.getIntlText('home.Favorites'),
   },
   {
     id: 2,
@@ -166,43 +178,42 @@ const dataList1 = [
     goTotop: false,
   },
 ];
-export default {
-  name: 'mex-currentcy-list',
+@Observer
+@Component({
   components: {
     MexCurrentcyListDataItem,
   },
-  data() {
-    return {
-      items: [],
-      sort: '',
-      inputValue: '',
-      currentTab: tabs[1],
-      tabs,
-    };
-  },
+})
+export default class MexCurrentcyList extends Vue {
+  // data
+  items: Array<any> = [];
+  sort: string = '';
+  inputValue: string = '';
+  currentTab: ObjectData = tabs[1];
+  tabs: Array<any> = tabs;
+
   created() {
     this.updateDataList(this.currentTab.id);
-  },
-  methods: {
-    updateTab(obj) {
-      this.currentTab = obj;
-      this.sort = '';
-      this.updateDataList(obj.id);
-    },
-    updateDataList(num) {
-      num === 1 ? (this.items = dataList) : (this.items = dataList1);
-    },
-    sortDataList() {
-      if (this.sort === '' || this.sort === 'sort-down') {
-        this.sort = 'sort-up';
-        this.updateDataList(1);
-      } else {
-        this.sort = 'sort-down';
-        this.updateDataList(0);
-      }
-    },
-  },
-};
+  }
+  // methods
+  updateTab(obj: ObjectData) {
+    this.currentTab = obj;
+    this.sort = '';
+    this.updateDataList(obj.id);
+  }
+  updateDataList(num: number) {
+    num === 1 ? (this.items = dataList) : (this.items = dataList1);
+  }
+  sortDataList() {
+    if (this.sort === '' || this.sort === 'sort-down') {
+      this.sort = 'sort-up';
+      this.updateDataList(1);
+    } else {
+      this.sort = 'sort-down';
+      this.updateDataList(0);
+    }
+  }
+}
 </script>
 <style lang="scss" scoped>
 $marginLeft-width: 24px;

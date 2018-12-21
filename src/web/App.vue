@@ -3,7 +3,6 @@
     <router-view/>
   </div>
 </template>
-
 <script lang="ts">
 import './element-variables.scss';
 

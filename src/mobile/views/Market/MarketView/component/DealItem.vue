@@ -1,11 +1,11 @@
 <template>
-  <div class="item-out-box">
-    <div class="item-box" v-for="item in data">
-      <span class="time-mark time">{{item.time|formatTime}}</span>
-      <span class="price-mark price">{{item.price}}</span>
-      <span class="size-mark size">{{item.size}}</span>
-    </div>
+<div class="item-out-box">
+  <div class="item-box" v-for="item in data">
+    <span class="time-mark time">{{item.time|formatTime}}</span>
+    <span class="price-mark price">{{item.price}}</span>
+    <span class="size-mark size">{{item.size}}</span>
   </div>
+</div>
 </template>
 
 <script lang="ts">
@@ -82,4 +82,3 @@ export default class extends Vue {
   }
 }
 </style>
-
