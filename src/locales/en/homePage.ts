@@ -2,8 +2,8 @@ export default {
   homepage: 'Home',
   exchange: 'Exchange',
   white_paper: 'White Paper',
-  banner_text_one: 'A Truly Decentralized Digital ',
-  banner_text_two: 'Asset Exchange Platform',
+  banner_text_one: 'A Truly Decentralized',
+  banner_text_two: 'Digital Asset Exchange Platform',
   what_EOSmex: 'What is EOSmex?',
   EOSmex_community: 'EOSmex is of, for and by EOS community.',
   built_with_smart:
