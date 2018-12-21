@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+"@aspnet/signalr@^1.1.0":
+  version "1.1.0"
+  resolved "http://registry.npm.taobao.org/@aspnet/signalr/download/@aspnet/signalr-1.1.0.tgz#616be5d565f78ea6ab3910d8a5fb0690471b35f9"
+  dependencies:
+    eventsource "^1.0.7"
+    request "^2.88.0"
+    ws "^6.0.0"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.0.0-beta.35":
   version "7.0.0"
   resolved "http://registry.npm.taobao.org/@babel/code-frame/download/@babel/code-frame-7.0.0.tgz#06e2ab19bdb535385559aabb5ba59729482800f8"
@@ -5682,14 +5690,12 @@ mkdirp@0.5.x, mkdirp@0.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp
 mobx-vue@^2.0.8:
   version "2.0.8"
   resolved "http://registry.npm.taobao.org/mobx-vue/download/mobx-vue-2.0.8.tgz#db7e9807248332cc3383886fd39c75fa4d5b6f5b"
-  integrity sha1-236YBySDMswzg4hv05x1+k1bb1s=
   dependencies:
     tslib "^1.9.0"
 
 mobx@^5.8.0:
   version "5.8.0"
   resolved "http://registry.npm.taobao.org/mobx/download/mobx-5.8.0.tgz#cf59eae4baa2fde4387ffb6462b7ccf3b497b03c"
-  integrity sha1-z1nq5Lqi/eQ4f/tkYrfM87SXsDw=
 
 moment@2.22.2:
   version "2.22.2"
