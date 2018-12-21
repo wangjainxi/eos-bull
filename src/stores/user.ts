@@ -1,6 +1,5 @@
 import { observable, action } from 'mobx';
 import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
-import socket from '@/utils/socket';
 
 class UserStore {
   @observable
@@ -8,6 +7,7 @@ class UserStore {
   account = 'admin';
   marketId = 1;
   socket: any;
+
   @action.bound
   setCurrency(currency: string) {
     this.currency = currency;
@@ -31,8 +31,8 @@ class UserStore {
     // const res =
 
     const socketLogin = () => {
-      console.log(111);
-      return socket.invoke('SubscribeL2update', 2);
+      const res = socket.invoke('SubscribeL2update', 2);
+      console.log(res);
     };
 
     socket
