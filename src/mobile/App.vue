@@ -1,8 +1,16 @@
 <template>
   <div id="app">
-    <router-view/>
+    <transition name="fade" mode="out-in">
+      <router-view/>
+    </transition>
   </div>
 </template>
+<script  lang="ts">
+export default {
+  name: 'App',
+};
+</script>
+
 <style lang="scss">
 @import "./../style/common.scss";
 #app {
