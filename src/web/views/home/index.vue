@@ -9,106 +9,176 @@
           </div>
           <div class="nav">
             <p>
-              <Language resource="transaction.homepage" />
+              <Language resource="home.homepage"/>
             </p>
-            <p>币币交易</p>
-            <p>白皮书</p>
-            <!-- <select name id="ch">
-              <option value="ch">简体中文</option>
-              <option value="en">English</option>
-            </select>-->
+            <p>
+              <Language resource="home.exchange"/>
+            </p>
+            <p>
+              <Language resource="home.white_paper"/>
+            </p>
+            <select id="ch" :value="language.currentLocale" @change="changeLanguageType">
+              <option v-for="item in language.locales" :value="item.mark">{{item.label}}</option>
+            </select>
           </div>
         </div>
       </div>
       <div class="banner-box-page">
         <div class="banner-box">
           <h4>EOSmex</h4>
-          <p>一个真实去中心化的</p>
-          <p>数字资产交易平台</p>
+          <p>
+            <Language resource="home.banner_text_one"/>
+          </p>
+          <p>
+            <Language resource="home.banner_text_two"/>
+          </p>
         </div>
       </div>
       <div class="introduce-box-page">
         <div class="introduce-box">
-          <h4>什么是EOSmex？</h4>
-          <p>EOSmex完全内生于EOSIO，致力于完善EOS生态，服务EOS用户。</p>
-          <p>基于EOS公链开发，采用完全去中心化，充分利用了区块链技术的优势，实现高并发、低手续费、资金安全、最高交易透明的优质交易体验，达到了底层安全透明与效率的完美平衡 ；</p>
-          <p>用户在EOS个人钱包内即可完成全部操作，无需注册、认证等繁琐流程，感觉交易所的极致体验。</p>
+          <h4>
+            <Language resource="home.what_EOSmex"/>
+          </h4>
+          <p>
+            <Language resource="home.EOSmex_community"/>
+          </p>
+          <p>
+            <Language resource="home.built_with_smart"/>
+          </p>
+          <p>
+            <Language resource="home.no_registration"/>
+          </p>
         </div>
       </div>
       <div class="advantage-box-page">
         <div class="advantage-box">
-          <h3>核心优势</h3>
+          <h3>
+            <Language resource="home.advantages"/>
+          </h3>
           <div class="advantage-inner-box">
             <img src="./home-page-img/ic_advantage1.svg" alt>
             <div>
-              <h4>高量级撮合服务</h4>
-              <p>内生于EOS生态，天然适应全球市场</p>
-              <p>经过多个顶级专业团队测试</p>
-              <p>保证交易效率，高延展性可支持多样交易需求</p>
+              <h4>
+                <Language resource="home.high_efficiency"/>
+              </h4>
+              <p>
+                <Language resource="home.EOS_community"/>
+              </p>
+              <p>
+                <Language resource="home.security_auditing"/>
+              </p>
+              <p>
+                <Language resource="home.meet_various"/>
+              </p>
             </div>
           </div>
           <div class="advantage-inner-box">
             <div>
-              <h4>数字资产安全风控经验</h4>
-              <p>无注册、无充值提币、无用户信息泄露风险</p>
-              <p>资产管理、撮合服务、清结算系统</p>
-              <p>交易平台核心模块去中心化服务</p>
+              <h4>
+                <Language resource="home.digital_asset"/>
+              </h4>
+              <p>
+                <Language resource="home.privacy_protection"/>
+              </p>
+              <p>
+                <Language resource="home.portfolio_management"/>
+              </p>
+              <p>
+                <Language resource="home.true_decentralization"/>
+              </p>
             </div>
             <img src="./home-page-img/ic_advantage2.svg" alt>
           </div>
           <div class="advantage-inner-box">
             <img src="./home-page-img/ic_advantage3.svg" alt>
             <div>
-              <h4>优质贴心服务</h4>
-              <p>国际化市场与社区运营团队</p>
-              <p>EOS代币快速上线交易服务</p>
-              <p>全天 7x24 客服服务</p>
+              <h4>
+                <Language resource="home.high_Quality"/>
+              </h4>
+              <p>
+                <Language resource="home.international_marketing"/>
+              </p>
+              <p>
+                <Language resource="home.trading_services"/>
+              </p>
+              <p>
+                <Language resource="home.customer_service"/>
+              </p>
             </div>
           </div>
         </div>
       </div>
       <div class="programme-box-page">
         <div class="programme-box">
-          <h3>实现方案</h3>
-          <img src="./home-page-img/program.png" alt>
+          <h3>
+            <Language resource="home.workflow_Solution"/>
+          </h3>
+          <img src="./home-page-img/program.png" alt v-if="language.currentLocale === 'zh-CN'">
+          <img src="./home-page-img/bg_english.png" alt v-else>
         </div>
       </div>
       <div class="roadmap-box-page">
-        <div class="roadmap-box">
-          <div>EOSmex
-            <br>项目立项
+        <div :class="language.currentLocale === 'zh-CN'?'roadmap-box':'roadmap-box_en'">
+          <div>
+            <Language resource="home.project_started"/>
+            <br>
+            <Language resource="home.project_started_two"/>
           </div>
-          <div>核心团队
-            <br>主体方案确认完成
+          <div>
+            <Language resource="home.core_product"/>
+
+            <br>
+            <Language resource="home.core_product_two"/>
           </div>
-          <div>合约主体开发完成</div>
-          <div>产品进入内测阶段</div>
-          <div>V1.0择机上线
-            <br>跨链技术方案探讨
+          <div>
+            <Language resource="home.core_development"/>
+            <br>
+            <Language resource="home.core_development_two"/>
+          </div>
+          <div>
+            <Language resource="home.launch_testnet"/>
+          </div>
+          <div>
+            <Language resource="home.mainnet_goes_live"/>
+
+            <br>
+            <Language resource="home.mainnet_goes_live_two"/>
           </div>
           <div>2018/9</div>
           <div>2018/10</div>
           <div>2018/11</div>
           <div>2018/12</div>
           <div>2019......</div>
-          <h3>Roadmap</h3>
+          <h3>
+            <Language resource="home.roadmap"/>
+          </h3>
         </div>
       </div>
       <div class="introduce-box-page">
         <div class="introduce-box desire-box">
-          <h4>我们的愿景</h4>
-          <p>率先实现真实的去中心化交易，提升用户对去中心化交易所的认知</p>
-          <p>内生于EOS上的DApp，最大限度发挥了区块链技术的优势，提供了一键交易</p>
-          <p>在跨链技术成熟稳定后，打通与其他币种的跨链交易服务，以此取代传统的中心化交易所。</p>
+          <h4>
+            <Language resource="home.our_visions"/>
+          </h4>
+          <p>
+            <Language resource="home.a_truly_decentralized"/>
+          </p>
+          <p>
+            <Language resource="home.an_EOS_DApp"/>
+          </p>
+          <p>
+            <Language resource="home.working_on_cross_chain"/>
+          </p>
         </div>
       </div>
       <div class="cooperation-page-box">
         <div class="cooperation-box">
-          <h4>合作伙伴</h4>
+          <h4>
+            <Language resource="home.cooperative_partner"/>
+          </h4>
           <div>
             <img src="./home-page-img/logo_p01.svg" alt>
-            <img src="./home-page-img/logo_p02.svg" alt>
             <img src="./home-page-img/logo_p02h.svg" alt>
+            <img src="./home-page-img/logo_p02.svg" alt>
             <img src="./home-page-img/logo_p03.svg" alt>
             <img src="./home-page-img/logo_p04.svg" alt>
           </div>
@@ -144,8 +214,11 @@
         <div class="foot-box">
           <div>
             <img src="./home-page-img/logo_eosmex011.svg" alt>
-            <p>一个真实去中心化的数字资产交易平台</p>
-            <p>&copy;2017-2018 TYPE.PRO</p>
+            <p>
+              <Language resource="home.banner_text_one"/>
+              <Language resource="home.banner_text_two"/>
+            </p>
+            <p>Copyright &copy; 2018 EOSmex.io. All rights reserved</p>
           </div>
           <div>
             <img src="./home-page-img/ic_weixin.svg" alt>
@@ -153,8 +226,10 @@
             <img src="./home-page-img/ic_weibo.svg" alt>
           </div>
           <div>
-            <h4>联系我们</h4>
-            <p>support@xingyun.com</p>
+            <h4>
+              <Language resource="home.contact_us"/>
+            </h4>
+            <p>info@eosmex.io</p>
           </div>
         </div>
       </div>
@@ -164,10 +239,16 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import languageStore from '@/stores/language';
+import { Observer } from 'mobx-vue';
 
+@Observer
 @Component
 export default class extends Vue {
   bgClass = 'bg-img-box-s1';
+
+  language = languageStore;
+
   scrollEvent() {
     const scrollPackage = document.getElementById('scrollPackage');
     if (!scrollPackage) {
@@ -179,11 +260,15 @@ export default class extends Vue {
       this.bgClass = 'bg-img-box-s1';
     }
   }
+  changeLanguageType(data: any) {
+    languageStore.changeLanguage(data.currentTarget.value);
+  }
 }
 </script>
+
 <style lang="scss">
 #home-page {
-  background: #0d1f35;
+  background: #0c1f35;
   width: 100%;
   height: 100%;
 
@@ -222,7 +307,7 @@ export default class extends Vue {
     top: 0;
     left: 0;
     z-index: 100;
-    background: #0d1f35;
+    background: #0c1f35;
   }
   .top-box {
     width: 1440px;
@@ -266,7 +351,7 @@ export default class extends Vue {
   .banner-box-page {
     width: 100%;
     padding-top: 123px;
-    background: #0d1f35;
+    background: #0c1f35;
   }
   .banner-box {
     width: 1440px;
@@ -344,7 +429,7 @@ export default class extends Vue {
       display: flex;
       justify-content: space-between;
       > div {
-        width: 350px;
+        width: 400px;
         padding-top: 104px;
         h4 {
           font-size: 32px;
@@ -375,7 +460,7 @@ export default class extends Vue {
     width: 100%;
     padding-top: 80px;
     padding-bottom: 70px;
-    background: #0d1f35;
+    background: #0c1f35;
 
     .programme-box {
       width: 1440px;
@@ -392,6 +477,7 @@ export default class extends Vue {
     padding-top: 80px;
     padding-bottom: 70px;
     background: #142e4d;
+
     .roadmap-box {
       width: 1440px;
       height: 645px;
@@ -436,6 +522,72 @@ export default class extends Vue {
       div:nth-child(5) {
         top: 175px;
         left: 1006px;
+      }
+      div:nth-child(6) {
+        top: 543px;
+        left: 301px;
+      }
+      div:nth-child(7) {
+        top: 499px;
+        left: 484px;
+      }
+      div:nth-child(8) {
+        top: 462px;
+        left: 670px;
+      }
+      div:nth-child(9) {
+        top: 420px;
+        left: 857px;
+      }
+      div:nth-child(10) {
+        top: 398px;
+        left: 1045px;
+      }
+    }
+    .roadmap-box_en {
+      width: 1440px;
+      height: 645px;
+      margin: 0 auto;
+      background: url('./home-page-img/bg_time.png') no-repeat;
+      background-position: 293px 314px;
+      position: relative;
+      h3 {
+        color: #fff;
+        font-size: 32px;
+      }
+      > div {
+        color: #bbccff;
+        position: absolute;
+        top: 324px;
+        left: 305px;
+      }
+      > div::after {
+        content: '';
+        position: absolute;
+        bottom: -140px;
+        left: 50%;
+        width: 1px;
+        height: 135px;
+        border-left: 1px dashed #01d6f9;
+      }
+      > div:nth-child(n + 6)::after {
+        display: none;
+      }
+      div:nth-child(2) {
+        top: 289px;
+        left: 457px;
+      }
+      div:nth-child(3) {
+        top: 250px;
+        left: 630px;
+      }
+      div:nth-child(4) {
+        top: 234px;
+        left: 832px;
+      }
+      div:nth-child(5) {
+        top: 175px;
+        left: 966px;
       }
       div:nth-child(6) {
         top: 543px;

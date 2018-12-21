@@ -1,5 +1,5 @@
 import get from 'lodash/get';
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 
 import esUS from '@/locales/en';
 import zhCN from '@/locales/zh';
@@ -13,13 +13,29 @@ const STORAGE_LANGUAGE = '__language__';
 
 class LanguageStore {
   @observable
-  private locale!: string;
+  locale = localStorage.getItem(STORAGE_LANGUAGE);
+
+  locales = [
+    {
+      label: '简体中文',
+      mark: 'zh-CN',
+    },
+    {
+      label: 'English',
+      mark: 'en-US',
+    },
+  ];
 
   private fallbackLocale = 'en-US';
 
+  @computed
+  get currentLocale() {
+    return this.locale || this.fallbackLocale;
+  }
+
+  @computed
   get resource(): any {
-    const { locale, fallbackLocale } = this;
-    return get(languageMap, locale) || get(languageMap, fallbackLocale);
+    return get(languageMap, this.currentLocale);
   }
 
   @action.bound
