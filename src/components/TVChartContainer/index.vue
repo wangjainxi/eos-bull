@@ -1,13 +1,12 @@
 /* eslint-disable */
 <template>
-  <div class="hello">
+  <div >
     <div id="chart_container" class="f-fill" style="height:463px"></div>
   </div>
 </template>
-
-<script>
+<script >
 export default {
-  name: 'HelloWorld',
+  name: 'trading-view',
   mounted() {
     //thisVue.getChartData();//todo: do odkomentowania na feedzie
 
@@ -15,19 +14,20 @@ export default {
     //     thisVue.saved_chart = JSON.parse(window.localStorage.getItem("chart_settings"));
     this.loadChart();
   },
-  updated() {
-    this.loadChart();
-  },
+  // updated() {
+  //   this.loadChart();
+  // },
   methods: {
     loadChart() {
       const thisVue = this;
       thisVue.feed = thisVue.createFeed();
-
+     console.log('2');
       TradingView.onready(function(configurationData) {
         console.log('1');
         thisVue.chart = window.tvWidget = new TradingView.widget({
           fullscreen: false,
           autosize: true,
+          preset: "mobile",
           symbol: thisVue.currency1 + ':' + thisVue.currency2,
           container_id: 'chart_container',
           datafeed: thisVue.feed,
