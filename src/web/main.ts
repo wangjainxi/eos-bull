@@ -6,6 +6,7 @@ import locale from 'element-ui/lib/locale';
 import Language from '@/components/Language';
 import lang from 'element-ui/lib/locale/lang/en';
 import '../registerServiceWorker';
+import '../stores/data';
 
 import {
   Button,
