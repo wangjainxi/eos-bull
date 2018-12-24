@@ -15,6 +15,7 @@ import { Component, Vue } from 'vue-property-decorator';
 
 import Top from './components/header.vue';
 import Foot from './components/footer.vue';
+
 @Component({
   components: {
     Top,

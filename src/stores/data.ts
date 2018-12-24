@@ -1,14 +1,97 @@
+import { observable, computed, action, runInAction } from 'mobx';
 import socket from '@/utils/socket';
-import { PriceLevelUpdate, TickerUpdate, Trade, Order } from '@/define';
+import { getMrkets, getAccountInfo } from '@/utils/apis';
+import {
+  PriceLevelUpdate,
+  TickerUpdate,
+  Trade,
+  Order,
+  Market,
+  AccountInfo,
+  BalanceUpdate,
+} from '@/define';
 
 class DataStore {
+  @observable
+  accountName = 'player';
+
+  @observable
+  markets: Array<Market> = [];
+
+  @observable
+  orders: Array<Order> = [];
+
+  @observable
+  market?: Market;
+
+  @observable
+  accountInfo?: AccountInfo;
+
+  @observable
+  marketParams = {
+    sortby: '', // pair, volume, price, change
+    order: '', // asc, desc
+    name: '',
+  };
+
+  @computed
+  get marketList() {
+    const { name, order, sortby } = this.marketParams;
+    let arr = this.markets.slice();
+    if (name) {
+      arr = arr.filter(e => {
+        const { baseCurrency, quoteCurrency } = e.pair;
+        return baseCurrency.symbol.name.includes(name) || quoteCurrency.symbol.name.includes(name);
+      });
+    }
+
+    if (!sortby) return arr;
+    return arr.sort((e1, e2) => {
+      let v1;
+      let v2;
+      if (sortby === 'volume') {
+        v1 = e1.volumeBase;
+        v2 = e2.volumeBase;
+      } else if (sortby === 'price') {
+        v1 = e1.lastPrice;
+        v2 = e2.lastPrice;
+      } else if (sortby === 'change') {
+        v1 = e1.change;
+        v2 = e2.change;
+      } else {
+        // 其余情况按pair处理
+        v1 = `${e1.pair.baseCurrency.symbol.name}/${e1.pair.quoteCurrency.symbol.name}`;
+        v2 = `${e2.pair.baseCurrency.symbol.name}/${e2.pair.quoteCurrency.symbol.name}`;
+      }
+      if (order === 'desc') return Number(v2 > v1);
+      return Number(v1 > v2);
+    });
+  }
+
   constructor() {
-    console.log(1);
     socket.on('l2update', this.handlePriceLevelUpdate);
     socket.on('ticketUpdate', this.handleTickerUpdate);
     socket.on('tradeUpdate', this.handleTradeUpdate);
     socket.on('balanceUpdate', this.handleBalanceUpdate);
     socket.on('orderUpdate', this.handleOrderUpdate);
+    this.updateMarkets();
+    this.updateAccountInfo();
+  }
+
+  @action
+  async updateMarkets() {
+    const res = await getMrkets();
+    runInAction(() => {
+      this.markets = res;
+    });
+  }
+
+  @action
+  async updateAccountInfo() {
+    const res = await getAccountInfo('player');
+    runInAction(() => {
+      this.accountInfo = res;
+    });
   }
 
   /**
@@ -106,8 +189,11 @@ class DataStore {
   /**
    * 侦听Ticker统计更新
    */
+  @action
   handleTickerUpdate(data: TickerUpdate) {
-    // TODO: 更新交易对
+    const market = this.markets.find(e => e.marketId === data.marketId);
+    if (!market) return;
+    Object.assign(market, data);
   }
 
   /**
@@ -120,23 +206,37 @@ class DataStore {
   /**
    * 侦听余额变化
    */
-  handleBalanceUpdate(data: Trade) {
-    // TODO: 更新余额信息
+  @action
+  handleBalanceUpdate(data: BalanceUpdate) {
+    if (!this.accountInfo) return;
+    const token = this.accountInfo.tokens.find(
+      e => e.symbol.symbol.name === data.newBalance.symbol.symbol.name
+    );
+    token && (token.amount = data.newBalance.amount);
   }
 
   /**
    * 侦听订单状态变化
    */
   handleOrderUpdate(data: Order) {
-    // TODO: 更新订单信息
+    if (!this.accountName) return;
+    const order = this.orders.find(e => e.orderId === data.orderId);
+    if (order) {
+      Object.assign(order, data);
+    } else {
+      this.orders.push(data);
+    }
   }
 
   /**
    * 侦听订单撮合通知
    */
   handleFillUpdate(data: Trade) {
-    // TODO: 处理更新撮合
+    const { buyer, buyerOrderId, sellerOrderId } = data;
+    const orderId = buyer === this.accountName ? buyerOrderId : sellerOrderId;
   }
 }
 
-export default new DataStore();
+const dataStore = new DataStore();
+Object.assign(window, { dataStore });
+export default dataStore;
