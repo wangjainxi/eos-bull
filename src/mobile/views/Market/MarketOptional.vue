@@ -27,7 +27,7 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 const growList = [
   {
     currency: 'EOS',
@@ -57,21 +57,17 @@ const growList = [
     id: 3,
   },
 ];
-export default {
-  date() {
-    return {
-      growList: [],
-    };
-  },
-  methods: {
-    setGrowList(list) {
-      this.growList = list;
-    },
-  },
+import { Vue, Component } from 'vue-property-decorator';
+@Component
+export default class extends Vue {
+  growList = [];
+  setGrowList(list: any) {
+    this.growList = list;
+  }
   created() {
     this.setGrowList(growList);
-  },
-};
+  }
+}
 </script>
 <style lang="scss">
 #market-optional-page {
