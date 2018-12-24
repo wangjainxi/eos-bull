@@ -38,12 +38,12 @@
 </template>
 <script lang="ts">
 import { MessageBox } from 'element-ui';
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import ChooseNode from './chooseNode.vue';
 
 @Component({
   components: {
-    // ChooseNode,
+    ChooseNode,
   },
 })
 export default class Footer extends Vue {
@@ -53,14 +53,14 @@ export default class Footer extends Vue {
   boxKey: number = 10;
   // methods
   showAddress() {
-    // const h = this.$createElement;
-    // MessageBox({
-    //   title: 'EOSmex',
-    //   message: h(ChooseNode, { key: this.boxKey++ }),
-    //   showCancelButton: false,
-    //   showConfirmButton: false,
-    //   customClass: 'foot-choose-node',
-    // });
+    const h = this.$createElement;
+    MessageBox({
+      title: 'EOSmex',
+      message: h(ChooseNode, { key: this.boxKey++ }),
+      showCancelButton: false,
+      showConfirmButton: false,
+      customClass: 'foot-choose-node',
+    });
   }
 }
 </script>

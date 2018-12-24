@@ -97,6 +97,8 @@ const option = [
     type: 2,
   },
 ];
+
+@Component
 export default class ChooseNode extends Vue {
   // data
   showFlag: boolean = false;

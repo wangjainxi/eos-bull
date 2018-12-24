@@ -35,6 +35,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
+@Component
 export default class MyWalletModel extends Vue {
   goAction() {
     console.log(121);
