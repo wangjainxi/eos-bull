@@ -3,7 +3,7 @@ import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 
 class UserStore {
   @observable
-  currency = 'BTC';
+  currency = '1';
   account = 'admin';
   marketId = 1;
   socket: any;

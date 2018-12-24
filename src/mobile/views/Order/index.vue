@@ -8,6 +8,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import OrderTab from './OrderTab.vue';
+import userStore from '@/stores/user';
 
 @Component({
   components: {
@@ -16,6 +17,9 @@ import OrderTab from './OrderTab.vue';
 })
 export default class extends Vue {
   selected = '1';
+  created() {
+    userStore.setCurrency('3');
+  }
 }
 </script>
 

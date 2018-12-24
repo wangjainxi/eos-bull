@@ -8,6 +8,9 @@
           </a>
       </div>
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> efa064345a4c56ed58ea17a1da8a04f2bc12a800
       <div class="tright-view">
         <span class="use-box">
           <img src="@/images/web/ic_eos.svg" alt>

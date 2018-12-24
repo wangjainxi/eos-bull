@@ -278,7 +278,6 @@ export default class extends Vue {
     left: 0;
     width: 100%;
     height: 100%;
-    min-width: 1440px;
     background-image: url('./home-page-img/bg_s1.png');
     background-size: 100% 100%;
   }
@@ -288,7 +287,6 @@ export default class extends Vue {
     left: 0;
     width: 100%;
     height: 100%;
-    min-width: 1440px;
     background-image: url('./home-page-img/bg_s2.png');
     background-size: 100% 100%;
   }
@@ -310,9 +308,9 @@ export default class extends Vue {
     background: #0c1f35;
   }
   .top-box {
-    width: 1440px;
+    width: 1200px;
     margin: 0 auto;
-    padding: 20px 120px 20px;
+    padding: 20px 0 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -352,11 +350,11 @@ export default class extends Vue {
     width: 100%;
     padding-top: 123px;
     background: #0c1f35;
+    min-width: 1200px;
   }
   .banner-box {
-    width: 1440px;
+    width: 1200px;
     height: 676px;
-    padding: 0 120px;
     position: relative;
     background: url('./home-page-img/bg.png') 250px 0 no-repeat;
     background-size: 1040px 629px;
@@ -364,32 +362,32 @@ export default class extends Vue {
     h4 {
       position: absolute;
       top: 154px;
-      left: 182px;
+      left: 62px;
       color: #007aff;
       font-size: 67px;
     }
     p:nth-child(2) {
       position: absolute;
       top: 257px;
-      left: 182px;
+      left: 62px;
       font-size: 44px;
-      font-weight: bold;
       color: #fff;
     }
     p:nth-child(3) {
       position: absolute;
       top: 323px;
-      left: 182px;
+      left: 62px;
       font-size: 44px;
       color: #fff;
     }
   }
   .introduce-box-page {
     width: 100%;
+    min-width: 1200px;
   }
   .introduce-box {
-    width: 1440px;
-    padding: 80px 230px;
+    width: 1200px;
+    padding: 80px 110px;
     margin: 0 auto;
     h4 {
       font-size: 32px;
@@ -411,6 +409,7 @@ export default class extends Vue {
   }
   .advantage-box-page {
     width: 100%;
+    min-width: 1200px;
     background: #0c2641;
   }
   .advantage-box {
@@ -458,12 +457,13 @@ export default class extends Vue {
   }
   .programme-box-page {
     width: 100%;
+    min-width: 1200px;
     padding-top: 80px;
     padding-bottom: 70px;
     background: #0c1f35;
 
     .programme-box {
-      width: 1440px;
+      width: 1200px;
       margin: 0 auto;
       h3 {
         font-size: 32px;
@@ -477,13 +477,13 @@ export default class extends Vue {
     padding-top: 80px;
     padding-bottom: 70px;
     background: #142e4d;
-
+    min-width: 1200px;
     .roadmap-box {
-      width: 1440px;
+      width: 1200px;
       height: 645px;
       margin: 0 auto;
       background: url('./home-page-img/bg_time.png') no-repeat;
-      background-position: 293px 314px;
+      background-position: 173px 314px;
       position: relative;
       h3 {
         color: #fff;
@@ -493,7 +493,7 @@ export default class extends Vue {
         color: #bbccff;
         position: absolute;
         top: 324px;
-        left: 295px;
+        left: 175px;
       }
       > div::after {
         content: '';
@@ -509,47 +509,47 @@ export default class extends Vue {
       }
       div:nth-child(2) {
         top: 289px;
-        left: 450px;
+        left: 330px;
       }
       div:nth-child(3) {
         top: 274px;
-        left: 635px;
+        left: 515px;
       }
       div:nth-child(4) {
         top: 234px;
-        left: 820px;
+        left: 700px;
       }
       div:nth-child(5) {
         top: 175px;
-        left: 1006px;
+        left: 886px;
       }
       div:nth-child(6) {
         top: 543px;
-        left: 301px;
+        left: 181px;
       }
       div:nth-child(7) {
         top: 499px;
-        left: 484px;
+        left: 364px;
       }
       div:nth-child(8) {
         top: 462px;
-        left: 670px;
+        left: 550px;
       }
       div:nth-child(9) {
         top: 420px;
-        left: 857px;
+        left: 737px;
       }
       div:nth-child(10) {
         top: 398px;
-        left: 1045px;
+        left: 925px;
       }
     }
     .roadmap-box_en {
-      width: 1440px;
+      width: 1200px;
       height: 645px;
       margin: 0 auto;
       background: url('./home-page-img/bg_time.png') no-repeat;
-      background-position: 293px 314px;
+      background-position: 173px 314px;
       position: relative;
       h3 {
         color: #fff;
@@ -559,7 +559,7 @@ export default class extends Vue {
         color: #bbccff;
         position: absolute;
         top: 324px;
-        left: 305px;
+        left: 185px;
       }
       > div::after {
         content: '';
@@ -575,39 +575,39 @@ export default class extends Vue {
       }
       div:nth-child(2) {
         top: 289px;
-        left: 457px;
+        left: 337px;
       }
       div:nth-child(3) {
         top: 250px;
-        left: 630px;
+        left: 510px;
       }
       div:nth-child(4) {
         top: 234px;
-        left: 832px;
+        left: 712px;
       }
       div:nth-child(5) {
         top: 175px;
-        left: 966px;
+        left: 846px;
       }
       div:nth-child(6) {
         top: 543px;
-        left: 301px;
+        left: 181px;
       }
       div:nth-child(7) {
         top: 499px;
-        left: 484px;
+        left: 364px;
       }
       div:nth-child(8) {
         top: 462px;
-        left: 670px;
+        left: 550px;
       }
       div:nth-child(9) {
         top: 420px;
-        left: 857px;
+        left: 737px;
       }
       div:nth-child(10) {
         top: 398px;
-        left: 1045px;
+        left: 925px;
       }
     }
   }
@@ -616,10 +616,10 @@ export default class extends Vue {
     padding-top: 80px;
     padding-bottom: 20px;
     background: #fff;
+    min-width: 1200px;
     .cooperation-box {
-      width: 1440px;
+      width: 1200px;
       margin: 0 auto;
-      padding: 0 120px;
       h4 {
         color: #000;
         font-size: 32px;
@@ -645,15 +645,16 @@ export default class extends Vue {
     width: 100%;
     height: 188px;
     background: #001936;
+    min-width: 1200px;
     .foot-box {
-      width: 1440px;
+      width: 1200px;
       height: 100%;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-left: 190px;
-      padding-right: 180px;
+      padding-left: 70px;
+      padding-right: 60px;
       div:nth-child(1) {
         text-align: left;
         img {

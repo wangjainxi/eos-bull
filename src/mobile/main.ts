@@ -14,6 +14,7 @@ Vue.component(TabContainerItem.name, TabContainerItem);
 Vue.component(Popup.name, Popup);
 Vue.component('Language', Language);
 Vue.use(Mint);
+Vue.component('Language', Language);
 Vue.config.productionTip = false;
 new Vue({
   router,
