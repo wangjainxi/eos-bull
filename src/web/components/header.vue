@@ -7,36 +7,9 @@
             <img src="@/images/web/logo_eosmex.svg" alt>
           </a>
       </div>
-<<<<<<< HEAD
-      <div class="tab-view">
-        <el-tabs v-model="activeName">
-          <el-tab-pane label="Exchange" name="first"></el-tab-pane>
-          <el-tab-pane label="Markets" name="second"></el-tab-pane>
-        </el-tabs>
-=======
-      <div class="tright-view">
-        <span class="use-box">
-          <img src="@/images/web/ic_eos.svg" alt>
-          <span class="text-style">admin11</span>
-        </span>
-        <span class="text-style switch">Switch</span>
-        <span class="text-style exit">Exit</span>
-        <span class="order-box flex-start">
-          <img src="@/images/web/ic_order.svg" alt>
-          <span class="text-style exit">admin11</span>
-        </span>
-        <span class="language-box">
-          <img class="mark" src="@/images/web/ic_eos.svg" alt>
-          <select class="text-style" v-model="selected" @change="selectPamas">
-            <option v-for="option in options" v-bind:value="option.value">{{ option.text }}</option>
-          </select>
-          <img class="arrow" src="@/images/web/ic_arrow_down.svg" alt>
-        </span>
->>>>>>> 0acc2a283a0a5c2f3741e0fee8d8b24f43c5d3ab
-      </div>
     </div>
     <div class="tright-view">
-      <span class="use-box">
+      <span class="use-box" @click="goWallet">
             <img src="@/images/web/ic_eos.svg" alt>
             <span class="text-style">admin11</span>
       </span>
@@ -50,7 +23,7 @@
       <span class="language-box">
             <img class="mark" src="@/images/web/ic_eos.svg" alt>
             <select class="text-style" v-model="selected" @change="selectPamas">
-              <option v-for="option in options" v-bind:value="option.value">{{ option.text }}</option>
+              <option v-for="option in options" :key="option.text" v-bind:value="option.value">{{ option.text }}</option>
             </select>
             <img class="arrow" src="@/images/web/ic_arrow_down.svg" alt>
           </span>
@@ -83,6 +56,12 @@ export default class extends Vue {
   created() {
     this.selectPamas();
   }
+  goWallet() {
+    this.$router.push({
+      path: '/myWallet',
+      name: 'myWallet',
+    });
+  }
 }
 </script>
 
@@ -106,6 +85,7 @@ export default class extends Vue {
       align-items: center;
 
       .use-box {
+        cursor: pointer;
         margin-right: 10px;
 
         .text-style {

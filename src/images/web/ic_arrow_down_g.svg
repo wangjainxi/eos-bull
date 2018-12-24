@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="5px" viewBox="0 0 12 5" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_arrow_down</title>
+    <desc>Created with Sketch.</desc>
+    <g id="PC-币币交易所" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="My-Wallet_tooptips01" transform="translate(-1229.000000, -375.000000)" fill-rule="nonzero" stroke="#1CC466">
+            <g id="coin-details" transform="translate(120.000000, 332.000000)">
+                <g id="24H-Volume" transform="translate(1040.000000, 13.000000)">
+                    <polyline id="ic_arrow_down" points="70 30 74.9777832 34.9777832 79.9555664 30"></polyline>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
