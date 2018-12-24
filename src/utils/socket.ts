@@ -1,16 +1,14 @@
-import { HubConnectionBuilder, HubConnection, LogLevel } from '@aspnet/signalr';
-
+import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
+console.log(process.env);
 const socket = new HubConnectionBuilder()
-  .withUrl('http://47.52.113.167:5566/feed')
+  .withUrl(process.env.VUE_APP_URL + '/feed')
   .configureLogging(LogLevel.Information)
   .build();
 
 socket.on('connect', () => {
-  console.log('connect');
+  console.log('connected');
 });
-function s() {
-  socket.invoke('UnsubscribeTradeUpdate', 2);
-}
+
 socket
   .start()
   .then()

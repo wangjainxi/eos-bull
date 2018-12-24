@@ -1,10 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
-import VueI18n from 'vue-i18n';
-import locale from 'element-ui/lib/locale';
 import Language from '@/components/Language';
-import lang from 'element-ui/lib/locale/lang/en';
 import '../registerServiceWorker';
 
 import {
@@ -29,10 +26,8 @@ import {
   DatePicker,
   Dialog,
 } from 'element-ui';
-locale.use(lang);
-Vue.config.productionTip = false;
 
-Vue.use(VueI18n); // 通过插件的形式挂载
+Vue.config.productionTip = false;
 Vue.use(Button);
 Vue.use(Collapse);
 Vue.use(Dialog);
