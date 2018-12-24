@@ -47,6 +47,7 @@
         </div>
       </mt-tab-container-item>
     </mt-tab-container>
+    <HomeIntroduce/>
   </div>
 </template>
 
@@ -54,6 +55,7 @@
 import ListChild from './components/ListChild.vue';
 import userStore from '@/stores/user';
 import { Vue, Component } from 'vue-property-decorator';
+import HomeIntroduce from './HomeIntroduce.vue';
 
 const dealList = [
   {
@@ -103,6 +105,7 @@ const growList = [
 @Component({
   components: {
     ListChild,
+    HomeIntroduce,
   },
 })
 export default class extends Vue {
@@ -236,8 +239,7 @@ export default class extends Vue {
     height: 0.6rem;
     display: flex;
     justify-content: center;
-    padding-top: 0.1rem;
-    align-items: flex-start;
+    align-items: center;
     a {
       font-size: 0.12rem;
       color: #007aff;
@@ -245,7 +247,6 @@ export default class extends Vue {
     img {
       width: 0.12rem;
       height: 0.12rem;
-      margin-top: 0.02rem;
       transform: rotate(-90deg);
       margin-left: 5px;
     }

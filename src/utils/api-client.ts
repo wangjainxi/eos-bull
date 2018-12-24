@@ -8,10 +8,9 @@ interface ResponseData<T = any> {
 }
 
 type Response<T = any> = AxiosResponse<ResponseData<T>>;
-
+console.log(process.env);
 const instance = Axios.create({
-  // baseURL: process.env.REACT_APP_API_URL,
-  baseURL: 'http://47.52.113.167:5566/v1',
+  baseURL: process.env.VUE_APP_URL,
   timeout: 10000,
 });
 
