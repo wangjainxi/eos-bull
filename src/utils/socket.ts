@@ -1,7 +1,7 @@
 import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
-
+console.log(process.env);
 const socket = new HubConnectionBuilder()
-  .withUrl(process.env.SOCKET_URL)
+  .withUrl(process.env.VUE_APP_URL + '/feed')
   .configureLogging(LogLevel.Information)
   .build();
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="5px" viewBox="0 0 10 5" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_arrow_up</title>
+    <desc>Created with Sketch.</desc>
+    <g id="PC-币币交易所" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Node" transform="translate(-1031.000000, -475.000000)" fill-rule="nonzero" stroke="#DDDDDD">
+            <g id="popup01" transform="translate(320.000000, 352.000000)">
+                <g id="popupwindow">
+                    <g id="textInput" transform="translate(60.000000, 105.000000)">
+                        <polyline id="ic_arrow_up" transform="translate(655.905273, 20.189453) scale(1, -1) translate(-655.905273, -20.189453) " points="652 18 656 22.3789062 659.810547 18"></polyline>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

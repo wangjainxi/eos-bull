@@ -3,7 +3,9 @@
     <TransactionDetail v-if="showAlert" :onTransaction="onTransaction"/>
     <div class="market-container">
       <TopView/>
-      <div class="trading-box">trading view</div>
+      <div class="trading-box">
+        <TradingViewMobile/>
+      </div>
       <BomView/>
     </div>
     <div class="btn-box">
@@ -28,20 +30,26 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import userStore from '@/stores/user';
+import dataStore from '@/stores/data';
 import TopView from './TopView.vue';
 import BomView from './BomView.vue';
 import TransactionDetail from './TransactionDetail.vue';
+import TradingViewMobile from './component/tradingView/index.vue';
 
 @Component({
   components: {
     TopView,
     BomView,
     TransactionDetail,
+    TradingViewMobile,
   },
 })
 export default class extends Vue {
   showAlert = false;
   created() {
+    userStore.getData();
+  }
+  mounted() {
     userStore.getData();
   }
   onTransaction(t: any) {

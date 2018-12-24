@@ -52,4 +52,8 @@ export default {
     '在跨链技术成熟稳定后，打通与其他币种的跨链交易服务，以此取代传统的中心化交易所。',
   cooperative_partner: '合作伙伴',
   contact_us: '联系我们',
+  Favorites: '自选',
+  Market: '市场',
+  Last_price: '最新价',
+  Change: '涨跌幅',
 };

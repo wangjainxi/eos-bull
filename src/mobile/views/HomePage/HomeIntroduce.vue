@@ -156,12 +156,12 @@ export default class HomeIntroduce extends Vue {
       display: flex;
       justify-content: flex-start;
       padding: 0 0.3rem;
+      height: 0.23rem;
+      margin-bottom: 0.1rem;
       img {
         width: 0.52rem;
-        height: 0.23rem;
         margin-right: 0.18rem;
         flex: 0 0;
-        margin-bottom: 0.1rem;
       }
       img:last-child {
         margin-right: 0;

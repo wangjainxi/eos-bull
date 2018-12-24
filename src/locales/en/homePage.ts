@@ -54,4 +54,8 @@ export default {
     'Working on cross-chain and side-chain solutions, EOSmex will support cross-chain asset exchange and management to better compete with centralized exchanges.',
   cooperative_partner: 'Partners',
   contact_us: 'Contact us',
+  Favorites: 'Favorites',
+  Market: 'Market',
+  Last_price: 'Last price',
+  Change: 'Change',
 };
