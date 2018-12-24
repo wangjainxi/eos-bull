@@ -9,7 +9,6 @@ interface HistoryParams {
 interface MarketOrderParams {
   marketId: number;
 }
-
 export async function orderHistory(account: string, params: HistoryParams) {
   const res = await instance.get('/orders/history/' + account, {
     params,

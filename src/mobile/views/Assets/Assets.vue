@@ -45,7 +45,7 @@
       <div class="currener-info-box" v-for="(item,index) in currendcrInfo">
         <div>
           <h4>{{item.name}}</h4>
-          <p>{{item.value}}</p>
+          <p>估值：{{item.value}}</p>
         </div>
         <div>
           <h4>可用：{{item.available}}</h4>
@@ -75,7 +75,6 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import userStore from '@/stores/user';
-
 @Component
 export default class Assets extends Vue {
   popupVisible = false;
@@ -104,13 +103,10 @@ export default class Assets extends Vue {
   ];
 
   onpopupState() {
-    console.log(this);
     this.popupVisible = !this.popupVisible;
   }
   created() {
     userStore.setCurrency('4');
-
-    console.log(userStore);
   }
 }
 </script>
@@ -235,7 +231,12 @@ export default class Assets extends Vue {
       h4 {
         color: #007aff;
         font-size: 0.16rem;
-        margin-bottom: 0.05rem;
+        margin-bottom: 0.02rem;
+        font-weight: bold;
+      }
+      p {
+        color: #8d8d8d;
+        font-size: 0.13rem;
         font-weight: bold;
       }
     }
@@ -274,6 +275,7 @@ export default class Assets extends Vue {
         span {
           color: #ff0000;
           font-weight: bold;
+          font-size: 0.15rem;
         }
       }
       > p {
