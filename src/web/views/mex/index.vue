@@ -34,29 +34,33 @@
     </div>
   </div>
 </template>
-<script>
+
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
 import MexCurrentcyList from './MexCurrentcyList.vue';
 import MexHeadInfo from './MexHeadInfo.vue';
-import MexKLineChart from './tradingView/index.vue';
-import MexMarketList from './MexMarketList/MexMarketList.vue';
+// import MexKLineChart from './tradingView/index.vue';
+// import MexMarketList from './MexMarketList/MexMarketList.vue';
 import MexPlaceOrder from './MexPlaceOrder.vue';
 import MexTableHistory from './MexTableHistory.vue';
 import MexTableOrder from './MexTableOrder.vue';
 import MexTranHistoryList from './MexTranHistoryList/MexTranHistoryList.vue';
-export default {
-  name: 'mex',
+
+@Component({
   components: {
     MexCurrentcyList,
     MexHeadInfo,
-    MexMarketList,
-    MexKLineChart,
+    // MexMarketList,
+    // MexKLineChart,
     MexPlaceOrder,
     MexTableHistory,
     MexTableOrder,
     MexTranHistoryList,
   },
-};
+})
+export default class extends Vue {}
 </script>
+
 <style lang="scss">
 #mex {
   padding-top: 10px;
