@@ -8,12 +8,9 @@
           </a>
       </div>
 <<<<<<< HEAD
-      <div class="tab-view">
-        <el-tabs v-model="activeName">
-          <el-tab-pane label="Exchange" name="first"></el-tab-pane>
-          <el-tab-pane label="Markets" name="second"></el-tab-pane>
-        </el-tabs>
 =======
+<<<<<<< HEAD
+>>>>>>> efa064345a4c56ed58ea17a1da8a04f2bc12a800
       <div class="tright-view">
         <span class="use-box">
           <img src="@/images/web/ic_eos.svg" alt>
@@ -32,11 +29,12 @@
           </select>
           <img class="arrow" src="@/images/web/ic_arrow_down.svg" alt>
         </span>
->>>>>>> 0acc2a283a0a5c2f3741e0fee8d8b24f43c5d3ab
       </div>
+=======
+>>>>>>> ce69b6174f55d2a957b11394c0547b85aa68f93e
     </div>
     <div class="tright-view">
-      <span class="use-box">
+      <span class="use-box" @click="goWallet">
             <img src="@/images/web/ic_eos.svg" alt>
             <span class="text-style">admin11</span>
       </span>
@@ -50,7 +48,7 @@
       <span class="language-box">
             <img class="mark" src="@/images/web/ic_eos.svg" alt>
             <select class="text-style" v-model="selected" @change="selectPamas">
-              <option v-for="option in options" v-bind:value="option.value">{{ option.text }}</option>
+              <option v-for="option in options" :key="option.text" v-bind:value="option.value">{{ option.text }}</option>
             </select>
             <img class="arrow" src="@/images/web/ic_arrow_down.svg" alt>
           </span>
@@ -72,16 +70,20 @@ export default class extends Vue {
   selectPamas() {
     if (this.selected === 'en-US') {
       this.lang = 'en-US';
-      this.$i18n.locale = this.lang;
     } else {
       this.lang = 'zh-CN';
-      this.$i18n.locale = this.lang;
     }
     language.changeLanguage(this.lang);
   }
 
   created() {
     this.selectPamas();
+  }
+  goWallet() {
+    this.$router.push({
+      path: '/myWallet',
+      name: 'myWallet',
+    });
   }
 }
 </script>
@@ -106,6 +108,7 @@ export default class extends Vue {
       align-items: center;
 
       .use-box {
+        cursor: pointer;
         margin-right: 10px;
 
         .text-style {

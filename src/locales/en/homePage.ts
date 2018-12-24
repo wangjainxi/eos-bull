@@ -2,8 +2,8 @@ export default {
   homepage: 'Home',
   exchange: 'Exchange',
   white_paper: 'White Paper',
-  banner_text_one: 'A Truly Decentralized Digital ',
-  banner_text_two: 'Asset Exchange Platform',
+  banner_text_one: 'A Truly Decentralized ',
+  banner_text_two: 'Digital Asset Exchange Platform',
   what_EOSmex: 'What is EOSmex?',
   EOSmex_community: 'EOSmex is of, for and by EOS community.',
   built_with_smart:
@@ -35,7 +35,7 @@ export default {
   smart_contract: 'Smart Contract Execution',
   security: 'Security check',
   withdrawal: 'Withdrawal',
-  roadmap: 'ROADMAP',
+  roadmap: 'Roadmap',
   project_started: 'Project',
   project_started_two: 'started',
   core_product: 'Core product ',
@@ -54,4 +54,8 @@ export default {
     'Working on cross-chain and side-chain solutions, EOSmex will support cross-chain asset exchange and management to better compete with centralized exchanges.',
   cooperative_partner: 'Partners',
   contact_us: 'Contact us',
+  Favorites: 'Favorites',
+  Market: 'Market',
+  Last_price: 'Last price',
+  Change: 'Change',
 };

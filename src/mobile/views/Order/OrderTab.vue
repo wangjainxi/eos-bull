@@ -19,7 +19,7 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 import Vue from 'vue';
 import OrderItem from './OrderItem.vue';
 import FilterPopup from './FilterPopup.vue';
@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     showFilter() {
-      this.showPopup = !this.showPopup;
+      // this.showPopup = !this.showPopup;
     },
   },
   components: {

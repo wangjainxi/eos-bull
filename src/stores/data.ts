@@ -66,7 +66,6 @@ class DataStore {
   }
 
   constructor() {
-    debugger;
     socket.on('l2update', this.handlePriceLevelUpdate);
     socket.on('ticketUpdate', this.handleTickerUpdate);
     socket.on('tradeUpdate', this.handleTradeUpdate);
@@ -180,6 +179,7 @@ class DataStore {
    * 侦听市场订单簿价格更新
    */
   handlePriceLevelUpdate(data: PriceLevelUpdate) {
+    console.log(data);
     // TODO: 更新订单簿条目的数据
   }
 

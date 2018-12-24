@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import TabPackage from './TabPackage.vue';
+import TabPackage from '@/mobile/TabPackage.vue';
 import MarketView from './views/Market/MarketView/index.vue';
 import MarketSearch from './views/Market/MarketSearch.vue';
 import MarketOptional from './views/Market/MarketOptional.vue';
@@ -35,6 +35,11 @@ export default new Router({
           path: '/more',
           name: 'more',
           component: () => import(/* webpackChunkName: "more" */ './views/More/More.vue'),
+        },
+        {
+          path: '/assets',
+          name: 'assets',
+          component: () => import(/* webpackChunkName: "more" */ './views/Assets/Assets.vue'),
         },
       ],
     },

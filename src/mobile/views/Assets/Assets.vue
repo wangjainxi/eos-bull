@@ -1,7 +1,7 @@
 <template>
   <div id="about-page">
     <div class="about-banner-box">
-      <img src="../../images/mobile/ic_correct.svg" alt>
+      <img src="@/images/mobile/ic_correct.svg" alt>
       <h3>WantLine</h3>
       <div>
         <h4>8888.93</h4>
@@ -26,7 +26,7 @@
     <div class="currency-input-box">
       <div>
         <p>非小额资产</p>
-        <img src="../../images/mobile/ic_arrow_under.svg" alt>
+        <img src="@/images/mobile/ic_arrow_under.svg" alt>
       </div>
       <div>
         <input type="text" placeholder="搜索">
@@ -45,7 +45,7 @@
       <div class="currener-info-box" v-for="(item,index) in currendcrInfo">
         <div>
           <h4>{{item.name}}</h4>
-          <p>{{item.value}}</p>
+          <p>估值：{{item.value}}</p>
         </div>
         <div>
           <h4>可用：{{item.available}}</h4>
@@ -75,43 +75,37 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import userStore from '@/stores/user';
-
-const currendcrInfo = [
-  {
-    name: 'DPY',
-    available: 3333,
-    value: 3333,
-    Frozen: 3333,
-    id: 1,
-  },
-  {
-    name: 'DPY',
-    available: 3333,
-    value: 3333,
-    Frozen: 3333,
-    id: 2,
-  },
-  {
-    name: 'DPY',
-    available: 3333,
-    value: 3333,
-    Frozen: 3333,
-    id: 3,
-  },
-];
-export default class extends Vue {
+@Component
+export default class Assets extends Vue {
   popupVisible = false;
-  currendcrInfo = [];
+  currendcrInfo = [
+    {
+      name: 'DPY',
+      available: 3333,
+      value: 3333,
+      Frozen: 3333,
+      id: 1,
+    },
+    {
+      name: 'DPY',
+      available: 3333,
+      value: 3333,
+      Frozen: 3333,
+      id: 2,
+    },
+    {
+      name: 'DPY',
+      available: 3333,
+      value: 3333,
+      Frozen: 3333,
+      id: 3,
+    },
+  ];
 
   onpopupState() {
     this.popupVisible = !this.popupVisible;
   }
-  setCurrendcrInfo(list: any) {
-    this.currendcrInfo = list;
-  }
-
   created() {
-    this.setCurrendcrInfo(currendcrInfo);
     userStore.setCurrency('4');
   }
 }
@@ -123,7 +117,7 @@ export default class extends Vue {
     height: 2rem;
     width: 100%;
     padding-top: 0.4rem;
-    background-image: url('../../images/mobile/bg_banner.svg');
+    background-image: url('../../../images/mobile/bg_banner.svg');
     background-repeat: no-repeat;
     background-size: cover;
     color: #fff;
@@ -211,7 +205,7 @@ export default class extends Vue {
         padding-left: 0.16rem;
         line-height: 0.22rem;
         border-radius: 0.11rem;
-        background-image: url('../../images/mobile/ic_find.svg');
+        background-image: url('../../../images/mobile/ic_find.svg');
         background-repeat: no-repeat;
         background-size: 0.12rem 0.12rem;
         background-position: 1.38rem 0.06rem;
@@ -237,7 +231,12 @@ export default class extends Vue {
       h4 {
         color: #007aff;
         font-size: 0.16rem;
-        margin-bottom: 0.05rem;
+        margin-bottom: 0.02rem;
+        font-weight: bold;
+      }
+      p {
+        color: #8d8d8d;
+        font-size: 0.13rem;
         font-weight: bold;
       }
     }
@@ -276,6 +275,7 @@ export default class extends Vue {
         span {
           color: #ff0000;
           font-weight: bold;
+          font-size: 0.15rem;
         }
       }
       > p {

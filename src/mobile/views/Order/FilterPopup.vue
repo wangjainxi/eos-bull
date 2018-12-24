@@ -30,25 +30,19 @@
 </div>
 
 </template>
-<script>
-export default {
-  name: 'filter-popup',
-  methods: {
-    onClose() {
-      console.log(111);
-      this.$emit('onClose');
-    },
-    onClick() {
-      console.log(1);
-      this.isSelected = !this.isSelected;
-    },
-  },
-  data() {
-    return {
-      isSelected: true,
-    };
-  },
-};
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+export default class extends Vue {
+  isSelected = true;
+  onClose() {
+    console.log(111);
+    this.$emit('onClose');
+  }
+  onClick() {
+    console.log(1);
+    this.isSelected = !this.isSelected;
+  }
+}
 </script>
 <style lang="scss" scoped>
 @import '@/style/mixin.scss';
