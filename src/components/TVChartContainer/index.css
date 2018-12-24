@@ -1,0 +1,6 @@
+.TVChartContainer {
+	height: 100%;
+}
+#tv_chart_container #tradingview_fac8c .wrap-3tiHesTk-:nth-child(3){
+	display: none!important;
+}

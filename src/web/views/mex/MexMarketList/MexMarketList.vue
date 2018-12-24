@@ -65,6 +65,7 @@ import { Vue, Component } from 'vue-property-decorator';
 import ListItem from './ListItem.vue';
 
 @Component({
+  name: 'mex-market-list',
   components: {
     ListItem,
   },
