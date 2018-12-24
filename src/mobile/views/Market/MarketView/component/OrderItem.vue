@@ -1,6 +1,6 @@
 <template>
   <div  class="item-out-box">
-    <div class="item-box" v-for="item in data">
+    <div class="item-box" v-for="(item,index) in data" :key="index">
       <span class="total greenbg"></span>
       <span class="price">{{item.price}}</span>
       <span class="size">{{item.size}}</span>
