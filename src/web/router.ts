@@ -9,8 +9,6 @@ import WebPackage from './WebPackage.vue';
 Vue.use(Router);
 
 export default new Router({
-  mode: 'hash',
-  base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
@@ -19,40 +17,29 @@ export default new Router({
     },
     {
       path: '/mex',
-      name: 'Package',
       component: WebPackage,
       children: [
         {
-          path: '/',
-          name: 'mex',
+          path: 'mex',
           component: Mex,
         },
         {
-          path: '/market',
-          name: 'market',
+          path: 'market',
           component: Market,
         },
         {
-          path: '/order-details',
-          name: 'orderDetails',
+          path: 'order-details',
           component: OrderDetails,
         },
         {
-          path: '/about',
-          name: 'about',
+          path: 'about',
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
           component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
         },
         {
-          path: '/markets',
-          name: 'markets',
-          // component: markets
-        },
-        {
-          path: '/myWallet',
-          name: 'myWallet',
+          path: 'myWallet',
           component: MyWallet,
         },
       ],

@@ -1,6 +1,6 @@
 <template>
 <div class="item-out-box">
-  <div class="item-box" v-for="(item,index) in data" :key="key">
+  <div class="item-box" v-for="(item,index) in data" :key="index">
     <span class="time-mark time">{{item.time|formatTime}}</span>
     <span class="price-mark price">{{item.price}}</span>
     <span class="size-mark size">{{item.size}}</span>
@@ -10,7 +10,6 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-
 import { formatTimes } from '@/utils/formatTime';
 
 @Component({

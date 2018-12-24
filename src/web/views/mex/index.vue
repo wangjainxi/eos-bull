@@ -48,8 +48,8 @@ export default {
   components: {
     MexCurrentcyList,
     MexHeadInfo,
-    MexMarketList,
-    MexKLineChart,
+    // MexMarketList,
+    // MexKLineChart,
     MexPlaceOrder,
     MexTableHistory,
     MexTableOrder,

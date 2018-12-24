@@ -7,31 +7,6 @@
             <img src="@/images/web/logo_eosmex.svg" alt>
           </a>
       </div>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> efa064345a4c56ed58ea17a1da8a04f2bc12a800
-      <div class="tright-view">
-        <span class="use-box">
-          <img src="@/images/web/ic_eos.svg" alt>
-          <span class="text-style">admin11</span>
-        </span>
-        <span class="text-style switch">Switch</span>
-        <span class="text-style exit">Exit</span>
-        <span class="order-box flex-start">
-          <img src="@/images/web/ic_order.svg" alt>
-          <span class="text-style exit">admin11</span>
-        </span>
-        <span class="language-box">
-          <img class="mark" src="@/images/web/ic_eos.svg" alt>
-          <select class="text-style" v-model="selected" @change="selectPamas">
-            <option v-for="option in options" v-bind:value="option.value">{{ option.text }}</option>
-          </select>
-          <img class="arrow" src="@/images/web/ic_arrow_down.svg" alt>
-        </span>
-      </div>
-=======
->>>>>>> ce69b6174f55d2a957b11394c0547b85aa68f93e
     </div>
     <div class="tright-view">
       <span class="use-box" @click="goWallet">
