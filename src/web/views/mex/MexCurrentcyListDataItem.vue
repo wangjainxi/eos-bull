@@ -13,8 +13,8 @@
         <div class="content-dec">{{item.pair.baseCurrency.contract}}</div>
       </div>
     </div>
-    <div :class="['market-price', {green:getShowColor}]">{{item.lastPrice}}</div>
-    <div :class="['market-change', {green:getShowColor}]">{{item.change}}</div>
+    <div :class="getShowColor ? 'market-price green' : 'market-price red'">{{item.lastPrice}}</div>
+    <div :class="getShowColor ? 'market-change green' : 'market-change red'">{{item.change}}</div>
   </div>
 </template>
 <script lang="ts">
@@ -102,13 +102,16 @@ $borderWidth: 12px;
   .market-change {
     width: 29.5%;
     text-align: right;
-    color: rgba(229, 55, 87, 1);
+    color: #6e84a3;
   }
   .market-change {
     padding-right: 9px;
   }
   .green {
     color: rgba(28, 196, 102, 1);
+  }
+  .red {
+    color: rgba(229, 55, 87, 1);
   }
 }
 </style>

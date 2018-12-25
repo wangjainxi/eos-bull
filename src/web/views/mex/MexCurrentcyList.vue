@@ -89,7 +89,11 @@ export default class MexCurrentcyList extends Vue {
   tabs: Array<any> = tabs;
 
   created() {
+    dataStore.setMarketParams('change', '', '');
     this.updateDataList(this.currentTab.id);
+  }
+  get itemsdata() {
+    return this.items;
   }
   // methods
   updateTab(obj: ObjectData) {
@@ -101,6 +105,7 @@ export default class MexCurrentcyList extends Vue {
     //获取列表
     const res = dataStore;
     const res1 = dataStore.markets;
+    this.sort = '';
     if (num === 1) {
       // this.items.markets = [];
       // this.items.markets.forEach((element: any) => {
@@ -118,25 +123,25 @@ export default class MexCurrentcyList extends Vue {
   }
   sortDataList() {
     //列表排序
-    // if (this.sort === '' || this.sort === 'sort-down') {
-    //   this.sort = 'sort-up';
-    //   dataStore.marketParams = {
-    //     sortby: 'change', // pair, volume, price, change
-    //     order: 'asc', // asc, desc
-    //     name: '',
-    //   };
-    //   this.items = dataStore;
-    //   // dataStore.marketList();
-    // } else {
-    //   this.sort = 'sort-down';
-    //   dataStore.marketParams = {
-    //     sortby: 'change', // pair, volume, price, change
-    //     order: 'desc', // asc, desc
-    //     name: '',
-    //   };
-    //   this.items = dataStore;
-    //   // this.updateDataList(0);
-    // }
+    if (this.sort === '' || this.sort === 'sort-down') {
+      dataStore.setMarketParams('change', 'asc', '');
+      dataStore.riseRank;
+      console.log(this.items);
+      if (this.currentTab.id === 1) {
+        this.items.markets = this.items.markets.filter((e: any) => e.favourited === true);
+      }
+      this.sort = 'sort-up';
+      // dataStore.marketList();
+    } else {
+      dataStore.setMarketParams('change', 'desc', '');
+      dataStore.riseRank;
+      console.log(this.items);
+      if (this.currentTab.id === 1) {
+        this.items.markets = this.items.markets.filter((e: any) => e.favourited === true);
+      }
+      this.sort = 'sort-down';
+      // this.updateDataList(0);
+    }
   }
 }
 </script>
