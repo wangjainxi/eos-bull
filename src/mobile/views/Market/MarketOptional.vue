@@ -17,7 +17,12 @@
       </div>
       <div v-for="(item,index) in growList" :key="index" class="search-list-child-box">
         <h4 class="list-title">{{item.currency}}/EOS</h4>
-        <img v-if="index !== 0" src="../../../images/mobile/ic_topping.svg" alt>
+        <img
+          v-if="index !== 0"
+          src="../../../images/mobile/ic_topping.svg"
+          v-on:click="setTop(index)"
+          alt
+        >
         <img src="../../../images/mobile/ic_delete.svg" alt>
       </div>
     </div>
@@ -27,51 +32,48 @@
     </div>
   </div>
 </template>
-<script>
-const growList = [
-  {
-    currency: 'EOS',
-    dealSize: 3333,
-    price: 0.0023,
-    statu: 1,
-    percentage: 10,
-    collectionState: 1,
-    id: 1,
-  },
-  {
-    currency: 'EOS',
-    dealSize: 3333,
-    price: 0.0023,
-    statu: 0,
-    percentage: 10,
-    collectionState: 0,
-    id: 2,
-  },
-  {
-    currency: 'EOS',
-    dealSize: 3333,
-    price: 0.0023,
-    statu: 2,
-    percentage: 10,
-    collectionState: 0,
-    id: 3,
-  },
-];
-export default {
-  date() {
-    return {
-      growList: [],
-    };
-  },
-  methods: {
-    setGrowList(list) {
-      this.growList = list;
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+import { Observer } from 'mobx-vue';
+import dataStores from '@/stores/data';
+
+@Observer
+@Component
+export default class extends Vue {
+  dataStores = dataStores;
+  growList = [
+    {
+      currency: 'EOS',
+      dealSize: 3333,
+      price: 0.0023,
+      statu: 1,
+      percentage: 10,
+      collectionState: 1,
+      id: 1,
     },
-  },
-  created() {
-    this.setGrowList(growList);
-  },
-};
+    {
+      currency: 'EOS',
+      dealSize: 3333,
+      price: 0.0023,
+      statu: 0,
+      percentage: 10,
+      collectionState: 0,
+      id: 2,
+    },
+    {
+      currency: 'EOS',
+      dealSize: 3333,
+      price: 0.0023,
+      statu: 2,
+      percentage: 10,
+      collectionState: 0,
+      id: 3,
+    },
+  ];
+  setTop(id: number) {
+    dataStores.setTop(id);
+  }
+}
 </script>
 <style lang="scss">
 #market-optional-page {

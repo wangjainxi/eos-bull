@@ -1,12 +1,14 @@
 <template>
-<div id="top-page">
-  <div class="top-view">
-    <div class="tleft-view flex-start">
-      <div class="logo-view">
-        <a href="/">
+  <div id="top-page">
+    <div class="top-view">
+      <div class="tleft-view flex-start">
+        <div class="logo-view">
+          <a href="/">
             <img src="@/images/web/logo_eosmex.svg" alt>
           </a>
+        </div>
       </div>
+<<<<<<< HEAD
     </div>
     <div class="tright-view">
       <span class="use-box" @click="goWallet">
@@ -27,9 +29,34 @@
             </select>
             <img class="arrow" src="@/images/web/ic_arrow_down.svg" alt>
           </span>
+=======
+      <div class="tright-view">
+        <span class="use-box" @click="goWallet">
+          <img src="@/images/web/ic_eos.svg" alt>
+          <span class="text-style">admin11</span>
+        </span>
+        <span class="text-style switch">Switch</span>
+        <span class="text-style exit">Exit</span>
+        <span class="order-box flex-start">
+          <img src="@/images/web/ic_order.svg" alt>
+          <span class="text-style exit">admin11</span>
+        </span>
+        <!-- {{$t('m.transaction.homepage')}} -->
+        <span class="language-box">
+          <img class="mark" src="@/images/web/ic_eos.svg" alt>
+          <select class="text-style" v-model="selected" @change="selectPamas">
+            <option
+              v-for="option in options"
+              :key="option.text"
+              v-bind:value="option.value"
+            >{{ option.text }}</option>
+          </select>
+          <img class="arrow" src="@/images/web/ic_arrow_down.svg" alt>
+        </span>
+      </div>
+>>>>>>> b37240fd48a01154ba050fc606e2deca3f2c0493
     </div>
   </div>
-</div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';

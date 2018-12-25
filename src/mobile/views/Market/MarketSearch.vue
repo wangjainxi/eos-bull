@@ -1,19 +1,26 @@
 <template>
   <div id="market-search-page">
     <div class="market-search-input-box">
-      <img src="../../../images/mobile/ic_find.svg" alt>
-      <input type="text" placeholder="搜索">
+      <img src="../../../images/mobile/ic_find.svg" v-on:click="onSearch" alt>
+      <input v-model="searchInput" type="text">
       <router-link to="market">
-        <img src="../../../images/mobile/ic_find.svg" alt>
+        <img src="../../../images/mobile/closeBtn.svg" alt>
       </router-link>
     </div>
-    <div v-if="growList.length>0">
+    <div v-if="dataStore.searchmarketList.length>0">
       <div class="search-result-box">搜索结果</div>
-      <div v-for="item in growList" :key="item.id" class="search-list-child-box">
-        <h4 class="list-title">{{item.currency}}/EOS</h4>
-        <p class="list-price">{{item.price}}</p>
-        <p class="list-precentage-rise" v-if="item.statu === 1">+{{item.percentage}}%</p>
-        <p class="list-precentage-fall" v-else-if="item.statu === 0">-{{item.percentage}}%</p>
+      <div v-for="(item,key,index) in dataStore.searchmarketList" :key="index" class="search-list-child-box">
+        <h4
+          class="list-title"
+        >{{item.pair.baseCurrency.symbol.name}}/{{item.pair.quoteCurrency.symbol.name}}</h4>
+        <p
+          class="list-price"
+        >{{Number(item.lastPrice).toFixed(item.pair.quoteCurrency.symbol.precision)}}</p>
+        <p class="list-precentage-rise" v-if="item.change.indexOf('+') !== -1">{{item.change}}%</p>
+        <p
+          class="list-precentage-fall"
+          v-else-if="item.change.indexOf('-') !== -1"
+        >-{{item.percentage}}%</p>
         <p class="list-precentage-middle" v-else>0.00%</p>
         <img v-if="item.collectionState === 1" src="../../../images/mobile/ic_collection_s.svg" alt>
         <img v-else src="../../../images/mobile/ic_collection_current_s.svg" alt>
@@ -25,51 +32,20 @@
     </div>
   </div>
 </template>
-<script>
-const growList = [
-  {
-    currency: 'EOS',
-    dealSize: 3333,
-    price: 0.0023,
-    statu: 1,
-    percentage: 10,
-    collectionState: 1,
-    id: 1,
-  },
-  {
-    currency: 'EOS',
-    dealSize: 3333,
-    price: 0.0023,
-    statu: 0,
-    percentage: 10,
-    collectionState: 0,
-    id: 2,
-  },
-  {
-    currency: 'EOS',
-    dealSize: 3333,
-    price: 0.0023,
-    statu: 2,
-    percentage: 10,
-    collectionState: 0,
-    id: 3,
-  },
-];
-export default {
-  date() {
-    return {
-      growList: [],
-    };
-  },
-  methods: {
-    setGrowList(list) {
-      this.growList = list;
-    },
-  },
-  created() {
-    this.setGrowList(growList);
-  },
-};
+
+<script lang="ts">
+import { Vue, Component, Watch } from 'vue-property-decorator';
+import dataStore from '@/stores/data';
+import { Observer } from 'mobx-vue';
+@Observer
+@Component
+export default class extends Vue {
+  dataStore = dataStore;
+  searchInput = '';
+  onSearch() {
+    dataStore.getMarketSearchList(this.searchInput);
+  }
+}
 </script>
 <style lang="scss">
 #market-search-page {
