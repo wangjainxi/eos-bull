@@ -182,6 +182,14 @@ export interface BalanceUpdate {
 }
 
 /**
+ * 用于My Wallet页面展示代币余额
+ */
+export interface TokenBalance {
+  available: ExtendedAsset;
+  onOrder: ExtendedAsset;
+}
+
+/**
  * 用于My Wallet页面展示
  */
 export interface AccountInfo {
@@ -191,5 +199,15 @@ export interface AccountInfo {
     available: CoinAsset;
     refunding: CoinAsset;
   };
-  tokens: Array<ExtendedAsset>;
+  tokens: Array<TokenBalance>;
+}
+
+/**
+ * 表示公告详情
+ */
+export interface Announcement {
+  announcementId: number;
+  time: string;
+  title: string;
+  content: string;
 }
