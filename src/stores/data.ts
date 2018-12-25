@@ -5,6 +5,7 @@ import {
   getAccountInfo,
   getUserHistoryOrders,
   getUserPendingOrders,
+  getAnnouncementList,
 } from '@/utils/apis';
 import {
   PriceLevelUpdate,
@@ -14,6 +15,7 @@ import {
   Market,
   AccountInfo,
   BalanceUpdate,
+  Announcement,
 } from '@/define';
 
 class DataStore {
@@ -30,6 +32,9 @@ class DataStore {
   pendingOrders: Array<Order> = [];
 
   @observable
+  announcements: Array<Announcement> = [];
+
+  @observable
   market?: Market;
 
   @observable
@@ -41,6 +46,13 @@ class DataStore {
     order: '', // asc, desc
     name: '',
   };
+
+  // 用户钱包页面token展示
+  @computed
+  get walletTokens() {
+    if (!this.accountInfo) return [];
+    return this.accountInfo.tokens;
+  }
 
   @computed
   get marketList() {
@@ -82,7 +94,6 @@ class DataStore {
     socket.on('tradeUpdate', this.handleTradeUpdate);
     socket.on('balanceUpdate', this.handleBalanceUpdate);
     socket.on('orderUpdate', this.handleOrderUpdate);
-    // this.subscribeTickerUpdate();
     this.updateMarkets();
     this.updateAccountInfo();
   }
@@ -116,6 +127,14 @@ class DataStore {
     const res = await getUserPendingOrders(this.accountName);
     runInAction(() => {
       this.pendingOrders = res;
+    });
+  }
+
+  @action
+  async updateAnnouncements() {
+    const res = await getAnnouncementList({ page: 1, pageSize: 5 });
+    runInAction(() => {
+      this.announcements = res.announcements;
     });
   }
 
@@ -233,11 +252,7 @@ class DataStore {
    */
   @action
   handleBalanceUpdate(data: BalanceUpdate) {
-    if (!this.accountInfo) return;
-    const token = this.accountInfo.tokens.find(
-      e => e.symbol.symbol.name === data.newBalance.symbol.symbol.name
-    );
-    token && (token.amount = data.newBalance.amount);
+    this.updateAccountInfo();
   }
 
   /**

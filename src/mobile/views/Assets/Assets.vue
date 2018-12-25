@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class="currener-info-box-package">
-      <div class="currener-info-box">
+      <!-- <div class="currener-info-box">
         <div>
           <h4>EOS</h4>
         </div>
@@ -41,15 +41,15 @@
           <h4>可用：808.19</h4>
           <p>冻结：0.0000</p>
         </div>
-      </div>
-      <div class="currener-info-box" v-for="(item,index) in currendcrInfo">
+      </div> -->
+      <div class="currener-info-box" v-for="(item,index) in dataStore.walletTokens" :key="index">
         <div>
-          <h4>{{item.name}}</h4>
+          <h4>{{item.available.symbol.symbol.name}}</h4>
           <p>估值：{{item.value}}</p>
         </div>
         <div>
-          <h4>可用：{{item.available}}</h4>
-          <p>冻结：{{item.Frozen}}</p>
+          <h4>可用：{{item.available.amount}}</h4>
+          <p>冻结：{{item.onOrder.amount}}</p>
         </div>
       </div>
     </div>
@@ -74,39 +74,17 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import userStore from '@/stores/user';
+import dataStore from '@/stores/data';
+import { Observer } from 'mobx-vue';
+
+@Observer
 @Component
 export default class Assets extends Vue {
+  dataStore = dataStore;
   popupVisible = false;
-  currendcrInfo = [
-    {
-      name: 'DPY',
-      available: 3333,
-      value: 3333,
-      Frozen: 3333,
-      id: 1,
-    },
-    {
-      name: 'DPY',
-      available: 3333,
-      value: 3333,
-      Frozen: 3333,
-      id: 2,
-    },
-    {
-      name: 'DPY',
-      available: 3333,
-      value: 3333,
-      Frozen: 3333,
-      id: 3,
-    },
-  ];
 
   onpopupState() {
     this.popupVisible = !this.popupVisible;
-  }
-  created() {
-    userStore.setCurrency('4');
   }
 }
 </script>
