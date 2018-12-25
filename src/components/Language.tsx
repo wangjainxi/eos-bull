@@ -17,5 +17,4 @@ class Language extends Vue {
     return <span>{intlText}</span>;
   }
 }
-
 export default Language;

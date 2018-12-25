@@ -39,7 +39,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 import MexCurrentcyList from './MexCurrentcyList.vue';
 import MexHeadInfo from './MexHeadInfo.vue';
-// import MexKLineChart from './tradingView/index.vue';
+import MexKLineChart from './tradingView/index.vue';
 // import MexMarketList from './MexMarketList/MexMarketList.vue';
 import MexPlaceOrder from './MexPlaceOrder.vue';
 import MexTableHistory from './MexTableHistory.vue';
@@ -51,7 +51,7 @@ import MexTranHistoryList from './MexTranHistoryList/MexTranHistoryList.vue';
     MexCurrentcyList,
     MexHeadInfo,
     // MexMarketList,
-    // MexKLineChart,
+    MexKLineChart,
     MexPlaceOrder,
     MexTableHistory,
     MexTableOrder,
