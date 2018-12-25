@@ -12,12 +12,12 @@
     <div class="home-user-info-box">
       <div>
         <img src="../../../images/mobile/ic_announcement.svg" alt>
-        <p>WantLine</p>
+        <p>{{ dataStore.accountName }}</p>
       </div>
       <div>
         <p>总估值</p>
-        <h4>9999999.9999</h4>
-        <p>EOS</p>
+        <h4>{{ dataStore.totalValuation.amount }}</h4>
+        <p>{{ dataStore.totalValuation.name }}</p>
       </div>
     </div>
     <div class="home-tab-title-box">
@@ -56,6 +56,8 @@ import ListChild from './components/ListChild.vue';
 import userStore from '@/stores/user';
 import { Vue, Component } from 'vue-property-decorator';
 import HomeIntroduce from './HomeIntroduce.vue';
+import { Observer } from 'mobx-vue';
+import dataStore from '@/stores/data';
 
 const dealList = [
   {
@@ -102,6 +104,7 @@ const growList = [
   },
 ];
 
+@Observer
 @Component({
   components: {
     ListChild,
@@ -112,6 +115,7 @@ export default class extends Vue {
   selected = '1';
   dealList: any[] = [];
   growList: any[] = [];
+  dataStore = dataStore;
 
   setDealList(list: any) {
     this.dealList = list;

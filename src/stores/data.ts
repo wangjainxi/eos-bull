@@ -88,6 +88,18 @@ class DataStore {
     });
   }
 
+  @computed
+  get totalValuation() {
+    if (!this.accountInfo) {
+      return {
+        name: 'EOS',
+        amount: '0.0000',
+      };
+    }
+    const { amount, symbol } = this.accountInfo.estValue;
+    return { amount, name: symbol.name };
+  }
+
   constructor() {
     socket.on('l2update', this.handlePriceLevelUpdate);
     socket.on('tickerUpdate', this.handleTickerUpdate);

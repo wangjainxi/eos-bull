@@ -2,10 +2,10 @@
   <div id="about-page">
     <div class="about-banner-box">
       <img src="@/images/mobile/ic_correct.svg" alt>
-      <h3>WantLine</h3>
+      <h3>{{ dataStore.accountName }}</h3>
       <div>
-        <h4>8888.93</h4>
-        <span>EOS</span>
+        <h4>{{ dataStore.totalValuation.amount }}</h4>
+        <span>{{ dataStore.totalValuation.name }}</span>
       </div>
       <p>总估值</p>
     </div>
