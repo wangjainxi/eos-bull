@@ -9,14 +9,20 @@
         <p>完成</p>
       </router-link>
     </div>
-    <div v-if="growList.length>0" class="optional-list-box">
+    <div v-if="dataStores.marketsLink.length>0" class="optional-list-box">
       <div class="optional-list-title-box">
         <p>交易对</p>
         <p>置顶</p>
         <p>删除</p>
       </div>
-      <div v-for="(item,index) in growList" :key="index" class="search-list-child-box">
-        <h4 class="list-title">{{item.currency}}/EOS</h4>
+      <div
+        v-for="(item,index) in dataStores.marketsLink"
+        :key="index"
+        class="search-list-child-box"
+      >
+        <h4
+          class="list-title"
+        >{{item.pair.baseCurrency.symbol.name}}/{{item.pair.quoteCurrency.symbol.name}}</h4>
         <img
           v-if="index !== 0"
           src="../../../images/mobile/ic_topping.svg"
@@ -41,35 +47,6 @@ import dataStores from '@/stores/data';
 @Component
 export default class extends Vue {
   dataStores = dataStores;
-  growList = [
-    {
-      currency: 'EOS',
-      dealSize: 3333,
-      price: 0.0023,
-      statu: 1,
-      percentage: 10,
-      collectionState: 1,
-      id: 1,
-    },
-    {
-      currency: 'EOS',
-      dealSize: 3333,
-      price: 0.0023,
-      statu: 0,
-      percentage: 10,
-      collectionState: 0,
-      id: 2,
-    },
-    {
-      currency: 'EOS',
-      dealSize: 3333,
-      price: 0.0023,
-      statu: 2,
-      percentage: 10,
-      collectionState: 0,
-      id: 3,
-    },
-  ];
   setTop(id: number) {
     dataStores.setTop(id);
   }
