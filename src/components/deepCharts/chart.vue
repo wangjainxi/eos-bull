@@ -1,6 +1,6 @@
 <template>
   <div class="x-bar">
-    <div :id="id"
+    <div :id="id" class="chart-line"
     :option="option"></div>
   </div>
 </template>
@@ -21,3 +21,13 @@ export default {
   },
 };
 </script>
+<style scoped>
+  .x-bar{
+    height: 100%;
+    width: 100%;
+  }
+  .chart-line{
+    height: 100%;
+    width: 100%;
+  }
+</style>

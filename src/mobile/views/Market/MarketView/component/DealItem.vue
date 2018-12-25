@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Vue, Component } from 'vue-property-decorator';
 import { formatTimes } from '@/utils/formatTime';
 
 @Component({
@@ -18,7 +18,6 @@ import { formatTimes } from '@/utils/formatTime';
   },
 })
 export default class extends Vue {
-  @Prop({ required: true })
   data = [];
 }
 </script>

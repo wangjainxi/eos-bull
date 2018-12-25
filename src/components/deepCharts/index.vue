@@ -1,18 +1,15 @@
 <template>
-  <div id="app">
+  <div id="deep-chart">
     <x-chart :id="id" :option="option"></x-chart>
   </div>
 </template>
 
 <script lang="ts">
 import XChart from './chart.vue';
-
 import options from './chart-options.js';
-console.log(options);
 export default {
   name: 'app',
   data() {
-    console.log(options);
     const option = options;
     return {
       id: 'test',
@@ -26,9 +23,8 @@ export default {
 </script>
 
 <style>
-#test {
+#deep-chart {
   width: 100%;
-  height: 400px;
-  margin: 40px auto;
+  height: 100%;
 }
 </style>

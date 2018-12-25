@@ -5,10 +5,8 @@
 import { Vue, Component } from 'vue-property-decorator';
 import Datafeed from './api/index.js';
 export default class extends Vue {
-  beforeMount() {
-    console.log(Datafeed);
-  }
   mounted() {
+    debugger;
     const widget = (window.tvWidget = new window.TradingView.widget({
       symbol: 'Coinbase:BTC/USD',
       interval: '15',

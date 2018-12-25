@@ -8425,10 +8425,6 @@ vue-hot-reload-api@^2.3.0:
   version "2.3.1"
   resolved "http://registry.npm.taobao.org/vue-hot-reload-api/download/vue-hot-reload-api-2.3.1.tgz#b2d3d95402a811602380783ea4f566eb875569a2"
 
-vue-i18n@^8.4.0:
-  version "8.4.0"
-  resolved "http://registry.npm.taobao.org/vue-i18n/download/vue-i18n-8.4.0.tgz#bc3437ff8f5f389c57235ced602e9d7bfd87995c"
-
 vue-jest@^3.0.1:
   version "3.0.1"
   resolved "http://registry.npm.taobao.org/vue-jest/download/vue-jest-3.0.1.tgz#127cded1a57cdfcf01fa8a10ce29579e2cb3a04d"
@@ -8485,6 +8481,10 @@ vue-template-compiler@^2.5.17:
 vue-template-es2015-compiler@^1.6.0:
   version "1.6.0"
   resolved "http://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.6.0.tgz#dc42697133302ce3017524356a6c61b7b69b4a18"
+
+vue-trading-view@^1.0.1:
+  version "1.0.1"
+  resolved "http://registry.npm.taobao.org/vue-trading-view/download/vue-trading-view-1.0.1.tgz#05309a9cfa70c296b1c24251a6e29595a8a3579b"
 
 vue@^2.5.17:
   version "2.5.21"

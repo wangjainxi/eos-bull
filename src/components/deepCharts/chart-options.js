@@ -24,8 +24,6 @@ let sell = data.sell;
         dataX.push(ele[0])
         dataY.push(ele[1])
       })
-console.log(sell);
-console.log(buy);
 const options = {
     chart: {
       type: 'area'
