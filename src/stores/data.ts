@@ -17,6 +17,7 @@ import {
   BalanceUpdate,
   Announcement,
 } from '@/define';
+import { getAccount } from '@/utils/scatter';
 
 class DataStore {
   @observable
@@ -108,6 +109,9 @@ class DataStore {
     socket.on('orderUpdate', this.handleOrderUpdate);
     this.updateMarkets();
     this.updateAccountInfo();
+    setInterval(() => {
+      getAccount(this.accountName);
+    }, 3000);
   }
 
   @action
@@ -195,36 +199,36 @@ class DataStore {
   /**
    * 订阅余额变更
    */
-  subscribeBalanceUpdate(accountName: string) {
-    return socket.invoke('SubscribeBalanceUpdate', accountName);
+  subscribeBalanceUpdate() {
+    return socket.invoke('SubscribeBalanceUpdate', this.accountName);
   }
 
   /**
    * 取消订阅余额变更
    */
-  unsubscribeBalanceUpdate(accountName: string) {
-    return socket.invoke('UnsubscribeBalanceUpdate', accountName);
+  unsubscribeBalanceUpdate() {
+    return socket.invoke('UnsubscribeBalanceUpdate', this.accountName);
   }
 
   /**
    * 订阅订单状态更新
    */
-  subscribeOrderUpdate(accountName: string) {
-    return socket.invoke('SubscribeOrderUpdate', accountName);
+  subscribeOrderUpdate() {
+    return socket.invoke('SubscribeOrderUpdate', this.accountName);
   }
 
   /**
    * 取消订阅订单状态更新
    */
-  unsubscribeOrderUpdate(accountName: string) {
-    return socket.invoke('UnsubscribeOrderUpdate', accountName);
+  unsubscribeOrderUpdate() {
+    return socket.invoke('UnsubscribeOrderUpdate', this.accountName);
   }
 
   /**
    * 订阅订单撮合通知
    */
-  subscribeFillUpdate(accountName: string) {
-    return socket.invoke('SubscribeFillUpdate', accountName);
+  subscribeFillUpdate() {
+    return socket.invoke('SubscribeFillUpdate', this.accountName);
   }
 
   /**

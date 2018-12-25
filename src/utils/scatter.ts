@@ -1,8 +1,8 @@
 import { Market } from '@/define';
 
-const EOS = require('eosjs');
-const ScatterJS = require('scatterjs-core');
-const ScatterEOS = require('scatterjs-plugin-eosjs');
+import EOS from 'eosjs';
+import ScatterJS from 'scatterjs-core';
+import ScatterEOS from 'scatterjs-plugin-eosjs';
 
 ScatterJS.plugins(new ScatterEOS());
 
@@ -28,7 +28,7 @@ const lazyInitScatter = async () => {
     eos = scatter.eos(network, EOS, {});
     scatterInstalled = true;
     scatterLoading = false;
-  } catch {
+  } catch (err) {
     scatterLoading = false;
     scatterInstalled = false;
   }
@@ -71,6 +71,11 @@ const callEosApi = async <T = any>(apiName: string, ...args: Array<any>) => {
 export const getIdentity = async () => {
   const res = await callScatterApi('getIdentity', { accounts: [network] });
   return res.accounts[0];
+};
+
+export const getAccount = async (accountName: string) => {
+  const res = await callEosApi('getAccount', accountName);
+  return res;
 };
 
 const transaction = async (...args: any[]) => {
