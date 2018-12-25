@@ -8,26 +8,28 @@
 import { Vue, Component } from 'vue-property-decorator';
 import { getMarketOrderbook } from '@/utils/apis';
 import HighCharts from 'highcharts';
-export default {
-  // 验证类型
-  props: {
-    id: {
-      type: String,
-    },
-    option: {
-      type: Object,
-    },
-  },
-  methods: {
-    async getOrder() {
-      const res = await getMarketOrderbook(1);
-      console.log(res);
-    },
-  },
+import Orderdata from '@/stores/data';
+import { observer } from 'mobx-vue';
+
+@observer
+export default class extends Vue {
+  id = String;
+  option = Object;
   mounted() {
-    HighCharts.chart(this.id, this.option);
-  },
-};
+    const dataX: Array<any> = [];
+    const dataY: Array<any> = [];
+    Orderdata.resOrder.bids.forEach((ele: any) => {
+      console.log(ele);
+      dataX.push(ele[0]);
+      dataY.push(ele[1]);
+    });
+    Orderdata.resOrder.asks.forEach((ele: any) => {
+      dataX.push(ele[0]);
+      dataY.push(ele[1]);
+    });
+    // HighCharts.chart(this.id, this.option);
+  }
+}
 </script>
 <style scoped>
 .x-bar {

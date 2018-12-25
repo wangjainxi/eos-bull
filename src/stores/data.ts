@@ -1,3 +1,4 @@
+import { getMarketOrderbook } from './../utils/apis';
 import { observable, computed, action, runInAction } from 'mobx';
 import socket from '@/utils/socket';
 import { getMrkets, getAccountInfo } from '@/utils/apis';
@@ -9,6 +10,8 @@ import {
   Market,
   AccountInfo,
   BalanceUpdate,
+  ResOrder,
+  Orderbook,
 } from '@/define';
 
 class DataStore {
@@ -23,6 +26,12 @@ class DataStore {
 
   @observable
   orders: Array<Order> = [];
+
+  @observable
+  resOrder = {
+    bids: [],
+    asks: [],
+  };
 
   @observable
   searchmarketList: Array<Market> = [];
@@ -100,6 +109,21 @@ class DataStore {
     this.updateMarkets();
     this.updateAccountInfo();
   }
+
+  /**
+   * restful获取订单
+   *    */
+  @action
+  getResOrder = () => {
+    getMarketOrderbook(1).then(res => {
+      //@ts-ignore
+      this.resOrder.asks = res.asks;
+      //@ts-ignore
+      this.resOrder.bids = res.bids;
+    });
+    //
+  };
+
   @action
   setMarketParams(sortby: string = 'pair', order: string = 'asc', name: string = '') {
     this.marketParams = {

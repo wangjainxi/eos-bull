@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import userStore from '@/stores/user';
+import data from '@/stores/data';
 import dataStore from '@/stores/data';
 import TopView from './TopView.vue';
 import BomView from './BomView.vue';
@@ -47,16 +47,16 @@ import TradingViewMobile from './component/tradingView/index.vue';
 export default class extends Vue {
   showAlert = false;
   created() {
-    userStore.getData();
+    data.getResOrder();
   }
   mounted() {
-    userStore.getData();
+    data.getResOrder();
   }
   onTransaction(t: any) {
     const data = {
       name: 'business',
       params: {
-        id: String(userStore.marketId),
+        id: '1',
         type: t,
       },
     };
