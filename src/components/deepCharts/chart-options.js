@@ -1,16 +1,31 @@
-import Orderdata from '@/stores/data';
-console.log(Orderdata.resOrder);
-console.log(Orderdata.resOrder.bids);
+let data = {
+  "buy": [
+              [100, 8000],
+              [200, 7000],
+              [300, 6000],
+              [400, 1000]
+          ],
+          "sell": [
+              [500, 1100],
+              [610, 3000],
+              [720, 4000],
+              [830, 5000]
+          ]
+      }
+let buy = data.buy;
+let sell = data.sell;
     let dataX = [];
     let dataY = [];
-    Orderdata.resOrder.bids.forEach(ele => {
+    buy.forEach(ele => {
         dataX.push(ele[0])
         dataY.push(ele[1])
     })
-    Orderdata.resOrder.asks.forEach(ele => {
+    sell.forEach(ele => {
         dataX.push(ele[0])
         dataY.push(ele[1])
       })
+console.log(sell);
+console.log(buy);
 const options = {
     chart: {
       type: 'area'
