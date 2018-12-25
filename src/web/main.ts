@@ -2,8 +2,6 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import Language from '@/components/Language';
-import VueHighcharts from 'vue-highcharts';
-import Highcharts from 'highcharts';
 import '../registerServiceWorker';
 import '../stores/data';
 
@@ -53,7 +51,7 @@ Vue.use(Option);
 Vue.use(Input);
 Vue.use(DatePicker);
 Vue.component('Language', Language);
-Vue.use(VueHighcharts, { Highcharts });
+
 new Vue({
   router,
   render: h => h(App),
