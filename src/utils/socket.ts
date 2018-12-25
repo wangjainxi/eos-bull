@@ -1,6 +1,6 @@
 import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 
-const callArr = [];
+console.log(process.env);
 
 const socket = new HubConnectionBuilder()
   .withUrl(process.env.VUE_APP_SOCKET_URL)
