@@ -1,25 +1,24 @@
 <template>
-  <div class="trading-box">
-    <VueTradingView/>
+  <div>
+    <TVChartContainer/>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-// import TVChartContainer from '@/components/TVChartContainer/index.vue';
-import VueTradingView from '@/components/vueTradingView/index.vue';
-@Component({
+import TVChartContainer from '@/components/TVChartContainer/index.vue';
+export default {
+  name: 'trading-view',
   components: {
-    VueTradingView,
+    TVChartContainer,
   },
-})
-export default class extends Vue {
-  //
-}
+};
+// @Component({
+//   components: {
+//     TVChartContainer,
+//   },
+// })
+// export default class extends Vue {
+//   //
+// }
 </script>
-<style scoped>
-.trading-box{
-  height: 100%;
-}
-
-</style>

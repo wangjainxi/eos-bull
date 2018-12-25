@@ -15,9 +15,7 @@
           <mt-tab-container-item id="1">
             <OrderTab/>
           </mt-tab-container-item>
-          <mt-tab-container-item id="2">
-            <DeepCharts/>
-          </mt-tab-container-item>
+          <mt-tab-container-item id="2">深度图</mt-tab-container-item>
           <mt-tab-container-item id="3">
             <DealTab/>
           </mt-tab-container-item>
@@ -35,7 +33,6 @@
 import OrderTab from './component/OrderTab.vue';
 import DealTab from './component/DealTab.vue';
 import Introduction from './component/Introduction.vue';
-import DeepCharts from '@/components/deepCharts/index.vue';
 export default {
   name: 'bom-view',
   data() {
@@ -52,12 +49,11 @@ export default {
     OrderTab,
     DealTab,
     Introduction,
-    DeepCharts,
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '../../../../style/mixin.scss';
 #bom-container {
   width: 100vw;
@@ -76,7 +72,6 @@ export default {
     }
     @include flexLayout(column, flex-start, flex-start);
     .mint-navbar {
-      height: 0.4rem;
       border-bottom: 0.01rem solid rgba(242, 245, 251, 1);
       border-top: 0.01rem solid rgba(242, 245, 251, 1);
     }
@@ -96,7 +91,7 @@ export default {
     }
     .mint-navbar .mint-tab-item {
       padding: 0px;
-      margin-top: 0.15rem;
+      margin: 0.1rem;
     }
     .mint-navbar .mint-tab-item.is-selected {
       border-bottom: none;

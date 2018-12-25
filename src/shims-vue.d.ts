@@ -6,9 +6,3 @@ declare module 'mint-ui';
 declare module 'element-ui/lib/locale';
 declare module 'element-ui/lib/locale/lang/en';
 declare module 'element-ui/lib/locale/lang/zh-CN';
-declare module 'vue-highcharts';
-declare module 'vue-trading-view';
-interface Window {
-  TradingView:any;
-  tvWidget:any;
-}
