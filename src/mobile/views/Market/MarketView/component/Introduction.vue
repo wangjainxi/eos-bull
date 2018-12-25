@@ -27,9 +27,10 @@
 </template>
 
 <script lang="ts">
-export default {
-  name: 'introduction',
-};
+import { Vue, Component } from 'vue-property-decorator';
+
+@Component({})
+export default class extends Vue {}
 </script>
 <style lang="scss" scoped>
 @import '@/style/mixin.scss';

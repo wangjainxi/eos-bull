@@ -18,7 +18,7 @@
               <Language resource="home.white_paper"/>
             </p>
             <select id="ch" :value="language.currentLocale" @change="changeLanguageType">
-              <option v-for="item in language.locales" :value="item.mark">{{item.label}}</option>
+              <option v-for="(item,index) in language.locales" :key="index" :value="item.mark">{{item.label}}</option>
             </select>
           </div>
         </div>

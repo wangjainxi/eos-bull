@@ -14,18 +14,18 @@ const instance = Axios.create({
   timeout: 10000,
 });
 
-function resWrapper<T = any>(res: Response<T>) {
+function resWrapper<T = any>(res: Response<T>): T {
   return res.data.data;
 }
 
 /**
  * 获取市场列表
  */
-export const getMrkets = async (accountName: string) => {
+export const getMrkets = async (accountName?: string) => {
   const res = await instance.get('/v1/markets', {
     params: { accountName },
   });
-  return resWrapper<Response<Market[]>>(res);
+  return resWrapper<Market[]>(res);
 };
 
 /**
@@ -33,7 +33,7 @@ export const getMrkets = async (accountName: string) => {
  */
 export const getTokenInfo = async (contract: string, symbol: string) => {
   const res = await instance.get(`/v1/token/${contract}/${symbol}`);
-  return resWrapper<Response<TokenInfo>>(res);
+  return resWrapper<TokenInfo>(res);
 };
 
 /**
@@ -41,7 +41,7 @@ export const getTokenInfo = async (contract: string, symbol: string) => {
  */
 export const getMarketOrderbook = async (marketId: number) => {
   const res = await instance.get(`/v1/markets/${marketId}/orderbook`);
-  return resWrapper<Response<Orderbook>>(res);
+  return resWrapper<Orderbook>(res);
 };
 
 /**
@@ -49,7 +49,7 @@ export const getMarketOrderbook = async (marketId: number) => {
  */
 export const getMarketTrades = async (marketId: number) => {
   const res = await instance.get(`/v1/markets/${marketId}/trades`);
-  return resWrapper<Response<Trade[]>>(res);
+  return resWrapper<Trade[]>(res);
 };
 
 /**
@@ -57,7 +57,7 @@ export const getMarketTrades = async (marketId: number) => {
  */
 export const getUserPendingOrders = async (accountName: string) => {
   const res = await instance.get(`/v1/orders/pending/${accountName}`);
-  return resWrapper<Response<Order[]>>(res);
+  return resWrapper<Order[]>(res);
 };
 
 /**
@@ -68,12 +68,10 @@ export const getUserHistoryOrders = async (
   params?: { page?: number; pageSize?: number }
 ) => {
   const res = await instance.get(`/v1/orders/history/${accountName}`, { params });
-
-  type HistoryOrderData = Response<{
+  return resWrapper<{
     orders: Order[];
     count: number;
-  }>;
-  return resWrapper<HistoryOrderData>(res);
+  }>(res);
 };
 
 /**
@@ -81,13 +79,13 @@ export const getUserHistoryOrders = async (
  */
 export const getOrderFills = async (orderId: number) => {
   const res = await instance.get(`/v1/fills/${orderId}`);
-  return resWrapper<Response<Trade[]>>(res);
+  return resWrapper<Trade[]>(res);
 };
 
 /**
  * 获取账户信息
  */
-export const getCountInfo = async (accountName: string) => {
+export const getAccountInfo = async (accountName: string) => {
   const res = await instance.get(`/v1/account/${accountName}`);
-  return resWrapper<Response<AccountInfo>>(res);
+  return resWrapper<AccountInfo>(res);
 };

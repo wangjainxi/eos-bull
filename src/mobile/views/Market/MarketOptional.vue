@@ -17,7 +17,12 @@
       </div>
       <div v-for="(item,index) in growList" :key="index" class="search-list-child-box">
         <h4 class="list-title">{{item.currency}}/EOS</h4>
-        <img v-if="index !== 0" src="../../../images/mobile/ic_topping.svg" alt>
+        <img
+          v-if="index !== 0"
+          src="../../../images/mobile/ic_topping.svg"
+          v-on:click="setGrowList(item.id)"
+          alt
+        >
         <img src="../../../images/mobile/ic_delete.svg" alt>
       </div>
     </div>
@@ -28,44 +33,40 @@
   </div>
 </template>
 <script lang="ts">
-const growList = [
-  {
-    currency: 'EOS',
-    dealSize: 3333,
-    price: 0.0023,
-    statu: 1,
-    percentage: 10,
-    collectionState: 1,
-    id: 1,
-  },
-  {
-    currency: 'EOS',
-    dealSize: 3333,
-    price: 0.0023,
-    statu: 0,
-    percentage: 10,
-    collectionState: 0,
-    id: 2,
-  },
-  {
-    currency: 'EOS',
-    dealSize: 3333,
-    price: 0.0023,
-    statu: 2,
-    percentage: 10,
-    collectionState: 0,
-    id: 3,
-  },
-];
 import { Vue, Component } from 'vue-property-decorator';
 @Component
 export default class extends Vue {
-  growList = [];
-  setGrowList(list: any) {
-    this.growList = list;
-  }
-  created() {
-    this.setGrowList(growList);
+  growList = [
+    {
+      currency: 'EOS',
+      dealSize: 3333,
+      price: 0.0023,
+      statu: 1,
+      percentage: 10,
+      collectionState: 1,
+      id: 1,
+    },
+    {
+      currency: 'EOS',
+      dealSize: 3333,
+      price: 0.0023,
+      statu: 0,
+      percentage: 10,
+      collectionState: 0,
+      id: 2,
+    },
+    {
+      currency: 'EOS',
+      dealSize: 3333,
+      price: 0.0023,
+      statu: 2,
+      percentage: 10,
+      collectionState: 0,
+      id: 3,
+    },
+  ];
+  setGrowList(id: string) {
+    //
   }
 }
 </script>

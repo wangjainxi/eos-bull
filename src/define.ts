@@ -178,7 +178,7 @@ export interface TickerUpdate {
  */
 export interface BalanceUpdate {
   accountName: string; // 用户账户名
-  newBalance: string; // 新余额 (ExtendedAsset类型)
+  newBalance: ExtendedAsset; // 新余额
 }
 
 /**
