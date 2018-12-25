@@ -178,7 +178,7 @@ export interface TickerUpdate {
  */
 export interface BalanceUpdate {
   accountName: string; // 用户账户名
-  newBalance: ExtendedAsset; // 新余额
+  newBalance: TokenBalance; // 新余额
 }
 
 /**
@@ -187,6 +187,7 @@ export interface BalanceUpdate {
 export interface TokenBalance {
   available: ExtendedAsset;
   onOrder: ExtendedAsset;
+  estValue: ExtendedAsset;
 }
 
 /**
@@ -197,7 +198,9 @@ export interface AccountInfo {
   estValue: CoinAsset;
   eos: {
     available: CoinAsset;
+    staked: CoinAsset;
     refunding: CoinAsset;
+    onOrder: CoinAsset;
   };
   tokens: Array<TokenBalance>;
 }
