@@ -1,6 +1,11 @@
 import { observable, computed, action, runInAction } from 'mobx';
 import socket from '@/utils/socket';
-import { getMrkets, getAccountInfo } from '@/utils/apis';
+import {
+  getMrkets,
+  getAccountInfo,
+  getUserHistoryOrders,
+  getUserPendingOrders,
+} from '@/utils/apis';
 import {
   PriceLevelUpdate,
   TickerUpdate,
@@ -19,7 +24,10 @@ class DataStore {
   markets: Array<Market> = [];
 
   @observable
-  orders: Array<Order> = [];
+  historyOrders: Array<Order> = [];
+
+  @observable
+  pendingOrders: Array<Order> = [];
 
   @observable
   market?: Market;
@@ -70,10 +78,11 @@ class DataStore {
 
   constructor() {
     socket.on('l2update', this.handlePriceLevelUpdate);
-    socket.on('ticketUpdate', this.handleTickerUpdate);
+    socket.on('tickerUpdate', this.handleTickerUpdate);
     socket.on('tradeUpdate', this.handleTradeUpdate);
     socket.on('balanceUpdate', this.handleBalanceUpdate);
     socket.on('orderUpdate', this.handleOrderUpdate);
+    // this.subscribeTickerUpdate();
     this.updateMarkets();
     this.updateAccountInfo();
   }
@@ -91,6 +100,22 @@ class DataStore {
     const res = await getAccountInfo('player');
     runInAction(() => {
       this.accountInfo = res;
+    });
+  }
+
+  @action
+  async updateHistoryOrders(params?: { page?: number; pageSize?: number }) {
+    const res = await getUserHistoryOrders(this.accountName, params);
+    runInAction(() => {
+      this.historyOrders = res.orders;
+    });
+  }
+
+  @action
+  async updatePendingOrders() {
+    const res = await getUserPendingOrders(this.accountName);
+    runInAction(() => {
+      this.pendingOrders = res;
     });
   }
 
@@ -189,7 +214,7 @@ class DataStore {
   /**
    * 侦听Ticker统计更新
    */
-  @action
+  @action.bound
   handleTickerUpdate(data: TickerUpdate) {
     const market = this.markets.find(e => e.marketId === data.marketId);
     if (!market) return;
@@ -219,13 +244,13 @@ class DataStore {
    * 侦听订单状态变化
    */
   handleOrderUpdate(data: Order) {
-    if (!this.accountName) return;
-    const order = this.orders.find(e => e.orderId === data.orderId);
-    if (order) {
-      Object.assign(order, data);
-    } else {
-      this.orders.push(data);
-    }
+    // if (!this.accountName) return;
+    // const order = this.pendingOrders.find(e => e.orderId === data.orderId);
+    // if (order) {
+    //   Object.assign(order, data);
+    // } else {
+    //   this.orders.push(data);
+    // }
   }
 
   /**
