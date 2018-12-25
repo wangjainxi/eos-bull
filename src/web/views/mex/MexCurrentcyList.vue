@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="data-list-body">
-        <mex-currentcy-list-data-item v-for="(item, index) in items" :item="item" :key="index"></mex-currentcy-list-data-item>
+        <MexCurrentcyListDataItem v-for="(item, index) in items.markets" :item="item" :key="index"></MexCurrentcyListDataItem>
       </div>
     </div>
   </div>
@@ -38,8 +38,11 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { Observer } from 'mobx-vue';
+import { getMrkets, getAccountInfo } from '@/utils/apis';
 import languageStore from '@/stores/language';
 import MexCurrentcyListDataItem from './MexCurrentcyListDataItem.vue';
+// import socket from '@/utils/socket';
+import dataStore from '@/stores/data';
 
 interface ObjectData {
   id: number;
@@ -71,113 +74,6 @@ const dataList = [
     goTotop: false,
   },
 ];
-const dataList1 = [
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
-  },
-  {
-    name: 'DICE / EOS',
-    dec: 'betdicetoken',
-    price: 0.002541,
-    change: '5.44%',
-    goTotop: true,
-  },
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
-  },
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
-  },
-  {
-    name: 'DICE / EOS',
-    dec: 'betdicetoken',
-    price: 0.002541,
-    change: '5.44%',
-    goTotop: true,
-  },
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
-  },
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
-  },
-  {
-    name: 'DICE / EOS',
-    dec: 'betdicetoken',
-    price: 0.002541,
-    change: '5.44%',
-    goTotop: true,
-  },
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
-  },
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
-  },
-  {
-    name: 'DICE / EOS',
-    dec: 'betdicetoken',
-    price: 0.002541,
-    change: '5.44%',
-    goTotop: true,
-  },
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
-  },
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
-  },
-  {
-    name: 'DICE / EOS',
-    dec: 'betdicetoken',
-    price: 0.002541,
-    change: '5.44%',
-    goTotop: true,
-  },
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
-  },
-];
 @Observer
 @Component({
   components: {
@@ -186,7 +82,7 @@ const dataList1 = [
 })
 export default class MexCurrentcyList extends Vue {
   // data
-  items: Array<any> = [];
+  items: any = dataStore;
   sort: string = '';
   inputValue: string = '';
   currentTab: ObjectData = tabs[1];
@@ -202,16 +98,45 @@ export default class MexCurrentcyList extends Vue {
     this.updateDataList(obj.id);
   }
   updateDataList(num: number) {
-    num === 1 ? (this.items = dataList) : (this.items = dataList1);
+    //获取列表
+    const res = dataStore;
+    const res1 = dataStore.markets;
+    if (num === 1) {
+      // this.items.markets = [];
+      // this.items.markets.forEach((element: any) => {
+      //   if (element.favourited) {
+      //     this.items.markets.push(element);
+      //   }
+      // });
+      console.log(this.items.markets);
+      this.items.markets = this.items.markets.filter((e: any) => e.favourited === true);
+      console.log(this.items.markets);
+    } else {
+      dataStore.updateMarkets();
+      this.items = dataStore;
+    }
   }
   sortDataList() {
-    if (this.sort === '' || this.sort === 'sort-down') {
-      this.sort = 'sort-up';
-      this.updateDataList(1);
-    } else {
-      this.sort = 'sort-down';
-      this.updateDataList(0);
-    }
+    //列表排序
+    // if (this.sort === '' || this.sort === 'sort-down') {
+    //   this.sort = 'sort-up';
+    //   dataStore.marketParams = {
+    //     sortby: 'change', // pair, volume, price, change
+    //     order: 'asc', // asc, desc
+    //     name: '',
+    //   };
+    //   this.items = dataStore;
+    //   // dataStore.marketList();
+    // } else {
+    //   this.sort = 'sort-down';
+    //   dataStore.marketParams = {
+    //     sortby: 'change', // pair, volume, price, change
+    //     order: 'desc', // asc, desc
+    //     name: '',
+    //   };
+    //   this.items = dataStore;
+    //   // this.updateDataList(0);
+    // }
   }
 }
 </script>

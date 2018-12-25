@@ -1,41 +1,61 @@
 <template>
   <div class="data-list-item">
     <div class="data-market">
-      <div :class="['star',{starActive:starStatus}]" @click="addStar($event)"></div>
-      <img src="../../../images/logo_box.png" alt="" class="market-logo">
+      <div
+        :class="['star',{starActive:item.favourited || localFavourite.indexOf(item.marketId) >= 0}]"
+        @click="addStar(item.marketId,$event)"
+      ></div>
+      <img src="../../../images/logo_box.png" alt class="market-logo">
       <div class="market-content">
-        <div class="content-name">{{item.name}}</div>
-        <div class="content-dec">{{item.dec}}</div>
+        <div
+          class="content-name"
+        >{{`${item.pair.baseCurrency.symbol.name}/${item.pair.quoteCurrency.symbol.name}`}}</div>
+        <div class="content-dec">{{item.pair.baseCurrency.contract}}</div>
       </div>
     </div>
-    <div :class="['market-price', {green:item.goTotop}]">{{item.price}}</div>
-    <div
-      :class="['market-change', {green:item.goTotop}]"
-    >{{item.goTotop ? `+${item.change}` : `-${item.change}`}}</div>
+    <div :class="['market-price', {green:getShowColor}]">{{item.lastPrice}}</div>
+    <div :class="['market-change', {green:getShowColor}]">{{item.change}}</div>
   </div>
 </template>
-<script>
-export default {
-  name: 'mex-currentcy-list-data-item',
-  data() {
-    return {
-      starStatus: false,
-    };
-  },
-  props: ['item'],
-  methods: {
-    addStar($event) {
-      $event.stopPropagation();
-      $event.stopImmediatePropagation();
-      this.starStatus = !this.starStatus;
-      if (this.starStatus) {
-        console.log('添加');
-      } else {
-        console.log('取消');
-      }
-    },
-  },
-};
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator';
+@Component
+export default class MexCurrentcyListDataItem extends Vue {
+  // name: 'mex-currentcy-list-data-item',
+  // data
+  @Prop() item: any;
+
+  starStatus: boolean = false;
+  localFavourite: Array<any> = [];
+  // props: ['item'],
+  create() {
+    const loData = localStorage.getItem('localFavourite');
+    if (!loData) return;
+    this.localFavourite = JSON.parse(loData) || [];
+  }
+  // methods
+  addStar(id: number, $event: any) {
+    $event.stopPropagation();
+    $event.stopImmediatePropagation();
+    this.starStatus = !this.starStatus;
+    if (this.starStatus) {
+      console.log('添加');
+      this.localFavourite.push(id);
+      localStorage.setItem('localFavourite', JSON.stringify(this.localFavourite));
+    } else {
+      console.log('取消');
+      this.localFavourite = this.localFavourite.filter((e: any) => e !== id);
+      localStorage.setItem('localFavourite', JSON.stringify(this.localFavourite));
+    }
+  }
+  getShowColor() {
+    if (this.item.change.indexOf('+') >= 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
 </script>
 <style lang="scss" >
 $borderWidth: 12px;
@@ -84,7 +104,7 @@ $borderWidth: 12px;
     text-align: right;
     color: rgba(229, 55, 87, 1);
   }
-  .market-change{
+  .market-change {
     padding-right: 9px;
   }
   .green {
