@@ -83,7 +83,6 @@ export default class extends Vue {
     }
   }
   onLanguageSwich(type: string) {
-    console.log(type);
     languageStore.changeLanguage(type);
   }
   created() {

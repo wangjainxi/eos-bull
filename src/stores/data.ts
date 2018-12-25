@@ -22,9 +22,6 @@ class DataStore {
   marketsLink: Array<Market> = [];
 
   @observable
-  growList: any;
-
-  @observable
   orders: Array<Order> = [];
 
   @observable
