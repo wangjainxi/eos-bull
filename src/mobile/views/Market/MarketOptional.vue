@@ -20,7 +20,7 @@
         <img
           v-if="index !== 0"
           src="../../../images/mobile/ic_topping.svg"
-          v-on:click="setGrowList(item.id)"
+          v-on:click="setTop(index)"
           alt
         >
         <img src="../../../images/mobile/ic_delete.svg" alt>
@@ -34,8 +34,13 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import { Observer } from 'mobx-vue';
+import dataStores from '@/stores/data';
+
+@Observer
 @Component
 export default class extends Vue {
+  dataStores = dataStores;
   growList = [
     {
       currency: 'EOS',
@@ -65,8 +70,8 @@ export default class extends Vue {
       id: 3,
     },
   ];
-  setGrowList(id: string) {
-    //
+  setTop(id: number) {
+    dataStores.setTop(id);
   }
 }
 </script>
