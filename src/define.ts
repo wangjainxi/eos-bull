@@ -187,7 +187,7 @@ export interface BalanceUpdate {
 export interface TokenBalance {
   available: ExtendedAsset;
   onOrder: ExtendedAsset;
-  estValue: ExtendedAsset;
+  estValue: CoinAsset;
 }
 
 /**
