@@ -1,86 +1,111 @@
 <template>
-<div>
-  <div class="order-item" v-for="item in data">
-    <div class="type-buy"  v-if="item.type === 1">
-      <div class="top">
-       <span class="left-info">
-        <img class="type" src="@/images/mobile/ic_buy_c.svg" alt="">
-        <span class="currency">MAX/EOS</span>
-        <span class="time">12-11</span>
-      </span>
-      <span>
-        <Button class="btn" type="default" v-if="item.status === 1">撤销</Button>
-        <span  v-if="item.status === 0">已撤销</span>
-       <span   v-if="item.status === 2" class="already-deal">
-          <span>已成交</span>
-           <img class="type" src="@/images/mobile/ic_sell_c.svg" alt="">
-        </span>
-      </span>
-
+  <div>
+    <div class="order-item" v-for="item in data">
+      <div class="type-buy" v-if="item.type === 1">
+        <div class="top">
+          <span class="left-info">
+            <img class="type" src="@/images/mobile/ic_buy_c.svg" alt>
+            <span class="currency">MAX/EOS</span>
+            <span class="time">12-11</span>
+          </span>
+          <span>
+            <Button class="btn" type="default" v-if="item.status === 1">
+              <Language resource="order.Revoke"/>
+            </Button>
+            <span v-if="item.status === 0">
+              <Language resource="order.Revoked"/>
+            </span>
+            <span v-if="item.status === 2" class="already-deal">
+              <span>
+                <Language resource="order.Dealt"/>
+              </span>
+              <img class="type" src="@/images/mobile/ic_sell_c.svg" alt>
+            </span>
+          </span>
+        </div>
+        <div class="bom">
+          <span>
+            <span>
+              <Language resource="order.Order_Price"/>(EOS)
+            </span>
+            <span>0.000150</span>
+          </span>
+          <span>
+            <span>
+              <Language resource="order.Order_VOL"/>(MAX)
+            </span>
+            <span>64274.6666</span>
+          </span>
+          <span>
+            <span>
+              <Language resource="order.VOL"/>(MAX)
+            </span>
+            <span>150</span>
+          </span>
+        </div>
+        <div class="line"></div>
+      </div>
+      <div class="type-sell" v-if="item.type === 2">
+        <div class="top">
+          <span class="left-info">
+            <img class="type" src="@/images/mobile/ic_sell_c.svg" alt>
+            <span class="currency">MAX/EOS</span>
+            <span class="time">12-11</span>
+          </span>
+          <span>
+            <Button class="btn" type="default" v-if="item.status === 1">撤销</Button>
+            <span v-if="item.status === 0">
+              <Language resource="order.Revoked"/>
+            </span>
+            <span v-if="item.status === 2" class="already-deal">
+              <span><Language resource="order.Dealt"/></span>
+              <img class="type" src="@/images/mobile/ic_arrow_right_ red.svg" alt>
+            </span>
+          </span>
+        </div>
+        <div class="bom">
+          <span>
+            <span>
+              <Language resource="order.Order_Price"/>(EOS)
+            </span>
+            <span>0.000150</span>
+          </span>
+          <span>
+            <span>
+              <Language resource="order.Order_VOL"/>(MAX)
+            </span>
+            <span>64274.6666</span>
+          </span>
+          <span>
+            <span>
+              <Language resource="order.VOL"/>(MAX)
+            </span>
+            <span>150</span>
+          </span>
+        </div>
+        <div class="bom2">
+          <span>
+            <span>
+              <Language resource="order.AVG_Price"/>(EOS)
+            </span>
+            <span>0.000150</span>
+          </span>
+          <span>
+            <span>
+              <Language resource="order.Total"/>(EOS)
+            </span>
+            <span>64274.6666</span>
+          </span>
+          <span>
+            <span>
+              <Language resource="order.Fee"/>(EOS)
+            </span>
+            <span>150</span>
+          </span>
+        </div>
+        <div class="line"></div>
+      </div>
     </div>
-    <div class="bom">
-      <span>
-        <span>委托价(EOS)</span>
-        <span>0.000150</span>
-      </span>
-       <span>
-        <span>委托量(MAX)</span>
-        <span>64274.6666</span>
-      </span>
-       <span>
-        <span>成交量(MAX)</span>
-        <span>150</span>
-      </span>
-    </div>
-    <div class="line"></div>
-    </div>
-    <div class="type-sell"  v-if="item.type === 2" >
-      <div class="top">
-         <span class="left-info">
-          <img class="type" src="@/images/mobile/ic_sell_c.svg" alt="">
-          <span class="currency">MAX/EOS</span>
-          <span class="time">12-11</span>
-        </span>
-      <span>
-        <Button class="btn" type="default" v-if="item.status === 1">撤销</Button>
-        <span  v-if="item.status === 0">已撤销</span>
-        <span   v-if="item.status === 2" class="already-deal">
-          <span>已成交</span>
-           <img class="type" src="@/images/mobile/ic_arrow_right_ red.svg" alt="">
-        </span>
-      </span>
-    </div>
-    <div class="bom">
-      <span>
-        <span>委托价(EOS)</span>
-        <span>0.000150</span>
-      </span>
-       <span>
-        <span>委托量(MAX)</span>
-        <span>64274.6666</span>
-      </span>
-       <span>
-        <span>成交量(MAX)</span>
-        <span>150</span>
-      </span>
-    </div>
-    <div class="bom2">
-      <span>
-        <span>成交均价(EOS)</span>
-        <span>0.000150</span>
-      </span>
-       <span>
-        <span>成交总额(EOS)</span>
-        <span>64274.6666</span>
-      </span>
-       <span>
-        <span>手续费(EOS)</span>
-        <span>150</span>
-      </span>
-    </div>
-    <div class="line"></div>
-    </div>
-  </div>
   </div>
 </template>
 <script>

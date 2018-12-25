@@ -1,7 +1,9 @@
 import transaction from './transaction';
 import myWallet from './myWallet';
 import home from './homePage';
-import asset from './asset';
+import asset from './assetAndMarket';
+import order from './order';
+
 const foot = {
   Homepage: '首页',
   Markets: '行情',
@@ -15,4 +17,5 @@ export default {
   home,
   asset,
   foot,
+  order,
 };

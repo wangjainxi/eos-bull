@@ -14,14 +14,18 @@
           @click="onTransaction('buy')"
           style="background:rgba(7,199,78,1);color:#fff"
           type="default"
-        >买入</mt-button>
+        >
+          <Language resource="asset.buy"/>
+        </mt-button>
       </div>
       <div>
         <mt-button
           @click="onTransaction('sell')"
           style="background:rgba(255,0,0,1);color:#fff"
           type="default"
-        >卖出</mt-button>
+        >
+          <Language resource="asset.sell"/>
+        </mt-button>
       </div>
     </div>
   </div>
