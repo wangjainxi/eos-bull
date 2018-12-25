@@ -1,24 +1,15 @@
 <template>
-  <div class="hello">
+  <div class="tradding-view-style">
     <VueTradingView :options="{
       symbol: 'BTC/USD',
-      theme: 'dark',
-        toolbar_bg:'#131722',
+      theme: 'Light',
+      toolbar_bg:'#131722',
       allow_symbol_change: true,
       autosize:true,
-      debug: false,
+      debug: true,
       width: '100%',
+       interval: '15',
       height: '100%',
-         overrides: {
-        'mainSeriesProperties.showCountdown': true,
-        'paneProperties.background': '#131722',
-        'paneProperties.vertGridProperties.color': '#363c4e',
-        'paneProperties.horzGridProperties.color': '#363c4e',
-        'symbolWatermarkProperties.transparency': 90,
-        'scalesProperties.textColor': '#AAA',
-        'mainSeriesProperties.candleStyle.wickUpColor': '#336854',
-        'mainSeriesProperties.candleStyle.wickDownColor': '#7f323f',
-      },
         disabled_features: [
         'control_bar',
         'timeframes_toolbar',
@@ -29,7 +20,22 @@
         'header_screenshot',
         'countdown',
         'header_compare',
+        'header_indicators',
+        'header_chart_type',
+        'snapshot_trading_drawings',
+        'loading_screen'
       ],
+      enabled_features: ['move_logo_to_main_pane',],
+      overrides: {
+        'mainSeriesProperties.showCountdown': true,
+        'paneProperties.background': '#131722',
+        'paneProperties.vertGridProperties.color': '#363c4e',
+        'paneProperties.horzGridProperties.color': '#363c4e',
+        'symbolWatermarkProperties.transparency': 290,
+        'scalesProperties.textColor': '#AAA',
+        'mainSeriesProperties.candleStyle.wickUpColor': '#336854',
+        'mainSeriesProperties.candleStyle.wickDownColor': '#7f323f',
+      },
     }" />
   </div>
 </template>
@@ -46,3 +52,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.tradding-view-style{
+  height: 100%;
+}
+</style>
