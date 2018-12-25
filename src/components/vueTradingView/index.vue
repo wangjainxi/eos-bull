@@ -25,17 +25,6 @@
         'snapshot_trading_drawings',
         'loading_screen'
       ],
-      enabled_features: ['move_logo_to_main_pane',],
-      overrides: {
-        'mainSeriesProperties.showCountdown': true,
-        'paneProperties.background': '#131722',
-        'paneProperties.vertGridProperties.color': '#363c4e',
-        'paneProperties.horzGridProperties.color': '#363c4e',
-        'symbolWatermarkProperties.transparency': 290,
-        'scalesProperties.textColor': '#AAA',
-        'mainSeriesProperties.candleStyle.wickUpColor': '#336854',
-        'mainSeriesProperties.candleStyle.wickDownColor': '#7f323f',
-      },
     }" />
   </div>
 </template>
