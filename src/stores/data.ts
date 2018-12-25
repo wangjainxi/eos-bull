@@ -13,6 +13,9 @@ import {
 
 class DataStore {
   @observable
+  accountName = 'player';
+
+  @observable
   markets: Array<Market> = [];
 
   @observable
@@ -135,7 +138,7 @@ class DataStore {
 
   @action
   async updateMarketsLink() {
-    const res = await getMrkets(this.accountInfo.accountName);
+    const res = await getMrkets('222');
     runInAction(() => {
       this.marketsLink = res.filter(e => {
         return e.favourited === true;
@@ -271,8 +274,11 @@ class DataStore {
   /**
    * 侦听Ticker统计更新
    */
+  @action
   handleTickerUpdate(data: TickerUpdate) {
-    // TODO: 更新交易对
+    const market = this.markets.find(e => e.marketId === data.marketId);
+    if (!market) return;
+    Object.assign(market, data);
   }
 
   /**
@@ -298,14 +304,21 @@ class DataStore {
    * 侦听订单状态变化
    */
   handleOrderUpdate(data: Order) {
-    // TODO: 更新订单信息
+    if (!this.accountName) return;
+    const order = this.orders.find(e => e.orderId === data.orderId);
+    if (order) {
+      Object.assign(order, data);
+    } else {
+      this.orders.push(data);
+    }
   }
 
   /**
    * 侦听订单撮合通知
    */
   handleFillUpdate(data: Trade) {
-    // TODO: 处理更新撮合
+    const { buyer, buyerOrderId, sellerOrderId } = data;
+    const orderId = buyer === this.accountName ? buyerOrderId : sellerOrderId;
   }
 }
 
