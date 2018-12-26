@@ -1,18 +1,8 @@
 import onfire from 'onfire.js';
 import { getMarketOrderbook } from './../utils/apis';
 import { observable, computed, action, runInAction } from 'mobx';
-import socket from '@/utils/socket';
 import { getMrkets, getAccountInfo, getUserPendingOrders, getAnnouncementList } from '@/utils/apis';
-import {
-  PriceLevelUpdate,
-  TickerUpdate,
-  Trade,
-  Order,
-  Market,
-  AccountInfo,
-  BalanceUpdate,
-  Announcement,
-} from '@/define';
+import { TickerUpdate, Order, Market, AccountInfo, BalanceUpdate, Announcement } from '@/define';
 import { getAccount } from '@/utils/scatter';
 
 class DataStore {
@@ -252,90 +242,6 @@ class DataStore {
   }
 
   /**
-   * 订阅市场订单簿价格更新
-   */
-  subscribeL2update(marketId: number) {
-    return socket.invoke('SubscribeL2update', marketId);
-  }
-
-  /**
-   * 取消订阅市场订单簿价格更新
-   */
-  unsubscribeL2update(marketId: number) {
-    return socket.invoke('UnsubscribeL2update', marketId);
-  }
-
-  /**
-   * 订阅市场Ticker统计更新
-   */
-  subscribeTickerUpdate() {
-    return socket.invoke('SubscribeTickerUpdate');
-  }
-
-  /**
-   * 取消市场Ticker统计更新
-   */
-  unsubscribeTickerUpdate() {
-    return socket.invoke('UnsubscribeTickerUpdate');
-  }
-
-  /**
-   * 市场最近成交列表更新
-   */
-  subscribeTradeUpdate(marketId: number) {
-    return socket.invoke('SubscribeTradeUpdate', marketId);
-  }
-
-  /**
-   * 取消市场最近成交列表更新
-   */
-  unsubscribeTradeUpdate(marketId: number) {
-    return socket.invoke('UnsubscribeTradeUpdate', marketId);
-  }
-
-  /**
-   * 订阅余额变更
-   */
-  subscribeBalanceUpdate() {
-    return socket.invoke('SubscribeBalanceUpdate', this.accountName);
-  }
-
-  /**
-   * 取消订阅余额变更
-   */
-  unsubscribeBalanceUpdate() {
-    return socket.invoke('UnsubscribeBalanceUpdate', this.accountName);
-  }
-
-  /**
-   * 订阅订单状态更新
-   */
-  subscribeOrderUpdate() {
-    return socket.invoke('SubscribeOrderUpdate', this.accountName);
-  }
-
-  /**
-   * 取消订阅订单状态更新
-   */
-  unsubscribeOrderUpdate() {
-    return socket.invoke('UnsubscribeOrderUpdate', this.accountName);
-  }
-
-  /**
-   * 订阅订单撮合通知
-   */
-  subscribeFillUpdate() {
-    return socket.invoke('SubscribeFillUpdate', this.accountName);
-  }
-
-  /**
-   * 取消订阅订单撮合通知
-   */
-  unsubscribeFillUpdate(accountName: string) {
-    return socket.invoke('UnsubscribeFillUpdate', accountName);
-  }
-
-  /**
    * 侦听Ticker统计更新
    */
   @action.bound
@@ -347,39 +253,11 @@ class DataStore {
   }
 
   /**
-   * 侦听市场最近成交
-   */
-  handleTradeUpdate(data: Trade) {
-    // TODO: 更新trade
-  }
-
-  /**
    * 侦听余额变化
    */
   @action
   handleBalanceUpdate(data: BalanceUpdate) {
     this.updateAccountInfo();
-  }
-
-  /**
-   * 侦听订单状态变化
-   */
-  handleOrderUpdate(data: Order) {
-    // if (!this.accountName) return;
-    // const order = this.pendingOrders.find(e => e.orderId === data.orderId);
-    // if (order) {
-    //   Object.assign(order, data);
-    // } else {
-    //   this.orders.push(data);
-    // }
-  }
-
-  /**
-   * 侦听订单撮合通知
-   */
-  handleFillUpdate(data: Trade) {
-    const { buyer, buyerOrderId, sellerOrderId } = data;
-    const orderId = buyer === this.accountName ? buyerOrderId : sellerOrderId;
   }
 }
 
