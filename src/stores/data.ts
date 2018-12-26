@@ -1,30 +1,13 @@
+import onfire from 'onfire.js';
 import { getMarketOrderbook } from './../utils/apis';
 import { observable, computed, action, runInAction } from 'mobx';
-import socket from '@/utils/socket';
-import {
-  getMrkets,
-  getAccountInfo,
-  getUserHistoryOrders,
-  getUserPendingOrders,
-  getAnnouncementList,
-} from '@/utils/apis';
-import {
-  PriceLevelUpdate,
-  TickerUpdate,
-  Trade,
-  Order,
-  Market,
-  AccountInfo,
-  BalanceUpdate,
-  Announcement,
-  ResOrder,
-  Orderbook,
-} from '@/define';
+import { getMrkets, getAccountInfo, getUserPendingOrders, getAnnouncementList } from '@/utils/apis';
+import { TickerUpdate, Order, Market, AccountInfo, BalanceUpdate, Announcement } from '@/define';
 import { getAccount } from '@/utils/scatter';
 
 class DataStore {
   @observable
-  accountName = 'player';
+  accountName = 'user1';
 
   @observable
   markets: Array<Market> = [];
@@ -42,6 +25,9 @@ class DataStore {
     bids: [],
     asks: [],
   };
+
+  @observable
+  eosAccountInfo: any = {};
 
   @observable
   searchmarketList: Array<Market> = [];
@@ -111,6 +97,54 @@ class DataStore {
   }
 
   @computed
+  get cpuLimit() {
+    return (
+      this.eosAccountInfo['cpu_limit'] || {
+        available: 0,
+        max: 0,
+        used: 0,
+      }
+    );
+  }
+
+  @computed
+  get netLimit() {
+    return (
+      this.eosAccountInfo['net_limit'] || {
+        available: 0,
+        max: 0,
+        used: 0,
+      }
+    );
+  }
+
+  @computed
+  get ramLimit() {
+    return {
+      used: this.eosAccountInfo['ram_usage'] || 0,
+      max: this.eosAccountInfo['ram_quota'] || 0,
+    };
+  }
+
+  @computed
+  get cpuUsageRate() {
+    const { used, max } = this.cpuLimit;
+    return Math.round((used / max) * 10000) / 100.0;
+  }
+
+  @computed
+  get netUsageRate() {
+    const { used, max } = this.netLimit;
+    return Math.round((used / max) * 10000) / 100.0;
+  }
+
+  @computed
+  get ramUsageRate() {
+    const { used, max } = this.ramLimit;
+    return Math.round((used / max) * 10000) / 100.0;
+  }
+
+  @computed
   get totalValuation() {
     if (!this.accountInfo) {
       return {
@@ -123,15 +157,14 @@ class DataStore {
   }
 
   constructor() {
-    socket.on('l2update', this.handlePriceLevelUpdate);
-    socket.on('tickerUpdate', this.handleTickerUpdate);
-    socket.on('tradeUpdate', this.handleTradeUpdate);
-    socket.on('balanceUpdate', this.handleBalanceUpdate);
-    socket.on('orderUpdate', this.handleOrderUpdate);
+    onfire.on('tickerUpdate', this.handleTickerUpdate);
+    onfire.on('balanceUpdate', this.handleBalanceUpdate);
     this.updateMarkets();
     this.updateAccountInfo();
     setInterval(() => {
-      getAccount(this.accountName);
+      getAccount(this.accountName).then(res => {
+        this.eosAccountInfo = res;
+      });
     }, 3000);
   }
 
@@ -260,109 +293,14 @@ class DataStore {
   }
 
   /**
-   * 订阅市场订单簿价格更新
-   */
-  subscribeL2update(marketId: number) {
-    return socket.invoke('SubscribeL2update', marketId);
-  }
-
-  /**
-   * 取消订阅市场订单簿价格更新
-   */
-  unsubscribeL2update(marketId: number) {
-    return socket.invoke('UnsubscribeL2update', marketId);
-  }
-
-  /**
-   * 订阅市场Ticker统计更新
-   */
-  subscribeTickerUpdate() {
-    return socket.invoke('SubscribeTickerUpdate');
-  }
-
-  /**
-   * 取消市场Ticker统计更新
-   */
-  unsubscribeTickerUpdate() {
-    return socket.invoke('UnsubscribeTickerUpdate');
-  }
-
-  /**
-   * 市场最近成交列表更新
-   */
-  subscribeTradeUpdate(marketId: number) {
-    return socket.invoke('SubscribeTradeUpdate', marketId);
-  }
-
-  /**
-   * 取消市场最近成交列表更新
-   */
-  unsubscribeTradeUpdate(marketId: number) {
-    return socket.invoke('UnsubscribeTradeUpdate', marketId);
-  }
-
-  /**
-   * 订阅余额变更
-   */
-  subscribeBalanceUpdate() {
-    return socket.invoke('SubscribeBalanceUpdate', this.accountName);
-  }
-
-  /**
-   * 取消订阅余额变更
-   */
-  unsubscribeBalanceUpdate() {
-    return socket.invoke('UnsubscribeBalanceUpdate', this.accountName);
-  }
-
-  /**
-   * 订阅订单状态更新
-   */
-  subscribeOrderUpdate() {
-    return socket.invoke('SubscribeOrderUpdate', this.accountName);
-  }
-
-  /**
-   * 取消订阅订单状态更新
-   */
-  unsubscribeOrderUpdate() {
-    return socket.invoke('UnsubscribeOrderUpdate', this.accountName);
-  }
-
-  /**
-   * 订阅订单撮合通知
-   */
-  subscribeFillUpdate() {
-    return socket.invoke('SubscribeFillUpdate', this.accountName);
-  }
-
-  /**
-   * 取消订阅订单撮合通知
-   */
-  unsubscribeFillUpdate(accountName: string) {
-    return socket.invoke('UnsubscribeFillUpdate', accountName);
-  }
-
-  /**
-   * 侦听市场订单簿价格更新
-   */
-  handlePriceLevelUpdate(data: PriceLevelUpdate) {
-    // TODO: 更新订单簿条目的数据
-  }
-
-  /**
    * 侦听Ticker统计更新
    */
   @action.bound
   handleTickerUpdate(data: TickerUpdate) {
-    //
-  }
-
-  /**
-   * 侦听市场最近成交
-   */
-  handleTradeUpdate(data: Trade) {
-    // TODO: 更新trade
+    this.markets.forEach((e, index) => {
+      if (e.marketId !== data.marketId) return;
+      this.markets.splice(index, 1, Object.assign({}, e, data));
+    });
   }
 
   /**
@@ -371,27 +309,6 @@ class DataStore {
   @action
   handleBalanceUpdate(data: BalanceUpdate) {
     this.updateAccountInfo();
-  }
-
-  /**
-   * 侦听订单状态变化
-   */
-  handleOrderUpdate(data: Order) {
-    // if (!this.accountName) return;
-    // const order = this.pendingOrders.find(e => e.orderId === data.orderId);
-    // if (order) {
-    //   Object.assign(order, data);
-    // } else {
-    //   this.orders.push(data);
-    // }
-  }
-
-  /**
-   * 侦听订单撮合通知
-   */
-  handleFillUpdate(data: Trade) {
-    const { buyer, buyerOrderId, sellerOrderId } = data;
-    const orderId = buyer === this.accountName ? buyerOrderId : sellerOrderId;
   }
 }
 

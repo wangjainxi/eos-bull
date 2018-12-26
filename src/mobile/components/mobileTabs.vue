@@ -1,78 +1,15 @@
 <template>
   <div class="tab-type-box flex-row-start">
-    <div @click="setCurrentNum('1')">
-      <router-link to="/" v-if="count.currency === '1'">
-        <img src="@/images/mobile/ic_nav_assets_press.svg" alt>
-        <p class="special">
-          <Language resource="foot.Homepage"/>
+    <router-link
+      v-for="item of navs"
+      :to="item.path"
+      :class="{ 'nav-item': true, 'current': $route.path === item.path }">
+        <img class="icon" v-if="$route.path === item.path" :src="item.selectIcon" />
+        <img class="icon" v-else :src="item.icon" />
+        <p class="name">
+          <Language :resource="item.key" />
         </p>
-      </router-link>
-      <router-link to="/" v-else>
-        <img src="@/images/mobile/ic_nav_assets_normal.svg" alt>
-        <p>
-          <Language resource="foot.Homepage"/>
-        </p>
-      </router-link>
-    </div>
-    <div @click="setCurrentNum('2')">
-      <router-link to="/market" v-if="count.currency === '2'">
-        <img src="@/images/mobile/ic_nav_home_press.svg" alt>
-        <p class="special">
-          <Language resource="foot.Markets"/>
-        </p>
-      </router-link>
-      <router-link to="/market" v-else>
-        <img src="@/images/mobile/ic_nav_home_normal.svg" alt>
-        <p>
-          <Language resource="foot.Markets"/>
-        </p>
-      </router-link>
-    </div>
-
-    <div @click="setCurrentNum('3')">
-      <router-link to="/orders" v-if="count.currency === '3'">
-        <img src="@/images/mobile/ic_nav_more_press.svg" alt>
-        <p class="special">
-          <Language resource="foot.Order"/>
-        </p>
-      </router-link>
-      <router-link to="/orders" v-else>
-        <img src="@/images/mobile/ic_nav_more_normal.svg" alt>
-        <p>
-          <Language resource="foot.Order"/>
-        </p>
-      </router-link>
-    </div>
-
-    <div @click="setCurrentNum('4')">
-      <router-link to="/assets" v-if="count.currency === '4'">
-        <img src="@/images/mobile/ic_nav_order_press.svg" alt>
-        <p class="special">
-          <Language resource="foot.Asser"/>
-        </p>
-      </router-link>
-      <router-link to="/assets" v-else>
-        <img src="@/images/mobile/ic_nav_order_normal.svg" alt>
-        <p>
-          <Language resource="foot.Asser"/>
-        </p>
-      </router-link>
-    </div>
-
-    <div @click="setCurrentNum('5')">
-      <router-link to="/more" v-if="count.currency === '5'">
-        <img src="@/images/mobile/ic_nav_quotes_press.svg" alt>
-        <p class="special">
-          <Language resource="foot.More"/>
-        </p>
-      </router-link>
-      <router-link to="/more" v-else>
-        <img src="@/images/mobile/ic_nav_quotes_normal.svg" alt>
-        <p>
-          <Language resource="foot.More"/>
-        </p>
-      </router-link>
-    </div>
+    </router-link>
   </div>
 </template>
 
@@ -85,16 +22,42 @@ import { Observer } from 'mobx-vue';
 @Component
 export default class TabPackage extends Vue {
   count = userStore;
-  setCurrentNum(num: string) {
-    userStore.setCurrency(num);
-  }
-  created() {
-    console.log(userStore);
-  }
+  navs = [
+    {
+      key: 'foot.Homepage',
+      path: '/',
+      icon: require('@/images/mobile/ic_nav_home_normal.svg'),
+      selectIcon: require('@/images/mobile/ic_nav_home_press.svg'),
+    },
+    {
+      key: 'foot.Markets',
+      path: '/market',
+      icon: require('@/images/mobile/ic_nav_quotes_normal.svg'),
+      selectIcon: require('@/images/mobile/ic_nav_quotes_press.svg'),
+    },
+    {
+      key: 'foot.Order',
+      path: '/orders',
+      icon: require('@/images/mobile/ic_nav_order_normal.svg'),
+      selectIcon: require('@/images/mobile/ic_nav_order_press.svg'),
+    },
+    {
+      key: 'foot.Asset',
+      path: '/assets',
+      icon: require('@/images/mobile/ic_nav_assets_normal.svg'),
+      selectIcon: require('@/images/mobile/ic_nav_assets_press.svg'),
+    },
+    {
+      key: 'foot.More',
+      path: '/more',
+      icon: require('@/images/mobile/ic_nav_more_normal.svg'),
+      selectIcon: require('@/images/mobile/ic_nav_more_press.svg'),
+    },
+  ];
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .tab-type-box {
   position: fixed;
   bottom: 0px;
@@ -104,24 +67,28 @@ export default class TabPackage extends Vue {
   border-top: 1px solid #f2f5fb;
   background: #fff;
   z-index: 1000;
-  > div {
+
+  .nav-item {
     display: flex;
     width: 20%;
     height: 100%;
     flex-direction: column;
     justify-content: space-between;
     padding-top: 0.1rem;
-    img {
+    .icon {
       display: inline-block;
     }
-    p {
+    .name {
       font-size: 0.1rem;
       padding-bottom: 2px;
       color: #b3bfd0;
     }
-  }
-  .special {
-    color: #007aff;
+
+    &.current {
+      .name {
+        color: #007aff;
+      }
+    }
   }
 }
 </style>

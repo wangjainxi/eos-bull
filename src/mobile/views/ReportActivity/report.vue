@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <h4 class="titleTOP">活动报名</h4>
+      <h4 class="titleTOP">活动报名</h4>
     <p class="title">参与份数（每份1EOS，单账户上限100份)</p>
     <div class="inputBox">
       <input type="number" v-model.number="num" v-on:blur="onInput">
@@ -11,11 +11,11 @@
     </p>
     <h4 class="title">每日短信提醒</h4>
     <div class="inputBox">
-      <input type="text">
+      <input type="number" v-model.number="iphoneNum">
       <span>(选填)</span>
     </div>
     <p class="tips">每日上午10: 00 / 下午6: 00两次短信提醒。</p>
-    <button class="button">确定</button>
+    <button class="button" @click="onConfirm">确定</button>
   </div>
 </template>
 <script lang="ts">
@@ -23,9 +23,13 @@ import { Vue, Component } from 'vue-property-decorator';
 @Component
 export default class ReportPage extends Vue {
   num = '0.0000';
+  iphoneNum = '';
   onInput() {
     this.num = Number(this.num).toFixed(4);
     console.log(this.num);
+  }
+  onConfirm() {
+    console.log(this.num, this.iphoneNum);
   }
 }
 </script>

@@ -2,12 +2,14 @@
   <div id="roportPage">
     <div class="banner-box">
       <div class="report-inner-box">
-        <button v-if="status === '1'" class="report-button">
-          <span>立即报名</span>
-        </button>
+        <router-link to="/report-page">
+          <button v-if="status === '1'" class="report-button">
+            <span>立即报名</span>
+          </button>
+        </router-link>
         <div :class="status==='3'?'actionTip':'action'">
           <p @click="onViewRules">活动规则</p>
-          <p>签到日历</p>
+          <p @click="showtimeView">签到日历</p>
           <p v-if="status ==='3'">短信提醒</p>
         </div>
         <img src="@/images/mobile/report/out.svg" class="outIcon" alt>
@@ -75,6 +77,9 @@
         </p>
       </div>
     </div>
+    <div v-if="showtimeViewStatu" class="time-view-box">
+      <span @click="hidetimeView">out</span>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -82,6 +87,13 @@ import { Vue, Component } from 'vue-property-decorator';
 @Component
 export default class ReportActivety extends Vue {
   status = '1';
+  showtimeViewStatu = false;
+  showtimeView() {
+    this.showtimeViewStatu = !this.showtimeViewStatu;
+  }
+  hidetimeView() {
+    this.showtimeViewStatu = !this.showtimeViewStatu;
+  }
   onViewRules() {
     const rulesElement = document.getElementById('rulesElement');
     const roportPage = document.getElementById('roportPage');
@@ -210,5 +222,13 @@ export default class ReportActivety extends Vue {
       margin-bottom: 0;
     }
   }
+}
+.time-view-box {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 </style>
