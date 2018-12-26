@@ -1,34 +1,47 @@
 <template>
   <div class="popup-box-out" @click="onClose">
-   <div class="popup-box"  @click.stop>
-    <p class="ptilte">交易对</p>
-    <div class="trans-box">
-      <input type="number"><span class="pop">/</span><button>EOS</button>
-    </div>
-    <p class="ptilte">订单状态</p>
-    <div class="btn-box mb11">
-      <mt-button type="defalut"  :class="isSelected? 'border-blue':''" @click="onClick">全部</mt-button>
-      <mt-button type="defalut"  :class="isSelected? 'border-blue':''" @click="onClick">进行中</mt-button>
-    </div>
-    <div class="btn-box">
-      <mt-button type="defalut"  :class="isSelected? 'border-blue':''" @click="onClick">全部</mt-button>
-      <mt-button type="defalut"  :class="isSelected? 'border-blue':''" @click="onClick">进行中</mt-button>
-    </div>
-    <p class="ptilte">交易方向</p>
-    <div class="btn-box">
-      <mt-button type="defalut"  :class="isSelected? 'border-blue':''" @click="onClick">全部</mt-button>
-      <mt-button type="defalut"  :class="isSelected? 'border-blue':''" @click="onClick">进行中</mt-button>
-    </div>
-    <p class="defaut-select">
-      <span>不看已撤销订单</span>
-    </p>
-    <div class="btn-box handle-box">
-      <mt-button type="defalut" @click="onClick">重置</mt-button>
-      <mt-button type="defalut" @click="onClick">确认</mt-button>
+    <div class="popup-box" @click.stop>
+      <p class="ptilte">
+        <Language resource="order.Pair"/>
+      </p>
+      <div class="trans-box">
+        <input type="number">
+        <span class="pop">/</span>
+        <button>EOS</button>
+      </div>
+      <p class="ptilte">
+        <Language resource="order.Order_Status"/>
+      </p>
+      <div class="btn-box mb11">
+        <mt-button type="defalut" :class="isSelected? 'border-blue':''" @click="onClick">全部</mt-button>
+        <mt-button type="defalut" :class="isSelected? 'border-blue':''" @click="onClick">进行中</mt-button>
+      </div>
+      <div class="btn-box">
+        <mt-button type="defalut" :class="isSelected? 'border-blue':''" @click="onClick">全部</mt-button>
+        <mt-button type="defalut" :class="isSelected? 'border-blue':''" @click="onClick">进行中</mt-button>
+      </div>
+      <p class="ptilte">
+        <Language resource="order.Trade_Type"/>
+      </p>
+      <div class="btn-box">
+        <mt-button type="defalut" :class="isSelected? 'border-blue':''" @click="onClick">全部</mt-button>
+        <mt-button type="defalut" :class="isSelected? 'border-blue':''" @click="onClick">进行中</mt-button>
+      </div>
+      <p class="defaut-select">
+        <span>
+          <Language resource="order.Hide_Revoked_Order"/>
+        </span>
+      </p>
+      <div class="btn-box handle-box">
+        <mt-button type="defalut" @click="onClick">
+          <Language resource="order.Reset"/>
+        </mt-button>
+        <mt-button type="defalut" @click="onClick">
+          <Language resource="order.OK"/>
+        </mt-button>
+      </div>
     </div>
   </div>
-</div>
-
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';

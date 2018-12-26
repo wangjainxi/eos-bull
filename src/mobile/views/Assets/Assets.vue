@@ -7,29 +7,39 @@
         <h4>8888.93</h4>
         <span>EOS</span>
       </div>
-      <p>总估值</p>
+      <p>
+        <Language resource="asset.totalValue"/>
+      </p>
     </div>
     <div class="about-CPU-info-box" v-on:click="onpopupState">
       <div>
         <h4>CPU</h4>
-        <p>已用 5048.2%</p>
+        <p>
+          <Language resource="asset.Used"/>&nbsp;5048.2%
+        </p>
       </div>
       <div>
         <h4>NET</h4>
-        <p>已用 5048.2%</p>
+        <p>
+          <Language resource="asset.Used"/>&nbsp;5048.2%
+        </p>
       </div>
       <div>
         <h4>RAM</h4>
-        <p>已用 5048.2%</p>
+        <p>
+          <Language resource="asset.Used"/>&nbsp;5048.2%
+        </p>
       </div>
     </div>
     <div class="currency-input-box">
       <div>
-        <p>非小额资产</p>
+        <p>
+          <Language resource="asset.Value_0_01EOS"/>
+        </p>
         <img src="@/images/mobile/ic_arrow_under.svg" alt>
       </div>
       <div>
-        <input type="text" placeholder="搜索">
+        <input type="text" placeholder="search">
       </div>
     </div>
     <div class="currener-info-box-package">
@@ -38,36 +48,67 @@
           <h4>EOS</h4>
         </div>
         <div>
-          <h4>可用：808.19</h4>
-          <p>冻结：0.0000</p>
+          <h4>
+            <Language resource="asset.Used"/>：808.19
+          </h4>
+          <p>
+            <Language resource="asset.Frozen"/>：0.0000
+          </p>
         </div>
       </div>
       <div class="currener-info-box" v-for="(item,index) in currendcrInfo">
         <div>
           <h4>{{item.name}}</h4>
-          <p>估值：{{item.value}}</p>
+          <p>
+            <Language resource="asset.Value"/>
+            ：{{item.value}}
+          </p>
         </div>
         <div>
-          <h4>可用：{{item.available}}</h4>
-          <p>冻结：{{item.Frozen}}</p>
+          <h4>
+            <Language resource="asset.Used"/>
+            ：{{item.available}}
+          </h4>
+          <p>
+            <Language resource="asset.Frozen"/>
+            ：{{item.Frozen}}
+          </p>
         </div>
       </div>
     </div>
 
     <mt-popup v-model="popupVisible" popup-transition="popup-fade">
-      <h4>资源用量</h4>
+      <h4>
+        <Language resource="asset.Resources_Usage"/>
+      </h4>
       <div>
         <h4>
           CPU：
-          <span>已用 5048.2%</span>
+          <span>
+            <Language resource="asset.Used"/>5048.2%
+          </span>
         </h4>
-        <p>已用 0.00us/总45.00us(0.1000 EOS)</p>
-        <h4>NET：已用 1.9%</h4>
-        <p>已用 0.00B/总77.15KB(0.1000 EOS)</p>
-        <h4>RAM：已用 57.0%</h4>
-        <p>已用 2.92KB/总5.34KB</p>
+        <p>
+          <Language resource="asset.Used"/>0.00us/
+          <Language resource="asset.Total"/>45.00us(0.1000 EOS)
+        </p>
+        <Language resource="asset.Used"/>
+        <h4>NET： 1.9%</h4>
+        <p>
+          <Language resource="asset.Used"/>0.00B/
+          <Language resource="asset.Total"/>77.15KB(0.1000 EOS)
+        </p>
+        <h4>RAM：
+          <Language resource="asset.Used"/>57.0%
+        </h4>
+        <p>
+          <Language resource="asset.Used"/>2.92KB/
+          <Language resource="asset.Total"/>5.34KB
+        </p>
       </div>
-      <mt-button v-on:click="onpopupState" type="primary">确认</mt-button>
+      <mt-button v-on:click="onpopupState" type="primary">
+        <Language resource="asset.Confirm"/>
+      </mt-button>
     </mt-popup>
   </div>
 </template>

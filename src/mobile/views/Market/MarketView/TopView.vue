@@ -1,26 +1,45 @@
 <template>
-    <div class="view-box-top">
-      <div class="currency-box flex-row-between">
-          <span class="currency-name">LTC/EOS</span>
-          <div class="collect-box">
-            <img v-if="isCollect" @click="collect" src="@/images/mobile/ic_collection_normal.svg" alt="">
-            <img v-else="isCollect" @click="collect" src="@/images/mobile/ic_collection_current_s.svg" alt="">
-          </div>
-
-      </div>
-      <div class="real-data flex-row-between-start">
-        <div class="real-name-box">
-          <span class="real-text green-color">0.00000314</span>
-          <img src="@/images/mobile/ic_rise.svg" alt="">
-        </div>
-        <span class="long-text green-color">+ 112.16%</span>
-      </div>
-      <div  class="max24-box">
-        <div><span class="real-title">24H最高价：</span><span class="real-text">0.000000373</span></div>
-        <div><span class="real-title">24H最低价：</span><span class="real-text">0.000000147</span></div>
-        <div><span class="real-title">24H成交量：</span><span class="real-text">8584584.134</span></div>
+  <div class="view-box-top">
+    <div class="currency-box flex-row-between">
+      <span class="currency-name">LTC/EOS</span>
+      <div class="collect-box">
+        <img v-if="isCollect" @click="collect" src="@/images/mobile/ic_collection_normal.svg" alt>
+        <img
+          v-else="isCollect"
+          @click="collect"
+          src="@/images/mobile/ic_collection_current_s.svg"
+          alt
+        >
       </div>
     </div>
+    <div class="real-data flex-row-between-start">
+      <div class="real-name-box">
+        <span class="real-text green-color">0.00000314</span>
+        <img src="@/images/mobile/ic_rise.svg" alt>
+      </div>
+      <span class="long-text green-color">+ 112.16%</span>
+    </div>
+    <div class="max24-box">
+      <div>
+        <span class="real-title">
+          <Language resource="asset.H24_Hig"/>：
+        </span>
+        <span class="real-text">0.000000373</span>
+      </div>
+      <div>
+        <span class="real-title">
+          <Language resource="asset.H24_Low"/>：
+        </span>
+        <span class="real-text">0.000000147</span>
+      </div>
+      <div>
+        <span class="real-title">
+          <Language resource="asset.H24_Volume"/>：
+        </span>
+        <span class="real-text">8584584.134</span>
+      </div>
+    </div>
+  </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
@@ -52,12 +71,11 @@ export default class extends Vue {
   height: 1.68rem;
   padding: 0.14rem 0.2rem;
   background-color: #fff;
-  .collect-box{
-    >img{
-    width: 0.18rem;
-    height: 0.18rem;
+  .collect-box {
+    > img {
+      width: 0.18rem;
+      height: 0.18rem;
     }
-
   }
   .currency-box {
     .currency-name {

@@ -4,16 +4,26 @@
       <router-link to="market">
         <img src="../../../images/mobile/ic_find.svg" alt>
       </router-link>
-      <h4>编辑自选</h4>
+      <h4>
+        <Language resource="asset.Edit_Favorites"/>
+      </h4>
       <router-link to="market">
-        <p>完成</p>
+        <p>
+          <Language resource="asset.Complete"/>
+        </p>
       </router-link>
     </div>
     <div v-if="dataStores.marketsLink.length>0" class="optional-list-box">
       <div class="optional-list-title-box">
-        <p>交易对</p>
-        <p>置顶</p>
-        <p>删除</p>
+        <p>
+          <Language resource="asset.Complete"/>
+        </p>
+        <p>
+          <Language resource="asset.Top"/>
+        </p>
+        <p>
+          <Language resource="asset.Delete"/>
+        </p>
       </div>
       <div
         v-for="(item,index) in dataStores.marketsLink"
@@ -34,7 +44,9 @@
     </div>
     <div v-else class="list-no-box">
       <img src="../../../images/mobile/ic_collection_s.svg" alt>
-      <p>暂无数据</p>
+      <p>
+        <Language resource="asset.no_data"/>
+      </p>
     </div>
   </div>
 </template>
