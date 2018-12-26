@@ -183,22 +183,12 @@ import ListChild from '../HomePage/components/ListChild.vue';
 })
 export default class extends Vue {
   isOptional = '2';
-  dealList = [];
-  growList = [];
   dataStore = dataStore;
   typeTableState = '1';
   upOrDown = '2';
 
   created() {
     userStore.setCurrency('2');
-  }
-
-  setDealList(list: any) {
-    this.dealList = list;
-  }
-
-  setGrowList(list: any) {
-    this.growList = list;
   }
 
   modifyGrowList(value: any) {

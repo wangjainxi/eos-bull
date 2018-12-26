@@ -157,12 +157,12 @@ class DataStore {
       this.accountInfo = res;
       this.updateMarketsLink();
     });
-    console.log(this.accountInfo);
   }
 
   @action
   async updateMarketsLink() {
-    const res = await getMrkets('222');
+    const accountInfo = this.accountInfo || { accountName: '' };
+    const res = await getMrkets(accountInfo.accountName);
     runInAction(() => {
       this.marketsLink = res.filter(e => {
         return e.favourited === true;
@@ -172,36 +172,8 @@ class DataStore {
 
   @action
   setTop(index: number) {
-    const growList = [
-      {
-        currency: 'EOS',
-        dealSize: 3333,
-        price: 0.0023,
-        statu: 1,
-        percentage: 10,
-        collectionState: 1,
-        id: 1,
-      },
-      {
-        currency: 'EOS',
-        dealSize: 3333,
-        price: 0.0023,
-        statu: 0,
-        percentage: 10,
-        collectionState: 0,
-        id: 2,
-      },
-      {
-        currency: 'EOS',
-        dealSize: 3333,
-        price: 0.0023,
-        statu: 2,
-        percentage: 10,
-        collectionState: 0,
-        id: 3,
-      },
-    ];
-    console.log(index);
+    const item = this.marketsLink.splice(index, 1);
+    this.marketsLink.unshift(item[0]);
   }
   /**
    * 订阅市场订单簿价格更新
@@ -291,7 +263,6 @@ class DataStore {
    * 侦听市场订单簿价格更新
    */
   handlePriceLevelUpdate(data: PriceLevelUpdate) {
-    console.log(data);
     // TODO: 更新订单簿条目的数据
   }
 
@@ -302,7 +273,6 @@ class DataStore {
   handleTickerUpdate(data: TickerUpdate) {
     const market = this.markets.find(e => e.marketId === data.marketId);
     if (!market) return;
-    Object.assign(market, data);
   }
 
   /**

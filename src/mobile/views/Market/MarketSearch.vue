@@ -2,14 +2,18 @@
   <div id="market-search-page">
     <div class="market-search-input-box">
       <img src="../../../images/mobile/ic_find.svg" v-on:click="onSearch" alt>
-      <input v-model="searchInput" type="text">
+      <input v-model="searchInput" type="text" @keyup.13="onSearch">
       <router-link to="market">
         <img src="../../../images/mobile/closeBtn.svg" alt>
       </router-link>
     </div>
     <div v-if="dataStore.searchmarketList.length>0">
       <div class="search-result-box">搜索结果</div>
-      <div v-for="(item,key,index) in dataStore.searchmarketList" :key="index" class="search-list-child-box">
+      <div
+        v-for="(item,key,index) in dataStore.searchmarketList"
+        :key="index"
+        class="search-list-child-box"
+      >
         <h4
           class="list-title"
         >{{item.pair.baseCurrency.symbol.name}}/{{item.pair.quoteCurrency.symbol.name}}</h4>
