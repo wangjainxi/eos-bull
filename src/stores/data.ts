@@ -7,7 +7,7 @@ import { getAccount } from '@/utils/scatter';
 
 class DataStore {
   @observable
-  accountName = 'player';
+  accountName = 'user1';
 
   @observable
   markets: Array<Market> = [];
@@ -25,6 +25,9 @@ class DataStore {
     bids: [],
     asks: [],
   };
+
+  @observable
+  eosAccountInfo: any = {};
 
   @observable
   searchmarketList: Array<Market> = [];
@@ -94,6 +97,54 @@ class DataStore {
   }
 
   @computed
+  get cpuLimit() {
+    return (
+      this.eosAccountInfo['cpu_limit'] || {
+        available: 0,
+        max: 0,
+        used: 0,
+      }
+    );
+  }
+
+  @computed
+  get netLimit() {
+    return (
+      this.eosAccountInfo['net_limit'] || {
+        available: 0,
+        max: 0,
+        used: 0,
+      }
+    );
+  }
+
+  @computed
+  get ramLimit() {
+    return {
+      used: this.eosAccountInfo['ram_usage'] || 0,
+      max: this.eosAccountInfo['ram_quota'] || 0,
+    };
+  }
+
+  @computed
+  get cpuUsageRate() {
+    const { used, max } = this.cpuLimit;
+    return Math.round((used / max) * 10000) / 100.0;
+  }
+
+  @computed
+  get netUsageRate() {
+    const { used, max } = this.netLimit;
+    return Math.round((used / max) * 10000) / 100.0;
+  }
+
+  @computed
+  get ramUsageRate() {
+    const { used, max } = this.ramLimit;
+    return Math.round((used / max) * 10000) / 100.0;
+  }
+
+  @computed
   get totalValuation() {
     if (!this.accountInfo) {
       return {
@@ -111,7 +162,9 @@ class DataStore {
     this.updateMarkets();
     this.updateAccountInfo();
     setInterval(() => {
-      getAccount(this.accountName);
+      getAccount(this.accountName).then(res => {
+        this.eosAccountInfo = res;
+      });
     }, 3000);
   }
 
