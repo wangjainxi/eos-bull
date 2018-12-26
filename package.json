@@ -14,11 +14,8 @@
     "axios": "^0.18.0",
     "dayjs": "^1.7.8",
     "element-ui": "^2.4.11",
-<<<<<<< HEAD
     "highcharts": "^7.0.1",
-=======
     "eosjs": "^16.0.9",
->>>>>>> ae55fd8d52d8ffbe0b5dfe712a18aefaee5025bb
     "lodash": "^4.17.11",
     "mint-ui": "^2.2.13",
     "mobx": "^5.8.0",

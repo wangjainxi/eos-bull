@@ -16,12 +16,9 @@ import {
   Market,
   AccountInfo,
   BalanceUpdate,
-<<<<<<< HEAD
   ResOrder,
   Orderbook,
-=======
   Announcement,
->>>>>>> ae55fd8d52d8ffbe0b5dfe712a18aefaee5025bb
 } from '@/define';
 import { getAccount } from '@/utils/scatter';
 
@@ -198,31 +195,10 @@ class DataStore {
   }
 
   @action
-<<<<<<< HEAD
-  async updateMarketsLink() {
-    const accountInfo = this.accountInfo || { accountName: '' };
-    const res = await getMrkets(accountInfo.accountName);
-    runInAction(() => {
-      this.marketsLink = res.filter(e => {
-        return e.favourited !== undefined;
-      });
-      const marketTopLocal = localStorage.getItem('marketTop');
-      if (marketTopLocal === null) return;
-      const marketTop = JSON.parse(marketTopLocal);
-      this.marketsLink.map((item, key) => {
-        if (item.marketId === marketTop.marketId) {
-          const item = this.marketsLink.splice(key, 1);
-          console.log(item);
-          this.marketsLink.unshift(item[0]);
-          console.log(this.marketsLink);
-        }
-      });
-=======
   async updateHistoryOrders(params?: { page?: number; pageSize?: number }) {
     const res = await getUserHistoryOrders(this.accountName, params);
     runInAction(() => {
       this.historyOrders = res.orders;
->>>>>>> ae55fd8d52d8ffbe0b5dfe712a18aefaee5025bb
     });
   }
 
@@ -243,9 +219,36 @@ class DataStore {
   }
 
   setTop(index: number) {
-    const item = this.marketsLink.splice(index, 1);
-    this.marketsLink.unshift(item[0]);
-    localStorage.setItem('marketTop', JSON.stringify(item[0]));
+    const growList = [
+      {
+        currency: 'EOS',
+        dealSize: 3333,
+        price: 0.0023,
+        statu: 1,
+        percentage: 10,
+        collectionState: 1,
+        id: 1,
+      },
+      {
+        currency: 'EOS',
+        dealSize: 3333,
+        price: 0.0023,
+        statu: 0,
+        percentage: 10,
+        collectionState: 0,
+        id: 2,
+      },
+      {
+        currency: 'EOS',
+        dealSize: 3333,
+        price: 0.0023,
+        statu: 2,
+        percentage: 10,
+        collectionState: 0,
+        id: 3,
+      },
+    ];
+    console.log(index);
   }
 
   /**
