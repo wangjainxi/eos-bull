@@ -7,11 +7,11 @@ import ScatterEOS from 'scatterjs-plugin-eosjs';
 ScatterJS.plugins(new ScatterEOS());
 
 const network = {
-  blockchain: process.env.REACT_APP_NETWORK_BLOCKCHAIN,
-  host: process.env.REACT_APP_NETWORK_HOST,
-  port: process.env.REACT_APP_NETWORK_PORT,
-  protocol: process.env.REACT_APP_NETWORK_PROTOCOL,
-  chainId: process.env.REACT_APP_NETWORK_CHAIN_ID,
+  blockchain: process.env.VUE_APP_NETWORK_BLOCKCHAIN,
+  host: process.env.VUE_APP_NETWORK_HOST,
+  port: process.env.VUE_APP_NETWORK_PORT,
+  protocol: process.env.VUE_APP_NETWORK_PROTOCOL,
+  chainId: process.env.VUE_APP_NETWORK_CHAIN_ID,
 };
 
 let scatter: any = null;
@@ -29,6 +29,7 @@ const lazyInitScatter = async () => {
     scatterInstalled = true;
     scatterLoading = false;
   } catch (err) {
+    console.error(err);
     scatterLoading = false;
     scatterInstalled = false;
   }
