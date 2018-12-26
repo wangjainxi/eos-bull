@@ -23,14 +23,14 @@
     <div class="home-tab-title-box">
       <mt-navbar class="page-part" v-model="selected">
         <mt-tab-item id="1">涨幅榜</mt-tab-item>
-        <mt-tab-item id="2" v-on:click.native="modifyGrowList">24小时成交榜</mt-tab-item>
+        <mt-tab-item id="2">24小时成交榜</mt-tab-item>
       </mt-navbar>
     </div>
     <!-- tab-container -->
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <div class="home-list-page-box">
-          <ListChild v-for="(item, index) in dealList" :item="item" :key="index"></ListChild>
+        <div class="home-list-page-box" v-for="item in dataStore.riseRank" :key="item.marketId">
+          <ListChild :item="item" />
         </div>
         <div class="home-link-to-market-box">
           <router-link to="market">查看更多</router-link>
@@ -38,8 +38,8 @@
         </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-        <div class="home-list-page-box">
-          <ListChild v-for="(item, index) in growList" :item="item" :key="index"></ListChild>
+        <div class="home-list-page-box" v-for="(item, index) in dataStore.exChangeRank" :key="item.marketId">
+          <ListChild v-if="index<=10" :item="item" :key="index"></ListChild>
         </div>
         <div class="home-link-to-market-box">
           <router-link to="market">查看更多</router-link>
@@ -54,55 +54,10 @@
 <script lang="ts">
 import ListChild from './components/ListChild.vue';
 import userStore from '@/stores/user';
+import dataStore from '@/stores/data';
 import { Vue, Component } from 'vue-property-decorator';
 import HomeIntroduce from './HomeIntroduce.vue';
 import { Observer } from 'mobx-vue';
-import dataStore from '@/stores/data';
-
-const dealList = [
-  {
-    currency: 'EOS',
-    dealSize: 3333,
-    price: 0.0023,
-    statu: 1,
-    Percentage: 10,
-    id: 1,
-  },
-  {
-    currency: 'EOS',
-    dealSize: 3333,
-    price: 0.0023,
-    statu: 0,
-    Percentage: 10,
-    id: 2,
-  },
-  {
-    currency: 'EOS',
-    dealSize: 3333,
-    price: 0.0023,
-    statu: 2,
-    Percentage: 10,
-    id: 3,
-  },
-];
-const growList = [
-  {
-    currency: 'EOS',
-    dealSize: 3333,
-    price: 0.0023,
-    statu: 1,
-    Percentage: 10,
-    id: 1,
-  },
-  {
-    currency: 'EOS',
-    dealSize: 3333,
-    price: 0.0023,
-    statu: 0,
-    Percentage: 10,
-    id: 2,
-  },
-];
 
 @Observer
 @Component({
@@ -112,24 +67,11 @@ const growList = [
   },
 })
 export default class extends Vue {
+  dataStore = dataStore;
   selected = '1';
   dealList: any[] = [];
   growList: any[] = [];
-  dataStore = dataStore;
-
-  setDealList(list: any) {
-    this.dealList = list;
-  }
-  setGrowList(list: any) {
-    this.growList = list;
-  }
-  modifyGrowList() {
-    this.growList = growList;
-  }
-
   created() {
-    this.setDealList(dealList);
-    this.setGrowList(growList);
     userStore.setCurrency('1');
   }
 }

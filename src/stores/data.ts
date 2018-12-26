@@ -36,6 +36,9 @@ class DataStore {
   announcements: Array<Announcement> = [];
 
   @observable
+  searchmarketList: Array<Market> = [];
+
+  @observable
   market?: Market;
 
   @observable
@@ -56,6 +59,24 @@ class DataStore {
   }
 
   @computed
+  get riseRank() {
+    return this.markets.slice().sort((e1, e2) => {
+      const num1 = Number(e1.change.slice(0, e1.change.length - 1).slice(1, e1.change.length));
+      const num2 = Number(e2.change.slice(0, e2.change.length - 1).slice(1, e2.change.length));
+      return num2 - num1;
+    });
+  }
+
+  @computed
+  get exChangeRank() {
+    return this.markets.slice().sort((e1, e2) => {
+      const num1 = Number(e1.volumeBase);
+      const num2 = Number(e2.volumeBase);
+      return num2 - num1;
+    });
+  }
+
+  @computed
   get marketList() {
     const { name, order, sortby } = this.marketParams;
     let arr = this.markets.slice();
@@ -67,18 +88,18 @@ class DataStore {
     }
 
     if (!sortby) return arr;
-    return arr.sort((e1, e2) => {
+    arr = arr.sort((e1, e2) => {
       let v1;
       let v2;
       if (sortby === 'volume') {
         v1 = e1.volumeBase;
         v2 = e2.volumeBase;
       } else if (sortby === 'price') {
-        v1 = e1.lastPrice;
-        v2 = e2.lastPrice;
+        v1 = parseFloat(e1.lastPrice);
+        v2 = parseFloat(e2.lastPrice);
       } else if (sortby === 'change') {
-        v1 = e1.change;
-        v2 = e2.change;
+        v1 = parseFloat(e1.change);
+        v2 = parseFloat(e2.change);
       } else {
         // 其余情况按pair处理
         v1 = `${e1.pair.baseCurrency.symbol.name}/${e1.pair.quoteCurrency.symbol.name}`;
@@ -87,6 +108,8 @@ class DataStore {
       if (order === 'desc') return Number(v2 > v1);
       return Number(v1 > v2);
     });
+    console.log(JSON.stringify(arr));
+    return arr;
   }
 
   @computed
@@ -113,7 +136,24 @@ class DataStore {
       getAccount(this.accountName);
     }, 3000);
   }
-
+  @action
+  setMarketParams(sortby: string = 'pair', order: string = 'asc', name: string = '') {
+    this.marketParams = {
+      sortby, // pair, volume, price, change
+      order, // asc, desc
+      name,
+    };
+  }
+  @action
+  getMarketSearchList(text: string) {
+    if (text === '') return;
+    this.searchmarketList = [];
+    this.markets.map((item, index) => {
+      if (item.pair.baseCurrency.symbol.name.toLowerCase().indexOf(text.toLowerCase()) !== -1) {
+        this.searchmarketList.push(item);
+      }
+    });
+  }
   @action
   async updateMarkets() {
     const res = await getMrkets();
@@ -128,6 +168,7 @@ class DataStore {
     runInAction(() => {
       this.accountInfo = res;
     });
+    console.log(this.accountInfo);
   }
 
   @action
@@ -152,6 +193,39 @@ class DataStore {
     runInAction(() => {
       this.announcements = res.announcements;
     });
+  }
+
+  setTop(index: number) {
+    const growList = [
+      {
+        currency: 'EOS',
+        dealSize: 3333,
+        price: 0.0023,
+        statu: 1,
+        percentage: 10,
+        collectionState: 1,
+        id: 1,
+      },
+      {
+        currency: 'EOS',
+        dealSize: 3333,
+        price: 0.0023,
+        statu: 0,
+        percentage: 10,
+        collectionState: 0,
+        id: 2,
+      },
+      {
+        currency: 'EOS',
+        dealSize: 3333,
+        price: 0.0023,
+        statu: 2,
+        percentage: 10,
+        collectionState: 0,
+        id: 3,
+      },
+    ];
+    console.log(index);
   }
 
   /**

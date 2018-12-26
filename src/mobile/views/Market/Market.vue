@@ -33,65 +33,65 @@
     <mt-tab-container v-model="isOptional">
       <mt-tab-container-item id="1">
         <div class="type-table">
-          <div :class="typeTableState === '1'? 'special':''" @click="onTypeTable('1')">
+          <div :class="typeTableState === '5'? 'special':''" @click="onTypeTable('5')">
             交易对
             <img
-              v-if="upOrDown === '1' && typeTableState ==='1'"
+              v-if="upOrDown === '1' && typeTableState ==='5'"
               src="../../../images/ic_sort_up.png"
               alt
             >
             <img
-              v-else-if="upOrDown === '2' && typeTableState ==='1'"
+              v-else-if="upOrDown === '2' && typeTableState ==='5'"
               src="../../../images/ic_sort_down.png"
               alt
             >
             <img v-else src="../../../images/ic_sort_normal.png" alt>
           </div>
-          <div :class="typeTableState === '2'? 'special':''" @click="onTypeTable('2')">
+          <div :class="typeTableState === '6'? 'special':''" @click="onTypeTable('6')">
             24H成交量
             <img
-              v-if="upOrDown === '1' && typeTableState ==='2'"
+              v-if="upOrDown === '1' && typeTableState ==='6'"
               src="../../../images/ic_sort_up.png"
               alt
             >
             <img
-              v-else-if="upOrDown === '2' && typeTableState ==='2'"
+              v-else-if="upOrDown === '2' && typeTableState ==='6'"
               src="../../../images/ic_sort_down.png"
               alt
             >
             <img v-else src="../../../images/ic_sort_normal.png" alt>
           </div>
-          <div :class="typeTableState === '3'? 'special':''" @click="onTypeTable('3')">
+          <div :class="typeTableState === '7'? 'special':''" @click="onTypeTable('7')">
             最新价
             <img
-              v-if="upOrDown === '1' && typeTableState ==='3'"
+              v-if="upOrDown === '1' && typeTableState ==='7'"
               src="../../../images/ic_sort_up.png"
               alt
             >
             <img
-              v-else-if="upOrDown === '2' && typeTableState ==='3'"
+              v-else-if="upOrDown === '2' && typeTableState ==='7'"
               src="../../../images/ic_sort_down.png"
               alt
             >
             <img v-else src="../../../images/ic_sort_normal.png" alt>
           </div>
-          <div :class="typeTableState === '4'? 'special':''" @click="onTypeTable('4')">
+          <div :class="typeTableState === '8'? 'special':''" @click="onTypeTable('8')">
             24H涨跌幅
             <img
-              v-if="upOrDown === '1' && typeTableState ==='4'"
+              v-if="upOrDown === '1' && typeTableState ==='8'"
               src="../../../images/ic_sort_up.png"
               alt
             >
             <img
-              v-else-if="upOrDown === '2' && typeTableState ==='4'"
+              v-else-if="upOrDown === '2' && typeTableState ==='8'"
               src="../../../images/ic_sort_down.png"
               alt
             >
             <img v-else src="../../../images/ic_sort_normal.png" alt>
           </div>
         </div>
-        <div v-if="dealList.length>0" class="market-list-package-box">
-          <ListChild v-for="(item, index) in dealList" :item="item" :key="index"></ListChild>
+        <div v-if="dataStore.marketList.length>0" class="market-list-package-box">
+          <ListChild v-for="(item, index) in dataStore.marketList" :item="item" :key="index"></ListChild>
         </div>
         <div class="list-no-box" v-else>
           <img src="../../../images/mobile/ic_collection_normal.svg" alt>
@@ -161,7 +161,7 @@
           </div>
         </div>
         <div class="market-list-package-box">
-          <ListChild v-for="(item, index) in growList" :item="item" :key="index"></ListChild>
+          <ListChild v-for="(item, index) in dataStore.marketList" :item="item" :key="index"></ListChild>
         </div>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -171,54 +171,11 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import userStore from '@/stores/user';
+import dataStore from '@/stores/data';
+import { Observer } from 'mobx-vue';
 import ListChild from '../HomePage/components/ListChild.vue';
 
-const dealList = [
-  {
-    currency: 'EOS',
-    dealSize: 3333,
-    price: 0.0023,
-    statu: 1,
-    Percentage: 10,
-    id: 1,
-  },
-  {
-    currency: 'EOS',
-    dealSize: 3333,
-    price: 0.0023,
-    statu: 0,
-    Percentage: 10,
-    id: 2,
-  },
-  {
-    currency: 'EOS',
-    dealSize: 3333,
-    price: 0.0023,
-    statu: 2,
-    Percentage: 10,
-    id: 3,
-  },
-];
-
-const growList = [
-  {
-    currency: 'EOS',
-    dealSize: 3333,
-    price: 0.0023,
-    statu: 1,
-    Percentage: 10,
-    id: 1,
-  },
-  {
-    currency: 'EOS',
-    dealSize: 3333,
-    price: 0.0023,
-    statu: 0,
-    Percentage: 10,
-    id: 2,
-  },
-];
-
+@Observer
 @Component({
   components: {
     ListChild,
@@ -228,12 +185,11 @@ export default class extends Vue {
   isOptional = '2';
   dealList = [];
   growList = [];
+  dataStore = dataStore;
   typeTableState = '1';
-  upOrDown = '0';
+  upOrDown = '2';
 
   created() {
-    this.setDealList(dealList);
-    this.setGrowList(growList);
     userStore.setCurrency('2');
   }
 
@@ -248,15 +204,24 @@ export default class extends Vue {
   modifyGrowList(value: any) {
     this.isOptional = value;
   }
-
-  onTypeTable(id: any) {
+  // pair, volume, price, change
+  onTypeTable(id: string) {
     this.typeTableState = id;
-    if (this.upOrDown === '0' || this.upOrDown === '2') {
+    let order;
+    if (this.upOrDown === '2') {
+      order = 'asc';
       this.upOrDown = '1';
-    } else if (this.upOrDown === '1') {
+    } else {
+      order = 'desc';
       this.upOrDown = '2';
     }
-    //获取数据时 根据this.isOptional结合this.typeTableState来判断应该调取的借口
+    const map = {
+      '1': 'pair',
+      '2': 'volume',
+      '3': 'price',
+      '4': 'change',
+    };
+    dataStore.setMarketParams(Reflect.get(map, id), order);
   }
 }
 </script>
