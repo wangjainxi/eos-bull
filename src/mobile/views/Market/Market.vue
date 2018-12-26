@@ -209,36 +209,21 @@ export default class extends Vue {
   // pair, volume, price, change
   onTypeTable(id: string) {
     this.typeTableState = id;
+    let order;
     if (this.upOrDown === '2') {
+      order = 'asc';
       this.upOrDown = '1';
-      if (id === '1') {
-        dataStore.setMarketParams('pair', 'asc');
-      }
-      if (id === '2') {
-        dataStore.setMarketParams('volume', 'asc');
-      }
-      if (id === '3') {
-        dataStore.setMarketParams('price', 'asc');
-      }
-      if (id === '4') {
-        dataStore.setMarketParams('change', 'asc');
-      }
-    } else if (this.upOrDown === '1') {
+    } else {
+      order = 'desc';
       this.upOrDown = '2';
-      if (id === '1') {
-        dataStore.setMarketParams('pair', 'asc');
-      }
-      if (id === '2') {
-        dataStore.setMarketParams('volume', 'asc');
-      }
-      if (id === '3') {
-        dataStore.setMarketParams('price', 'asc');
-      }
-      if (id === '4') {
-        dataStore.setMarketParams('change', 'asc');
-      }
     }
-    //获取数据时 根据this.isOptional结合this.typeTableState来判断应该调取的借口
+    const map = {
+      '1': 'pair',
+      '2': 'volume',
+      '3': 'price',
+      '4': 'change',
+    };
+    dataStore.setMarketParams(Reflect.get(map, id), order);
   }
 }
 </script>

@@ -14,12 +14,18 @@
     "axios": "^0.18.0",
     "dayjs": "^1.7.8",
     "element-ui": "^2.4.11",
+<<<<<<< HEAD
     "highcharts": "^7.0.1",
+=======
+    "eosjs": "^16.0.9",
+>>>>>>> ae55fd8d52d8ffbe0b5dfe712a18aefaee5025bb
     "lodash": "^4.17.11",
     "mint-ui": "^2.2.13",
     "mobx": "^5.8.0",
     "mobx-vue": "^2.0.8",
     "register-service-worker": "^1.5.2",
+    "scatterjs-core": "^2.5.0",
+    "scatterjs-plugin-eosjs": "^1.4.0",
     "vue": "^2.5.17",
     "vue-class-component": "^6.0.0",
     "vue-i18n": "^8.4.0",
