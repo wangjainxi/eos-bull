@@ -7,7 +7,7 @@ const foot = {
   Homepage: 'Home',
   Markets: 'Markets',
   Order: 'Order',
-  Asser: 'Asser',
+  Asset: 'Asset',
   More: 'More',
 };
 export default {
