@@ -2,41 +2,59 @@
   <div class="entrust-item">
     <div class="entrust-item-head">
       <div class="head-left">
-        <div class="left-type">买</div>
+        <div class="left-type">
+          <Language resource="business.Buy1"/>
+        </div>
         <div class="left-coin-type">MAX/EOS</div>
         <div class="left-date">12-11</div>
       </div>
       <div :class="['head-right',{canCansel:entrustType === 0}]">
-        <span @click="canselOrder">{{entrustType === 0?'撤销':'已成交'}}</span>
+        <span @click="canselOrder">
+          {{entrustType === 0?
+          status1:
+          status2}}
+        </span>
         <i v-show="entrustType !== 0" @click="goHisitory"></i>
       </div>
     </div>
     <div class="entrust-item-body">
       <div class="item-body-top">
         <div class="entrust-box1">
-          <div class="box-title">委托价(EOS)</div>
+          <div class="box-title">
+            <Language resource="business.Order_Price"/>(EOS)
+          </div>
           <div class="box-data">0.000150</div>
         </div>
         <div class="entrust-box2">
-          <div class="box-title">委托量(MAX)</div>
+          <div class="box-title">
+            <Language resource="business.Order_VOL"/>(MAX)
+          </div>
           <div class="box-data">64274.6666</div>
         </div>
         <div class="entrust-box3">
-          <div class="box-title">成交量(MAX)</div>
+          <div class="box-title">
+            <Language resource="business.VOL"/>(MAX)
+          </div>
           <div class="box-data">—</div>
         </div>
       </div>
       <div class="item-body-bottom" v-show="entrustType !== 0">
         <div class="entrust-box1">
-          <div class="box-title">成交均价(EOS)</div>
+          <div class="box-title">
+            <Language resource="business.AVG_Price"/>(EOS)
+          </div>
           <div class="box-data">0.000150</div>
         </div>
         <div class="entrust-box2">
-          <div class="box-title">成交总额(EOS)</div>
+          <div class="box-title">
+            <Language resource="business.Total"/>(EOS)
+          </div>
           <div class="box-data">64274.6666</div>
         </div>
         <div class="entrust-box3">
-          <div class="box-title">成交总额(EOS)</div>
+          <div class="box-title">
+            <Language resource="business.Fee"/>(EOS)
+          </div>
           <div class="box-data">0.0085</div>
         </div>
       </div>
@@ -47,6 +65,7 @@
 import { MessageBox } from 'mint-ui';
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import { Observer } from 'mobx-vue';
+import languageStore from '@/stores/language';
 // import fixHeader from './components/fixHeader.vue';
 
 @Observer
@@ -61,6 +80,10 @@ export default class BusinessEntrust extends Vue {
 
   @Prop() item!: any;
   @Prop() entrustType!: number;
+
+  status1: string = languageStore.getIntlText('business.Revoke');
+  status2: string = languageStore.getIntlText('business.Dealt');
+  status3: string = languageStore.getIntlText('business.Revoked');
   // data() {
   //   return {};
   // },
@@ -146,7 +169,9 @@ export default class BusinessEntrust extends Vue {
   span {
     background: rgba(0, 122, 255, 1);
     @include borderRadius(3px);
-    @include wh(0.42rem, 0.22rem);
+    // @include wh(0.42rem, 0.22rem);
+    height: 0.22rem;
+    padding: 0 0.05rem;
     color: rgba(255, 255, 255, 1);
   }
 }

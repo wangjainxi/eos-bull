@@ -29,6 +29,7 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import { Observer } from 'mobx-vue';
+import languageStore from '@/stores/language';
 // import fixHeader from './components/fixHeader.vue';
 
 @Observer
@@ -46,7 +47,7 @@ export default class ShowCoinList extends Vue {
   // props: ['popupVisible', 'dataCoinList', 'changePopupVisible'],
   // data
   currentTab: string = 'EOS';
-  tabs: Array<any> = ['自选', 'EOS'];
+  tabs: Array<any> = [languageStore.getIntlText('business.Favorites'), 'EOS'];
   dataList: any = this.dataCoinList;
   thisPopupVisible: boolean = this.popupVisible;
   // methods
@@ -138,7 +139,7 @@ $tabHeight: 44px;
 .coin-body-list {
   overflow-y: scroll;
   flex-direction: column;
-  height: 470px;
+  height: 500px;
   margin: 0 0.2rem;
   padding: 0 0 0.2rem;
   .coin-body-item {

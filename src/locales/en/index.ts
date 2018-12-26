@@ -2,7 +2,9 @@ import transaction from './transaction';
 import myWallet from './myWallet';
 import home from './homePage';
 import asset from './assetAndMarket';
+import business from './business';
 import order from './order';
+
 const foot = {
   Homepage: 'Home',
   Markets: 'Markets',
@@ -17,4 +19,5 @@ export default {
   foot,
   asset,
   order,
+  business,
 };
