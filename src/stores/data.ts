@@ -1,13 +1,8 @@
+import onfire from 'onfire.js';
 import { getMarketOrderbook } from './../utils/apis';
 import { observable, computed, action, runInAction } from 'mobx';
 import socket from '@/utils/socket';
-import {
-  getMrkets,
-  getAccountInfo,
-  getUserHistoryOrders,
-  getUserPendingOrders,
-  getAnnouncementList,
-} from '@/utils/apis';
+import { getMrkets, getAccountInfo, getUserPendingOrders, getAnnouncementList } from '@/utils/apis';
 import {
   PriceLevelUpdate,
   TickerUpdate,
@@ -17,8 +12,6 @@ import {
   AccountInfo,
   BalanceUpdate,
   Announcement,
-  ResOrder,
-  Orderbook,
 } from '@/define';
 import { getAccount } from '@/utils/scatter';
 
@@ -123,11 +116,8 @@ class DataStore {
   }
 
   constructor() {
-    socket.on('l2update', this.handlePriceLevelUpdate);
-    socket.on('tickerUpdate', this.handleTickerUpdate);
-    socket.on('tradeUpdate', this.handleTradeUpdate);
-    socket.on('balanceUpdate', this.handleBalanceUpdate);
-    socket.on('orderUpdate', this.handleOrderUpdate);
+    onfire.on('tickerUpdate', this.handleTickerUpdate);
+    onfire.on('balanceUpdate', this.handleBalanceUpdate);
     this.updateMarkets();
     this.updateAccountInfo();
     setInterval(() => {
@@ -346,18 +336,14 @@ class DataStore {
   }
 
   /**
-   * 侦听市场订单簿价格更新
-   */
-  handlePriceLevelUpdate(data: PriceLevelUpdate) {
-    // TODO: 更新订单簿条目的数据
-  }
-
-  /**
    * 侦听Ticker统计更新
    */
   @action.bound
   handleTickerUpdate(data: TickerUpdate) {
-    //
+    this.markets.forEach((e, index) => {
+      if (e.marketId !== data.marketId) return;
+      this.markets.splice(index, 1, Object.assign({}, e, data));
+    });
   }
 
   /**
