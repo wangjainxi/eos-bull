@@ -2,7 +2,7 @@
   <div class="data-list-item">
     <div class="data-market">
       <div
-        :class="['star',{starActive:item.favourited || localFavourite.indexOf(item.marketId) >= 0}]"
+        :class="['star',{starActive: item.favourited || localFavourite.indexOf(item.marketId) >= 0}]"
         @click="addStar(item.marketId,$event)"
       ></div>
       <img src="../../../images/logo_box.png" alt class="market-logo">
@@ -19,6 +19,10 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import dataStore from '@/stores/data';
+import { Observer } from 'mobx-vue';
+
+@Observer
 @Component
 export default class MexCurrentcyListDataItem extends Vue {
   // name: 'mex-currentcy-list-data-item',
@@ -28,25 +32,25 @@ export default class MexCurrentcyListDataItem extends Vue {
   starStatus: boolean = false;
   localFavourite: Array<any> = [];
   // props: ['item'],
-  create() {
+  created() {
     const loData = localStorage.getItem('localFavourite');
-    if (!loData) return;
-    this.localFavourite = JSON.parse(loData) || [];
+    if (!loData) return (this.localFavourite = []);
+    this.localFavourite = JSON.parse(loData);
   }
   // methods
   addStar(id: number, $event: any) {
     $event.stopPropagation();
     $event.stopImmediatePropagation();
     this.starStatus = !this.starStatus;
-    if (this.starStatus) {
-      console.log('添加');
-      this.localFavourite.push(id);
-      localStorage.setItem('localFavourite', JSON.stringify(this.localFavourite));
-    } else {
-      console.log('取消');
+
+    if (this.localFavourite.indexOf(id) !== -1) {
       this.localFavourite = this.localFavourite.filter((e: any) => e !== id);
       localStorage.setItem('localFavourite', JSON.stringify(this.localFavourite));
+    } else {
+      this.localFavourite.push(id);
+      localStorage.setItem('localFavourite', JSON.stringify(this.localFavourite));
     }
+    dataStore.getFavouriteList();
   }
   getShowColor() {
     if (this.item.change.indexOf('+') >= 0) {

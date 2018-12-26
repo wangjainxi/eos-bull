@@ -1,8 +1,8 @@
 <template>
   <div class="business-sell-details">
-    <fix-header :msg="msg"></fix-header>
+    <!-- <fix-header :msg="msg"></fix-header> -->
     <div class="sell-body">
-      <div class="line"></div>
+      <!-- <div class="line"></div> -->
       <div class="details-item">
         <div class="details-item-header">
           <div class="item-header-left">
@@ -90,30 +90,34 @@
     </div>
   </div>
 </template>
-<script>
-import fixHeader from './components/fixHeader.vue';
-export default {
-  name: 'business-history-page',
-  data() {
-    return { msg: '' };
-  },
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+import { Observer } from 'mobx-vue';
+// import fixHeader from './components/fixHeader.vue';
+
+@Observer
+@Component({
   components: {
-    fixHeader,
+    // fixHeader,
   },
-  methods: {},
-  computed: {
-    getParams() {
-      // 取到路由带过来的参数
-      const routerParams = this.$route.params;
-      // 将数据放在当前组件的数据内
-      this.msg = routerParams;
-    },
-  },
-  watch: {
-    // 监测路由变化,只要变化了就调用获取路由参数方法将数据存储本组件即可
-    $route: 'getParams',
-  },
-};
+})
+export default class BusinessSellDetails extends Vue {
+  // name: 'business-history-page',
+  // data
+  msg: any = '';
+
+  get getParams() {
+    // 取到路由带过来的参数
+    const routerParams = this.$route.params;
+    // 将数据放在当前组件的数据内
+    this.msg = routerParams;
+    return this.msg;
+  }
+  // watch: {
+  //   // 监测路由变化,只要变化了就调用获取路由参数方法将数据存储本组件即可
+  //   $route: 'getParams',
+  // },
+}
 </script>
 <style lang="scss" scoped>
 @import './../../../style/mixin.scss';
@@ -122,7 +126,7 @@ export default {
 }
 .sell-body {
   @include wh(100%, 100%);
-  margin-top: 0.4rem;
+  // margin-top: 0.4rem;
   .line {
     background: rgba(242, 245, 251, 1);
     @include wh(100%, 0.04rem);

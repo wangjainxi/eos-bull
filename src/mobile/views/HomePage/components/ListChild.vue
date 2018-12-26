@@ -1,14 +1,14 @@
 <template>
   <div id="home-list-box">
     <div class="home-list-name-box">
-      <h4>{{item.currency}}/EOS</h4>
-      <p>24小时成交量 {{item.dealSize}}</p>
+      <h4>{{item.marketId}}/EOS</h4>
+      <p>24小时成交量 {{item.volumeBase}}</p>
     </div>
     <div class="home-list-price-box">
-      <h4>{{item.price}}</h4>
-      <p v-if="item.statu === 1" class="rise">+{{item.statu}}%</p>
-      <p v-else-if="item.statu === 2" class="fall">-{{item.statu}}%</p>
-      <p v-else>0.00%</p>
+      <h4>{{item.lastPrice}}</h4>
+      <p v-if="item.change.indexOf('+') !== -1" class="rise">{{item.change}}%</p>
+      <p v-else-if="item.change.indexOf('-') !== -1" class="fall">{{item.change}}%</p>
+      <p v-else>{{item.change}}</p>
     </div>
   </div>
 </template>

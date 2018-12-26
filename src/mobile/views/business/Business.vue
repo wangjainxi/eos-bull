@@ -34,12 +34,12 @@
           <span>WIZBOX</span>
         </div>
         <div class="business-change-eos">{{`≈${changeEos}EOS`}}</div>
-        <business-range
+        <BusinessRange
           :currrentTab="currrentTab"
           @getRangeValue="getRangeValue"
           :rangeValue="rangeValue"
           :cricleMount="cricleMount"
-        ></business-range>
+        ></BusinessRange>
         <div class="use-mount">
           <div class="use-mount-left">{{`可用EOS：${getUseMount}`}}</div>
           <div class="use-mount-right">{{`${rangeValue}%`}}</div>
@@ -75,14 +75,14 @@
         </div>
         <div class="right-bottom">
           <div class="coin-item-box">
-            <business-trade-item
+            <BusinessTradeItem
               :tradeType="'buy'"
               :changePriceAndMount="changePriceAndMount"
               v-for="(item, index) in tradeData"
               :item="item"
               :key="index"
               :tradeDataMountSum="tradeDataMountSum"
-            ></business-trade-item>
+            ></BusinessTradeItem>
           </div>
         </div>
       </div>
@@ -111,32 +111,32 @@
         </div>
       </div>
       <div :class="['business-entrust-body',{'show-item':entrustData.length !== 0}]">
-        <show-message-img v-if="entrustData.length === 0" :imgUrl="imgUrl" :imgMsg="imgMsg"></show-message-img>
-        <business-entrust-item
+        <ShowMessageImg v-if="entrustData.length === 0" :imgUrl="imgUrl" :imgMsg="imgMsg"></ShowMessageImg>
+        <BusinessEntrust
           v-else
           v-for="(item,index) in entrustData"
           :entrustType="entrustType"
           :key="index"
-        ></business-entrust-item>
+        ></BusinessEntrust>
       </div>
     </div>
     <mt-actionsheet :actions="sheetActions" v-model="sheetVisible"></mt-actionsheet>
-    <show-coin-list
+    <ShowCoinList
       :popupVisible="popupVisible"
       :dataCoinList="dataCoinList"
       @changePopupVisible="changePopupVisible"
-    ></show-coin-list>
+    ></ShowCoinList>
     <!-- <mt-popup v-model="popupVisible" popup-transition="popup-fade"></mt-popup> -->
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import showMessageImg from './../../../components/messageImage.vue';
-import businessTradeItem from './components/businessTrade.vue';
-import businessEntrustItem from './components/businessEntrust.vue';
-import businessRange from './components/businessRange.vue';
-import showCoinList from './components/businessCoin.vue';
+import ShowMessageImg from './../../../components/messageImage.vue';
+import BusinessTradeItem from './components/businessTrade.vue';
+import BusinessEntrust from './components/businessEntrust.vue';
+import BusinessRange from './components/businessRange.vue';
+import ShowCoinList from './components/businessCoin.vue';
 import { MessageBox, Toast } from 'mint-ui';
 import { orderHistory } from '../../../utils/restful';
 const tradeData = [
@@ -305,11 +305,11 @@ const entrustData = [{}];
 
 @Component({
   components: {
-    showMessageImg,
-    businessTradeItem,
-    businessEntrustItem,
-    businessRange,
-    showCoinList,
+    ShowMessageImg,
+    BusinessTradeItem,
+    BusinessEntrust,
+    BusinessRange,
+    ShowCoinList,
   },
 })
 export default class extends Vue {

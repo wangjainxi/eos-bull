@@ -19,7 +19,16 @@ class DataStore {
   markets: Array<Market> = [];
 
   @observable
+  marketsLink: Array<Market> = [];
+
+  @observable
   orders: Array<Order> = [];
+
+  @observable
+  searchmarketList: Array<Market> = [];
+
+  @observable
+  favouriteList: Array<Market> = [];
 
   @observable
   market?: Market;
@@ -35,6 +44,27 @@ class DataStore {
   };
 
   @computed
+  get riseRank() {
+    const { order } = this.marketParams;
+    if (!order) return this.markets;
+    return this.markets.slice().sort((e1, e2) => {
+      const num1 = Number(e1.change.slice(0, e1.change.length - 1).slice(1, e1.change.length));
+      const num2 = Number(e2.change.slice(0, e2.change.length - 1).slice(1, e2.change.length));
+      if (order === 'desc') return num2 - num1;
+      return num1 - num2;
+    });
+  }
+
+  @computed
+  get exChangeRank() {
+    return this.markets.sort((e1, e2) => {
+      const num1 = Number(e1.volumeBase);
+      const num2 = Number(e2.volumeBase);
+      return num2 - num1;
+    });
+  }
+
+  @computed
   get marketList() {
     const { name, order, sortby } = this.marketParams;
     let arr = this.markets.slice();
@@ -44,7 +74,6 @@ class DataStore {
         return baseCurrency.symbol.name.includes(name) || quoteCurrency.symbol.name.includes(name);
       });
     }
-
     if (!sortby) return arr;
     return arr.sort((e1, e2) => {
       let v1;
@@ -77,6 +106,33 @@ class DataStore {
     this.updateMarkets();
     this.updateAccountInfo();
   }
+  @action
+  setMarketParams(sortby: string = 'pair', order: string = 'asc', name: string = '') {
+    this.marketParams = {
+      sortby, // pair, volume, price, change
+      order, // asc, desc
+      name,
+    };
+  }
+  @action
+  getMarketSearchList(text: string) {
+    if (text === '') return;
+    this.searchmarketList = [];
+    this.markets.map((item, index) => {
+      if (item.pair.baseCurrency.symbol.name.toLowerCase().indexOf(text.toLowerCase()) !== -1) {
+        this.searchmarketList.push(item);
+      }
+    });
+  }
+
+  @action
+  getFavouriteList() {
+    const locatFav = localStorage.getItem('localFavourite');
+    if (!locatFav) return;
+    this.favouriteList = this.markets.filter(
+      (e: any) => e.favourited === true || JSON.parse(locatFav).indexOf(e.marketId) >= 0
+    );
+  }
 
   @action
   async updateMarkets() {
@@ -91,9 +147,54 @@ class DataStore {
     const res = await getAccountInfo('player');
     runInAction(() => {
       this.accountInfo = res;
+      this.updateMarketsLink();
+    });
+    console.log(this.accountInfo);
+  }
+
+  @action
+  async updateMarketsLink() {
+    const res = await getMrkets('222');
+    runInAction(() => {
+      this.marketsLink = res.filter(e => {
+        return e.favourited === true;
+      });
     });
   }
 
+  @action
+  setTop(index: number) {
+    const growList = [
+      {
+        currency: 'EOS',
+        dealSize: 3333,
+        price: 0.0023,
+        statu: 1,
+        percentage: 10,
+        collectionState: 1,
+        id: 1,
+      },
+      {
+        currency: 'EOS',
+        dealSize: 3333,
+        price: 0.0023,
+        statu: 0,
+        percentage: 10,
+        collectionState: 0,
+        id: 2,
+      },
+      {
+        currency: 'EOS',
+        dealSize: 3333,
+        price: 0.0023,
+        statu: 2,
+        percentage: 10,
+        collectionState: 0,
+        id: 3,
+      },
+    ];
+    console.log(index);
+  }
   /**
    * 订阅市场订单簿价格更新
    */
