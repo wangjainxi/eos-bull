@@ -4,7 +4,7 @@
     <div class="market-container">
       <TopView/>
       <div class="trading-box">
-        <TradingViewMobile/>
+        <VueTradingView/>
       </div>
       <BomView/>
     </div>
@@ -34,14 +34,14 @@ import dataStore from '@/stores/data';
 import TopView from './TopView.vue';
 import BomView from './BomView.vue';
 import TransactionDetail from './TransactionDetail.vue';
-import TradingViewMobile from './component/tradingView/index.vue';
+import VueTradingView from '@/components/vueTradingView/index.vue';
 
 @Component({
   components: {
     TopView,
     BomView,
     TransactionDetail,
-    TradingViewMobile,
+    VueTradingView,
   },
 })
 export default class extends Vue {
@@ -87,6 +87,8 @@ export default class extends Vue {
     height: 40px;
   }
   .trading-box {
+    width: 100%;
+    height: 100%;
     height: 4.3rem;
     font-size: 0.14rem;
   }
