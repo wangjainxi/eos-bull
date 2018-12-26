@@ -141,7 +141,7 @@ class DataStore {
     const res = await getMrkets(accountInfo.accountName);
     runInAction(() => {
       this.marketsLink = res.filter(e => {
-        return e.favourited !== undefined;
+        return e.favourited === true;
       });
       const marketTopLocal = localStorage.getItem('marketTop');
       if (marketTopLocal === null) return;
@@ -149,9 +149,7 @@ class DataStore {
       this.marketsLink.map((item, key) => {
         if (item.marketId === marketTop.marketId) {
           const item = this.marketsLink.splice(key, 1);
-          console.log(item);
           this.marketsLink.unshift(item[0]);
-          console.log(this.marketsLink);
         }
       });
     });

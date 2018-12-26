@@ -1,5 +1,8 @@
 <template>
-  <div :class="['coin-items',{red:tradeType === 'sell'}]" @click="changePriceAndMount(item.price,item.mount)">
+  <div
+    :class="['coin-items',{red:tradeType === 'sell'}]"
+    @click="changePriceAndMount(item.price,item.mount)"
+  >
     <i :style="{ width: getItemWidth }"></i>
     <div class="coin-price">{{item.price}}</div>
     <div class="coin-mount">{{item.mount}}</div>
