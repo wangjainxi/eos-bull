@@ -2,7 +2,10 @@
   <div id="more-page">
     <div class="home-banner-box">
       <img src="../../../images/mobile/logo_eosmex.svg" alt>
-      <p>全球首家EOS去中心化交易所</p>
+      <p>
+        <Language resource="home.banner_text_one"/>
+        <Language resource="home.banner_text_two"/>
+      </p>
     </div>
     <div class="action-box">
       <div class="account-item" v-for="(item,index1) in accountData" @click="onClick(item.type)">
@@ -14,9 +17,13 @@
         <img :src="item.rightIcon" alt>
       </div>
     </div>
-    <mt-popup :visible.sync="popupVisible" position="bottom">
-      <div>dddd</div>
-      <div>dddd</div>
+    <mt-popup v-model="popupVisible" position="bottom">
+      <h4 @click="onClick(2)">确定</h4>
+      <div
+        v-for="(item,index) in language.locales"
+        :key="index"
+        @click="onLanguageSwich(item.mark)"
+      >{{item.label}}</div>
     </mt-popup>
   </div>
 </template>
@@ -24,10 +31,14 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import userStore from '@/stores/user';
+import languageStore from '@/stores/language';
+import { Observer } from 'mobx-vue';
 
+@Observer
 @Component
 export default class extends Vue {
   popupVisible = false;
+  language = languageStore;
   accountData = [
     {
       icon: require('../../../images/mobile/ic_account.svg'),
@@ -66,10 +77,14 @@ export default class extends Vue {
     },
   ];
 
-  onClick() {
-    this.popupVisible = true;
+  onClick(type: number) {
+    if (type === 2) {
+      this.popupVisible = !this.popupVisible;
+    }
   }
-
+  onLanguageSwich(type: string) {
+    languageStore.changeLanguage(type);
+  }
   created() {
     userStore.setCurrency('5');
   }
@@ -88,9 +103,11 @@ export default class extends Vue {
     background-position: 0 0;
     padding-top: 0.5rem;
     p {
-      font-size: 0.16rem;
-      color: #fff;
-      margin-top: 0.12rem;
+      span {
+        font-size: 0.16rem;
+        color: #fff;
+        margin-top: 0.12rem;
+      }
     }
   }
   .action-box {
@@ -123,6 +140,26 @@ export default class extends Vue {
   .line {
     height: 0.01rem;
     background: rgba(242, 245, 251, 1);
+  }
+}
+.mint-popup-bottom {
+  width: 100%;
+  h4 {
+    text-align: right;
+    font-size: 0.16rem;
+    padding: 10px;
+    color: #007aff;
+    bottom: #eff0f2;
+  }
+  div {
+    padding: 10px 0;
+    width: 100%;
+    border-bottom: 1px solid rgba(141, 141, 141, 0.6);
+    background: #d2d3d7;
+    font-size: 0.18rem;
+  }
+  div:last-child {
+    border: none;
   }
 }
 </style>

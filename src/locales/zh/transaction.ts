@@ -7,7 +7,7 @@ export default {
   depth: '深度',
   latest_Deal: '最新成交',
   introduction: '简介',
-  buyb: '买',
+  buy: '买',
   sell: '卖',
   amount: '数量',
   price: '价格',
