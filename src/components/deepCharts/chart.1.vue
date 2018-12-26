@@ -1,38 +1,21 @@
 <template>
-  <div>
-    <vue-highcharts :options="options" ref="lineCharts"></vue-highcharts>
-    <button @click="load">load</button>
+  <div class="x-bar">
+    <VueHighcharts :options="option" ref="lineCharts"></VueHighcharts>
+    <!-- <div :id="id" class="chart-line"
+    :option="option"  ref="lineCharts"></div> -->
   </div>
 </template>
-<script>
-import { Vue, Component} from 'vue-property-decorator';
-import VueHighcharts from 'vue2-highcharts';
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
 import { getMarketOrderbook } from '@/utils/apis';
-import chartStore from '@/stores/chart';
-import { observer } from 'mobx-vue';
+// import options from './chart-options.js';
+// import HighCharts from 'highcharts';
+// console.log(options.options.xAxis);
 
-const asyncData = {
-  data: [
- {x:1, color: '#ffd6d6',  y:8000,},
-  {x:200,  color: '#ffd6d6',y:7000,},
-   {x:300, color: '#ffd6d6', y:6000,},
-    {x:400,  color: '#ffd6d6', y:1000,},
-     {x:500, color: '#ffd6d6',  y:1100,},
-      {x:610,  y:3000,},
-        {x:720,  y:4000,},
-       {x:830,  y:5000,},
-  ]
-};
-@observer
-@Component({
- VueHighcharts,
-})
-export default class extends Vue{
-
-    mounted(){
-      console.log(chartStore.resData);
-    }
-    data() {
+export default {
+  name: 'deepChart',
+  // 验证类型
+  data() {
     let data = {
       buy: [[100, 8000], [200, 7000], [300, 6000], [400, 1000]],
       sell: [[500, 1100], [610, 3000], [720, 4000], [830, 5000]],
@@ -49,10 +32,9 @@ export default class extends Vue{
       dataX.push(ele[0]);
       dataY.push(ele[1]);
     });
-    console.log(dataX,dataY);
     return {
       id: 'test',
-      options: {
+      option: {
         chart: {
           type: 'area',
         },
@@ -71,6 +53,7 @@ export default class extends Vue{
           labels: {
             formatter: function() {
               const res = dataX[this.value];
+              console.log(res);
               return res;
             },
           },
@@ -128,19 +111,27 @@ export default class extends Vue{
         ],
       },
     };
-  }
-
-      load(){
-          let lineCharts = this.$refs.lineCharts;
-          lineCharts.delegateMethod('showLoading', 'Loading...');
-              lineCharts.chart.redraw();
-              lineCharts.hideLoading();
-      },
-
+  },
+  methods: {
     async getOrder() {
       const res = await getMarketOrderbook(1);
-      console.log(res);
-   }
-
-}
+    },
+  },
+  updated(){
+    this.getOrder();
+  },
+  mounted() {
+    // HighCharts.chart(this.id, this.option);
+  },
+};
 </script>
+<style scoped>
+.x-bar {
+  height: 100%;
+  width: 100%;
+}
+.chart-line {
+  height: 100%;
+  width: 100%;
+}
+</style>

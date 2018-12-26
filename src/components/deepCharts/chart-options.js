@@ -1,3 +1,4 @@
+
 let data = {
   "buy": [
               [100, 8000],
@@ -24,7 +25,7 @@ let sell = data.sell;
         dataX.push(ele[0])
         dataY.push(ele[1])
       })
-const options = {
+const optionsData = {
     chart: {
       type: 'area'
     },
@@ -41,7 +42,9 @@ const options = {
       },
       labels: {
         formatter: function () {
-							return dataX[this.value]
+              const res = dataX[this.value];
+              console.log(res);
+              return res;
         }
       },
       tickmarkPlacement:'on'
@@ -93,4 +96,10 @@ const options = {
 					data: dataY
 				}]
 };
-export default options;
+
+class OptionStore{
+  constructor(){
+    this.options = optionsData
+  }
+}
+export default new OptionStore();

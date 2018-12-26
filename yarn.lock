@@ -8557,6 +8557,10 @@ vue-class-component@^6.0.0, vue-class-component@^6.2.0:
   version "6.3.2"
   resolved "http://registry.npm.taobao.org/vue-class-component/download/vue-class-component-6.3.2.tgz#e6037e84d1df2af3bde4f455e50ca1b9eec02be6"
 
+vue-highcharts@^0.0.11:
+  version "0.0.11"
+  resolved "http://registry.npm.taobao.org/vue-highcharts/download/vue-highcharts-0.0.11.tgz#a8bc43b68ff5762f243ecb11f93dd5c4b8207a40"
+
 vue-hot-reload-api@^2.3.0:
   version "2.3.1"
   resolved "http://registry.npm.taobao.org/vue-hot-reload-api/download/vue-hot-reload-api-2.3.1.tgz#b2d3d95402a811602380783ea4f566eb875569a2"
@@ -8625,6 +8629,10 @@ vue-template-es2015-compiler@^1.6.0:
 vue-trading-view@^1.0.1:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/vue-trading-view/download/vue-trading-view-1.0.1.tgz#05309a9cfa70c296b1c24251a6e29595a8a3579b"
+
+vue2-highcharts@^1.2.5:
+  version "1.2.5"
+  resolved "http://registry.npm.taobao.org/vue2-highcharts/download/vue2-highcharts-1.2.5.tgz#4ab5ace0573d2e02a0cfd4029e3d7dbba2de2205"
 
 vue@^2.5.17:
   version "2.5.21"

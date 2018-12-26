@@ -1,4 +1,3 @@
-import { getMarketOrderbook } from './../utils/apis';
 import { observable, computed, action, runInAction } from 'mobx';
 import socket from '@/utils/socket';
 import {
@@ -146,19 +145,6 @@ class DataStore {
     }, 3000);
   }
 
-  /**
-   * restful获取订单
-   *    */
-  @action
-  getResOrder = () => {
-    getMarketOrderbook(1).then(res => {
-      //@ts-ignore
-      this.resOrder.asks = res.asks;
-      //@ts-ignore
-      this.resOrder.bids = res.bids;
-    });
-    //
-  };
 
   @action
   setMarketParams(sortby: string = 'pair', order: string = 'asc', name: string = '') {

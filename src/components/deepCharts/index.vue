@@ -7,10 +7,11 @@
 <script lang="ts">
 import XChart from './chart.vue';
 import options from './chart-options.js';
+
 export default {
   name: 'app',
   data() {
-    const option = options;
+    const option = options.options;
     return {
       id: 'test',
       option,

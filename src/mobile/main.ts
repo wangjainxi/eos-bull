@@ -6,9 +6,9 @@ import App from './App.vue';
 import router from './router';
 import '../registerServiceWorker';
 import '../stores/data';
-
+import VueHighcharts from 'vue2-highcharts';
 Vue.config.productionTip = false;
-
+Vue.use(VueHighcharts, { VueHighcharts });
 Vue.use(Mint);
 Vue.component('Language', Language);
 
