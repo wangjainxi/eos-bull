@@ -15,7 +15,9 @@
           <mt-tab-container-item id="1">
             <OrderTab/>
           </mt-tab-container-item>
-          <mt-tab-container-item id="2">深度图</mt-tab-container-item>
+          <mt-tab-container-item id="2">
+            <DeepCharts/>
+          </mt-tab-container-item>
           <mt-tab-container-item id="3">
             <DealTab/>
           </mt-tab-container-item>
@@ -33,6 +35,7 @@
 import OrderTab from './component/OrderTab.vue';
 import DealTab from './component/DealTab.vue';
 import Introduction from './component/VueIntroduction.vue';
+import DeepCharts from '../../../../components/deepCharts/index.vue';
 export default {
   name: 'bom-view',
   data() {
@@ -49,6 +52,7 @@ export default {
     OrderTab,
     DealTab,
     Introduction,
+    DeepCharts,
   },
 };
 </script>
