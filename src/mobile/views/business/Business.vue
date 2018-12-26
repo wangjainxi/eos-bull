@@ -398,7 +398,7 @@ export default class extends Vue {
       this.isFavorite.push(this.routeId);
       localStorage.setItem('localFavourite', JSON.stringify(this.isFavorite));
     }
-    dataStore.getFavouriteList();
+    dataStore.freeMarketList;
   }
 
   changeTab(val: any) {

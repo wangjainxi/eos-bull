@@ -1,5 +1,5 @@
 import Axios, { AxiosResponse } from 'axios';
-import { Market, TokenInfo, Orderbook, Trade, Order, AccountInfo } from '@/define';
+import { Market, TokenInfo, Orderbook, Trade, Order, AccountInfo, Announcement } from '@/define';
 
 interface ResponseData<T = any> {
   code: number;
@@ -88,4 +88,15 @@ export const getOrderFills = async (orderId: number) => {
 export const getAccountInfo = async (accountName: string) => {
   const res = await instance.get(`/v1/account/${accountName}`);
   return resWrapper<AccountInfo>(res);
+};
+
+/**
+ * 获取公告列表
+ */
+export const getAnnouncementList = async (params?: { page?: number; pageSize?: number }) => {
+  const res = await instance.get(`/v1/announcement/list`, { params });
+  return resWrapper<{
+    announcements: Announcement[];
+    count: number;
+  }>(res);
 };

@@ -7,13 +7,9 @@
         <img src="../../../images/mobile/closeBtn.svg" alt>
       </router-link>
     </div>
-    <div v-if="dataStore.searchmarketList.length>0">
+    <div v-if="markets.length > 0">
       <div class="search-result-box">搜索结果</div>
-      <div
-        v-for="(item,key,index) in dataStore.searchmarketList"
-        :key="index"
-        class="search-list-child-box"
-      >
+      <div v-for="item of markets" :key="item.marketId" class="search-list-child-box">
         <h4
           class="list-title"
         >{{item.pair.baseCurrency.symbol.name}}/{{item.pair.quoteCurrency.symbol.name}}</h4>
@@ -41,13 +37,16 @@
 import { Vue, Component, Watch } from 'vue-property-decorator';
 import dataStore from '@/stores/data';
 import { Observer } from 'mobx-vue';
+import { Market } from '@/define';
+
 @Observer
 @Component
 export default class extends Vue {
-  dataStore = dataStore;
   searchInput = '';
+  markets: Market[] = [];
+
   onSearch() {
-    dataStore.getMarketSearchList(this.searchInput);
+    this.markets = dataStore.getMarketSearchList(this.searchInput);
   }
 }
 </script>

@@ -36,6 +36,7 @@ export default class MexCurrentcyListDataItem extends Vue {
     const loData = localStorage.getItem('localFavourite');
     if (!loData) return (this.localFavourite = []);
     this.localFavourite = JSON.parse(loData);
+    console.log(this.item.favourited || this.localFavourite.indexOf(this.item.marketId) >= 0);
   }
   // methods
   addStar(id: number, $event: any) {
@@ -50,7 +51,7 @@ export default class MexCurrentcyListDataItem extends Vue {
       this.localFavourite.push(id);
       localStorage.setItem('localFavourite', JSON.stringify(this.localFavourite));
     }
-    dataStore.getFavouriteList();
+    dataStore.freeMarketList;
   }
   getShowColor() {
     if (this.item.change.indexOf('+') >= 0) {

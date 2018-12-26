@@ -35,8 +35,19 @@
           <span :class="['data-change-icon',sort]" @click="sortDataList"></span>
         </div>
       </div>
-      <div class="data-list-body">
-        <MexCurrentcyListDataItem v-for="(item, index) in items.riseRank" :item="item" :key="index"></MexCurrentcyListDataItem>
+      <div class="data-list-body" v-if="currentTab.id === 1">
+        <MexCurrentcyListDataItem
+          v-for="(item, index) in items.freeMarketList"
+          :item="item"
+          :key="index"
+        ></MexCurrentcyListDataItem>
+      </div>
+      <div class="data-list-body" v-else>
+        <MexCurrentcyListDataItem
+          v-for="(item, index) in items.marketList"
+          :item="item"
+          :key="index"
+        ></MexCurrentcyListDataItem>
       </div>
     </div>
   </div>
@@ -95,7 +106,6 @@ export default class MexCurrentcyList extends Vue {
   tabs: Array<any> = tabs;
 
   created() {
-    dataStore.setMarketParams('change', '', '');
     this.updateDataList(this.currentTab.id);
   }
   get inputSearch() {
@@ -103,8 +113,7 @@ export default class MexCurrentcyList extends Vue {
       dataStore.updateMarkets();
       this.items = dataStore;
     } else {
-      dataStore.getMarketSearchList(this.inputValue);
-      return (this.items.markets = dataStore.searchmarketList);
+      return (this.items.markets = dataStore.getMarketSearchList(this.inputValue));
     }
   }
   // methods
@@ -117,16 +126,11 @@ export default class MexCurrentcyList extends Vue {
     //获取列表
     const res = dataStore;
     this.sort = '';
-    dataStore.setMarketParams('', '', '');
+    dataStore.marketParams.sortby = '';
+    dataStore.marketParams.order = '';
     if (num === 1) {
-      // const loData = localStorage.getItem('localFavourite');
-      // if (!loData) return;
-      // const localFavourite = JSON.parse(loData);
-      // this.items.markets = this.items.markets.filter(
-      //   (e: any) => e.favourited === true || localFavourite.indexOf(e.marketId) >= 0
-      // );
-      dataStore.getFavouriteList();
-      this.items.markets = dataStore.favouriteList;
+      // dataStore.getFavouriteList();
+      // this.items.markets = dataStore.favouriteList;
       console.log(this.items.markets);
     } else {
       dataStore.updateMarkets();
@@ -135,20 +139,14 @@ export default class MexCurrentcyList extends Vue {
   }
   sortDataList() {
     //列表排序
-    if (this.sort === '' || this.sort === 'sort-down') {
-      dataStore.setMarketParams('change', 'asc', '');
-      if (this.currentTab.id === 1) {
-        this.items.markets = this.items.markets.filter((e: any) => e.favourited === true);
-      }
-      this.sort = 'sort-up';
+
+    dataStore.marketParams.sortby = 'change';
+    if (this.currentTab.id === 1) {
+      dataStore.updateFreeMarketListSort('change');
     } else {
-      dataStore.setMarketParams('change', 'desc', '');
-      console.log(this.items);
-      if (this.currentTab.id === 1) {
-        this.items.markets = this.items.markets.filter((e: any) => e.favourited === true);
-      }
-      this.sort = 'sort-down';
+      dataStore.updateMarketListSort('change');
     }
+    this.sort === 'sort-up' ? (this.sort = 'sort-down') : (this.sort = 'sort-up');
   }
 }
 </script>

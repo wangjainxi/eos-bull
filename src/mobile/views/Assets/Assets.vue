@@ -2,10 +2,10 @@
   <div id="about-page">
     <div class="about-banner-box">
       <img src="@/images/mobile/ic_correct.svg" alt>
-      <h3>WantLine</h3>
+      <h3>{{ dataStore.accountName }}</h3>
       <div>
-        <h4>8888.93</h4>
-        <span>EOS</span>
+        <h4>{{ dataStore.totalValuation.amount }}</h4>
+        <span>{{ dataStore.totalValuation.name }}</span>
       </div>
       <p>
         <Language resource="asset.totalValue"/>
@@ -43,7 +43,7 @@
       </div>
     </div>
     <div class="currener-info-box-package">
-      <div class="currener-info-box">
+      <!-- <div class="currener-info-box">
         <div>
           <h4>EOS</h4>
         </div>
@@ -55,10 +55,10 @@
             <Language resource="asset.Frozen"/>：0.0000
           </p>
         </div>
-      </div>
-      <div class="currener-info-box" v-for="(item,index) in currendcrInfo">
+      </div> -->
+      <div class="currener-info-box" v-for="(item,index) in dataStore.walletTokens" :key="index">
         <div>
-          <h4>{{item.name}}</h4>
+          <h4>{{item.available.symbol.symbol.name}}</h4>
           <p>
             <Language resource="asset.Value"/>
             ：{{item.value}}
@@ -67,11 +67,11 @@
         <div>
           <h4>
             <Language resource="asset.Used"/>
-            ：{{item.available}}
+            ：{{item.available.amount}}
           </h4>
           <p>
             <Language resource="asset.Frozen"/>
-            ：{{item.Frozen}}
+            ：{{item.onOrder.amount}}
           </p>
         </div>
       </div>
@@ -115,39 +115,17 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import userStore from '@/stores/user';
+import dataStore from '@/stores/data';
+import { Observer } from 'mobx-vue';
+
+@Observer
 @Component
 export default class Assets extends Vue {
+  dataStore = dataStore;
   popupVisible = false;
-  currendcrInfo = [
-    {
-      name: 'DPY',
-      available: 3333,
-      value: 3333,
-      Frozen: 3333,
-      id: 1,
-    },
-    {
-      name: 'DPY',
-      available: 3333,
-      value: 3333,
-      Frozen: 3333,
-      id: 2,
-    },
-    {
-      name: 'DPY',
-      available: 3333,
-      value: 3333,
-      Frozen: 3333,
-      id: 3,
-    },
-  ];
 
   onpopupState() {
     this.popupVisible = !this.popupVisible;
-  }
-  created() {
-    userStore.setCurrency('4');
   }
 }
 </script>
