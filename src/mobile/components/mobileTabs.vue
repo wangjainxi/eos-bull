@@ -3,54 +3,74 @@
     <div @click="setCurrentNum('1')">
       <router-link to="/" v-if="count.currency === '1'">
         <img src="@/images/mobile/ic_nav_assets_press.svg" alt>
-        <p class="special">首页</p>
+        <p class="special">
+          <Language resource="foot.Homepage"/>
+        </p>
       </router-link>
       <router-link to="/" v-else>
         <img src="@/images/mobile/ic_nav_assets_normal.svg" alt>
-        <p>首页</p>
+        <p>
+          <Language resource="foot.Homepage"/>
+        </p>
       </router-link>
     </div>
     <div @click="setCurrentNum('2')">
       <router-link to="/market" v-if="count.currency === '2'">
         <img src="@/images/mobile/ic_nav_home_press.svg" alt>
-        <p class="special">行情</p>
+        <p class="special">
+          <Language resource="foot.Markets"/>
+        </p>
       </router-link>
       <router-link to="/market" v-else>
         <img src="@/images/mobile/ic_nav_home_normal.svg" alt>
-        <p>行情</p>
+        <p>
+          <Language resource="foot.Markets"/>
+        </p>
       </router-link>
     </div>
 
     <div @click="setCurrentNum('3')">
       <router-link to="/orders" v-if="count.currency === '3'">
         <img src="@/images/mobile/ic_nav_more_press.svg" alt>
-        <p class="special">订单</p>
+        <p class="special">
+          <Language resource="foot.Order"/>
+        </p>
       </router-link>
       <router-link to="/orders" v-else>
         <img src="@/images/mobile/ic_nav_more_normal.svg" alt>
-        <p>订单</p>
+        <p>
+          <Language resource="foot.Order"/>
+        </p>
       </router-link>
     </div>
 
     <div @click="setCurrentNum('4')">
       <router-link to="/assets" v-if="count.currency === '4'">
         <img src="@/images/mobile/ic_nav_order_press.svg" alt>
-        <p class="special">资产</p>
+        <p class="special">
+          <Language resource="foot.Asser"/>
+        </p>
       </router-link>
       <router-link to="/assets" v-else>
         <img src="@/images/mobile/ic_nav_order_normal.svg" alt>
-        <p>资产</p>
+        <p>
+          <Language resource="foot.Asser"/>
+        </p>
       </router-link>
     </div>
 
     <div @click="setCurrentNum('5')">
       <router-link to="/more" v-if="count.currency === '5'">
         <img src="@/images/mobile/ic_nav_quotes_press.svg" alt>
-        <p class="special">更多</p>
+        <p class="special">
+          <Language resource="foot.More"/>
+        </p>
       </router-link>
       <router-link to="/more" v-else>
         <img src="@/images/mobile/ic_nav_quotes_normal.svg" alt>
-        <p>更多</p>
+        <p>
+          <Language resource="foot.More"/>
+        </p>
       </router-link>
     </div>
   </div>

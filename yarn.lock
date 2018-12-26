@@ -4048,6 +4048,10 @@ hex-color-regex@^1.1.0:
   version "1.1.0"
   resolved "http://registry.npm.taobao.org/hex-color-regex/download/hex-color-regex-1.1.0.tgz#4c06fccb4602fe2602b3c93df82d7e7dbf1a8a8e"
 
+highcharts@^7.0.1:
+  version "7.0.1"
+  resolved "http://registry.npm.taobao.org/highcharts/download/highcharts-7.0.1.tgz#0c6ad096559aca723bc95276bce02b9790c444e8"
+
 hmac-drbg@^1.0.0:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/hmac-drbg/download/hmac-drbg-1.0.1.tgz#d2745701025a6c775a6c545793ed502fc0c649a1"
@@ -8617,6 +8621,10 @@ vue-template-compiler@^2.5.17:
 vue-template-es2015-compiler@^1.6.0:
   version "1.6.0"
   resolved "http://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.6.0.tgz#dc42697133302ce3017524356a6c61b7b69b4a18"
+
+vue-trading-view@^1.0.1:
+  version "1.0.1"
+  resolved "http://registry.npm.taobao.org/vue-trading-view/download/vue-trading-view-1.0.1.tgz#05309a9cfa70c296b1c24251a6e29595a8a3579b"
 
 vue@^2.5.17:
   version "2.5.21"

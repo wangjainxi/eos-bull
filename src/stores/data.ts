@@ -1,3 +1,4 @@
+import { getMarketOrderbook } from './../utils/apis';
 import { observable, computed, action, runInAction } from 'mobx';
 import socket from '@/utils/socket';
 import {
@@ -16,6 +17,8 @@ import {
   AccountInfo,
   BalanceUpdate,
   Announcement,
+  ResOrder,
+  Orderbook,
 } from '@/define';
 import { getAccount } from '@/utils/scatter';
 
@@ -34,6 +37,17 @@ class DataStore {
 
   @observable
   announcements: Array<Announcement> = [];
+
+  resOrder = {
+    bids: [],
+    asks: [],
+  };
+
+  @observable
+  searchmarketList: Array<Market> = [];
+
+  @observable
+  marketsLink: Array<Market> = [];
 
   @observable
   market?: Market;
@@ -166,6 +180,20 @@ class DataStore {
     }
   }
 
+  /**
+   * restful获取订单
+   *    */
+  @action
+  getResOrder = () => {
+    getMarketOrderbook(1).then(res => {
+      //@ts-ignore
+      this.resOrder.asks = res.asks;
+      //@ts-ignore
+      this.resOrder.bids = res.bids;
+    });
+    //
+  };
+
   @action
   getMarketSearchList(text: string) {
     return this.markets.filter(item => {
@@ -188,14 +216,26 @@ class DataStore {
     runInAction(() => {
       this.accountInfo = res;
     });
-    console.log(this.accountInfo);
   }
 
-  @action
-  async updateHistoryOrders(params?: { page?: number; pageSize?: number }) {
-    const res = await getUserHistoryOrders(this.accountName, params);
+  async updateMarketsLink() {
+    const accountInfo = this.accountInfo || { accountName: '' };
+    const res = await getMrkets(accountInfo.accountName);
     runInAction(() => {
-      this.historyOrders = res.orders;
+      this.marketsLink = res.filter(e => {
+        return e.favourited !== undefined;
+      });
+      const marketTopLocal = localStorage.getItem('marketTop');
+      if (marketTopLocal === null) return;
+      const marketTop = JSON.parse(marketTopLocal);
+      this.marketsLink.map((item, key) => {
+        if (item.marketId === marketTop.marketId) {
+          const item = this.marketsLink.splice(key, 1);
+          console.log(item);
+          this.marketsLink.unshift(item[0]);
+          console.log(this.marketsLink);
+        }
+      });
     });
   }
 
@@ -216,36 +256,9 @@ class DataStore {
   }
 
   setTop(index: number) {
-    const growList = [
-      {
-        currency: 'EOS',
-        dealSize: 3333,
-        price: 0.0023,
-        statu: 1,
-        percentage: 10,
-        collectionState: 1,
-        id: 1,
-      },
-      {
-        currency: 'EOS',
-        dealSize: 3333,
-        price: 0.0023,
-        statu: 0,
-        percentage: 10,
-        collectionState: 0,
-        id: 2,
-      },
-      {
-        currency: 'EOS',
-        dealSize: 3333,
-        price: 0.0023,
-        statu: 2,
-        percentage: 10,
-        collectionState: 0,
-        id: 3,
-      },
-    ];
-    console.log(index);
+    const item = this.marketsLink.splice(index, 1);
+    this.marketsLink.unshift(item[0]);
+    localStorage.setItem('marketTop', JSON.stringify(item[0]));
   }
 
   /**
@@ -336,7 +349,6 @@ class DataStore {
    * 侦听市场订单簿价格更新
    */
   handlePriceLevelUpdate(data: PriceLevelUpdate) {
-    console.log(data);
     // TODO: 更新订单簿条目的数据
   }
 
@@ -345,10 +357,7 @@ class DataStore {
    */
   @action.bound
   handleTickerUpdate(data: TickerUpdate) {
-    this.markets.forEach((e, index) => {
-      if (e.marketId !== data.marketId) return;
-      this.markets.splice(index, 1, Object.assign({}, e, data));
-    });
+    //
   }
 
   /**

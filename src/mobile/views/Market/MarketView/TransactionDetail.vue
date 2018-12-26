@@ -1,79 +1,109 @@
 <template>
-  <div class="detail-container" @click="onTransaction"  @touchmove.prevent>
+  <div class="detail-container" @click="onTransaction" @touchmove.prevent>
     <div class="detail-content" @click.stop>
-      <div class="title">DICE/EOS交易明细</div>
+      <div class="title">DICE/EOS
+        <Language resource="asset.deal_Details"/>
+      </div>
       <div class="tans-detail-top">
         <div class="detail-box">
           <div class="detail-item">
-            <p>成交价</p>
+            <p>
+              <Language resource="asset.deal_price"/>
+            </p>
             <p>0.000150</p>
           </div>
-           <div class="detail-item">
-            <p>成交量</p>
+          <div class="detail-item">
+            <p>
+              <Language resource="asset.deal_amount"/>
+            </p>
             <p>0.000150</p>
           </div>
         </div>
         <div class="detail-box">
           <div class="detail-item">
-            <p>成交金额</p>
+            <p>
+              <Language resource="asset.total"/>
+            </p>
             <p>0.000150</p>
           </div>
-           <div class="detail-item">
-            <p>成交时间</p>
+          <div class="detail-item">
+            <p>
+              <Language resource="asset.deal_Time"/>
+            </p>
             <p>0.000150</p>
           </div>
-      </div>
+        </div>
       </div>
       <div class="trans-buy">
         <div class="trans-type buy-text">
-          买方
+          <Language resource="asset.buyer"/>
         </div>
         <div class="detail-text-box">
           <p class="text-item">
-            <span>EOS账户名：</span>
+            <span>
+              <Language resource="asset.eos_Account_Name"/>：
+            </span>
             <span class="account account-text">WantLine</span>
           </p>
           <p class="text-item">
-            <span>结算数量：</span>
+            <span>
+              <Language resource="asset.settle_total"/>：
+            </span>
             <span class="account">2390.8097</span>
           </p>
-            <p class="text-item">
-            <span>手续费：</span>
+          <p class="text-item">
+            <span>
+              <Language resource="asset.fee"/>：
+            </span>
             <span class="account">2.8097</span>
           </p>
-            <p class="text-item">
-            <span>交易委托TrxID：</span>
+          <p class="text-item">
+            <span>
+              <Language resource="asset.entrusted_TrxID"/>：
+            </span>
             <span class="account">4ewfewf214...</span>
           </p>
-            <p class="text-item">
-            <span>成交结算TrxID：</span>
+          <p class="text-item">
+            <span>
+              <Language resource="asset.dealt_TrxID"/>：
+            </span>
             <span class="account">4ewfewf214...</span>
           </p>
         </div>
       </div>
-        <div class="trans-sell">
-        <div class="trans-type sell-text">
-           卖方
+      <div class="trans-sell">
+        <div class="trans-type buy-text">
+          <Language resource="asset.seller"/>
         </div>
         <div class="detail-text-box">
           <p class="text-item">
-            <span>EOS账户名：</span>
+            <span>
+              <Language resource="asset.eos_Account_Name"/>：
+            </span>
             <span class="account account-text">WantLine</span>
           </p>
           <p class="text-item">
-            <span>结算数量：</span>
+            <span>
+              <Language resource="asset.settle_total"/>：
+            </span>
             <span class="account">2390.8097</span>
           </p>
-            <p class="text-item">
-            <span>手续费：</span>
+          <p class="text-item">
+            <span>
+              <Language resource="asset.fee"/>：
+            </span>
             <span class="account">2.8097</span>
           </p>
-            <p class="text-item">
-            <span>交易委托TrxID：</span>
+          <p class="text-item">
+            <span>
+              <Language resource="asset.entrusted_TrxID"/>：
+            </span>
             <span class="account">4ewfewf214...</span>
           </p>
-            <p class="text-item">
-            <span>成交结算TrxID：</span>
+          <p class="text-item">
+            <span>
+              <Language resource="asset.dealt_TrxID"/>：
+            </span>
             <span class="account">4ewfewf214...</span>
           </p>
         </div>
@@ -139,51 +169,50 @@ export default {
       margin-bottom: 0.19rem;
     }
   }
-     .trans-buy,.trans-sell{
-      @include flexLayout(row,flex-start,flex-start);
+  .trans-buy,
+  .trans-sell {
+    @include flexLayout(row, flex-start, flex-start);
+  }
+  .trans-buy {
+    margin-bottom: 0.11rem;
+  }
+  .trans-type {
+    width: 0.46rem;
+    height: 0.18rem;
+    line-height: 0.18rem;
+    text-align: center;
+    border-radius: 0.02rem;
+    font-size: 0.14rem;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 1);
+    margin-right: 0.13rem;
+  }
+  .buy-text {
+    background: rgba(7, 199, 78, 1);
+  }
+  .sell-text {
+    background: rgba(255, 0, 0, 1);
+  }
+  .text-item {
+    text-align: left;
+    margin-bottom: 0.05rem;
+    span:nth-child(1) {
+      font-size: 0.12rem;
+      font-family: PingFangSC-Light;
+      font-weight: 300;
+      color: rgba(102, 102, 102, 1);
     }
-    .trans-buy{
-      margin-bottom: 0.11rem;
+    span:nth-child(2) {
+      font-size: 0.14rem;
+      font-family: PingFangSC-Light;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 1);
     }
-      .trans-type{
-      width:0.46rem;
-      height:0.18rem;
-      line-height: 0.18rem;
-      text-align: center;
-      border-radius:0.02rem;
-      font-size:0.14rem;
-      font-family:PingFangSC-Medium;
-      font-weight:500;
-      color:rgba(255,255,255,1);
-      margin-right: 0.13rem;
-
+    .account-text {
+      color: rgba(0, 122, 255, 1) !important;
     }
-    .buy-text{
-      background:rgba(7,199,78,1);
-    }
-     .sell-text{
-      background:rgba(255,0,0,1);
-    }
-    .text-item{
-      text-align: left;
-      margin-bottom: 0.05rem;
-        span:nth-child(1){
-          font-size:0.12rem;
-          font-family:PingFangSC-Light;
-          font-weight:300;
-          color:rgba(102,102,102,1);
-        }
-        span:nth-child(2){
-          font-size:0.14rem;
-          font-family:PingFangSC-Light;
-          font-weight:500;
-          color:rgba(0,0,0,1);
-        }
-        .account-text{
-          color:rgba(0,122,255,1)!important;
-      }
-      }
-
+  }
 }
 </style>
 

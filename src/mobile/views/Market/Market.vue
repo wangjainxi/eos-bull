@@ -4,7 +4,7 @@
       <mt-navbar class="page-part" v-model="selectTab">
         <mt-tab-item v-for="item of tabs" :id="item.id" :key="item.id">
           <img class="table-icon" :src="selectTab === item.id ? item.selectIcon : item.icon" />
-          {{ item.name }}
+          <Language :resource="item.key" />
         </mt-tab-item>
       </mt-navbar>
       <router-link to="market-search">
@@ -22,7 +22,7 @@
             :key="item.type"
             :class="{ special: dataStore.freeMarketParams.sortby === item.type}"
             @click="dataStore.updateFreeMarketListSort(item.type)">
-            {{ item.name }}
+            <Language :resource="item.key"/>
             <img v-if="item.type !== dataStore.freeMarketParams.sortby" src="../../../images/ic_sort_normal.png" />
             <template v-else>
               <img v-if="dataStore.freeMarketParams.order === 'asc'" src="../../../images/ic_sort_down.png" />
@@ -35,9 +35,13 @@
         </div>
         <div class="list-no-box" v-else>
           <img src="../../../images/mobile/ic_collection_normal.svg" alt>
-          <p>快去添加你感兴趣的交易对吧</p>
+          <p>
+            <Language resource="asset.Get_started_on_adding_your_favorite_exchange_pair"/>
+          </p>
           <router-link to="market-search">
-            <mt-button type="primary">添加</mt-button>
+            <mt-button type="primary">
+              <Language resource="asset.Add"/>
+            </mt-button>
           </router-link>
         </div>
       </mt-tab-container-item>
@@ -48,7 +52,7 @@
             :key="item.type"
             :class="{ special: dataStore.marketParams.sortby === item.type}"
             @click="dataStore.updateMarketListSort(item.type)">
-            {{ item.name }}
+            <Language :resource="item.key"/>
             <img v-if="item.type !== dataStore.marketParams.sortby" src="../../../images/ic_sort_normal.png" />
             <template v-else>
               <img v-if="dataStore.marketParams.order === 'asc'" src="../../../images/ic_sort_down.png" />
@@ -85,13 +89,13 @@ export default class MarketList extends Vue {
   selectTab = 'eos';
   tabs = [
     {
-      name: '自选',
+      key: 'asset.Favorites',
       id: 'free',
       icon: require('../../../images/mobile/ic_collection_s.svg'),
       selectIcon: require('../../../images/mobile/ic_collection_current_s.svg'),
     },
     {
-      name: 'EOS',
+      key: 'asset.EOS',
       id: 'eos',
       icon: require('../../../images/mobile/ic_normal_eos.svg'),
       selectIcon: require('../../../images/mobile/ic_current_eos.svg'),
@@ -103,19 +107,19 @@ export default class MarketList extends Vue {
   filters = [
     {
       type: 'pair',
-      name: '交易对',
+      key: 'asset.Pairs',
     },
     {
       type: 'volume',
-      name: '24H成交量',
+      key: 'asset.VOL24H',
     },
     {
       type: 'price',
-      name: '最新价',
+      key: 'asset.Last_Price',
     },
     {
       type: 'change',
-      name: '24H涨跌幅',
+      key: 'asset.Change24H',
     },
   ];
 }

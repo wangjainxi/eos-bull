@@ -214,3 +214,14 @@ export interface Announcement {
   title: string;
   content: string;
 }
+
+interface ResOrderItem {
+  price: string;
+  size: string;
+}
+
+export interface ResOrder {
+  asks: Array<ResOrderItem>;
+  bids: Array<ResOrderItem>;
+  marketId: number;
+}

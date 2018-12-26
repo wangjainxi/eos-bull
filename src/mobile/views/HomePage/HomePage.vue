@@ -2,11 +2,15 @@
   <div id="home-page">
     <div class="home-banner-box">
       <img src="../../../images/mobile/logo_eosmex.svg" alt>
-      <p>全球首家EOS去中心化交易所</p>
+      <p>
+        <Language resource="asset.the_Worlds_1st_Decentralized_EOS_Exchange"/>
+      </p>
     </div>
     <div class="home-notice-box">
       <img src="../../../images/mobile/ic_announcement.svg" alt>
-      <h4>公告:</h4>
+      <h4>
+        <Language resource="asset.Notice"/>:
+      </h4>
       <p>EOSmex上线PSI/EOS新交易对</p>
     </div>
     <div class="home-user-info-box">
@@ -15,15 +19,21 @@
         <p>{{ dataStore.accountName }}</p>
       </div>
       <div>
-        <p>总估值</p>
+        <p>
+          <Language resource="asset.totalValue"/>
+        </p>
         <h4>{{ dataStore.totalValuation.amount }}</h4>
         <p>{{ dataStore.totalValuation.name }}</p>
       </div>
     </div>
     <div class="home-tab-title-box">
       <mt-navbar class="page-part" v-model="selected">
-        <mt-tab-item id="1">涨幅榜</mt-tab-item>
-        <mt-tab-item id="2">24小时成交榜</mt-tab-item>
+        <mt-tab-item id="1">
+          <Language resource="asset.Top_Gainers"/>
+        </mt-tab-item>
+        <mt-tab-item id="2">
+          <Language resource="asset.VOL_Top24H"/>
+        </mt-tab-item>
       </mt-navbar>
     </div>
     <!-- tab-container -->
@@ -33,7 +43,9 @@
           <ListChild :item="item" />
         </div>
         <div class="home-link-to-market-box">
-          <router-link to="market">查看更多</router-link>
+          <router-link to="market">
+            <Language resource="asset.View_More"/>
+          </router-link>
           <img src="../../../images/mobile/ic_arrow_under.svg" alt>
         </div>
       </mt-tab-container-item>
@@ -42,7 +54,9 @@
           <ListChild v-if="index<=10" :item="item" :key="index"></ListChild>
         </div>
         <div class="home-link-to-market-box">
-          <router-link to="market">查看更多</router-link>
+          <router-link to="market">
+            <Language resource="asset.View_More"/>
+          </router-link>
           <img src="../../../images/mobile/ic_arrow_under.svg" alt>
         </div>
       </mt-tab-container-item>
