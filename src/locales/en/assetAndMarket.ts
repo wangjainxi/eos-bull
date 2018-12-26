@@ -23,6 +23,7 @@ export default {
   Complete: 'Complete',
   Top: 'Top',
   Delete: 'Delete',
+  the_Worlds_1st_Decentralized_EOS_Exchange: 'the World’s 1st Decentralized EOS Exchange',
   Notice: 'Notice',
   Top_Gainers: 'Top Gainers',
   VOL_Top24H: '24H VOL Top',

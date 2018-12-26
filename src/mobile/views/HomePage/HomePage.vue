@@ -3,7 +3,7 @@
     <div class="home-banner-box">
       <img src="../../../images/mobile/logo_eosmex.svg" alt>
       <p>
-        <Language resource="home.banner_text_one"/>
+        <Language resource="asset.the_Worlds_1st_Decentralized_EOS_Exchange"/>
       </p>
     </div>
     <div class="home-notice-box">

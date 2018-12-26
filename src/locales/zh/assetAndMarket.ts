@@ -22,6 +22,7 @@ export default {
   Complete: '完成',
   Top: '置顶',
   Delete: '删除',
+  the_Worlds_1st_Decentralized_EOS_Exchange: '全球首家EOS去中心化交易所',
   Notice: '公告',
   Top_Gainers: '涨幅榜',
   VOL_Top24H: '24H成交榜',
