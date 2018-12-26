@@ -36,9 +36,6 @@ class DataStore {
   announcements: Array<Announcement> = [];
 
   @observable
-  searchmarketList: Array<Market> = [];
-
-  @observable
   market?: Market;
 
   @observable
@@ -48,7 +45,12 @@ class DataStore {
   marketParams = {
     sortby: '', // pair, volume, price, change
     order: '', // asc, desc
-    name: '',
+  };
+
+  @observable
+  freeMarketParams = {
+    sortby: '', // pair, volume, price, change
+    order: '', // asc, desc
   };
 
   // 用户钱包页面token展示
@@ -76,40 +78,22 @@ class DataStore {
     });
   }
 
+  // 自选市场列表
+  @computed
+  get freeMarketList() {
+    return this.markets.filter(e => {
+      return !!e;
+    });
+  }
+
+  // 市场列表
   @computed
   get marketList() {
-    const { name, order, sortby } = this.marketParams;
-    let arr = this.markets.slice();
-    if (name) {
-      arr = arr.filter(e => {
-        const { baseCurrency, quoteCurrency } = e.pair;
-        return baseCurrency.symbol.name.includes(name) || quoteCurrency.symbol.name.includes(name);
-      });
-    }
-
+    if (this.markets.length === 0) return this.markets;
+    const { order, sortby } = this.marketParams;
+    const arr = this.markets.slice();
     if (!sortby) return arr;
-    arr = arr.sort((e1, e2) => {
-      let v1;
-      let v2;
-      if (sortby === 'volume') {
-        v1 = e1.volumeBase;
-        v2 = e2.volumeBase;
-      } else if (sortby === 'price') {
-        v1 = parseFloat(e1.lastPrice);
-        v2 = parseFloat(e2.lastPrice);
-      } else if (sortby === 'change') {
-        v1 = parseFloat(e1.change);
-        v2 = parseFloat(e2.change);
-      } else {
-        // 其余情况按pair处理
-        v1 = `${e1.pair.baseCurrency.symbol.name}/${e1.pair.quoteCurrency.symbol.name}`;
-        v2 = `${e2.pair.baseCurrency.symbol.name}/${e2.pair.quoteCurrency.symbol.name}`;
-      }
-      if (order === 'desc') return Number(v2 > v1);
-      return Number(v1 > v2);
-    });
-    console.log(JSON.stringify(arr));
-    return arr;
+    return this.sortMarkets(arr, sortby, order);
   }
 
   @computed
@@ -136,24 +120,60 @@ class DataStore {
       getAccount(this.accountName);
     }, 3000);
   }
-  @action
-  setMarketParams(sortby: string = 'pair', order: string = 'asc', name: string = '') {
-    this.marketParams = {
-      sortby, // pair, volume, price, change
-      order, // asc, desc
-      name,
-    };
+
+  sortMarkets(markets: Market[], sortby: string, order: string) {
+    markets.sort((e1, e2) => {
+      let v1;
+      let v2;
+      if (sortby === 'volume') {
+        v1 = e1.volumeBase;
+        v2 = e2.volumeBase;
+      } else if (sortby === 'price') {
+        v1 = parseFloat(e1.lastPrice);
+        v2 = parseFloat(e2.lastPrice);
+      } else if (sortby === 'change') {
+        v1 = parseFloat(e1.change);
+        v2 = parseFloat(e2.change);
+      } else {
+        // 其余情况按pair处理
+        v1 = `${e1.pair.baseCurrency.symbol.name}/${e1.pair.quoteCurrency.symbol.name}`;
+        v2 = `${e2.pair.baseCurrency.symbol.name}/${e2.pair.quoteCurrency.symbol.name}`;
+      }
+
+      const o = order === 'desc' ? v2 > v1 : v1 > v2;
+      return o ? -1 : 1;
+    });
+    return markets;
   }
+
+  @action.bound
+  updateMarketListSort(t: string) {
+    const { sortby, order } = this.marketParams;
+    if (t === sortby) {
+      Object.assign(this.marketParams, { order: order === 'asc' ? 'desc' : 'asc' });
+    } else {
+      Object.assign(this.marketParams, { sortby: t, order: 'asc' });
+    }
+  }
+
+  @action.bound
+  updateFreeMarketListSort(t: string) {
+    const { sortby, order } = this.freeMarketParams;
+    if (t === sortby) {
+      Object.assign(this.freeMarketParams, { order: order === 'asc' ? 'desc' : 'asc' });
+    } else {
+      Object.assign(this.freeMarketParams, { sortby: t, order: 'asc' });
+    }
+  }
+
   @action
   getMarketSearchList(text: string) {
-    if (text === '') return;
-    this.searchmarketList = [];
-    this.markets.map((item, index) => {
-      if (item.pair.baseCurrency.symbol.name.toLowerCase().indexOf(text.toLowerCase()) !== -1) {
-        this.searchmarketList.push(item);
-      }
+    return this.markets.filter(item => {
+      const symbolName = item.pair.baseCurrency.symbol.name.toLowerCase();
+      return symbolName.includes(text.toLocaleLowerCase());
     });
   }
+
   @action
   async updateMarkets() {
     const res = await getMrkets();
@@ -325,9 +345,10 @@ class DataStore {
    */
   @action.bound
   handleTickerUpdate(data: TickerUpdate) {
-    const market = this.markets.find(e => e.marketId === data.marketId);
-    if (!market) return;
-    Object.assign(market, data);
+    this.markets.forEach((e, index) => {
+      if (e.marketId !== data.marketId) return;
+      this.markets.splice(index, 1, Object.assign({}, e, data));
+    });
   }
 
   /**
