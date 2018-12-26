@@ -12,6 +12,7 @@ export default {
   Available: 'Available',
   Frozen: 'Frozen',
   Favorites: 'Favorites',
+  EOS: 'EOS',
   Pairs: 'Pairs',
   VOL24H: '24H VOL',
   Last_Price: 'Last Price',

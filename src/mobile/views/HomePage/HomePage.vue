@@ -18,14 +18,14 @@
     <div class="home-user-info-box">
       <div>
         <img src="../../../images/mobile/ic_announcement.svg" alt>
-        <p>WantLine</p>
+        <p>{{ dataStore.accountName }}</p>
       </div>
       <div>
         <p>
           <Language resource="asset.totalValue"/>
         </p>
-        <h4>9999999.9999</h4>
-        <p>EOS</p>
+        <h4>{{ dataStore.totalValuation.amount }}</h4>
+        <p>{{ dataStore.totalValuation.name }}</p>
       </div>
     </div>
     <div class="home-tab-title-box">
@@ -41,8 +41,8 @@
     <!-- tab-container -->
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <div class="home-list-page-box" v-for="(item, index) in dataStore.riseRank">
-          <ListChild :item="item" :key="index"></ListChild>
+        <div class="home-list-page-box" v-for="item in dataStore.riseRank" :key="item.marketId">
+          <ListChild :item="item" />
         </div>
         <div class="home-link-to-market-box">
           <router-link to="market">
@@ -52,7 +52,7 @@
         </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-        <div class="home-list-page-box" v-for="(item, index) in dataStore.exChangeRank">
+        <div class="home-list-page-box" v-for="(item, index) in dataStore.exChangeRank" :key="item.marketId">
           <ListChild v-if="index<=10" :item="item" :key="index"></ListChild>
         </div>
         <div class="home-link-to-market-box">

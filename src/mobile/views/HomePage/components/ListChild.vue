@@ -1,7 +1,7 @@
 <template>
   <div id="home-list-box">
     <div class="home-list-name-box">
-      <h4>{{item.marketId}}/EOS</h4>
+      <h4>{{item.pair.baseCurrency.symbol.name}}/{{item.pair.quoteCurrency.symbol.name}}</h4>
       <p>
         <Language resource="asset.VOL24H"/>
         {{item.volumeBase}}
@@ -9,9 +9,7 @@
     </div>
     <div class="home-list-price-box">
       <h4>{{item.lastPrice}}</h4>
-      <p v-if="item.change.indexOf('+') !== -1" class="rise">{{item.change}}%</p>
-      <p v-else-if="item.change.indexOf('-') !== -1" class="fall">{{item.change}}%</p>
-      <p v-else>{{item.change}}</p>
+      <p :class="changeStyle">{{item.change}}</p>
     </div>
   </div>
 </template>
@@ -23,6 +21,12 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 export default class extends Vue {
   @Prop()
   item: any;
+
+  get changeStyle() {
+    if (this.item.change.indexOf('+') !== -1) return 'rise';
+    if (this.item.change.indexOf('-') !== -1) return 'fail';
+    return '';
+  }
 }
 </script>
 

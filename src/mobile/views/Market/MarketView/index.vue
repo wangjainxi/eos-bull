@@ -4,7 +4,7 @@
     <div class="market-container">
       <TopView/>
       <div class="trading-box">
-        <TradingViewMobile/>
+        <VueTradingView/>
       </div>
       <BomView/>
     </div>
@@ -33,34 +33,34 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import userStore from '@/stores/user';
+import data from '@/stores/data';
 import dataStore from '@/stores/data';
 import TopView from './TopView.vue';
 import BomView from './BomView.vue';
 import TransactionDetail from './TransactionDetail.vue';
-import TradingViewMobile from './component/tradingView/index.vue';
+import VueTradingView from '@/components/vueTradingView/index.vue';
 
 @Component({
   components: {
     TopView,
     BomView,
     TransactionDetail,
-    TradingViewMobile,
+    VueTradingView,
   },
 })
 export default class extends Vue {
   showAlert = false;
   created() {
-    userStore.getData();
+    data.getResOrder();
   }
   mounted() {
-    userStore.getData();
+    data.getResOrder();
   }
   onTransaction(t: any) {
     const data = {
       name: 'business',
       params: {
-        id: String(userStore.marketId),
+        id: '1',
         type: t,
       },
     };
@@ -91,6 +91,8 @@ export default class extends Vue {
     height: 40px;
   }
   .trading-box {
+    width: 100%;
+    height: 100%;
     height: 4.3rem;
     font-size: 0.14rem;
   }
