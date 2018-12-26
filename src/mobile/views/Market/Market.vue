@@ -10,7 +10,7 @@
             class="table-icon"
           >
           <img v-else src="../../../images/mobile/ic_collection_s.svg" alt class="table-icon">
-          自选
+          <Language resource="asset.Favorites"/>
         </mt-tab-item>
         <mt-tab-item id="2" v-on:click.native="modifyGrowList('2')">
           <img
@@ -34,7 +34,8 @@
       <mt-tab-container-item id="1">
         <div class="type-table">
           <div :class="typeTableState === '5'? 'special':''" @click="onTypeTable('5')">
-            交易对
+            <Language resource="asset.Pairs"/>
+
             <img
               v-if="upOrDown === '1' && typeTableState ==='5'"
               src="../../../images/ic_sort_up.png"
@@ -48,7 +49,8 @@
             <img v-else src="../../../images/ic_sort_normal.png" alt>
           </div>
           <div :class="typeTableState === '6'? 'special':''" @click="onTypeTable('6')">
-            24H成交量
+            <Language resource="asset.VOL24H"/>
+
             <img
               v-if="upOrDown === '1' && typeTableState ==='6'"
               src="../../../images/ic_sort_up.png"
@@ -62,7 +64,8 @@
             <img v-else src="../../../images/ic_sort_normal.png" alt>
           </div>
           <div :class="typeTableState === '7'? 'special':''" @click="onTypeTable('7')">
-            最新价
+            <Language resource="asset.Last_Price"/>
+
             <img
               v-if="upOrDown === '1' && typeTableState ==='7'"
               src="../../../images/ic_sort_up.png"
@@ -76,7 +79,8 @@
             <img v-else src="../../../images/ic_sort_normal.png" alt>
           </div>
           <div :class="typeTableState === '8'? 'special':''" @click="onTypeTable('8')">
-            24H涨跌幅
+            <Language resource="asset.Change24H"/>
+
             <img
               v-if="upOrDown === '1' && typeTableState ==='8'"
               src="../../../images/ic_sort_up.png"
@@ -95,16 +99,21 @@
         </div>
         <div class="list-no-box" v-else>
           <img src="../../../images/mobile/ic_collection_normal.svg" alt>
-          <p>快去添加你感兴趣的交易对吧</p>
+          <p>
+            <Language resource="asset.Get_started_on_adding_your_favorite_exchange_pair"/>
+          </p>
           <router-link to="market-search">
-            <mt-button type="primary">添加</mt-button>
+            <mt-button type="primary">
+              <Language resource="asset.Add"/>
+            </mt-button>
           </router-link>
         </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
         <div class="type-table">
           <div :class="typeTableState === '1'? 'special':''" @click="onTypeTable('1')">
-            交易对
+            <Language resource="asset.Pairs"/>
+
             <img
               v-if="upOrDown === '1' && typeTableState ==='1'"
               src="../../../images/ic_sort_up.png"
@@ -118,7 +127,8 @@
             <img v-else src="../../../images/ic_sort_normal.png" alt>
           </div>
           <div :class="typeTableState === '2'? 'special':''" @click="onTypeTable('2')">
-            24H成交量
+            <Language resource="asset.VOL24H"/>
+
             <img
               v-if="upOrDown === '1' && typeTableState ==='2'"
               src="../../../images/ic_sort_up.png"
@@ -132,7 +142,8 @@
             <img v-else src="../../../images/ic_sort_normal.png" alt>
           </div>
           <div :class="typeTableState === '3'? 'special':''" @click="onTypeTable('3')">
-            最新价
+            <Language resource="asset.Last_Price"/>
+
             <img
               v-if="upOrDown === '1' && typeTableState ==='3'"
               src="../../../images/ic_sort_up.png"
@@ -146,7 +157,8 @@
             <img v-else src="../../../images/ic_sort_normal.png" alt>
           </div>
           <div :class="typeTableState === '4'? 'special':''" @click="onTypeTable('4')">
-            24H涨跌幅
+            <Language resource="asset.Change24H"/>
+
             <img
               v-if="upOrDown === '1' && typeTableState ==='4'"
               src="../../../images/ic_sort_up.png"

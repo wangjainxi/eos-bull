@@ -3,8 +3,12 @@
     <FilterPopup class="filterPopup" @onClose="showFilter" v-if="showPopup"/>
     <div class="type-select-box">
       <mt-navbar v-model="selected">
-        <mt-tab-item id="1">委托订单</mt-tab-item>
-        <mt-tab-item id="2">深度</mt-tab-item>
+        <mt-tab-item id="1">
+          <Language resource="order.Changed_Time"/>
+        </mt-tab-item>
+        <mt-tab-item id="2">
+          <Language resource="order.Entrusted_Time"/>
+        </mt-tab-item>
         <img @click="showFilter" src="@/images/mobile/ic_filter.svg" alt>
       </mt-navbar>
     </div>
