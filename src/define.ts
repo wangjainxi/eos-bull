@@ -178,7 +178,16 @@ export interface TickerUpdate {
  */
 export interface BalanceUpdate {
   accountName: string; // 用户账户名
-  newBalance: ExtendedAsset; // 新余额
+  newBalance: TokenBalance; // 新余额
+}
+
+/**
+ * 用于My Wallet页面展示代币余额
+ */
+export interface TokenBalance {
+  available: ExtendedAsset;
+  onOrder: ExtendedAsset;
+  estValue: CoinAsset;
 }
 
 /**
@@ -189,9 +198,21 @@ export interface AccountInfo {
   estValue: CoinAsset;
   eos: {
     available: CoinAsset;
+    staked: CoinAsset;
     refunding: CoinAsset;
+    onOrder: CoinAsset;
   };
-  tokens: Array<ExtendedAsset>;
+  tokens: Array<TokenBalance>;
+}
+
+/**
+ * 表示公告详情
+ */
+export interface Announcement {
+  announcementId: number;
+  time: string;
+  title: string;
+  content: string;
 }
 
 interface ResOrderItem {
