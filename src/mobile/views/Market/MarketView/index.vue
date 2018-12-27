@@ -2,7 +2,7 @@
   <div class="market-view-box">
     <TransactionDetail v-if="showAlert" :onTransaction="onTransaction"/>
     <div class="market-container">
-      <TopView/>
+      <TopView :marketData="marketData"/>
       <div class="trading-box">
         <VueTradingView/>
       </div>
@@ -39,7 +39,11 @@ import TopView from './TopView.vue';
 import BomView from './BomView.vue';
 import TransactionDetail from './TransactionDetail.vue';
 import VueTradingView from '@/components/vueTradingView/index.vue';
+import { observer } from 'mobx-vue';
+import { Market } from '@/define';
+import { computed } from 'mobx';
 
+@observer
 @Component({
   components: {
     TopView,
@@ -50,6 +54,21 @@ import VueTradingView from '@/components/vueTradingView/index.vue';
 })
 export default class extends Vue {
   showAlert = false;
+  marketData = {};
+
+  filterData() {
+    dataStore.markets.forEach((ele: any) => {
+      if (this.$route.params.id === ele.marketId) {
+        this.marketData = ele;
+        console.log(this.marketData);
+      }
+    });
+  }
+
+  beforeMount() {
+    this.filterData();
+  }
+
   onTransaction(t: any) {
     const data = {
       name: 'business',

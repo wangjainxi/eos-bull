@@ -94,14 +94,17 @@ export default {
       }
     }
     .mint-navbar .mint-tab-item {
+      height: 0.42rem;
       padding: 0px;
-      margin: 0.1rem;
     }
     .mint-navbar .mint-tab-item.is-selected {
       border-bottom: none;
       .mint-tab-item-label {
         color: rgba(0, 122, 255, 1);
       }
+    }
+    .mint-tab-item-label{
+      margin-top: 0.14rem;
     }
     .mint-navbar .mint-tab-item.is-selected::after {
       content: '1';

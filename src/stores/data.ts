@@ -162,6 +162,7 @@ class DataStore {
   }
 
   constructor() {
+    console.log(1111);
     onfire.on('tickerUpdate', this.handleTickerUpdate);
     onfire.on('balanceUpdate', this.handleBalanceUpdate);
     this.updateMarkets();
@@ -229,6 +230,7 @@ class DataStore {
   @action
   async updateMarkets() {
     const res = await getMrkets();
+    console.log(222);
     runInAction(() => {
       this.markets = res;
     });
