@@ -1,5 +1,15 @@
 import Axios, { AxiosResponse } from 'axios';
-import { Market, TokenInfo, Orderbook, Trade, Order, AccountInfo, Announcement } from '@/define';
+import {
+  Market,
+  TokenInfo,
+  Orderbook,
+  Trade,
+  Order,
+  AccountInfo,
+  Announcement,
+  ORDER_SIDE,
+  ORDER_STATUS,
+} from '@/define';
 
 interface ResponseData<T = any> {
   code: number;
@@ -65,7 +75,15 @@ export const getUserPendingOrders = async (accountName: string) => {
  */
 export const getUserHistoryOrders = async (
   accountName: string,
-  params?: { page?: number; pageSize?: number }
+  params?: {
+    page?: number; // 页数，从1开始
+    pageSize?: number; // 每页条目数
+    baseCurrency?: string; // 基础货币符号
+    side?: ORDER_SIDE; // 订单方向
+    status?: ORDER_STATUS; // 订单状态
+    startTime?: string; // 开始时间
+    endTime?: string; // 结束时间
+  }
 ) => {
   const res = await instance.get(`/v1/orders/history/${accountName}`, { params });
   return resWrapper<{
