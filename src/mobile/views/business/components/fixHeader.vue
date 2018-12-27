@@ -8,22 +8,26 @@
     </mt-header>
   </div>
 </template>
-<script>
-export default {
-  name: 'fix-header',
-  props: ['msg'],
-  data() {
-    return {
-      prevRoute: '',
-    };
-  },
-  computed: {
-    getRouter() {
-      this.prevRoute = `/${this.msg.name}`;
-      return this.prevRoute;
-    },
-  },
-};
+<script lang="ts">
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Observer } from 'mobx-vue';
+
+@Observer
+@Component({
+  components: {},
+})
+export default class FixHeader extends Vue {
+  // name: 'fix-header',
+  // props,
+  @Prop() msg!: any;
+  // data
+  prevRoute: string = '';
+  get getRouter() {
+    this.prevRoute = `/${this.msg.name}`;
+    console.log(this.prevRoute);
+    return this.prevRoute;
+  }
+}
 </script>
 <style lang="scss">
 .fix-header {

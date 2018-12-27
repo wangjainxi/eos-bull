@@ -2,7 +2,7 @@
   <div id="market-optional-page">
     <div class="market-search-input-box">
       <router-link to="market">
-        <img src="../../../images/mobile/ic_find.svg" alt>
+        <img src="../../../images/mobile/ic_arrow_right.svg" class="return-icon" alt>
       </router-link>
       <h4>
         <Language resource="asset.Edit_Favorites"/>
@@ -43,7 +43,7 @@
       </div>
     </div>
     <div v-else class="list-no-box">
-      <img src="../../../images/mobile/ic_collection_s.svg" alt>
+      <img src="../../../images/mobile/ic_nodata.png" alt>
       <p>
         <Language resource="asset.no_data"/>
       </p>
@@ -67,6 +67,8 @@ export default class extends Vue {
 <style lang="scss">
 #market-optional-page {
   width: 100%;
+  min-height: 100%;
+  background: #f7f7f7;
   .market-search-input-box {
     height: 0.42rem;
     padding: 0 0.18rem;
@@ -74,6 +76,7 @@ export default class extends Vue {
     justify-content: space-between;
     align-items: center;
     border-bottom: 4px solid #f2f5fb;
+    background: #fff;
     h4 {
       color: #191a2a;
       font-size: 0.16rem;
@@ -85,6 +88,7 @@ export default class extends Vue {
   }
   .optional-list-box {
     padding: 0 0.2rem;
+    background: #fff;
   }
   .optional-list-title-box,
   .search-list-child-box {
@@ -94,6 +98,7 @@ export default class extends Vue {
     align-items: center;
     height: 0.4rem;
     border-bottom: 1px solid #f2f5fb;
+    background: #fff;
   }
   .optional-list-title-box {
     p {
@@ -130,6 +135,8 @@ export default class extends Vue {
   }
   .list-no-box {
     padding-top: 1rem;
+    width: 100%;
+    min-height: 100%;
     img {
       width: 0.78rem;
       height: 0.78rem;
@@ -140,5 +147,8 @@ export default class extends Vue {
       margin-top: 0.15rem;
     }
   }
+}
+.return-icon {
+  transform: rotate(180deg);
 }
 </style>

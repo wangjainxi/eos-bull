@@ -4,16 +4,24 @@
     <span>{{imgMsg}}</span>
   </div>
 </template>
-<script>
-export default {
-  name: 'show-message-img',
-  props: ['imgUrl', 'imgMsg'],
-  data() {
-    return {
-      imageUrl: { backgroundImage: `url(${this.imgUrl})` },
-    };
+<script lang="ts">
+import { Vue, Component, Prop } from 'vue-property-decorator';
+// import fixHeader from './components/fixHeader.vue';
+
+@Component({
+  components: {
+    // fixHeader,
   },
-};
+})
+export default class ShowMessageImg extends Vue {
+  // name: 'show-message-img',
+
+  @Prop() imgUrl!: any;
+  @Prop() imgMsg!: string;
+  // props: ['imgUrl', 'imgMsg'],
+  // data
+  imageUrl: any = { backgroundImage: `url(${this.imgUrl})` };
+}
 </script>
 <style lang="scss" scoped>
 @import '../style/mixin.scss';
