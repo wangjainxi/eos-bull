@@ -8,6 +8,10 @@
             <span>{{ market.pair.baseCurrency.symbol.name }}</span>
             /{{ market.pair.quoteCurrency.symbol.name }}
           </h4>
+          <h4 v-else>
+            <span>-</span>
+            /-
+          </h4>
           <p>Introduction</p>
         </div>
       </div>
@@ -119,7 +123,7 @@ export default class MexHead extends Vue {
     padding: 10px 0;
     .head-info-title-logo {
       display: flex;
-      padding: 0 61px 0 51px;
+      padding: 0 0 0 51px;
       border-right: 1px solid #2a4a72;
       color: #677bb7;
       text-align: left;

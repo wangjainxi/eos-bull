@@ -1,7 +1,7 @@
 <template>
   <div id="mex">
     <div class="mex-head-Info">
-      <mex-head-info :market="currentMarket" />
+      <mex-head-info :market="dataStore.currentMarket" />
     </div>
     <div class="mex-keynote-page">
       <div class="mex-keynote-first">
@@ -63,14 +63,8 @@ import MexTranHistoryList from './MexTranHistoryList/MexTranHistoryList.vue';
 export default class Mex extends Vue {
   dataStore = dataStore;
 
-  market: any = null;
-
-  get currentMarket() {
-    return this.market || dataStore.marketList[0];
-  }
-
   handleMarketChange(market: Market) {
-    this.market = market;
+    dataStore.setCurrentMarketId(market.marketId);
   }
 }
 </script>

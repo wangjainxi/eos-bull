@@ -22,6 +22,14 @@ class DataStore {
   markets: Array<Market> = [];
 
   @observable
+  currentMarketId?: number;
+
+  @computed
+  get currentMarket() {
+    return this.markets.find(e => e.marketId === this.currentMarketId) || this.markets[0];
+  }
+
+  @observable
   historyOrders: Historyobject = {
     orders: [],
     count: 0,
@@ -349,6 +357,11 @@ class DataStore {
   @action
   handleBalanceUpdate(data: BalanceUpdate) {
     this.updateAccountInfo();
+  }
+
+  @action
+  setCurrentMarketId(id: number) {
+    this.currentMarketId = id;
   }
 }
 

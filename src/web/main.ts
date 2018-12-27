@@ -2,8 +2,8 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import Language from '@/components/Language';
-import '../registerServiceWorker';
-import '../stores/data';
+import '@/stores/data';
+import '@/utils/socket';
 
 import {
   Button,
