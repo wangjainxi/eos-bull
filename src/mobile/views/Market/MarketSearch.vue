@@ -30,7 +30,7 @@
       </router-link>
     </div>
     <div v-else class="list-no-box">
-      <img src="../../../images/mobile/ic_collection_s.svg" alt>
+      <img src="../../../images/mobile/ic_nodata.png" alt>
       <p>暂无数据</p>
     </div>
   </div>

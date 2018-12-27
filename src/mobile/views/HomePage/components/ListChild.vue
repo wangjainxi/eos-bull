@@ -52,7 +52,6 @@ export default class extends Vue {
   justify-content: center;
   align-items: flex-start;
   height: 0.6rem;
-  border-bottom: 1px solid #f2f5fb;
   text-align: left;
 
   .name {

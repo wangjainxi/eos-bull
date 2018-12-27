@@ -42,7 +42,7 @@
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
         <div class="home-list-page-box" v-for="item in dataStore.riseRank" :key="item.marketId">
-          <ListChild :item="item" />
+          <ListChild :item="item"/>
         </div>
         <div class="home-link-to-market-box">
           <router-link to="market">
@@ -52,7 +52,11 @@
         </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-        <div class="home-list-page-box" v-for="(item, index) in dataStore.exChangeRank" :key="item.marketId">
+        <div
+          class="home-list-page-box"
+          v-for="(item, index) in dataStore.exChangeRank"
+          :key="item.marketId"
+        >
           <ListChild v-if="index<=10" :item="item" :key="index"></ListChild>
         </div>
         <div class="home-link-to-market-box">
@@ -132,12 +136,12 @@ export default class extends Vue {
     display: flex;
     justify-content: flex-start;
     border-bottom: 4px solid #f2f5fb;
-    height: 40px;
+    height: 0.4rem;
     align-items: center;
     padding: 0 0.2rem;
     h4 {
       color: #0078ff;
-      font-size: 0.12px;
+      font-size: 0.12rem;
       font-weight: bold;
       margin: 0 0.08rem;
       width: 0.4rem;
@@ -148,7 +152,7 @@ export default class extends Vue {
       nobr {
         width: 100%;
         color: #191a2a;
-        font-size: 0.12px;
+        font-size: 0.12rem;
       }
     }
   }
@@ -157,21 +161,21 @@ export default class extends Vue {
     display: flex;
     justify-content: space-between;
     border-bottom: 4px solid #f2f5fb;
-    height: 70px;
+    height: 0.7rem;
     align-items: center;
     padding: 0 0.2rem;
     > div {
       display: flex;
       align-items: center;
       img {
-        width: 34px;
-        height: 34px;
+        width: 0.34rem;
+        height: 0.34rem;
         border-radius: 50%;
         margin-right: 0.08rem;
       }
       p {
         font-weight: bold;
-        font-size: 0.12px;
+        font-size: 0.12rem;
         color: #24272b;
       }
       h4 {
