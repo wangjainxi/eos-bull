@@ -85,7 +85,7 @@ class DataStore {
   @computed
   get freeMarketList() {
     const locatFav = localStorage.getItem('localFavourite');
-    if (!locatFav) return;
+    if (!locatFav) return [];
     return this.markets.filter(e => {
       return e.favourited === true || JSON.parse(locatFav).indexOf(e.marketId) >= 0;
     });
