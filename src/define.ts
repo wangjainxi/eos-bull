@@ -112,9 +112,12 @@ export interface Order {
   type: ORDER_TYPE;
   timeInForce: TIME_IN_FORCE;
   status: ORDER_STATUS;
-  price: string; // 订单价格
-  size: number; // 订单数量
-  filled: number; // 已撮合数量
+  price: CoinAsset; // 订单价格
+  size: CoinAsset; // 订单数量
+  filled: CoinAsset; // 已撮合数量
+  filledQuote: CoinAsset; // 用quoteCurrency表示的已撮合金额
+  avgPrice: CoinAsset; // 平均成交价格
+  fees: CoinAsset; // 交易总费用
   trxId: string; // 下单交易哈希
 }
 
