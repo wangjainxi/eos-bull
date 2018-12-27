@@ -87,6 +87,7 @@ export interface Market {
   marketId: number; // 市场ID
   favourited: boolean; // 用户是否收藏该市场
   pair: TradingPair;
+  baseCurrencyIcon: TokenIcon;
   pricePrecision: number;
   sizePrecision: number;
   status: MARKET_STATUS;
@@ -208,6 +209,7 @@ export interface AccountInfo {
     onOrder: CoinAsset;
   };
   tokens: Array<TokenBalance>;
+  icons: Array<TokenIcon>;
 }
 
 /**
@@ -218,6 +220,14 @@ export interface Announcement {
   time: string;
   title: string;
   content: string;
+}
+
+/**
+ * 表示代币图标
+ */
+export interface TokenIcon {
+  token: ExtendedSymbol;
+  iconUrl: string;
 }
 
 interface ResOrderItem {
