@@ -15,19 +15,22 @@
       <div>
         <h4>CPU</h4>
         <p>
-          <Language resource="asset.Used"/>&nbsp;{{ dataStore.cpuUsageRate }}%
+          <Language resource="asset.Used"/>
+          &nbsp;{{ dataStore.cpuUsageRate }}%
         </p>
       </div>
       <div>
         <h4>NET</h4>
         <p>
-          <Language resource="asset.Used"/>&nbsp;{{ dataStore.netUsageRate }}%
+          <Language resource="asset.Used"/>
+          &nbsp;{{ dataStore.netUsageRate }}%
         </p>
       </div>
       <div>
         <h4>RAM</h4>
         <p>
-          <Language resource="asset.Used"/>&nbsp;{{ dataStore.ramUsageRate }}%
+          <Language resource="asset.Used"/>
+          &nbsp;{{ dataStore.ramUsageRate }}%
         </p>
       </div>
     </div>
