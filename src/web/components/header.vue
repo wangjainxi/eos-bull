@@ -11,13 +11,13 @@
       <div class="tright-view">
         <span class="use-box" @click="goWallet">
           <img src="@/images/web/ic_eos.svg" alt>
-          <span class="text-style">admin11</span>
+          <span class="text-style">{{ dataStore.accountName }}</span>
         </span>
         <span class="text-style switch">Switch</span>
         <span class="text-style exit">Exit</span>
         <span class="order-box flex-start">
           <img src="@/images/web/ic_order.svg" alt>
-          <span class="text-style exit">admin11</span>
+          <span class="text-style exit">Orders</span>
         </span>
         <!-- {{$t('m.transaction.homepage')}} -->
         <span class="language-box">
@@ -37,10 +37,14 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import { Observer } from 'mobx-vue';
 import language from '@/stores/language';
+import dataStore from '@/stores/data';
 
+@Observer
 @Component
 export default class extends Vue {
+  dataStore = dataStore;
   lang = 'en-US';
   selected = 'en-US';
   activeName = 'first';
