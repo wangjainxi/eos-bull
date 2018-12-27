@@ -1,5 +1,4 @@
 import onfire from 'onfire.js';
-import { getMarketOrderbook } from './../utils/apis';
 import { observable, computed, action, runInAction } from 'mobx';
 import { getMrkets, getAccountInfo, getUserPendingOrders, getAnnouncementList } from '@/utils/apis';
 import { TickerUpdate, Order, Market, AccountInfo, BalanceUpdate, Announcement } from '@/define';

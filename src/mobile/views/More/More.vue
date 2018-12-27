@@ -12,7 +12,7 @@
         <div class="left-part">
           <img :src="item.icon" alt>
           <span>{{language.getIntlText(item.text)}}</span>
-          
+
           <span>{{language.getIntlText(item.common)}}</span>
         </div>
         <img :src="item.rightIcon" alt>
@@ -31,7 +31,6 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import userStore from '@/stores/user';
 import languageStore from '@/stores/language';
 import { Observer } from 'mobx-vue';
 
@@ -87,7 +86,7 @@ export default class extends Vue {
     languageStore.changeLanguage(type);
   }
   created() {
-    userStore.setCurrency('5');
+    //
   }
 }
 </script>

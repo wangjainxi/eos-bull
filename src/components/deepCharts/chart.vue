@@ -21,7 +21,6 @@ export default class extends Vue {
     this.load();
   }
   options = chartStore.options;
-
   load() {
     console.log(chartStore.dataX, chartStore.dataY);
     const lineCharts = this.$refs.lineCharts;

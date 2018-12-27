@@ -17,7 +17,10 @@
         <span class="real-text green-color">0.00000314</span>
         <img src="@/images/mobile/ic_rise.svg" alt>
       </div>
-      <span class="long-text green-color">+ 112.16%</span>
+      <span>
+      <span v-if="Number(marketData.change)>0" class="long-text green-color" >{{marketData.change}}</span>
+      <span v-else class="long-text red-color" >{{marketData.change}}</span>
+      </span>
     </div>
     <div class="max24-box">
       <div>
@@ -109,7 +112,6 @@ export default class extends Vue {
       font-size: 0.14rem;
       font-family: PingFangSC-Regular;
       font-weight: 400;
-      color: rgba(7, 199, 78, 1);
     }
   }
   .max24-box {

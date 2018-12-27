@@ -1,12 +1,13 @@
 <template>
   <div class="market-view-box">
     <TransactionDetail v-if="showAlert" :onTransaction="onTransaction"/>
+
     <div class="market-container">
       <TopView :marketData="marketData"/>
       <div class="trading-box">
         <VueTradingView/>
       </div>
-      <BomView/>
+      <BomView :OrderData="OrderData" :recentDealData="recentDealData" />
     </div>
     <div class="btn-box">
       <div>
@@ -40,8 +41,10 @@ import BomView from './BomView.vue';
 import TransactionDetail from './TransactionDetail.vue';
 import VueTradingView from '@/components/vueTradingView/index.vue';
 import { observer } from 'mobx-vue';
-import { Market } from '@/define';
+import { Market, Trade } from '@/define';
 import { computed } from 'mobx';
+import { getMarketOrderbook, getMarketTrades } from '@/utils/apis';
+import marketViewStore from './component/marketViewStore';
 
 @observer
 @Component({
@@ -53,8 +56,20 @@ import { computed } from 'mobx';
   },
 })
 export default class extends Vue {
-  showAlert = false;
+  showAlert = marketViewStore.showAlert;
   marketData = {};
+  OrderData = {};
+  recentDealData: Array<Trade> = [];
+  mounted() {
+    console.log(dataStore.markets);
+    this.filterData();
+    this.getOrderData();
+    this.getRecentData();
+  }
+
+  async getRecentData() {
+    this.recentDealData = await getMarketTrades(Number(this.$route.params.id));
+  }
 
   filterData() {
     dataStore.markets.forEach((ele: any) => {
@@ -65,8 +80,17 @@ export default class extends Vue {
     });
   }
 
-  beforeMount() {
-    this.filterData();
+  async getOrderData() {
+    this.OrderData = await getMarketOrderbook(Number(this.$route.params.id));
+  }
+
+  @computed
+  filterResData() {
+    dataStore.markets.forEach((ele: any) => {
+      if (this.$route.params.id === ele.marketId) {
+        this.marketData = ele;
+      }
+    });
   }
 
   onTransaction(t: any) {

@@ -69,7 +69,6 @@
 
 <script lang="ts">
 import ListChild from './components/ListChild.vue';
-import userStore from '@/stores/user';
 import dataStore from '@/stores/data';
 import { Vue, Component } from 'vue-property-decorator';
 import HomeIntroduce from './HomeIntroduce.vue';
@@ -88,7 +87,7 @@ export default class extends Vue {
   dealList: any[] = [];
   growList: any[] = [];
   created() {
-    userStore.setCurrency('1');
+    //
   }
   mounted() {
     const noticeBox = document.getElementById('noticeBox');
