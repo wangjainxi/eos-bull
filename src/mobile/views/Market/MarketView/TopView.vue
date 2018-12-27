@@ -17,39 +17,49 @@
         <span class="real-text green-color">0.00000314</span>
         <img src="@/images/mobile/ic_rise.svg" alt>
       </div>
-      <span class="long-text green-color">+ 112.16%</span>
+      <span>
+      <span v-if="Number(marketData.change)>0" class="long-text green-color" >{{marketData.change}}</span>
+      <span v-else class="long-text red-color" >{{marketData.change}}</span>
+      </span>
     </div>
     <div class="max24-box">
       <div>
         <span class="real-title">
-          <Language resource="asset.H24_Hig"/>：
+          <Language resource="transaction.H24_Hig"/>：
         </span>
-        <span class="real-text">0.000000373</span>
+        <span class="real-text">{{marketData.high}}</span>
       </div>
       <div>
         <span class="real-title">
-          <Language resource="asset.H24_Low"/>：
+          <Language resource="transaction.H24_Low"/>：
         </span>
-        <span class="real-text">0.000000147</span>
+        <span class="real-text">{{marketData.low}}</span>
       </div>
       <div>
         <span class="real-title">
-          <Language resource="asset.H24_Volume"/>：
+          <Language resource="transaction.H24_Volume"/>：
         </span>
-        <span class="real-text">8584584.134</span>
+        <span class="real-text">{{marketData.volumeQuote}}</span>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import { observer } from 'mobx-vue';
 
+@observer
 @Component
 export default class extends Vue {
-  isCollect: boolean = false;
+  @Prop() marketData!: any;
+  isCollect: boolean = this.marketData;
+
+  mounted() {
+    console.log(this);
+    console.log(this.marketData);
+  }
 
   collect() {
-    console.log(this);
     this.isCollect = !this.isCollect;
   }
 }
@@ -102,7 +112,6 @@ export default class extends Vue {
       font-size: 0.14rem;
       font-family: PingFangSC-Regular;
       font-weight: 400;
-      color: rgba(7, 199, 78, 1);
     }
   }
   .max24-box {

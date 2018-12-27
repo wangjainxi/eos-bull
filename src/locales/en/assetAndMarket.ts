@@ -31,4 +31,6 @@ export default {
   View_More: 'View More',
   no_data: 'No data',
   Confirm: 'Confirm',
+  buy: 'buy',
+  sell: 'sell',
 };

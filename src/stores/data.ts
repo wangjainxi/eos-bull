@@ -1,5 +1,4 @@
 import onfire from 'onfire.js';
-import { getMarketOrderbook } from './../utils/apis';
 import { observable, computed, action, runInAction } from 'mobx';
 import { getMrkets, getAccountInfo, getUserPendingOrders, getAnnouncementList } from '@/utils/apis';
 import { TickerUpdate, Order, Market, AccountInfo, BalanceUpdate, Announcement } from '@/define';
@@ -162,6 +161,7 @@ class DataStore {
   }
 
   constructor() {
+    console.log(1111);
     onfire.on('tickerUpdate', this.handleTickerUpdate);
     onfire.on('balanceUpdate', this.handleBalanceUpdate);
     this.updateMarkets();
@@ -218,20 +218,6 @@ class DataStore {
     }
   }
 
-  /**
-   * restful获取订单
-   *    */
-  @action
-  getResOrder = () => {
-    getMarketOrderbook(1).then(res => {
-      //@ts-ignore
-      this.resOrder.asks = res.asks;
-      //@ts-ignore
-      this.resOrder.bids = res.bids;
-    });
-    //
-  };
-
   @action
   getMarketSearchList(text: string) {
     return this.markets.filter(item => {
@@ -243,6 +229,7 @@ class DataStore {
   @action
   async updateMarkets() {
     const res = await getMrkets();
+    console.log(222);
     runInAction(() => {
       this.markets = res;
     });
@@ -292,9 +279,36 @@ class DataStore {
   }
 
   setTop(index: number) {
-    const item = this.marketsLink.splice(index, 1);
-    this.marketsLink.unshift(item[0]);
-    localStorage.setItem('marketTop', JSON.stringify(item[0]));
+    const growList = [
+      {
+        currency: 'EOS',
+        dealSize: 3333,
+        price: 0.0023,
+        statu: 1,
+        percentage: 10,
+        collectionState: 1,
+        id: 1,
+      },
+      {
+        currency: 'EOS',
+        dealSize: 3333,
+        price: 0.0023,
+        statu: 0,
+        percentage: 10,
+        collectionState: 0,
+        id: 2,
+      },
+      {
+        currency: 'EOS',
+        dealSize: 3333,
+        price: 0.0023,
+        statu: 2,
+        percentage: 10,
+        collectionState: 0,
+        id: 3,
+      },
+    ];
+    console.log(index);
   }
 
   /**

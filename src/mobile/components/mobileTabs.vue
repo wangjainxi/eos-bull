@@ -16,13 +16,11 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import userStore from '@/stores/user';
 import { Observer } from 'mobx-vue';
 
 @Observer
 @Component
 export default class TabPackage extends Vue {
-  count = userStore;
   navs = [
     {
       key: 'foot.Homepage',

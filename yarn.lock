@@ -8630,6 +8630,10 @@ vue-trading-view@^1.0.1:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/vue-trading-view/download/vue-trading-view-1.0.1.tgz#05309a9cfa70c296b1c24251a6e29595a8a3579b"
 
+vue2-highcharts@^1.2.5:
+  version "1.2.5"
+  resolved "http://registry.npm.taobao.org/vue2-highcharts/download/vue2-highcharts-1.2.5.tgz#4ab5ace0573d2e02a0cfd4029e3d7dbba2de2205"
+
 vue@^2.5.17:
   version "2.5.21"
   resolved "http://registry.npm.taobao.org/vue/download/vue-2.5.21.tgz#3d33dcd03bb813912ce894a8303ab553699c4a85"

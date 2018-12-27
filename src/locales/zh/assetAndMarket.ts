@@ -30,4 +30,6 @@ export default {
   View_More: '查看更多',
   no_data: '暂无数据',
   Confirm: '确认',
+  buy: '买入',
+  sell: '卖出',
 };

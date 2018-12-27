@@ -1,23 +1,32 @@
 <template>
-  <div class="x-bar">
-    <div :id="id"
-    :option="option"></div>
+  <div>
+    <vue-highcharts :options="options" ref="lineCharts"></vue-highcharts>
+    <button @click="load">load</button>
   </div>
 </template>
 <script lang="ts">
-import HighCharts from 'highcharts';
-export default {
-  // 验证类型
-  props: {
-    id: {
-      type: String,
-    },
-    option: {
-      type: Object,
-    },
+import { Vue, Component } from 'vue-property-decorator';
+import VueHighcharts from 'vue2-highcharts';
+import chartStore from '@/stores/chart';
+import { observer } from 'mobx-vue';
+
+@observer
+@Component({
+  components: {
+    VueHighcharts,
   },
+})
+export default class extends Vue {
   mounted() {
-    HighCharts.chart(this.id, this.option);
-  },
-};
+    this.load();
+  }
+  options = chartStore.options;
+  load() {
+    console.log(chartStore.dataX, chartStore.dataY);
+    const lineCharts = this.$refs.lineCharts;
+    lineCharts.delegateMethod('showLoading', 'Loading...');
+    lineCharts.chart.redraw();
+    lineCharts.hideLoading();
+  }
+}
 </script>

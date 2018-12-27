@@ -2,19 +2,19 @@
   <div class="detail-container" @click="onTransaction" @touchmove.prevent>
     <div class="detail-content" @click.stop>
       <div class="title">DICE/EOS
-        <Language resource="asset.deal_Details"/>
+        <Language resource="transaction.deal_Details"/>
       </div>
       <div class="tans-detail-top">
         <div class="detail-box">
           <div class="detail-item">
             <p>
-              <Language resource="asset.deal_price"/>
+              <Language resource="transaction.deal_price"/>
             </p>
             <p>0.000150</p>
           </div>
           <div class="detail-item">
             <p>
-              <Language resource="asset.deal_amount"/>
+              <Language resource="transaction.deal_amount"/>
             </p>
             <p>0.000150</p>
           </div>
@@ -22,13 +22,13 @@
         <div class="detail-box">
           <div class="detail-item">
             <p>
-              <Language resource="asset.total"/>
+              <Language resource="transaction.total"/>
             </p>
             <p>0.000150</p>
           </div>
           <div class="detail-item">
             <p>
-              <Language resource="asset.deal_Time"/>
+              <Language resource="transaction.deal_Time"/>
             </p>
             <p>0.000150</p>
           </div>
@@ -36,36 +36,36 @@
       </div>
       <div class="trans-buy">
         <div class="trans-type buy-text">
-          <Language resource="asset.buyer"/>
+          <Language resource="transaction.buyer"/>
         </div>
         <div class="detail-text-box">
           <p class="text-item">
             <span>
-              <Language resource="asset.eos_Account_Name"/>：
+              <Language resource="transaction.eos_Account_Name"/>：
             </span>
             <span class="account account-text">WantLine</span>
           </p>
           <p class="text-item">
             <span>
-              <Language resource="asset.settle_total"/>：
+              <Language resource="transaction.settle_total"/>：
             </span>
             <span class="account">2390.8097</span>
           </p>
           <p class="text-item">
             <span>
-              <Language resource="asset.fee"/>：
+              <Language resource="transaction.fee"/>：
             </span>
             <span class="account">2.8097</span>
           </p>
           <p class="text-item">
             <span>
-              <Language resource="asset.entrusted_TrxID"/>：
+              <Language resource="transaction.entrusted_TrxID"/>：
             </span>
             <span class="account">4ewfewf214...</span>
           </p>
           <p class="text-item">
             <span>
-              <Language resource="asset.dealt_TrxID"/>：
+              <Language resource="transaction.dealt_TrxID"/>：
             </span>
             <span class="account">4ewfewf214...</span>
           </p>
@@ -73,36 +73,36 @@
       </div>
       <div class="trans-sell">
         <div class="trans-type buy-text">
-          <Language resource="asset.seller"/>
+          <Language resource="transaction.seller"/>
         </div>
         <div class="detail-text-box">
           <p class="text-item">
             <span>
-              <Language resource="asset.eos_Account_Name"/>：
+              <Language resource="transaction.eos_Account_Name"/>：
             </span>
             <span class="account account-text">WantLine</span>
           </p>
           <p class="text-item">
             <span>
-              <Language resource="asset.settle_total"/>：
+              <Language resource="transaction.settle_total"/>：
             </span>
             <span class="account">2390.8097</span>
           </p>
           <p class="text-item">
             <span>
-              <Language resource="asset.fee"/>：
+              <Language resource="transaction.fee"/>：
             </span>
             <span class="account">2.8097</span>
           </p>
           <p class="text-item">
             <span>
-              <Language resource="asset.entrusted_TrxID"/>：
+              <Language resource="transaction.entrusted_TrxID"/>：
             </span>
             <span class="account">4ewfewf214...</span>
           </p>
           <p class="text-item">
             <span>
-              <Language resource="asset.dealt_TrxID"/>：
+              <Language resource="transaction.dealt_TrxID"/>：
             </span>
             <span class="account">4ewfewf214...</span>
           </p>
