@@ -1,7 +1,7 @@
 <template>
   <div id="market-search-page">
     <div class="market-search-input-box">
-      <img src="../../../images/mobile/ic_find.svg" v-on:click="onSearch" alt>
+      <img src="../../../images/mobile/ic_find.svg" @click="onSearch" alt>
       <input v-model="searchInput" type="text" @keyup.13="onSearch">
       <router-link to="market">
         <img src="../../../images/mobile/closeBtn.svg" alt>
@@ -9,7 +9,10 @@
     </div>
     <div v-if="markets.length > 0">
       <div class="search-result-box">搜索结果</div>
-      <div v-for="item of markets" :key="item.marketId" class="search-list-child-box">
+      <router-link
+        class="search-list-child-box"
+        v-for="item of markets" :key="item.marketId"
+        :to="{ name: 'market-view', params: { id: item.marketId } }">
         <h4
           class="list-title"
         >{{item.pair.baseCurrency.symbol.name}}/{{item.pair.quoteCurrency.symbol.name}}</h4>
@@ -24,7 +27,7 @@
         <p class="list-precentage-middle" v-else>0.00%</p>
         <img v-if="item.collectionState === 1" src="../../../images/mobile/ic_collection_s.svg" alt>
         <img v-else src="../../../images/mobile/ic_collection_current_s.svg" alt>
-      </div>
+      </router-link>
     </div>
     <div v-else class="list-no-box">
       <img src="../../../images/mobile/ic_collection_s.svg" alt>

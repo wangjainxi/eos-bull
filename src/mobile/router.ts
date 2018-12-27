@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import TabPackage from '@/mobile/TabPackage.vue';
 import MarketView from './views/Market/MarketView/index.vue';
+import ReportActivity from './views/ReportActivity/index.vue';
+import ReportActivityPage from './views/ReportActivity/report.vue';
 import MarketSearch from './views/Market/MarketSearch.vue';
 import MarketOptional from './views/Market/MarketOptional.vue';
 
@@ -39,7 +41,7 @@ export default new Router({
         {
           path: '/assets',
           name: 'assets',
-          component: () => import(/* webpackChunkName: "more" */ './views/Assets/Assets.vue'),
+          component: () => import(/* webpackChunkName: "assets" */ './views/Assets/Assets.vue'),
         },
       ],
     },
@@ -66,9 +68,19 @@ export default new Router({
         import(/* webpackChunkName: "businessHistory" */ './views/business/businessSellDetails.vue'),
     },
     {
-      path: '/market-view',
+      path: '/market-view/:id',
       name: 'market-view',
       component: MarketView,
+    },
+    {
+      path: '/report-activity',
+      name: 'report-activity',
+      component: ReportActivity,
+    },
+    {
+      path: '/report-page',
+      name: 'report-page',
+      component: ReportActivityPage,
     },
   ],
 });

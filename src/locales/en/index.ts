@@ -4,14 +4,16 @@ import home from './homePage';
 import asset from './assetAndMarket';
 import business from './business';
 import order from './order';
+import more from './more';
 
 const foot = {
   Homepage: 'Home',
   Markets: 'Markets',
   Order: 'Order',
-  Asser: 'Asser',
+  Asset: 'Asset',
   More: 'More',
 };
+
 export default {
   transaction,
   myWallet,
@@ -20,4 +22,5 @@ export default {
   asset,
   order,
   business,
+  more,
 };

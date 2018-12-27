@@ -6,7 +6,8 @@ import Language from '@/components/Language';
 import App from './App.vue';
 import router from './router';
 import '../registerServiceWorker';
-import '../stores/data';
+import '@/stores/data';
+import '@/utils/socket';
 
 Vue.config.productionTip = false;
 

@@ -7,7 +7,7 @@ import { getAccount } from '@/utils/scatter';
 
 class DataStore {
   @observable
-  accountName = 'player';
+  accountName = 'user1';
 
   @observable
   markets: Array<Market> = [];
@@ -25,6 +25,9 @@ class DataStore {
     bids: [],
     asks: [],
   };
+
+  @observable
+  eosAccountInfo: any = {};
 
   @observable
   searchmarketList: Array<Market> = [];
@@ -82,7 +85,7 @@ class DataStore {
   @computed
   get freeMarketList() {
     const locatFav = localStorage.getItem('localFavourite');
-    if (!locatFav) return;
+    if (!locatFav) return [];
     return this.markets.filter(e => {
       return e.favourited === true || JSON.parse(locatFav).indexOf(e.marketId) >= 0;
     });
@@ -96,6 +99,54 @@ class DataStore {
     const arr = this.markets.slice();
     if (!sortby) return arr;
     return this.sortMarkets(arr, sortby, order);
+  }
+
+  @computed
+  get cpuLimit() {
+    return (
+      this.eosAccountInfo['cpu_limit'] || {
+        available: 0,
+        max: 0,
+        used: 0,
+      }
+    );
+  }
+
+  @computed
+  get netLimit() {
+    return (
+      this.eosAccountInfo['net_limit'] || {
+        available: 0,
+        max: 0,
+        used: 0,
+      }
+    );
+  }
+
+  @computed
+  get ramLimit() {
+    return {
+      used: this.eosAccountInfo['ram_usage'] || 0,
+      max: this.eosAccountInfo['ram_quota'] || 0,
+    };
+  }
+
+  @computed
+  get cpuUsageRate() {
+    const { used, max } = this.cpuLimit;
+    return Math.round((used / max) * 10000) / 100.0;
+  }
+
+  @computed
+  get netUsageRate() {
+    const { used, max } = this.netLimit;
+    return Math.round((used / max) * 10000) / 100.0;
+  }
+
+  @computed
+  get ramUsageRate() {
+    const { used, max } = this.ramLimit;
+    return Math.round((used / max) * 10000) / 100.0;
   }
 
   @computed
@@ -116,7 +167,9 @@ class DataStore {
     this.updateMarkets();
     this.updateAccountInfo();
     setInterval(() => {
-      getAccount(this.accountName);
+      getAccount(this.accountName).then(res => {
+        this.eosAccountInfo = res;
+      });
     }, 3000);
   }
 
@@ -208,7 +261,7 @@ class DataStore {
     const res = await getMrkets(accountInfo.accountName);
     runInAction(() => {
       this.marketsLink = res.filter(e => {
-        return e.favourited !== undefined;
+        return e.favourited === true;
       });
       const marketTopLocal = localStorage.getItem('marketTop');
       if (marketTopLocal === null) return;
@@ -216,9 +269,7 @@ class DataStore {
       this.marketsLink.map((item, key) => {
         if (item.marketId === marketTop.marketId) {
           const item = this.marketsLink.splice(key, 1);
-          console.log(item);
           this.marketsLink.unshift(item[0]);
-          console.log(this.marketsLink);
         }
       });
     });
