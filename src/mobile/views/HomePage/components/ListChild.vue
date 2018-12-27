@@ -1,5 +1,5 @@
 <template>
-  <div id="home-list-box">
+  <router-link :to="{ name: 'market-view', params: { id: item.marketId } }" id="home-list-box">
     <div class="home-list-name-box">
       <h4>{{item.pair.baseCurrency.symbol.name}}/{{item.pair.quoteCurrency.symbol.name}}</h4>
       <p>24小时成交量 {{item.volumeBase}}</p>
@@ -8,7 +8,7 @@
       <h4>{{item.lastPrice}}</h4>
       <p :class="changeStyle">{{item.change}}</p>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script lang="ts">
