@@ -5,7 +5,7 @@
         :class="['star',{starActive: item.favourited || localFavourite.indexOf(item.marketId) >= 0}]"
         @click="addStar(item.marketId,$event)"
       ></div>
-      <img src="../../../images/logo_box.png" alt class="market-logo">
+      <img :src="item.baseCurrencyIcon.iconUrl" class="market-logo" />
       <div class="market-content">
         <div
           class="content-name"

@@ -2,7 +2,7 @@
   <div id="mex-head-info-page">
     <div class="head-info-title">
       <div class="head-info-title-logo">
-        <img src="../../../images/web/logo_box.svg" alt>
+        <img class="symbol-icon" :src="market && market.baseCurrencyIcon.iconUrl" />
         <div @click="setInfoTitleState" class="click-range">
           <h4 v-if="market">
             <span>{{ market.pair.baseCurrency.symbol.name }}</span>
@@ -111,7 +111,12 @@ export default class MexHead extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.symbol-icon {
+  width: 44px;
+  height: 44px;
+}
+
 #mex-head-info-page {
   height: 100%;
   width: 100%;
@@ -123,17 +128,14 @@ export default class MexHead extends Vue {
     padding: 10px 0;
     .head-info-title-logo {
       display: flex;
+      align-items: center;
       padding: 0 0 0 51px;
       border-right: 1px solid #2a4a72;
       color: #677bb7;
-      text-align: left;
       width: 23%;
       margin-right: 2%;
       div {
         margin-left: 10px;
-      }
-      h4 {
-        margin-top: 10px;
       }
       h4 > span {
         font-size: 24px;
@@ -230,5 +232,7 @@ export default class MexHead extends Vue {
 }
 .click-range {
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
 }
 </style>

@@ -308,35 +308,6 @@ class DataStore {
   }
 
   setTop(index: number) {
-    const growList = [
-      {
-        currency: 'EOS',
-        dealSize: 3333,
-        price: 0.0023,
-        statu: 1,
-        percentage: 10,
-        collectionState: 1,
-        id: 1,
-      },
-      {
-        currency: 'EOS',
-        dealSize: 3333,
-        price: 0.0023,
-        statu: 0,
-        percentage: 10,
-        collectionState: 0,
-        id: 2,
-      },
-      {
-        currency: 'EOS',
-        dealSize: 3333,
-        price: 0.0023,
-        statu: 2,
-        percentage: 10,
-        collectionState: 0,
-        id: 3,
-      },
-    ];
     console.log(index);
   }
 
