@@ -1,4 +1,5 @@
-import { Market } from '@/define';
+import pick from 'lodash/pick';
+import { CoinAsset } from '@/define';
 
 import EOS from 'eosjs';
 import ScatterJS from 'scatterjs-core';
@@ -13,6 +14,8 @@ const network = {
   protocol: process.env.VUE_APP_NETWORK_PROTOCOL,
   chainId: process.env.VUE_APP_NETWORK_CHAIN_ID,
 };
+
+const mexContract = process.env.VUE_APP_MEX_CONTRACT;
 
 let scatter: any = null;
 let eos: any = null;
@@ -91,42 +94,58 @@ const transaction = async (...args: any[]) => {
   const params = { context_free_actions: [], actions };
   return await callEosApi('transaction', params);
 };
+interface OrderParams {
+  market_id: number;
+  price: CoinAsset;
+  size: CoinAsset;
+  order_side: 'bid' | 'ask';
+  order_type: 'limit' | 'market';
+  time_in_force: 'gtc' | 'fok' | 'ioc';
+  post_only: boolean;
+  coin_contract: string;
+  quantity: string;
+}
 
-export const createOrder = async (market: Market) => {
+export const createOrder = async (params: OrderParams) => {
   const { name, authority } = await getIdentity();
   const authorization = [{ actor: name, permission: authority }];
-  await transaction([
-    {
-      account: process.env.VUE_APP_MEX_CONTRACT,
-      name: 'neworder',
-      authorization,
-      data: {
-        user: name,
-        market_id: market.marketId,
-        price: 1,
-        size: 1,
-        order_side: 1,
-        order_type: 1,
-        time_in_force: 1,
-        post_only: 1,
-      },
+
+  const newOrderAction = {
+    account: mexContract,
+    name: 'neworder',
+    authorization,
+    data: {
+      user: name,
+      ...pick(
+        params,
+        'market_id',
+        'price',
+        'size',
+        'order_side',
+        'order_type',
+        'time_in_force',
+        'post_only'
+      ),
     },
-    {
-      account: '代币合约',
-      name: 'transfer',
-      authorization,
-      data: {
-        from: '用户账户',
-        to: '交易所合约',
-        quantity: '交易所需金额',
-        memo: '',
-      },
+  };
+
+  const transferAction = {
+    account: params.coin_contract,
+    name: 'transfer',
+    authorization,
+    data: {
+      from: name,
+      to: mexContract,
+      quantity: params.quantity,
+      memo: '',
     },
-  ]);
+  };
+
+  await transaction([newOrderAction, transferAction]);
 };
 
 export const cancelOrder = async (orderId: number) => {
-  await transaction('cxlorder', process.env.VUE_APP_MEX_CONTRACT, {
+  await transaction('cxlorder', mexContract, {
     order_id: orderId,
   });
 };
