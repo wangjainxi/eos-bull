@@ -83,8 +83,6 @@ import { computed } from 'mobx';
 })
 export default class MarketList extends Vue {
   dataStore = dataStore;
-  typeTableState = '1';
-  upOrDown = '2';
 
   selectTab = 'eos';
   tabs = [
