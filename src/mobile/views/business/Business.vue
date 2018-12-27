@@ -2,7 +2,7 @@
   <div class="business" id="business">
     <div class="business-coin-title">
       <div class="business-coin-name" @click="showCoinData">
-        <span>LTC/EOS</span>
+        <span>{{routeParam.coinName}}</span>
         <i></i>
       </div>
       <div class="business-coin-image">
@@ -136,7 +136,7 @@
             <BusinessEntrust
               v-for="(item,index) in entrustData.pendingOrders"
               :item="item"
-              :entrustType="entrustType"
+              :routeParam="routeParam"
               :key="index"
             ></BusinessEntrust>
             <div slot="bottom" class="mint-loadmore-bottom">
@@ -150,11 +150,11 @@
         </div>
       </div>
       <div
-        :class="['business-entrust-body',{'show-item':entrustData.pendingOrders.length !== 0}]"
+        :class="['business-entrust-body',{'show-item':entrustData.historyOrders.orders.length !== 0}]"
         v-else
       >
         <ShowMessageImg
-          v-if="entrustData.pendingOrders.length === 0"
+          v-if="entrustData.historyOrders.orders.length === 0"
           :imgUrl="imgUrl"
           :imgMsg="imgMsg"
         ></ShowMessageImg>
@@ -166,9 +166,9 @@
             ref="loadmore"
           >
             <BusinessEntrust
-              v-for="(item,index) in entrustData.pendingOrders"
+              v-for="(item,index) in entrustData.historyOrders.orders"
               :item="item"
-              :entrustType="entrustType"
+              :routeParam="routeParam"
               :key="index"
             ></BusinessEntrust>
             <div slot="bottom" class="mint-loadmore-bottom">
@@ -369,6 +369,10 @@ const dataList = [
   },
 ];
 const entrustData = [{}];
+interface PageParam {
+  page?: number;
+  pageSize?: number;
+}
 
 @Observer
 @Component({
@@ -384,11 +388,13 @@ export default class extends Vue {
   cricleMount = [0, 1, 2, 3, 4];
   rangeValue = 0;
   entrustType = 0;
+  pageparams: PageParam = { page: 1, pageSize: 10 };
   cancel = languageStore.getIntlText('business.cancel');
   popupVisible = false; //币种弹
   sheetVisible = false; //价格弹
   businessPrice = 3422.02; //交易价
   inputVal = 0; //交易
+  routeParam: any = '';
   isFavorite: any = [];
   routeId: number = -1;
   changeEos = 0.00001;
@@ -435,7 +441,9 @@ export default class extends Vue {
 
   mounted() {
     // const eventObj = onfire.on('tickerUpdate', callback);
-    console.log(dataStore);
+    this.routeParam = this.$route.params;
+
+    console.log(this.$route.params);
     this.routeId = Number(this.$route.params.id);
     this.currrentTab =
       this.$route.params.type === 'buy'
@@ -473,7 +481,9 @@ export default class extends Vue {
   }
   loadBottom() {
     // 加载更多数据
-
+    if (!this.pageparams.page) return;
+    this.pageparams.page += 1;
+    dataStore.updateHistoryOrders(this.pageparams);
     this.allLoaded = true; // 若数据已全部获取完毕
     // this.$refs.loadmore.onBottomLoaded();
   }
@@ -487,6 +497,9 @@ export default class extends Vue {
       dataStore.updatePendingOrders();
       this.entrustData = dataStore;
     } else {
+      dataStore.updateHistoryOrders(this.pageparams);
+      this.entrustData = dataStore;
+      console.log(dataStore);
       // this.entrustData = dataStore.pendingOrders;
     }
   }

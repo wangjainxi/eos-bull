@@ -1,6 +1,6 @@
 <template>
   <div class="fix-header">
-    <mt-header fixed title="MAX/EOS卖出明细">
+    <mt-header fixed :title="thisTitle">
       <router-link :to="getRouter" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
@@ -21,10 +21,21 @@ export default class FixHeader extends Vue {
   // props,
   @Prop() msg!: any;
   // data
-  prevRoute: string = '';
+  prevRoute: any = '';
+  thisTitle: string = '';
+  created() {
+    if (this.msg.type === 'buy') {
+      this.thisTitle = `${this.msg.coinName}买入明细`;
+    } else {
+      this.thisTitle = `${this.msg.coinName}卖出明细`;
+    }
+  }
   get getRouter() {
-    this.prevRoute = `/${this.msg.name}`;
-    console.log(this.prevRoute);
+    this.prevRoute = `/${this.msg.name}/${this.msg.id}`;
+    this.prevRoute = {
+      name: this.msg.name,
+      params: { coinName: this.msg.coinName, id: this.msg.id, type: this.msg.type },
+    };
     return this.prevRoute;
   }
 }

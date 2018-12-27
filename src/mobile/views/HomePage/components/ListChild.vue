@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{ name: 'market-view', params: { id: item.marketId } }" class="wrapper">
+  <router-link :to="{ name: 'market-view', params: { id: item.marketId, coinName:`${item.pair.baseCurrency.symbol.name}/${item.pair.quoteCurrency.symbol.name}` } }" class="wrapper">
     <div class="name-box">
       <h4 class="name">
         {{item.pair.baseCurrency.symbol.name}}/{{item.pair.quoteCurrency.symbol.name}}

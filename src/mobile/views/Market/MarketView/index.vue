@@ -60,7 +60,8 @@ export default class extends Vue {
     const data = {
       name: 'business',
       params: {
-        id: '1',
+        id: this.$route.params.id,
+        coinName: this.$route.params.coinName,
         type: t,
       },
     };
