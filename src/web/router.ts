@@ -19,7 +19,6 @@ export default new Router({
     },
     {
       path: '/mex',
-      name: 'Package',
       component: WebPackage,
       children: [
         {

@@ -2,8 +2,8 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import Language from '@/components/Language';
-import '../registerServiceWorker';
-import '../stores/data';
+import '@/stores/data';
+import '@/utils/socket';
 
 import {
   Button,
@@ -26,7 +26,9 @@ import {
   Option,
   DatePicker,
   Dialog,
+  Loading,
 } from 'element-ui';
+import { formatDate } from '@/utils/common';
 
 Vue.config.productionTip = false;
 Vue.use(Button);
@@ -50,7 +52,9 @@ Vue.use(Select);
 Vue.use(Option);
 Vue.use(Input);
 Vue.use(DatePicker);
+Vue.use(Loading);
 Vue.component('Language', Language);
+Vue.filter('formatDate', formatDate);
 
 new Vue({
   router,

@@ -22,6 +22,14 @@ class DataStore {
   markets: Array<Market> = [];
 
   @observable
+  currentMarketId?: number;
+
+  @computed
+  get currentMarket() {
+    return this.markets.find(e => e.marketId === this.currentMarketId) || this.markets[0];
+  }
+
+  @observable
   historyOrders: Historyobject = {
     orders: [],
     count: 0,
@@ -300,35 +308,6 @@ class DataStore {
   }
 
   setTop(index: number) {
-    const growList = [
-      {
-        currency: 'EOS',
-        dealSize: 3333,
-        price: 0.0023,
-        statu: 1,
-        percentage: 10,
-        collectionState: 1,
-        id: 1,
-      },
-      {
-        currency: 'EOS',
-        dealSize: 3333,
-        price: 0.0023,
-        statu: 0,
-        percentage: 10,
-        collectionState: 0,
-        id: 2,
-      },
-      {
-        currency: 'EOS',
-        dealSize: 3333,
-        price: 0.0023,
-        statu: 2,
-        percentage: 10,
-        collectionState: 0,
-        id: 3,
-      },
-    ];
     console.log(index);
   }
 
@@ -349,6 +328,11 @@ class DataStore {
   @action
   handleBalanceUpdate(data: BalanceUpdate) {
     this.updateAccountInfo();
+  }
+
+  @action
+  setCurrentMarketId(id: number) {
+    this.currentMarketId = id;
   }
 }
 
