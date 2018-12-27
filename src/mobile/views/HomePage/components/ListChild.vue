@@ -2,7 +2,10 @@
   <div id="home-list-box">
     <div class="home-list-name-box">
       <h4>{{item.pair.baseCurrency.symbol.name}}/{{item.pair.quoteCurrency.symbol.name}}</h4>
-      <p>24小时成交量 {{item.volumeBase}}</p>
+      <p>
+        <Language resource="asset.VOL24H"/>
+        {{item.volumeBase}}
+      </p>
     </div>
     <div class="home-list-price-box">
       <h4>{{item.lastPrice}}</h4>

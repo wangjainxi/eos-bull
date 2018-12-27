@@ -1,7 +1,7 @@
 <template>
   <div id="market-search-page">
     <div class="market-search-input-box">
-      <img src="../../../images/mobile/ic_find.svg" v-on:click="onSearch" alt>
+      <img src="../../../images/mobile/ic_find.svg" @click="onSearch" alt>
       <input v-model="searchInput" type="text" @keyup.13="onSearch">
       <router-link to="market">
         <img src="../../../images/mobile/closeBtn.svg" alt>
