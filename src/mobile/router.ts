@@ -13,7 +13,6 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'TabPackage',
       component: TabPackage,
       children: [
         {
