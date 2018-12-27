@@ -12,6 +12,10 @@ export default {
 </script>
 
 <style lang="scss">
+html {
+  font-family: 'PingFang SC', 'Microsoft Yahei';
+}
+
 html,
 body {
   height: 100vh;
@@ -54,7 +58,6 @@ figcaption {
   text-decoration: none;
   border: none;
   font-weight: normal;
-  font-family: 'Microsoft Yahei';
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
