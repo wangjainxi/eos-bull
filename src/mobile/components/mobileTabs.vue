@@ -3,6 +3,7 @@
     <router-link
       v-for="item of navs"
       :to="item.path"
+      :key="item.path"
       :class="{ 'nav-item': true, 'current': $route.path === item.path }">
         <img class="icon" v-if="$route.path === item.path" :src="item.selectIcon" />
         <img class="icon" v-else :src="item.icon" />

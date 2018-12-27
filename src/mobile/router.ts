@@ -41,7 +41,7 @@ export default new Router({
         {
           path: '/assets',
           name: 'assets',
-          component: () => import(/* webpackChunkName: "more" */ './views/Assets/Assets.vue'),
+          component: () => import(/* webpackChunkName: "assets" */ './views/Assets/Assets.vue'),
         },
       ],
     },
@@ -68,7 +68,7 @@ export default new Router({
         import(/* webpackChunkName: "businessHistory" */ './views/business/businessSellDetails.vue'),
     },
     {
-      path: '/market-view',
+      path: '/market-view/:id',
       name: 'market-view',
       component: MarketView,
     },
