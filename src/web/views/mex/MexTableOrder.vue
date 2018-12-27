@@ -1,16 +1,16 @@
 <template>
-  <div id="mex-table-roder-page">
+  <div id="mex-table-roder-page" v-loading="loading">
     <div class="table-roder-title">
       <h4>Open Order</h4>
       <div>
         <img src="../../../images/web/ic_refresh.svg" alt>
-        <p>Revoke All</p>
-        <el-checkbox v-model="checked">Hide Other Pair</el-checkbox>
+        <p @click="handleRevokeAllBtnClick">Revoke All</p>
+        <el-checkbox v-model="checked" @change="handleHideMarketCheck">Hide Other Pair</el-checkbox>
         <img src="../../../images/web/ic_refresh.svg" alt>
       </div>
     </div>
     <div class="table-box">
-      <el-table :data="tableData" style="width: 100%" empty-text="There's no data yet">
+      <el-table :data="Array.from(openOrderStore.orders)" style="width: 100%" empty-text="There's no data yet">
         <el-table-column prop="coin" label="Coin" width="200">
           <template slot-scope="props">
             <div class="coin-box">
@@ -61,48 +61,40 @@
     </div>
   </div>
 </template>
-<script>
-export default {
-  name: 'mex-table-order',
-  methods: {
-    greet(id) {
-      console.log(id);
-    },
-  },
-  data() {
-    return {
-      checked: false,
-      tableData: [
-        {
-          coin: 'ZKS',
-          type: 'Buy',
-          time: '2018-12-07 14:15:5',
-          price: 0.00008,
-          average: 0,
-          amount: 21,
-          dealt: 0,
-          entrusted: 0.003,
-          status: 'Not deal',
-          odd: 'eosdkeigjndlie',
-          id: 1,
-        },
-        {
-          coin: 'ZKS',
-          type: 'Sell',
-          time: '2018-12-07 14:15:5',
-          price: 0.00008,
-          average: 0,
-          amount: 21,
-          dealt: 0,
-          entrusted: 0.003,
-          status: 'Not deal',
-          odd: 'eosdkeigjndlie',
-          id: 2,
-        },
-      ],
-    };
-  },
-};
+
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+import { Observer } from 'mobx-vue';
+import dataStore from '@/stores/data';
+import openOrderStore from '@/stores/open-order';
+
+@Observer
+@Component
+export default class MexOpenOrders extends Vue {
+  dataStore = dataStore;
+  openOrderStore = openOrderStore;
+  checked = false;
+  loading = false;
+
+  handleRevokeAllBtnClick() {
+    this.loading = true;
+    openOrderStore.fetchOrders('user1').finally(() => {
+      setTimeout(() => {
+        this.loading = false;
+      }, 1000);
+    });
+  }
+
+  handleHideMarketCheck(val: boolean) {
+    const marketId = dataStore.currentMarket.marketId;
+    if (val) openOrderStore.hideOtherMarket(marketId);
+    else openOrderStore.showOtherMarket();
+  }
+
+  handleDetailBtnClick() {
+    // TODO：展示订单详情
+  }
+}
 </script>
 <style lang="scss">
 #mex-table-roder-page {

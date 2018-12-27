@@ -83,6 +83,7 @@ export const getUserHistoryOrders = async (
     status?: ORDER_STATUS; // 订单状态
     startTime?: string; // 开始时间
     endTime?: string; // 结束时间
+    ignoreCanceled?: boolean; // 是否显示取消订单
   }
 ) => {
   const res = await instance.get(`/v1/orders/history/${accountName}`, { params });
