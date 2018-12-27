@@ -30,7 +30,6 @@
 </template>
 
 <script lang="ts">
-
 export default {
   name: 'trading-view',
   props: {
@@ -38,8 +37,9 @@ export default {
   },
 };
 </script>
+
 <style scoped>
-.tradding-view-style{
+.tradding-view-style {
   height: 100%;
 }
 </style>

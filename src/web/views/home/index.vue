@@ -56,7 +56,7 @@
             <Language resource="home.advantages"/>
           </h3>
           <div class="advantage-inner-box">
-            <img src="./home-page-img/ic_advantage1.svg" alt>
+            <img src="./home-page-img/ic_advantage1@2x.png" width="340" height="340" />
             <div>
               <h4>
                 <Language resource="home.high_efficiency"/>
@@ -87,10 +87,10 @@
                 <Language resource="home.true_decentralization"/>
               </p>
             </div>
-            <img src="./home-page-img/ic_advantage2.svg" alt>
+            <img src="./home-page-img/ic_advantage2@2x.png"  width="340" height="340" />
           </div>
           <div class="advantage-inner-box">
-            <img src="./home-page-img/ic_advantage3.svg" alt>
+            <img src="./home-page-img/ic_advantage3@2x.png"  width="340" height="340" />
             <div>
               <h4>
                 <Language resource="home.high_Quality"/>
@@ -410,7 +410,7 @@ export default class extends Vue {
   .advantage-box-page {
     width: 100%;
     min-width: 1200px;
-    background: #0c2641;
+    background: #142e4d;
   }
   .advantage-box {
     width: 932px;
