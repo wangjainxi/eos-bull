@@ -6,7 +6,10 @@
         <i></i>
       </div>
       <div class="business-coin-image">
-        <i class="business-coin-star"></i>
+        <i
+          :class="['business-coin-star',{'business-coin-star-fav' : isFavorite.indexOf(routeId) !== -1}]"
+          @click="getFav"
+        ></i>
         <i class="business-coin-img1"></i>
       </div>
     </div>
@@ -34,55 +37,59 @@
           <span>WIZBOX</span>
         </div>
         <div class="business-change-eos">{{`≈${changeEos}EOS`}}</div>
-        <business-range
+        <BusinessRange
           :currrentTab="currrentTab"
           @getRangeValue="getRangeValue"
           :rangeValue="rangeValue"
           :cricleMount="cricleMount"
-        ></business-range>
+        ></BusinessRange>
         <div class="use-mount">
-          <div class="use-mount-left">{{`可用EOS：${getUseMount}`}}</div>
+          <div class="use-mount-left">{{`${thisBal}EOS：${getUseMount}`}}</div>
           <div class="use-mount-right">{{`${rangeValue}%`}}</div>
         </div>
         <div
           id="goBusiness"
-          :class="currrentTab === '买入' || currrentTab === 'buy' ? 'businessBuy' : 'businessSell'"
+          :class="currrentTab === '买入' || currrentTab === 'Buy' ? 'businessBuy' : 'businessSell'"
           @click="goBusiness"
         >{{currrentTab}}</div>
       </div>
       <div class="business-show-data-right">
         <div class="right-top">
           <div class="coin-items header">
-            <div class="coin-price">价格</div>
-            <div class="coin-mount">数量</div>
+            <div class="coin-price">
+              <Language resource="business.Price"/>
+            </div>
+            <div class="coin-mount">
+              <Language resource="business.Amount"/>
+            </div>
           </div>
           <div class="coin-item-box">
-            <business-trade-item
+            <BusinessTradeItem
               :changePriceAndMount="changePriceAndMount"
               :tradeType="'sell'"
               v-for="(item, index) in tradeData"
               :item="item"
               :key="index"
               :tradeDataMountSum="tradeDataMountSum"
-            ></business-trade-item>
+            ></BusinessTradeItem>
           </div>
         </div>
         <div
-          :class="['right-middle',{'middle-active':currrentTab === '买入' || currrentTab === 'buy'}]"
+          :class="['right-middle',{'middle-active':currrentTab === '买入' || currrentTab === 'Buy'}]"
         >
           <span>0.0200</span>
           <i></i>
         </div>
         <div class="right-bottom">
           <div class="coin-item-box">
-            <business-trade-item
+            <BusinessTradeItem
               :tradeType="'buy'"
               :changePriceAndMount="changePriceAndMount"
               v-for="(item, index) in tradeData"
               :item="item"
               :key="index"
               :tradeDataMountSum="tradeDataMountSum"
-            ></business-trade-item>
+            ></BusinessTradeItem>
           </div>
         </div>
       </div>
@@ -94,51 +101,55 @@
             :class="['entrust-tab-item',{'entrust-active': entrustType === 0}]"
             @click="changeEntrustType(0)"
           >
-            <span>当前委托</span>
+            <Language resource="business.Open_Orders"/>
             <i></i>
           </div>
           <div
             :class="['entrust-tab-item',{'entrust-active': entrustType === 1}]"
             @click="changeEntrustType(1)"
           >
-            <span>历史委托</span>
+            <Language resource="business.Order_History"/>
             <i></i>
           </div>
         </div>
         <div class="entrust-img" @click="showMsg">
           <i></i>
-          <span>提示</span>
+          <Language resource="business.Tips"/>
         </div>
       </div>
       <div :class="['business-entrust-body',{'show-item':entrustData.length !== 0}]">
-        <show-message-img v-if="entrustData.length === 0" :imgUrl="imgUrl" :imgMsg="imgMsg"></show-message-img>
-        <business-entrust-item
+        <ShowMessageImg v-if="entrustData.length === 0" :imgUrl="imgUrl" :imgMsg="imgMsg"></ShowMessageImg>
+        <BusinessEntrust
           v-else
           v-for="(item,index) in entrustData"
           :entrustType="entrustType"
           :key="index"
-        ></business-entrust-item>
+        ></BusinessEntrust>
       </div>
     </div>
-    <mt-actionsheet :actions="sheetActions" v-model="sheetVisible"></mt-actionsheet>
-    <show-coin-list
+    <mt-actionsheet :actions="sheetActions" :cancelText="cancel" v-model="sheetVisible"></mt-actionsheet>
+    <ShowCoinList
       :popupVisible="popupVisible"
       :dataCoinList="dataCoinList"
       @changePopupVisible="changePopupVisible"
-    ></show-coin-list>
+    ></ShowCoinList>
     <!-- <mt-popup v-model="popupVisible" popup-transition="popup-fade"></mt-popup> -->
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import showMessageImg from './../../../components/messageImage.vue';
-import businessTradeItem from './components/businessTrade.vue';
-import businessEntrustItem from './components/businessEntrust.vue';
-import businessRange from './components/businessRange.vue';
-import showCoinList from './components/businessCoin.vue';
+import { Observer } from 'mobx-vue';
+import ShowMessageImg from './../../../components/messageImage.vue';
+import BusinessTradeItem from './components/businessTrade.vue';
+import BusinessEntrust from './components/businessEntrust.vue';
+import BusinessRange from './components/businessRange.vue';
+import ShowCoinList from './components/businessCoin.vue';
 import { MessageBox, Toast } from 'mint-ui';
+import languageStore from '@/stores/language';
 import { orderHistory } from '../../../utils/restful';
+import dataStore from '@/stores/data';
+
 const tradeData = [
   {
     price: 0.00231,
@@ -303,42 +314,47 @@ const dataList = [
 ];
 const entrustData = [{}];
 
+@Observer
 @Component({
   components: {
-    showMessageImg,
-    businessTradeItem,
-    businessEntrustItem,
-    businessRange,
-    showCoinList,
+    ShowMessageImg,
+    BusinessTradeItem,
+    BusinessEntrust,
+    BusinessRange,
+    ShowCoinList,
   },
 })
 export default class extends Vue {
   cricleMount = [0, 1, 2, 3, 4];
   rangeValue = 0;
   entrustType = 0;
+  cancel = languageStore.getIntlText('business.cancel');
   popupVisible = false; //币种弹
   sheetVisible = false; //价格弹
   businessPrice = 3422.02; //交易价
   inputVal = 0; //交易
+  isFavorite: any = [];
+  routeId: number = -1;
   changeEos = 0.00001;
   currrentTab = '卖出';
-  tabs = ['买入', '卖出'];
+  thisBal = languageStore.getIntlText('business.Bal');
+  tabs = [languageStore.getIntlText('business.Buy'), languageStore.getIntlText('business.Sell')];
   entrustData = entrustData;
   imgUrl = require('./../../../images/mobile/ic_nodata.png');
-  imgMsg = '暂无数据';
+  imgMsg = languageStore.getIntlText('business.nodata');
   tradeData = tradeData;
   tradeDataMountSum = 0;
   useMount = 0;
-  showSheetName = '限价';
+  showSheetName = languageStore.getIntlText('business.Limit');
   dataCoinList = dataList;
 
   sheetActions = [
     {
-      name: '限价',
+      name: languageStore.getIntlText('business.Limit'),
       method: this.changeNowPrice1,
     },
     {
-      name: '市价',
+      name: languageStore.getIntlText('business.Market'),
       method: this.changeNowPrice2,
     },
   ];
@@ -350,10 +366,18 @@ export default class extends Vue {
 
   created() {
     this.getSumMount();
+
+    const arr = localStorage.getItem('isFavorite');
+    if (!arr) return;
+    this.isFavorite = JSON.parse(arr);
   }
 
   mounted() {
-    this.currrentTab = this.$route.params.type === 'buy' ? '买入' : '卖出';
+    this.routeId = Number(this.$route.params.id);
+    this.currrentTab =
+      this.$route.params.type === 'buy'
+        ? languageStore.getIntlText('business.Buy')
+        : languageStore.getIntlText('business.Sell');
   }
 
   async getOrderHistory() {
@@ -366,6 +390,17 @@ export default class extends Vue {
       console.log(err);
     }
   }
+  getFav() {
+    if (this.isFavorite.indexOf(this.routeId) !== -1) {
+      this.isFavorite = this.isFavorite.filter((e: any) => e !== this.routeId);
+      localStorage.setItem('localFavourite', JSON.stringify(this.isFavorite));
+    } else {
+      this.isFavorite.push(this.routeId);
+      localStorage.setItem('localFavourite', JSON.stringify(this.isFavorite));
+    }
+    dataStore.freeMarketList;
+  }
+
   changeTab(val: any) {
     this.currrentTab = val;
   }
@@ -382,17 +417,18 @@ export default class extends Vue {
     this.inputVal = obj2;
   }
   showMsg() {
-    MessageBox(
-      '提示',
-      'EOSmex 是去中心化交易平台，不对任何项目作主观判断，亦不对投资结果负责。因此强烈建议您在详细了解项目后再做投资决定。'
-    );
+    MessageBox({
+      title: languageStore.getIntlText('business.Tips'),
+      message: languageStore.getIntlText('business.tipeos'),
+      confirmButtonText: languageStore.getIntlText('business.yes'),
+    });
   }
   changeNowPrice1() {
-    this.showSheetName = '限价';
+    this.showSheetName = languageStore.getIntlText('business.Limit');
     this.sheetVisible = false;
   }
   changeNowPrice2() {
-    this.showSheetName = '市价';
+    this.showSheetName = languageStore.getIntlText('business.Market');
     this.sheetVisible = false;
   }
   showNowPrice() {
@@ -462,6 +498,9 @@ $marginwidth: 0.12rem;
     .business-coin-img1 {
       margin-left: 0.15rem;
       @include bis('./../../../images/mobile/ic_chart.svg');
+    }
+    .business-coin-star-fav {
+      @include bis('./../../../images/mobile/ic_collection_current_s.svg');
     }
   }
 }

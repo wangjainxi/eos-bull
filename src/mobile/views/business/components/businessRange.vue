@@ -16,27 +16,37 @@
     <br>
   </div>
 </template>
-<script>
-export default {
-  name: 'business-range',
-  data() {
-    return {
-      rangeVal: this.rangeValue,
-    };
+<script lang="ts">
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Observer } from 'mobx-vue';
+// import fixHeader from './components/fixHeader.vue';
+
+@Observer
+@Component({
+  components: {
+    // fixHeader,
   },
-  props: ['rangeValue', 'cricleMount', 'getRangeValue', 'currrentTab'],
-  methods: {
-    changeRangeValue(num) {
-      this.rangeVal = num * 25;
-      return this.rangeVal;
-    },
-  },
-  computed: {
-    getRangeVal() {
-      this.$emit('getRangeValue', this.rangeVal);
-    },
-  },
-};
+})
+export default class BusinessRange extends Vue {
+  // name: 'business-range',
+
+  @Prop() rangeValue!: number;
+  @Prop() cricleMount!: any;
+  @Prop() getRangeValue!: any;
+  @Prop() currrentTab!: any;
+  // data
+  rangeVal: number = this.rangeValue;
+  // props: ['rangeValue', 'cricleMount', 'getRangeValue', 'currrentTab'],
+  // methods
+  changeRangeValue(num: number) {
+    this.rangeVal = num * 25;
+    return this.rangeVal;
+  }
+  // computed
+  get getRangeVal() {
+    return this.$emit('getRangeValue', this.rangeVal);
+  }
+}
 </script>
 <style lang="scss">
 @import '../../../../style/mixin.scss';

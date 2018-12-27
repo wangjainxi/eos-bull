@@ -62,10 +62,13 @@ class DataStore {
 
   @computed
   get riseRank() {
+    const { order } = this.marketParams;
+    if (!order) return this.markets;
     return this.markets.slice().sort((e1, e2) => {
       const num1 = Number(e1.change.slice(0, e1.change.length - 1).slice(1, e1.change.length));
       const num2 = Number(e2.change.slice(0, e2.change.length - 1).slice(1, e2.change.length));
-      return num2 - num1;
+      if (order === 'desc') return num2 - num1;
+      return num1 - num2;
     });
   }
 
@@ -81,8 +84,10 @@ class DataStore {
   // 自选市场列表
   @computed
   get freeMarketList() {
+    const locatFav = localStorage.getItem('localFavourite');
+    if (!locatFav) return;
     return this.markets.filter(e => {
-      return !!e;
+      return e.favourited === true || JSON.parse(locatFav).indexOf(e.marketId) >= 0;
     });
   }
 

@@ -12,7 +12,13 @@
       </div>
       <div class="search-input">
         <i class="search-icon"></i>
-        <input type="search" class="search" placeholder="Search" v-model="inputValue">
+        <input
+          type="search"
+          class="search"
+          placeholder="Search"
+          v-model="inputValue"
+          :inputSearch="inputSearch"
+        >
         <!-- <i v-if="inputValue" class="search-close"></i> -->
       </div>
     </div>
@@ -29,8 +35,19 @@
           <span :class="['data-change-icon',sort]" @click="sortDataList"></span>
         </div>
       </div>
-      <div class="data-list-body">
-        <mex-currentcy-list-data-item v-for="(item, index) in items" :item="item" :key="index"></mex-currentcy-list-data-item>
+      <div class="data-list-body" v-if="currentTab.id === 1">
+        <MexCurrentcyListDataItem
+          v-for="(item, index) in items.freeMarketList"
+          :item="item"
+          :key="index"
+        ></MexCurrentcyListDataItem>
+      </div>
+      <div class="data-list-body" v-else>
+        <MexCurrentcyListDataItem
+          v-for="(item, index) in items.marketList"
+          :item="item"
+          :key="index"
+        ></MexCurrentcyListDataItem>
       </div>
     </div>
   </div>
@@ -38,8 +55,11 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { Observer } from 'mobx-vue';
+import { getMrkets, getAccountInfo } from '@/utils/apis';
 import languageStore from '@/stores/language';
 import MexCurrentcyListDataItem from './MexCurrentcyListDataItem.vue';
+// import socket from '@/utils/socket';
+import dataStore from '@/stores/data';
 
 interface ObjectData {
   id: number;
@@ -71,113 +91,6 @@ const dataList = [
     goTotop: false,
   },
 ];
-const dataList1 = [
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
-  },
-  {
-    name: 'DICE / EOS',
-    dec: 'betdicetoken',
-    price: 0.002541,
-    change: '5.44%',
-    goTotop: true,
-  },
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
-  },
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
-  },
-  {
-    name: 'DICE / EOS',
-    dec: 'betdicetoken',
-    price: 0.002541,
-    change: '5.44%',
-    goTotop: true,
-  },
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
-  },
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
-  },
-  {
-    name: 'DICE / EOS',
-    dec: 'betdicetoken',
-    price: 0.002541,
-    change: '5.44%',
-    goTotop: true,
-  },
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
-  },
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
-  },
-  {
-    name: 'DICE / EOS',
-    dec: 'betdicetoken',
-    price: 0.002541,
-    change: '5.44%',
-    goTotop: true,
-  },
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
-  },
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
-  },
-  {
-    name: 'DICE / EOS',
-    dec: 'betdicetoken',
-    price: 0.002541,
-    change: '5.44%',
-    goTotop: true,
-  },
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
-  },
-];
 @Observer
 @Component({
   components: {
@@ -186,7 +99,7 @@ const dataList1 = [
 })
 export default class MexCurrentcyList extends Vue {
   // data
-  items: Array<any> = [];
+  items: any = dataStore;
   sort: string = '';
   inputValue: string = '';
   currentTab: ObjectData = tabs[1];
@@ -195,6 +108,14 @@ export default class MexCurrentcyList extends Vue {
   created() {
     this.updateDataList(this.currentTab.id);
   }
+  get inputSearch() {
+    if (!this.inputValue) {
+      dataStore.updateMarkets();
+      this.items = dataStore;
+    } else {
+      return (this.items.markets = dataStore.getMarketSearchList(this.inputValue));
+    }
+  }
   // methods
   updateTab(obj: ObjectData) {
     this.currentTab = obj;
@@ -202,16 +123,30 @@ export default class MexCurrentcyList extends Vue {
     this.updateDataList(obj.id);
   }
   updateDataList(num: number) {
-    num === 1 ? (this.items = dataList) : (this.items = dataList1);
+    //获取列表
+    const res = dataStore;
+    this.sort = '';
+    dataStore.marketParams.sortby = '';
+    dataStore.marketParams.order = '';
+    if (num === 1) {
+      // dataStore.getFavouriteList();
+      // this.items.markets = dataStore.favouriteList;
+      console.log(this.items.markets);
+    } else {
+      dataStore.updateMarkets();
+      this.items = dataStore;
+    }
   }
   sortDataList() {
-    if (this.sort === '' || this.sort === 'sort-down') {
-      this.sort = 'sort-up';
-      this.updateDataList(1);
+    //列表排序
+
+    dataStore.marketParams.sortby = 'change';
+    if (this.currentTab.id === 1) {
+      dataStore.updateFreeMarketListSort('change');
     } else {
-      this.sort = 'sort-down';
-      this.updateDataList(0);
+      dataStore.updateMarketListSort('change');
     }
+    this.sort === 'sort-up' ? (this.sort = 'sort-down') : (this.sort = 'sort-up');
   }
 }
 </script>
