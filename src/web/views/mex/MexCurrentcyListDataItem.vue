@@ -1,5 +1,5 @@
 <template>
-  <div class="data-list-item">
+  <div class="data-list-item" @click="handleClick">
     <div class="data-market">
       <div
         :class="['star',{starActive: item.favourited || localFavourite.indexOf(item.marketId) >= 0}]"
@@ -25,20 +25,22 @@ import { Observer } from 'mobx-vue';
 @Observer
 @Component
 export default class MexCurrentcyListDataItem extends Vue {
-  // name: 'mex-currentcy-list-data-item',
-  // data
   @Prop() item: any;
 
   starStatus: boolean = false;
   localFavourite: Array<any> = [];
-  // props: ['item'],
+
   created() {
     const loData = localStorage.getItem('localFavourite');
     if (!loData) return (this.localFavourite = []);
     this.localFavourite = JSON.parse(loData);
     console.log(this.item.favourited || this.localFavourite.indexOf(this.item.marketId) >= 0);
   }
-  // methods
+
+  handleClick() {
+    this.$emit('click', this.item);
+  }
+
   addStar(id: number, $event: any) {
     $event.stopPropagation();
     $event.stopImmediatePropagation();
@@ -53,6 +55,7 @@ export default class MexCurrentcyListDataItem extends Vue {
     }
     dataStore.freeMarketList;
   }
+
   getShowColor() {
     if (this.item.change.indexOf('+') >= 0) {
       return true;

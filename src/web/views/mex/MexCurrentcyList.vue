@@ -40,14 +40,16 @@
           v-for="(item, index) in items.freeMarketList"
           :item="item"
           :key="index"
-        ></MexCurrentcyListDataItem>
+          @click="handleMarketItemClick"
+        />
       </div>
       <div class="data-list-body" v-else>
         <MexCurrentcyListDataItem
           v-for="(item, index) in items.marketList"
           :item="item"
           :key="index"
-        ></MexCurrentcyListDataItem>
+          @click="handleMarketItemClick"
+        />
       </div>
     </div>
   </div>
@@ -60,6 +62,7 @@ import languageStore from '@/stores/language';
 import MexCurrentcyListDataItem from './MexCurrentcyListDataItem.vue';
 // import socket from '@/utils/socket';
 import dataStore from '@/stores/data';
+import { Market } from '@/define';
 
 interface ObjectData {
   id: number;
@@ -147,6 +150,10 @@ export default class MexCurrentcyList extends Vue {
       dataStore.updateMarketListSort('change');
     }
     this.sort === 'sort-up' ? (this.sort = 'sort-down') : (this.sort = 'sort-up');
+  }
+
+  handleMarketItemClick(market: Market) {
+    this.$emit('change', market);
   }
 }
 </script>

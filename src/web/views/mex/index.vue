@@ -1,7 +1,7 @@
 <template>
   <div id="mex">
     <div class="mex-head-Info">
-      <mex-head-info></mex-head-info>
+      <mex-head-info :market="currentMarket" />
     </div>
     <div class="mex-keynote-page">
       <div class="mex-keynote-first">
@@ -19,10 +19,10 @@
       </div>
       <div class="mex-keynote-third">
         <div class="mex-currentcy-page">
-          <mex-currentcy-list></mex-currentcy-list>
+          <mex-currentcy-list @change="handleMarketChange" />
         </div>
         <div class="mex-tran-history-page">
-          <mex-tran-history-list></mex-tran-history-list>
+          <mex-tran-history-list />
         </div>
       </div>
     </div>
@@ -37,20 +37,22 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import { Observer } from 'mobx-vue';
 import MexCurrentcyList from './MexCurrentcyList.vue';
+import { Market } from '@/define';
+import dataStore from '@/stores/data';
 import MexHeadInfo from './MexHeadInfo.vue';
 import MexKLineChart from './tradingView/index.vue';
-// import MexMarketList from './MexMarketList/MexMarketList.vue';
 import MexPlaceOrder from './MexPlaceOrder.vue';
 import MexTableHistory from './MexTableHistory.vue';
 import MexTableOrder from './MexTableOrder.vue';
 import MexTranHistoryList from './MexTranHistoryList/MexTranHistoryList.vue';
 
+@Observer
 @Component({
   components: {
     MexCurrentcyList,
     MexHeadInfo,
-    // MexMarketList,
     MexKLineChart,
     MexPlaceOrder,
     MexTableHistory,
@@ -58,7 +60,19 @@ import MexTranHistoryList from './MexTranHistoryList/MexTranHistoryList.vue';
     MexTranHistoryList,
   },
 })
-export default class extends Vue {}
+export default class Mex extends Vue {
+  dataStore = dataStore;
+
+  market: any = null;
+
+  get currentMarket() {
+    return this.market || dataStore.marketList[0];
+  }
+
+  handleMarketChange(market: Market) {
+    this.market = market;
+  }
+}
 </script>
 
 <style lang="scss">
