@@ -12,7 +12,7 @@
       <router-link
         class="search-list-child-box"
         v-for="item of markets" :key="item.marketId"
-        :to="{ name: 'market-view', params: { id: item.marketId } }">
+        :to="{ name: 'market-view', params: { id: item.marketId,item:item } }">
         <h4
           class="list-title"
         >{{item.pair.baseCurrency.symbol.name}}/{{item.pair.quoteCurrency.symbol.name}}</h4>
@@ -30,7 +30,7 @@
       </router-link>
     </div>
     <div v-else class="list-no-box">
-      <img src="../../../images/mobile/ic_collection_s.svg" alt>
+      <img src="../../../images/mobile/ic_nodata.png" alt>
       <p>暂无数据</p>
     </div>
   </div>

@@ -13,10 +13,10 @@ import {
 import Language from '@/components/Language';
 import App from './App.vue';
 import router from './router';
+import VueTradingView from 'vue-trading-view';
 import '../registerServiceWorker';
-import '@/stores/data';
-import '@/utils/socket';
-
+import '../stores/data';
+import VueHighcharts from 'vue2-highcharts';
 Vue.config.productionTip = false;
 
 Vue.use(Button);
@@ -28,8 +28,10 @@ Vue.use(Navbar);
 Vue.use(TabItem);
 Vue.use(TabContainer);
 Vue.use(TabContainerItem);
-Vue.component('Language', Language);
+Vue.use(VueHighcharts, { VueHighcharts });
 
+Vue.component('Language', Language);
+Vue.component('VueTradingView', VueTradingView);
 new Vue({
   router,
   render: h => h(App),

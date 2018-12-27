@@ -13,11 +13,13 @@
       <div>
         <mt-tab-container v-model="selected">
           <mt-tab-container-item id="1">
-            <OrderTab/>
+            <OrderTab :OrderData="OrderData"/>
           </mt-tab-container-item>
-          <mt-tab-container-item id="2">深度图</mt-tab-container-item>
+          <mt-tab-container-item id="2">
+            <DeepCharts/>
+          </mt-tab-container-item>
           <mt-tab-container-item id="3">
-            <DealTab/>
+            <DealTab :recentDealData="recentDealData"/>
           </mt-tab-container-item>
           <mt-tab-container-item id="4">
             <Introduction/>
@@ -30,27 +32,29 @@
 </template>
 
 <script lang="ts">
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import OrderTab from './component/OrderTab.vue';
 import DealTab from './component/DealTab.vue';
 import Introduction from './component/VueIntroduction.vue';
-export default {
-  name: 'bom-view',
-  data() {
-    return {
-      selected: '1',
-    };
-  },
-  methods: {
-    // selected: function() {
-    //   console.log(222);
-    // },
-  },
+import DeepCharts from '../../../../components/deepCharts/index.vue';
+
+@Component({
   components: {
     OrderTab,
     DealTab,
     Introduction,
+    DeepCharts,
   },
-};
+})
+export default class extends Vue {
+  @Prop() OrderData!: any;
+  @Prop() recentDealData!: any;
+  selected = '1';
+
+  mounted() {
+    console.log(this.OrderData);
+  }
+}
 </script>
 
 <style lang="scss">
@@ -90,14 +94,17 @@ export default {
       }
     }
     .mint-navbar .mint-tab-item {
+      height: 0.42rem;
       padding: 0px;
-      margin: 0.1rem;
     }
     .mint-navbar .mint-tab-item.is-selected {
       border-bottom: none;
       .mint-tab-item-label {
         color: rgba(0, 122, 255, 1);
       }
+    }
+    .mint-tab-item-label {
+      margin-top: 0.14rem;
     }
     .mint-navbar .mint-tab-item.is-selected::after {
       content: '1';

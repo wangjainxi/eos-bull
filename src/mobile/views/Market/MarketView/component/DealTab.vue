@@ -9,23 +9,26 @@
     </div>
     <div class="order-content">
       <div class="buy-part">
-        <DealItem :data="dealData"/>
+        <DealItem :data="recentDealData"/>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import { marketRecentDeal } from '@/utils/restful.ts';
 import DealItem from './DealItem.vue';
+import { observer } from 'mobx-vue';
 
+@observer
 @Component({
   components: {
     DealItem,
   },
 })
 export default class extends Vue {
+  @Prop() recentDealData!: any;
   dealData: any[] = [];
 
   mounted() {

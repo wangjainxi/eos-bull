@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{ name: 'market-view', params: { id: item.marketId } }" class="wrapper">
+  <router-link :to="{ name: 'market-view', params: { id: item.marketId ,} }" class="wrapper">
     <div class="name-box">
       <h4 class="name">
         {{item.pair.baseCurrency.symbol.name}}/{{item.pair.quoteCurrency.symbol.name}}
@@ -52,7 +52,6 @@ export default class extends Vue {
   justify-content: center;
   align-items: flex-start;
   height: 0.6rem;
-  border-bottom: 1px solid #f2f5fb;
   text-align: left;
 
   .name {

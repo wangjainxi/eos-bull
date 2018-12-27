@@ -34,7 +34,7 @@
           <ListChild v-for="(item, index) in dataStore.freeMarketList" :item="item" :key="index"></ListChild>
         </div>
         <div class="list-no-box" v-else>
-          <img src="../../../images/mobile/ic_collection_normal.svg" alt>
+          <img src="../../../images/mobile/ic_nodata.png" alt>
           <p>
             <Language resource="asset.Get_started_on_adding_your_favorite_exchange_pair"/>
           </p>

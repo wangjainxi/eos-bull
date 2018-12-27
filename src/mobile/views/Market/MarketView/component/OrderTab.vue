@@ -15,19 +15,18 @@
     </div>
     <div class="order-content">
       <div class="buy-part">
-        <OrderItem :data="asks"/>
+        <OrderItem :data="OrderData.asks"/>
       </div>
       <div class="sell-part">
-        <OrderItem :data="bids"/>
+        <OrderItem :data="OrderData.bids"/>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import OrderItem from './OrderItem.vue';
-import { marketOrderList } from '@/utils/restful.ts';
 
 @Component({
   components: {
@@ -35,25 +34,7 @@ import { marketOrderList } from '@/utils/restful.ts';
   },
 })
 export default class extends Vue {
-  asks: any[] = [];
-  bids: any[] = [];
-
-  mounted() {
-    this.getMarketOrder();
-  }
-
-  async getMarketOrder() {
-    try {
-      const res = await marketOrderList({
-        marketId: 1,
-      });
-      this.asks = res.asks;
-      this.bids = res.bids;
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  @Prop() OrderData!: any;
 }
 </script>
 

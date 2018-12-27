@@ -12,7 +12,7 @@
           <p @click="showtimeView">签到日历</p>
           <p v-if="status ==='3'">短信提醒</p>
         </div>
-        <img src="@/images/mobile/report/out.svg" class="outIcon" alt>
+        <img v-if="status==='4'" src="@/images/mobile/report/out.svg" class="outIcon" alt>
       </div>
     </div>
     <div class="info-box-package">
@@ -37,15 +37,21 @@
           <p>4324</p>
         </div>
       </div>
-      <h4 class="title">我的</h4>
-      <div class="info">
-        <div class="info-box">
-          <p>参与份数</p>
-          <p>43255</p>
-        </div>
-        <div class="info-box">
-          <p>预期奖励</p>
-          <p>4324 EOS</p>
+      <div v-if="isparticipate">
+        <h4 class="title">我的</h4>
+        <div class="info">
+          <div class="info-box">
+            <p>参与份数</p>
+            <p>43255</p>
+          </div>
+          <div class="info-box" v-if="isEnd">
+            <p>预期奖励</p>
+            <p>4324 EOS</p>
+          </div>
+          <div class="info-box" v-else="isEnd">
+            <p>获得奖励</p>
+            <p>4324 EOS</p>
+          </div>
         </div>
       </div>
     </div>
@@ -78,16 +84,35 @@
       </div>
     </div>
     <div v-if="showtimeViewStatu" class="time-view-box">
-      <span @click="hidetimeView">out</span>
+      <div>
+        <date-picker
+          v-if="showDatePicker"
+          :date="date"
+          :isparticipate="isparticipate"
+          :isSign="isSign"
+          @cancel="hidetimeView"
+        ></date-picker>
+      </div>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-@Component
+import DatePicker from './components/DatePicker.vue';
+
+@Component({
+  components: {
+    DatePicker,
+  },
+})
 export default class ReportActivety extends Vue {
   status = '1';
   showtimeViewStatu = false;
+  isparticipate = false;
+  isEnd = false;
+  isSign = false;
+  showDatePicker = true;
+  date = '2018-12-01';
   showtimeView() {
     this.showtimeViewStatu = !this.showtimeViewStatu;
   }
@@ -97,10 +122,17 @@ export default class ReportActivety extends Vue {
   onViewRules() {
     const rulesElement = document.getElementById('rulesElement');
     const roportPage = document.getElementById('roportPage');
-
     if (rulesElement === null || roportPage === null) return;
     const rulesElementTop = rulesElement.offsetTop;
     roportPage.scrollTop = rulesElementTop;
+  }
+  created() {
+    const myDate = new Date();
+    const myDateStr = myDate
+      .toLocaleDateString()
+      .split('/')
+      .join('-');
+    this.date = myDateStr;
   }
 }
 </script>
@@ -118,8 +150,10 @@ export default class ReportActivety extends Vue {
   background-size: cover;
   position: relative;
   .outIcon {
+    width: 0.9rem;
+    height: 0.53rem;
     position: absolute;
-    bottom: -0.3rem;
+    bottom: -0.38rem;
     right: 0.59rem;
   }
   .report-inner-box {

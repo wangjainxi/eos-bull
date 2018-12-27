@@ -45,7 +45,7 @@ const checkStatter = () => {
   }
 
   if (!scatterInstalled) {
-    console.error('scatter not installed.');
+    // console.error('scatter not installed.');
     return Promise.reject();
   }
   return Promise.resolve();
