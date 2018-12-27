@@ -3,6 +3,8 @@ import myWallet from './myWallet';
 import home from './homePage';
 import asset from './assetAndMarket';
 import order from './order';
+import business from './business';
+import more from './more';
 
 const foot = {
   Homepage: '首页',
@@ -18,4 +20,6 @@ export default {
   asset,
   foot,
   order,
+  business,
+  more,
 };

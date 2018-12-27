@@ -11,8 +11,9 @@
       <div class="account-item" v-for="(item,index1) in accountData" @click="onClick(item.type)">
         <div class="left-part">
           <img :src="item.icon" alt>
-          <span>{{item.text}}</span>
-          <span>{{item.common}}</span>
+          <span>{{language.getIntlText(item.text)}}</span>
+          
+          <span>{{language.getIntlText(item.common)}}</span>
         </div>
         <img :src="item.rightIcon" alt>
       </div>
@@ -40,37 +41,37 @@ export default class extends Vue {
   popupVisible = false;
   language = languageStore;
   accountData = [
-    {
-      icon: require('../../../images/mobile/ic_account.svg'),
-      text: '账户委托',
-      common: '',
-      rightIcon: require('../../../images/mobile/ic_arrow_right.svg'),
-      type: 1,
-    },
+    // {
+    //   icon: require('../../../images/mobile/ic_account.svg'),
+    //   text: '账户委托',
+    //   common: '',
+    //   rightIcon: require('../../../images/mobile/ic_arrow_right.svg'),
+    //   type: 1,
+    // },
     {
       icon: require('../../../images/mobile/ic_Language.svg'),
-      text: '切换语言',
+      text: 'more.Language',
       common: '',
       rightIcon: require('../../../images/mobile/ic_arrow_right.svg'),
       type: 2,
     },
     {
       icon: require('../../../images/mobile/ic_help.svg'),
-      text: '帮助中心',
-      common: '常见问题与在线客服',
+      text: 'more.Help_Center',
+      common: 'more.FAQ_and_Online_Service',
       rightIcon: require('../../../images/mobile/ic_arrow_right.svg'),
       type: 3,
     },
     {
       icon: require('../../../images/mobile/ic_submit.svg'),
-      text: '提交工单',
-      common: '问题反馈',
+      text: 'more.Support',
+      common: 'more.Question_Feedback',
       rightIcon: require('../../../images/mobile/ic_arrow_right.svg'),
       type: 4,
     },
     {
       icon: require('../../../images/mobile/ic_aboutus.svg'),
-      text: '关于我们',
+      text: 'more.About_Us',
       common: '',
       rightIcon: require('../../../images/mobile/ic_arrow_right.svg'),
       type: 5,
