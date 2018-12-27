@@ -23,19 +23,19 @@
           <div class="box-title">
             <Language resource="business.Order_Price"/>(EOS)
           </div>
-          <div class="box-data">0.000150</div>
+          <div class="box-data">{{item.price}}</div>
         </div>
         <div class="entrust-box2">
           <div class="box-title">
             <Language resource="business.Order_VOL"/>(MAX)
           </div>
-          <div class="box-data">64274.6666</div>
+          <div class="box-data">{{item.price}}</div>
         </div>
         <div class="entrust-box3">
           <div class="box-title">
             <Language resource="business.VOL"/>(MAX)
           </div>
-          <div class="box-data">—</div>
+          <div class="box-data">{{item.filled === 0 ? '—' : item.filled}}</div>
         </div>
       </div>
       <div class="item-body-bottom" v-show="entrustType !== 0">
@@ -84,10 +84,13 @@ export default class BusinessEntrust extends Vue {
   status1: string = languageStore.getIntlText('business.Revoke');
   status2: string = languageStore.getIntlText('business.Dealt');
   status3: string = languageStore.getIntlText('business.Revoked');
+  // bottomStatus = '';
+  // allLoaded = false;
   // data() {
   //   return {};
   // },
   // methods
+
   canselOrder() {
     // MessageBox({
     //   title: "提示",
