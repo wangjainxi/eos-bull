@@ -1,9 +1,19 @@
 import onfire from 'onfire.js';
 import { observable, computed, action, runInAction } from 'mobx';
-import { getMrkets, getAccountInfo, getUserPendingOrders, getAnnouncementList } from '@/utils/apis';
+import {
+  getMrkets,
+  getAccountInfo,
+  getUserPendingOrders,
+  getUserHistoryOrders,
+  getAnnouncementList,
+} from '@/utils/apis';
 import { TickerUpdate, Order, Market, AccountInfo, BalanceUpdate, Announcement } from '@/define';
 import { getAccount } from '@/utils/scatter';
 
+interface Historyobject {
+  orders: Array<Order>;
+  count: number;
+}
 class DataStore {
   @observable
   accountName = 'user1';
@@ -12,7 +22,10 @@ class DataStore {
   markets: Array<Market> = [];
 
   @observable
-  historyOrders: Array<Order> = [];
+  historyOrders: Historyobject = {
+    orders: [],
+    count: 0,
+  };
 
   @observable
   pendingOrders: Array<Order> = [];
@@ -267,6 +280,14 @@ class DataStore {
     const res = await getUserPendingOrders(this.accountName);
     runInAction(() => {
       this.pendingOrders = res;
+    });
+  }
+
+  @action
+  async updateHistoryOrders(params: { page?: number; pageSize?: number }) {
+    const res = await getUserHistoryOrders(this.accountName, params);
+    runInAction(() => {
+      this.historyOrders = res;
     });
   }
 

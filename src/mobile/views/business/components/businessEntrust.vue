@@ -2,19 +2,17 @@
   <div class="entrust-item">
     <div class="entrust-item-head">
       <div class="head-left">
-        <div class="left-type">
-          <Language resource="business.Buy1"/>
-        </div>
-        <div class="left-coin-type">MAX/EOS</div>
-        <div class="left-date">12-11</div>
+        <div :class="getLangTitle"></div>
+        <div class="left-coin-type">{{routeParam.coinName}}</div>
+        <div class="left-date">{{Datatime}}</div>
       </div>
-      <div :class="['head-right',{canCansel:entrustType === 0}]">
-        <span @click="canselOrder">
-          {{entrustType === 0?
-          status1:
-          status2}}
-        </span>
-        <i v-show="entrustType !== 0" @click="goHisitory"></i>
+      <div :class="['head-right',{canCansel:item.status === 1 || item.status === 2 }]">
+        <!-- {{getThisShowTitle}} -->
+        <span v-show="item.status === 1 || item.status === 2" @click="canselOrder">{{showWords}}</span>
+        <span class="span-green" v-show="item.status === 3 && item.side === 1">{{showWords}}</span>
+        <span class="span-red" v-show="item.status === 3 && item.side === 2">{{showWords}}</span>
+        <span v-show="item.status === 4">{{showWords}}</span>
+        <i v-show="item.status === 3" :class="getGohistory" @click="goHisitory"></i>
       </div>
     </div>
     <div class="entrust-item-body">
@@ -23,19 +21,19 @@
           <div class="box-title">
             <Language resource="business.Order_Price"/>(EOS)
           </div>
-          <div class="box-data">0.000150</div>
+          <div class="box-data">{{item.price.amount}}</div>
         </div>
         <div class="entrust-box2">
           <div class="box-title">
             <Language resource="business.Order_VOL"/>(MAX)
           </div>
-          <div class="box-data">64274.6666</div>
+          <div class="box-data">{{item.size.amount}}</div>
         </div>
         <div class="entrust-box3">
           <div class="box-title">
             <Language resource="business.VOL"/>(MAX)
           </div>
-          <div class="box-data">—</div>
+          <div class="box-data">{{item.filled.amount === 0 ? '—' : item.filled.amount}}</div>
         </div>
       </div>
       <div class="item-body-bottom" v-show="entrustType !== 0">
@@ -43,29 +41,30 @@
           <div class="box-title">
             <Language resource="business.AVG_Price"/>(EOS)
           </div>
-          <div class="box-data">0.000150</div>
+          <div class="box-data">{{item.avgPrice.amount}}</div>
         </div>
         <div class="entrust-box2">
           <div class="box-title">
             <Language resource="business.Total"/>(EOS)
           </div>
-          <div class="box-data">64274.6666</div>
+          <div class="box-data">{{item.filledQuote.amount}}</div>
         </div>
         <div class="entrust-box3">
           <div class="box-title">
             <Language resource="business.Fee"/>(EOS)
           </div>
-          <div class="box-data">0.0085</div>
+          <div class="box-data">{{item.fees.amount}}</div>
         </div>
       </div>
     </div>
   </div>
 </template>
-<script lang="ts">
+<script lang="tsx">
 import { MessageBox } from 'mint-ui';
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import { Observer } from 'mobx-vue';
 import languageStore from '@/stores/language';
+import { formatTimes } from '@/utils/formatTime';
 // import fixHeader from './components/fixHeader.vue';
 
 @Observer
@@ -80,14 +79,49 @@ export default class BusinessEntrust extends Vue {
 
   @Prop() item!: any;
   @Prop() entrustType!: number;
+  @Prop() routeParam!: any;
 
   status1: string = languageStore.getIntlText('business.Revoke');
   status2: string = languageStore.getIntlText('business.Dealt');
   status3: string = languageStore.getIntlText('business.Revoked');
-  // data() {
-  //   return {};
-  // },
+  i18n: string = '';
+  Datatime = formatTimes(this.item.time, 'MM-DD');
   // methods
+  created() {
+    const lanS = localStorage.getItem('__language__');
+    if (!lanS) return;
+    this.i18n = lanS;
+  }
+  get getLangTitle() {
+    let thisString;
+    if (this.item.side === 1) {
+      //买单
+      if (this.i18n === 'zh-CN') {
+        thisString = 'left-type zhcn zhcnImg1';
+      } else {
+        thisString = 'left-type engh enghImg1';
+      }
+    } else {
+      //卖单
+      if (this.i18n === 'zh-CN') {
+        thisString = 'left-type zhcn zhcnImg2';
+      } else {
+        thisString = 'left-type engh enghImg2';
+      }
+    }
+    return thisString;
+    // <Language resource="business.Buy1"/>:
+    // <Language resource="business.Sell1"/>
+  }
+  get getGohistory() {
+    let thisimg;
+    if (this.item.side === 1) {
+      thisimg = 'getGohistoryImgB';
+    } else {
+      thisimg = 'getGohistoryImgS';
+    }
+    return thisimg;
+  }
   canselOrder() {
     // MessageBox({
     //   title: "提示",
@@ -105,12 +139,24 @@ export default class BusinessEntrust extends Vue {
       );
     }
   }
+  get showWords() {
+    if (this.item.status === 1 || this.item.status === 2) {
+      return this.status1;
+    } else if (this.item.status === 3) {
+      return this.status2;
+    } else if (this.item.status === 4) {
+      return this.status3;
+    }
+  }
   goHisitory() {
     this.$router.push({
       path: '/businessHistory',
       name: 'businessHistory',
       params: {
         name: 'business',
+        orderId: this.item.orderId,
+        tradeItem: this.item,
+        ...this.routeParam,
       },
     });
   }
@@ -133,11 +179,24 @@ export default class BusinessEntrust extends Vue {
   @include flex(flex, center, space-between);
   .left-type {
     @include flex(flex, center, center);
-    @include borderRadius(50%);
     @include wh(0.15rem, 0.15rem);
-    background: rgba(7, 199, 78, 1);
     @include font(400, 0.09rem, 0.13rem, 'PingFangSC-Regular');
     color: rgba(255, 255, 255, 1);
+  }
+  .engh {
+    @include wh(0.26rem, 0.13rem);
+  }
+  .zhcnImg1 {
+    @include bis('./../../../../images/mobile/ic_buy_c.svg');
+  }
+  .zhcnImg2 {
+    @include bis('./../../../../images/mobile/ic_sell_c.svg');
+  }
+  .engh.enghImg1 {
+    @include bis('./../../../../images/mobile/ic_buy_e.svg');
+  }
+  .engh.enghImg2 {
+    @include bis('./../../../../images/mobile/ic_sell_e.svg');
   }
   .left-type.sell {
     background: rgba(255, 0, 0, 1);
@@ -159,10 +218,21 @@ export default class BusinessEntrust extends Vue {
     color: rgba(102, 102, 102, 1);
     @include font(300, 0.14rem, 0.2rem, 'PingFangSC-Regular');
   }
-  i {
+  span.span-green {
+    color: rgba(7, 199, 78, 1);
+  }
+  span.span-red {
+    color: rgba(255, 0, 0, 1);
+  }
+  & > i {
     margin-left: 0.04rem;
-    @include bis('./../../../../images/mobile/ic_arrow_under.svg');
     @include wh(0.2rem, 0.2rem);
+  }
+  i.getGohistoryImgB {
+    @include bis('./../../../../images/mobile/ic_arrow_right_green.svg');
+  }
+  i.getGohistoryImgS {
+    @include bis('./../../../../images/mobile/ic_arrow_right_red.svg');
   }
 }
 .head-right.canCansel {

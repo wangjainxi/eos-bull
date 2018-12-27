@@ -27,7 +27,8 @@
             <Language resource="myWallet.H_Total"/>&nbsp; 265172.3326 EOS
           </div>
           <div>GBI：3980.3</div>
-          <div class="wifi" @click="showAddress">
+          <div class="wifi" >
+          <!-- <div class="wifi" @click="showAddress"> -->
             <img src="@/images/web/ic_wifi.svg" alt>
             <span>HongKong</span>
           </div>

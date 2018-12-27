@@ -59,7 +59,7 @@
             </span>
             <span v-if="item.status === 2" class="already-deal">
               <span><Language resource="order.Dealt"/></span>
-              <img class="type" src="@/images/mobile/ic_arrow_right_ red.svg" alt>
+              <img class="type" src="@/images/mobile/ic_arrow_right_red.svg" alt>
             </span>
           </span>
         </div>
