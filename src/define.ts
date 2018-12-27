@@ -87,7 +87,7 @@ export interface Market {
   marketId: number; // 市场ID
   favourited: boolean; // 用户是否收藏该市场
   pair: TradingPair;
-  baseCurrencyIcon: TokenIcon;
+  baseCurrencyIcon: string;
   pricePrecision: number;
   sizePrecision: number;
   status: MARKET_STATUS;
