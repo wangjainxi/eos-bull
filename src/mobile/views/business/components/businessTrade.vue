@@ -1,27 +1,39 @@
 <template>
-  <div :class="['coin-items',{red:tradeType === 'sell'}]" @click="changePriceAndMount(item.price,item.mount)">
+  <div
+    :class="['coin-items',{red:tradeType === 'sell'}]"
+    @click="changePriceAndMount(item.price,item.mount)"
+  >
     <i :style="{ width: getItemWidth }"></i>
     <div class="coin-price">{{item.price}}</div>
     <div class="coin-mount">{{item.mount}}</div>
   </div>
 </template>
-<script>
-export default {
-  name: 'business-trade-item',
-  props: ['item', 'tradeType', 'tradeDataMountSum', 'changePriceAndMount'],
-  data() {
-    return {
-      itemWidth: 0,
-    };
+<script lang="ts">
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Observer } from 'mobx-vue';
+// import fixHeader from './components/fixHeader.vue';
+
+@Observer
+@Component({
+  components: {
+    // fixHeader,
   },
-  computed: {
-    getItemWidth() {
-      const width = ((this.item.mount / this.tradeDataMountSum) * 100).toFixed(2);
-      this.itemWidth = `${width}%`;
-      return this.itemWidth;
-    },
-  },
-};
+})
+export default class BusinessTradeItem extends Vue {
+  // name: 'business-trade-item',
+  @Prop() item!: any;
+  @Prop() tradeType!: any;
+  @Prop() tradeDataMountSum!: any;
+  @Prop() changePriceAndMount!: any;
+  // props: ['item', 'tradeType', 'tradeDataMountSum', 'changePriceAndMount'],
+  // data
+  itemWidth: any = 0;
+  get getItemWidth() {
+    const width = ((this.item.mount / this.tradeDataMountSum) * 100).toFixed(2);
+    this.itemWidth = `${width}%`;
+    return this.itemWidth;
+  }
+}
 </script>
 <style lang="scss">
 @import '../../../../style/mixin.scss';

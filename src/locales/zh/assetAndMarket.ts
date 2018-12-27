@@ -12,6 +12,7 @@ export default {
   Available: '可用',
   Frozen: '冻结',
   Favorites: '自选',
+  EOS: 'EOS',
   Pairs: '交易对',
   VOL24H: '24H成交量',
   Last_Price: '最新价',

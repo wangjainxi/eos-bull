@@ -11,7 +11,9 @@
       <h4>
         <Language resource="asset.Notice"/>:
       </h4>
-      <p>EOSmex上线PSI/EOS新交易对</p>
+      <p id="noticeBox">
+        <nobr id="notice">EOS新交易对EOSmex上线PSIEOS新交易对EOSmex上线PSIEOS新交易对EOSmex上线PSI/EOS新交易对。</nobr>
+      </p>
     </div>
     <div class="home-user-info-box">
       <div>
@@ -22,8 +24,8 @@
         <p>
           <Language resource="asset.totalValue"/>
         </p>
-        <h4>9999999.9999</h4>
-        <p>EOS</p>
+        <h4>{{ dataStore.totalValuation.amount }}</h4>
+        <p>{{ dataStore.totalValuation.name }}</p>
       </div>
     </div>
     <div class="home-tab-title-box">
@@ -39,8 +41,8 @@
     <!-- tab-container -->
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <div class="home-list-page-box" v-for="(item, index) in dataStore.riseRank">
-          <ListChild :item="item" :key="index"></ListChild>
+        <div class="home-list-page-box" v-for="item in dataStore.riseRank" :key="item.marketId">
+          <ListChild :item="item" />
         </div>
         <div class="home-link-to-market-box">
           <router-link to="market">
@@ -88,6 +90,24 @@ export default class extends Vue {
   created() {
     userStore.setCurrency('1');
   }
+  mounted() {
+    const noticeBox = document.getElementById('noticeBox');
+    const notice = document.getElementById('notice');
+    if (noticeBox === null || notice === null) {
+      return;
+    }
+    if (noticeBox.offsetWidth > notice.offsetWidth) {
+      return;
+    }
+    const timer = setInterval(() => {
+      const text = notice.innerText;
+      notice.innerText = text.substring(1, text.length) + text.substring(0, 1);
+    }, 300);
+    // 通过$once来监听定时器，在beforeDestroy钩子可以被清除。
+    this.$once('hook:beforeDestroy', () => {
+      clearTimeout(timer);
+    });
+  }
 }
 </script>
 <style lang="scss">
@@ -120,10 +140,16 @@ export default class extends Vue {
       font-size: 0.12px;
       font-weight: bold;
       margin: 0 0.08rem;
+      width: 0.4rem;
     }
     p {
-      color: #191a2a;
-      font-size: 0.12px;
+      overflow: hidden;
+      width: 2.5rem;
+      nobr {
+        width: 100%;
+        color: #191a2a;
+        font-size: 0.12px;
+      }
     }
   }
   .home-user-info-box {

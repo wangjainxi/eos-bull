@@ -26,39 +26,54 @@
     </div>
   </mt-popup>
 </template>
-<script>
-export default {
-  name: 'show-coin-list',
-  props: ['popupVisible', 'dataCoinList', 'changePopupVisible'],
-  data() {
-    return {
-      currentTab: 'EOS',
-      tabs: ['自选', 'EOS'],
-      dataList: this.dataCoinList,
-      thisPopupVisible: this.popupVisible,
-    };
+<script lang="ts">
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+import { Observer } from 'mobx-vue';
+import languageStore from '@/stores/language';
+// import fixHeader from './components/fixHeader.vue';
+
+@Observer
+@Component({
+  components: {
+    // fixHeader,
   },
-  methods: {
-    getDataList(item, index) {
-      this.currentTab = item;
-      if (index === 0) {
-        this.dataList = [];
-      } else {
-        this.dataList = this.dataCoinList;
-      }
-    },
-  },
-  computed: {
-    getPopupVisible() {
-      this.$emit('changePopupVisible', this.thisPopupVisible);
-    },
-  },
-  watch: {
-    popupVisible(newVal) {
-      this.thisPopupVisible = newVal;
-    },
-  },
-};
+})
+export default class ShowCoinList extends Vue {
+  // name: 'show-coin-list',
+  @Prop() popupVisible!: boolean;
+
+  @Prop() dataCoinList!: any;
+  @Prop() changePopupVisible!: boolean;
+  // props: ['popupVisible', 'dataCoinList', 'changePopupVisible'],
+  // data
+  currentTab: string = 'EOS';
+  tabs: Array<any> = [languageStore.getIntlText('business.Favorites'), 'EOS'];
+  dataList: any = this.dataCoinList;
+  thisPopupVisible: boolean = this.popupVisible;
+  // methods
+  getDataList(item: any, index: number) {
+    this.currentTab = item;
+    if (index === 0) {
+      this.dataList = [];
+    } else {
+      this.dataList = this.dataCoinList;
+    }
+  }
+  // computed
+  get getPopupVisible() {
+    return this.$emit('changePopupVisible', this.thisPopupVisible);
+  }
+  // watch: {
+  //   popupVisible(newVal) {
+  //     this.thisPopupVisible = newVal;
+  //   },
+  // },
+  // watch
+  @Watch('popupVisible')
+  watchpopupVisible(newVal: any) {
+    this.thisPopupVisible = newVal;
+  }
+}
 </script>
 <style lang="scss">
 @import './../../../../style/mixin.scss';
@@ -124,7 +139,7 @@ $tabHeight: 44px;
 .coin-body-list {
   overflow-y: scroll;
   flex-direction: column;
-  height: 470px;
+  height: 500px;
   margin: 0 0.2rem;
   padding: 0 0 0.2rem;
   .coin-body-item {

@@ -30,14 +30,11 @@
 </template>
 
 <script lang="ts">
-import VueTradingView from 'vue-trading-view';
+
 export default {
   name: 'trading-view',
   props: {
     msg: String,
-  },
-  components: {
-    VueTradingView,
   },
 };
 </script>

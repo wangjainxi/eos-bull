@@ -3,6 +3,7 @@ declare module '*.vue' {
   export default Vue;
 }
 declare module 'mint-ui';
+declare module 'onfire.js';
 declare module 'eosjs';
 declare module 'scatterjs-core';
 declare module 'scatterjs-plugin-eosjs';

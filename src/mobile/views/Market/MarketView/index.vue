@@ -50,12 +50,6 @@ import VueTradingView from '@/components/vueTradingView/index.vue';
 })
 export default class extends Vue {
   showAlert = false;
-  created() {
-    data.getResOrder();
-  }
-  mounted() {
-    data.getResOrder();
-  }
   onTransaction(t: any) {
     const data = {
       name: 'business',

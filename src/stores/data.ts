@@ -1,29 +1,13 @@
+import onfire from 'onfire.js';
+import { getMarketOrderbook } from './../utils/apis';
 import { observable, computed, action, runInAction } from 'mobx';
-import socket from '@/utils/socket';
-import {
-  getMrkets,
-  getAccountInfo,
-  getUserHistoryOrders,
-  getUserPendingOrders,
-  getAnnouncementList,
-} from '@/utils/apis';
-import {
-  PriceLevelUpdate,
-  TickerUpdate,
-  Trade,
-  Order,
-  Market,
-  AccountInfo,
-  BalanceUpdate,
-  ResOrder,
-  Orderbook,
-  Announcement,
-} from '@/define';
+import { getMrkets, getAccountInfo, getUserPendingOrders, getAnnouncementList } from '@/utils/apis';
+import { TickerUpdate, Order, Market, AccountInfo, BalanceUpdate, Announcement } from '@/define';
 import { getAccount } from '@/utils/scatter';
 
 class DataStore {
   @observable
-  accountName = 'player';
+  accountName = 'user1';
 
   @observable
   markets: Array<Market> = [];
@@ -37,14 +21,19 @@ class DataStore {
   @observable
   announcements: Array<Announcement> = [];
 
-  @observable
   resOrder = {
     bids: [],
     asks: [],
   };
 
   @observable
+  eosAccountInfo: any = {};
+
+  @observable
   searchmarketList: Array<Market> = [];
+
+  @observable
+  marketsLink: Array<Market> = [];
 
   @observable
   market?: Market;
@@ -56,7 +45,12 @@ class DataStore {
   marketParams = {
     sortby: '', // pair, volume, price, change
     order: '', // asc, desc
-    name: '',
+  };
+
+  @observable
+  freeMarketParams = {
+    sortby: '', // pair, volume, price, change
+    order: '', // asc, desc
   };
 
   // 用户钱包页面token展示
@@ -68,10 +62,13 @@ class DataStore {
 
   @computed
   get riseRank() {
+    const { order } = this.marketParams;
+    if (!order) return this.markets;
     return this.markets.slice().sort((e1, e2) => {
       const num1 = Number(e1.change.slice(0, e1.change.length - 1).slice(1, e1.change.length));
       const num2 = Number(e2.change.slice(0, e2.change.length - 1).slice(1, e2.change.length));
-      return num2 - num1;
+      if (order === 'desc') return num2 - num1;
+      return num1 - num2;
     });
   }
 
@@ -84,19 +81,100 @@ class DataStore {
     });
   }
 
+  // 自选市场列表
+  @computed
+  get freeMarketList() {
+    const locatFav = localStorage.getItem('localFavourite');
+    if (!locatFav) return [];
+    return this.markets.filter(e => {
+      return e.favourited === true || JSON.parse(locatFav).indexOf(e.marketId) >= 0;
+    });
+  }
+
+  // 市场列表
   @computed
   get marketList() {
-    const { name, order, sortby } = this.marketParams;
-    let arr = this.markets.slice();
-    if (name) {
-      arr = arr.filter(e => {
-        const { baseCurrency, quoteCurrency } = e.pair;
-        return baseCurrency.symbol.name.includes(name) || quoteCurrency.symbol.name.includes(name);
-      });
-    }
-
+    if (this.markets.length === 0) return this.markets;
+    const { order, sortby } = this.marketParams;
+    const arr = this.markets.slice();
     if (!sortby) return arr;
-    arr = arr.sort((e1, e2) => {
+    return this.sortMarkets(arr, sortby, order);
+  }
+
+  @computed
+  get cpuLimit() {
+    return (
+      this.eosAccountInfo['cpu_limit'] || {
+        available: 0,
+        max: 0,
+        used: 0,
+      }
+    );
+  }
+
+  @computed
+  get netLimit() {
+    return (
+      this.eosAccountInfo['net_limit'] || {
+        available: 0,
+        max: 0,
+        used: 0,
+      }
+    );
+  }
+
+  @computed
+  get ramLimit() {
+    return {
+      used: this.eosAccountInfo['ram_usage'] || 0,
+      max: this.eosAccountInfo['ram_quota'] || 0,
+    };
+  }
+
+  @computed
+  get cpuUsageRate() {
+    const { used, max } = this.cpuLimit;
+    return Math.round((used / max) * 10000) / 100.0;
+  }
+
+  @computed
+  get netUsageRate() {
+    const { used, max } = this.netLimit;
+    return Math.round((used / max) * 10000) / 100.0;
+  }
+
+  @computed
+  get ramUsageRate() {
+    const { used, max } = this.ramLimit;
+    return Math.round((used / max) * 10000) / 100.0;
+  }
+
+  @computed
+  get totalValuation() {
+    if (!this.accountInfo) {
+      return {
+        name: 'EOS',
+        amount: '0.0000',
+      };
+    }
+    const { amount, symbol } = this.accountInfo.estValue;
+    return { amount, name: symbol.name };
+  }
+
+  constructor() {
+    onfire.on('tickerUpdate', this.handleTickerUpdate);
+    onfire.on('balanceUpdate', this.handleBalanceUpdate);
+    this.updateMarkets();
+    this.updateAccountInfo();
+    setInterval(() => {
+      getAccount(this.accountName).then(res => {
+        this.eosAccountInfo = res;
+      });
+    }, 3000);
+  }
+
+  sortMarkets(markets: Market[], sortby: string, order: string) {
+    markets.sort((e1, e2) => {
       let v1;
       let v2;
       if (sortby === 'volume') {
@@ -113,57 +191,41 @@ class DataStore {
         v1 = `${e1.pair.baseCurrency.symbol.name}/${e1.pair.quoteCurrency.symbol.name}`;
         v2 = `${e2.pair.baseCurrency.symbol.name}/${e2.pair.quoteCurrency.symbol.name}`;
       }
-      if (order === 'desc') return Number(v2 > v1);
-      return Number(v1 > v2);
+
+      const o = order === 'desc' ? v2 > v1 : v1 > v2;
+      return o ? -1 : 1;
     });
-    console.log(JSON.stringify(arr));
-    return arr;
+    return markets;
   }
 
-  @computed
-  get totalValuation() {
-    if (!this.accountInfo) {
-      return {
-        name: 'EOS',
-        amount: '0.0000',
-      };
+  @action.bound
+  updateMarketListSort(t: string) {
+    const { sortby, order } = this.marketParams;
+    if (t === sortby) {
+      Object.assign(this.marketParams, { order: order === 'asc' ? 'desc' : 'asc' });
+    } else {
+      Object.assign(this.marketParams, { sortby: t, order: 'asc' });
     }
-    const { amount, symbol } = this.accountInfo.estValue;
-    return { amount, name: symbol.name };
   }
 
-  constructor() {
-    socket.on('l2update', this.handlePriceLevelUpdate);
-    socket.on('tickerUpdate', this.handleTickerUpdate);
-    socket.on('tradeUpdate', this.handleTradeUpdate);
-    socket.on('balanceUpdate', this.handleBalanceUpdate);
-    socket.on('orderUpdate', this.handleOrderUpdate);
-    this.updateMarkets();
-    this.updateAccountInfo();
-    setInterval(() => {
-      getAccount(this.accountName);
-    }, 3000);
+  @action.bound
+  updateFreeMarketListSort(t: string) {
+    const { sortby, order } = this.freeMarketParams;
+    if (t === sortby) {
+      Object.assign(this.freeMarketParams, { order: order === 'asc' ? 'desc' : 'asc' });
+    } else {
+      Object.assign(this.freeMarketParams, { sortby: t, order: 'asc' });
+    }
   }
 
-
-  @action
-  setMarketParams(sortby: string = 'pair', order: string = 'asc', name: string = '') {
-    this.marketParams = {
-      sortby, // pair, volume, price, change
-      order, // asc, desc
-      name,
-    };
-  }
   @action
   getMarketSearchList(text: string) {
-    if (text === '') return;
-    this.searchmarketList = [];
-    this.markets.map((item, index) => {
-      if (item.pair.baseCurrency.symbol.name.toLowerCase().indexOf(text.toLowerCase()) !== -1) {
-        this.searchmarketList.push(item);
-      }
+    return this.markets.filter(item => {
+      const symbolName = item.pair.baseCurrency.symbol.name.toLowerCase();
+      return symbolName.includes(text.toLocaleLowerCase());
     });
   }
+
   @action
   async updateMarkets() {
     const res = await getMrkets();
@@ -180,11 +242,22 @@ class DataStore {
     });
   }
 
-  @action
-  async updateHistoryOrders(params?: { page?: number; pageSize?: number }) {
-    const res = await getUserHistoryOrders(this.accountName, params);
+  async updateMarketsLink() {
+    const accountInfo = this.accountInfo || { accountName: '' };
+    const res = await getMrkets(accountInfo.accountName);
     runInAction(() => {
-      this.historyOrders = res.orders;
+      this.marketsLink = res.filter(e => {
+        return e.favourited === true;
+      });
+      const marketTopLocal = localStorage.getItem('marketTop');
+      if (marketTopLocal === null) return;
+      const marketTop = JSON.parse(marketTopLocal);
+      this.marketsLink.map((item, key) => {
+        if (item.marketId === marketTop.marketId) {
+          const item = this.marketsLink.splice(key, 1);
+          this.marketsLink.unshift(item[0]);
+        }
+      });
     });
   }
 
@@ -238,110 +311,14 @@ class DataStore {
   }
 
   /**
-   * 订阅市场订单簿价格更新
-   */
-  subscribeL2update(marketId: number) {
-    return socket.invoke('SubscribeL2update', marketId);
-  }
-
-  /**
-   * 取消订阅市场订单簿价格更新
-   */
-  unsubscribeL2update(marketId: number) {
-    return socket.invoke('UnsubscribeL2update', marketId);
-  }
-
-  /**
-   * 订阅市场Ticker统计更新
-   */
-  subscribeTickerUpdate() {
-    return socket.invoke('SubscribeTickerUpdate');
-  }
-
-  /**
-   * 取消市场Ticker统计更新
-   */
-  unsubscribeTickerUpdate() {
-    return socket.invoke('UnsubscribeTickerUpdate');
-  }
-
-  /**
-   * 市场最近成交列表更新
-   */
-  subscribeTradeUpdate(marketId: number) {
-    return socket.invoke('SubscribeTradeUpdate', marketId);
-  }
-
-  /**
-   * 取消市场最近成交列表更新
-   */
-  unsubscribeTradeUpdate(marketId: number) {
-    return socket.invoke('UnsubscribeTradeUpdate', marketId);
-  }
-
-  /**
-   * 订阅余额变更
-   */
-  subscribeBalanceUpdate() {
-    return socket.invoke('SubscribeBalanceUpdate', this.accountName);
-  }
-
-  /**
-   * 取消订阅余额变更
-   */
-  unsubscribeBalanceUpdate() {
-    return socket.invoke('UnsubscribeBalanceUpdate', this.accountName);
-  }
-
-  /**
-   * 订阅订单状态更新
-   */
-  subscribeOrderUpdate() {
-    return socket.invoke('SubscribeOrderUpdate', this.accountName);
-  }
-
-  /**
-   * 取消订阅订单状态更新
-   */
-  unsubscribeOrderUpdate() {
-    return socket.invoke('UnsubscribeOrderUpdate', this.accountName);
-  }
-
-  /**
-   * 订阅订单撮合通知
-   */
-  subscribeFillUpdate() {
-    return socket.invoke('SubscribeFillUpdate', this.accountName);
-  }
-
-  /**
-   * 取消订阅订单撮合通知
-   */
-  unsubscribeFillUpdate(accountName: string) {
-    return socket.invoke('UnsubscribeFillUpdate', accountName);
-  }
-
-  /**
-   * 侦听市场订单簿价格更新
-   */
-  handlePriceLevelUpdate(data: PriceLevelUpdate) {
-    // TODO: 更新订单簿条目的数据
-  }
-
-  /**
    * 侦听Ticker统计更新
    */
   @action.bound
   handleTickerUpdate(data: TickerUpdate) {
-    const market = this.markets.find(e => e.marketId === data.marketId);
-    if (!market) return;
-  }
-
-  /**
-   * 侦听市场最近成交
-   */
-  handleTradeUpdate(data: Trade) {
-    // TODO: 更新trade
+    this.markets.forEach((e, index) => {
+      if (e.marketId !== data.marketId) return;
+      this.markets.splice(index, 1, Object.assign({}, e, data));
+    });
   }
 
   /**
@@ -350,27 +327,6 @@ class DataStore {
   @action
   handleBalanceUpdate(data: BalanceUpdate) {
     this.updateAccountInfo();
-  }
-
-  /**
-   * 侦听订单状态变化
-   */
-  handleOrderUpdate(data: Order) {
-    // if (!this.accountName) return;
-    // const order = this.pendingOrders.find(e => e.orderId === data.orderId);
-    // if (order) {
-    //   Object.assign(order, data);
-    // } else {
-    //   this.orders.push(data);
-    // }
-  }
-
-  /**
-   * 侦听订单撮合通知
-   */
-  handleFillUpdate(data: Trade) {
-    const { buyer, buyerOrderId, sellerOrderId } = data;
-    const orderId = buyer === this.accountName ? buyerOrderId : sellerOrderId;
   }
 }
 

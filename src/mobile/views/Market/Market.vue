@@ -1,101 +1,37 @@
 <template>
   <div id="market-page">
     <div class="home-tab-title-box">
-      <mt-navbar class="page-part" v-model="isOptional">
-        <mt-tab-item id="1" v-on:click.native="modifyGrowList('1')">
-          <img
-            v-if="isOptional === '1'"
-            src="../../../images/mobile/ic_collection_current_s.svg"
-            alt
-            class="table-icon"
-          >
-          <img v-else src="../../../images/mobile/ic_collection_s.svg" alt class="table-icon">
-          <Language resource="asset.Favorites"/>
-        </mt-tab-item>
-        <mt-tab-item id="2" v-on:click.native="modifyGrowList('2')">
-          <img
-            v-if="isOptional === '2'"
-            src="../../../images/mobile/ic_current_eos.svg"
-            alt
-            class="table-icon"
-          >
-          <img v-else src="../../../images/mobile/ic_normal_eos.svg" alt class="table-icon">
-          EOS
+      <mt-navbar class="page-part" v-model="selectTab">
+        <mt-tab-item v-for="item of tabs" :id="item.id" :key="item.id">
+          <img class="table-icon" :src="selectTab === item.id ? item.selectIcon : item.icon" />
+          <Language :resource="item.key" />
         </mt-tab-item>
       </mt-navbar>
       <router-link to="market-search">
         <img src="../../../images/mobile/ic_find.svg" alt class="search-icon">
       </router-link>
-      <router-link to="market-optional" v-if="isOptional === '1'">
+      <router-link to="market-optional" v-if="tabs[0].id === selectTab">
         <img src="../../../images/mobile/ic_edit.svg" alt class="edit-icon">
       </router-link>
     </div>
-    <mt-tab-container v-model="isOptional">
-      <mt-tab-container-item id="1">
+    <mt-tab-container v-model="selectTab">
+      <mt-tab-container-item :id="tabs[0].id">
         <div class="type-table">
-          <div :class="typeTableState === '5'? 'special':''" @click="onTypeTable('5')">
-            <Language resource="asset.Pairs"/>
-
-            <img
-              v-if="upOrDown === '1' && typeTableState ==='5'"
-              src="../../../images/ic_sort_up.png"
-              alt
-            >
-            <img
-              v-else-if="upOrDown === '2' && typeTableState ==='5'"
-              src="../../../images/ic_sort_down.png"
-              alt
-            >
-            <img v-else src="../../../images/ic_sort_normal.png" alt>
-          </div>
-          <div :class="typeTableState === '6'? 'special':''" @click="onTypeTable('6')">
-            <Language resource="asset.VOL24H"/>
-
-            <img
-              v-if="upOrDown === '1' && typeTableState ==='6'"
-              src="../../../images/ic_sort_up.png"
-              alt
-            >
-            <img
-              v-else-if="upOrDown === '2' && typeTableState ==='6'"
-              src="../../../images/ic_sort_down.png"
-              alt
-            >
-            <img v-else src="../../../images/ic_sort_normal.png" alt>
-          </div>
-          <div :class="typeTableState === '7'? 'special':''" @click="onTypeTable('7')">
-            <Language resource="asset.Last_Price"/>
-
-            <img
-              v-if="upOrDown === '1' && typeTableState ==='7'"
-              src="../../../images/ic_sort_up.png"
-              alt
-            >
-            <img
-              v-else-if="upOrDown === '2' && typeTableState ==='7'"
-              src="../../../images/ic_sort_down.png"
-              alt
-            >
-            <img v-else src="../../../images/ic_sort_normal.png" alt>
-          </div>
-          <div :class="typeTableState === '8'? 'special':''" @click="onTypeTable('8')">
-            <Language resource="asset.Change24H"/>
-
-            <img
-              v-if="upOrDown === '1' && typeTableState ==='8'"
-              src="../../../images/ic_sort_up.png"
-              alt
-            >
-            <img
-              v-else-if="upOrDown === '2' && typeTableState ==='8'"
-              src="../../../images/ic_sort_down.png"
-              alt
-            >
-            <img v-else src="../../../images/ic_sort_normal.png" alt>
+          <div
+            v-for="item of filters"
+            :key="item.type"
+            :class="{ special: dataStore.freeMarketParams.sortby === item.type}"
+            @click="dataStore.updateFreeMarketListSort(item.type)">
+            <Language :resource="item.key"/>
+            <img v-if="item.type !== dataStore.freeMarketParams.sortby" src="../../../images/ic_sort_normal.png" />
+            <template v-else>
+              <img v-if="dataStore.freeMarketParams.order === 'asc'" src="../../../images/ic_sort_down.png" />
+              <img v-else src="../../../images/ic_sort_up.png" />
+            </template>
           </div>
         </div>
-        <div v-if="dataStore.marketList.length>0" class="market-list-package-box">
-          <ListChild v-for="(item, index) in dataStore.marketList" :item="item" :key="index"></ListChild>
+        <div v-if="dataStore.freeMarketList.length > 0" class="market-list-package-box">
+          <ListChild v-for="(item, index) in dataStore.freeMarketList" :item="item" :key="index"></ListChild>
         </div>
         <div class="list-no-box" v-else>
           <img src="../../../images/mobile/ic_collection_normal.svg" alt>
@@ -109,67 +45,19 @@
           </router-link>
         </div>
       </mt-tab-container-item>
-      <mt-tab-container-item id="2">
+      <mt-tab-container-item :id="tabs[1].id">
         <div class="type-table">
-          <div :class="typeTableState === '1'? 'special':''" @click="onTypeTable('1')">
-            <Language resource="asset.Pairs"/>
-
-            <img
-              v-if="upOrDown === '1' && typeTableState ==='1'"
-              src="../../../images/ic_sort_up.png"
-              alt
-            >
-            <img
-              v-else-if="upOrDown === '2' && typeTableState ==='1'"
-              src="../../../images/ic_sort_down.png"
-              alt
-            >
-            <img v-else src="../../../images/ic_sort_normal.png" alt>
-          </div>
-          <div :class="typeTableState === '2'? 'special':''" @click="onTypeTable('2')">
-            <Language resource="asset.VOL24H"/>
-
-            <img
-              v-if="upOrDown === '1' && typeTableState ==='2'"
-              src="../../../images/ic_sort_up.png"
-              alt
-            >
-            <img
-              v-else-if="upOrDown === '2' && typeTableState ==='2'"
-              src="../../../images/ic_sort_down.png"
-              alt
-            >
-            <img v-else src="../../../images/ic_sort_normal.png" alt>
-          </div>
-          <div :class="typeTableState === '3'? 'special':''" @click="onTypeTable('3')">
-            <Language resource="asset.Last_Price"/>
-
-            <img
-              v-if="upOrDown === '1' && typeTableState ==='3'"
-              src="../../../images/ic_sort_up.png"
-              alt
-            >
-            <img
-              v-else-if="upOrDown === '2' && typeTableState ==='3'"
-              src="../../../images/ic_sort_down.png"
-              alt
-            >
-            <img v-else src="../../../images/ic_sort_normal.png" alt>
-          </div>
-          <div :class="typeTableState === '4'? 'special':''" @click="onTypeTable('4')">
-            <Language resource="asset.Change24H"/>
-
-            <img
-              v-if="upOrDown === '1' && typeTableState ==='4'"
-              src="../../../images/ic_sort_up.png"
-              alt
-            >
-            <img
-              v-else-if="upOrDown === '2' && typeTableState ==='4'"
-              src="../../../images/ic_sort_down.png"
-              alt
-            >
-            <img v-else src="../../../images/ic_sort_normal.png" alt>
+          <div
+            v-for="item of filters"
+            :key="item.type"
+            :class="{ special: dataStore.marketParams.sortby === item.type}"
+            @click="dataStore.updateMarketListSort(item.type)">
+            <Language :resource="item.key"/>
+            <img v-if="item.type !== dataStore.marketParams.sortby" src="../../../images/ic_sort_normal.png" />
+            <template v-else>
+              <img v-if="dataStore.marketParams.order === 'asc'" src="../../../images/ic_sort_down.png" />
+              <img v-else src="../../../images/ic_sort_up.png" />
+            </template>
           </div>
         </div>
         <div class="market-list-package-box">
@@ -182,10 +70,10 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import userStore from '@/stores/user';
 import dataStore from '@/stores/data';
 import { Observer } from 'mobx-vue';
 import ListChild from '../HomePage/components/ListChild.vue';
+import { computed } from 'mobx';
 
 @Observer
 @Component({
@@ -193,38 +81,45 @@ import ListChild from '../HomePage/components/ListChild.vue';
     ListChild,
   },
 })
-export default class extends Vue {
-  isOptional = '2';
+export default class MarketList extends Vue {
   dataStore = dataStore;
-  typeTableState = '1';
-  upOrDown = '2';
 
-  created() {
-    userStore.setCurrency('2');
-  }
+  selectTab = 'eos';
+  tabs = [
+    {
+      key: 'asset.Favorites',
+      id: 'free',
+      icon: require('../../../images/mobile/ic_collection_s.svg'),
+      selectIcon: require('../../../images/mobile/ic_collection_current_s.svg'),
+    },
+    {
+      key: 'asset.EOS',
+      id: 'eos',
+      icon: require('../../../images/mobile/ic_normal_eos.svg'),
+      selectIcon: require('../../../images/mobile/ic_current_eos.svg'),
+    },
+  ];
 
-  modifyGrowList(value: any) {
-    this.isOptional = value;
-  }
-  // pair, volume, price, change
-  onTypeTable(id: string) {
-    this.typeTableState = id;
-    let order;
-    if (this.upOrDown === '2') {
-      order = 'asc';
-      this.upOrDown = '1';
-    } else {
-      order = 'desc';
-      this.upOrDown = '2';
-    }
-    const map = {
-      '1': 'pair',
-      '2': 'volume',
-      '3': 'price',
-      '4': 'change',
-    };
-    dataStore.setMarketParams(Reflect.get(map, id), order);
-  }
+  selectFreeFilter = 'pair';
+  selectAllFilter = 'pair';
+  filters = [
+    {
+      type: 'pair',
+      key: 'asset.Pairs',
+    },
+    {
+      type: 'volume',
+      key: 'asset.VOL24H',
+    },
+    {
+      type: 'price',
+      key: 'asset.Last_Price',
+    },
+    {
+      type: 'change',
+      key: 'asset.Change24H',
+    },
+  ];
 }
 </script>
 

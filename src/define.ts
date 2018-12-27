@@ -87,6 +87,8 @@ export interface Market {
   marketId: number; // 市场ID
   favourited: boolean; // 用户是否收藏该市场
   pair: TradingPair;
+  pricePrecision: number;
+  sizePrecision: number;
   status: MARKET_STATUS;
   lastPrice: string; // 最新交易价格
   change: string; // 24小时价格变化
