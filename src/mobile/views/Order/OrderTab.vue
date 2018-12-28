@@ -4,10 +4,10 @@
     <div class="type-select-box">
       <mt-navbar v-model="selected">
         <mt-tab-item id="1">
-          <Language resource="order.Changed_Time"/>
+          <Language resource="business.Open_Orders"/>
         </mt-tab-item>
         <mt-tab-item id="2">
-          <Language resource="order.Entrusted_Time"/>
+          <Language resource="business.Order_History"/>
         </mt-tab-item>
         <img @click="showFilter" src="@/images/mobile/ic_filter.svg" alt>
       </mt-navbar>
