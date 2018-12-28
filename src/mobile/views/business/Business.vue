@@ -312,8 +312,6 @@ export default class extends Vue {
 
   mounted() {
     this.routeParam = this.$route.params;
-
-    console.log(this.$route.params);
     this.routeId = Number(this.$route.params.id);
     this.currrentTab =
       this.$route.params.type === 'buy'
@@ -759,7 +757,8 @@ $marginwidth: 0.12rem;
   }
 }
 .business-entrust-body {
-  @include wh(100%, 1.85rem);
+  width: 100%;
+  margin-bottom: 0.5rem;
   background: rgba(247, 247, 247, 1);
   @include flex(flex, center, center);
   max-height: inherit;
