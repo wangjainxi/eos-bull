@@ -18,10 +18,6 @@ class OpenOrder {
     return this.orderList.filter(e => e.marketId === this.marketId);
   }
 
-  constructor() {
-    this.fetchOrders('user1');
-  }
-
   @action
   async fetchOrders(name: string) {
     const res = await getUserPendingOrders(name);
