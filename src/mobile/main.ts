@@ -11,6 +11,7 @@ import {
   TabContainerItem,
   Loadmore,
 } from 'mint-ui';
+import 'mint-ui/lib/style.css';
 import Language from '@/components/Language';
 import App from './App.vue';
 import router from './router';
