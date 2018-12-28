@@ -1,7 +1,7 @@
 <template>
   <div class="view-box-top">
     <div class="currency-box flex-row-between">
-      <span class="currency-name">LTC/EOS</span>
+      <span class="currency-name">{{coinName}}</span>
       <div class="collect-box">
         <img v-if="isCollect" @click="collect" src="@/images/mobile/ic_collection_normal.svg" alt>
         <img
@@ -18,8 +18,8 @@
         <img src="@/images/mobile/ic_rise.svg" alt>
       </div>
       <span>
-      <span v-if="Number(marketData.change)>0" class="long-text green-color" >{{marketData.change}}</span>
-      <span v-else class="long-text red-color" >{{marketData.change}}</span>
+        <span v-if="Number(marketData.change)>0" class="long-text green-color">{{marketData.change}}</span>
+        <span v-else class="long-text red-color">{{marketData.change}}</span>
       </span>
     </div>
     <div class="max24-box">
@@ -52,9 +52,11 @@ import { observer } from 'mobx-vue';
 @Component
 export default class extends Vue {
   @Prop() marketData!: any;
+  coinName: string = '';
   isCollect: boolean = this.marketData;
 
   mounted() {
+    this.coinName = this.$route.params.coinName;
     console.log(this);
     console.log(this.marketData);
   }
