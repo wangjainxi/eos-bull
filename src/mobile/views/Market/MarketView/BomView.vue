@@ -106,7 +106,7 @@ export default class extends Vue {
         height: 0.16rem;
         font-size: 0.14rem;
         font-family: PingFangSC-Semibold;
-        font-weight: 600;
+        font-weight: 300;
         color: rgba(141, 141, 141, 1);
         line-height: 0.16rem;
         margin-top: 0.14rem;

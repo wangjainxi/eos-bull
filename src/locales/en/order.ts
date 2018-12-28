@@ -25,4 +25,6 @@ export default {
   Buying_Details: 'Buying Details',
   Selling_Details: 'Selling Details',
   Entrusted: 'Entrusted',
+  buy: 'buy',
+  sell: 'sell',
 };
