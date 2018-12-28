@@ -1,10 +1,10 @@
 <template>
   <div
-    :class="['business-range',currrentTab === '买入' || currrentTab === 'buy' ? 'business-range-buy' : 'business-range-sell']"
+    :class="['business-range',currrentTab === thisTabLang ? 'business-range-buy' : 'business-range-sell']"
     :getRangeVal="getRangeVal"
   >
     <i
-      class="cricle"
+      :class="classArr[index]"
       @click="changeRangeValue(item)"
       v-for="(item, index) in cricleMount"
       :key="index"
@@ -19,6 +19,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { Observer } from 'mobx-vue';
+import languageStore from '@/stores/language';
 // import fixHeader from './components/fixHeader.vue';
 
 @Observer
@@ -35,15 +36,44 @@ export default class BusinessRange extends Vue {
   @Prop() getRangeValue!: any;
   @Prop() currrentTab!: any;
   // data
+  classArr: string[] = ['cricle', 'cricle', 'cricle', 'cricle', 'cricle'];
   rangeVal: number = this.rangeValue;
+  thisTabLang = languageStore.getIntlText('business.Buy');
   // props: ['rangeValue', 'cricleMount', 'getRangeValue', 'currrentTab'],
   // methods
   changeRangeValue(num: number) {
     this.rangeVal = num * 25;
     return this.rangeVal;
   }
+  created() {
+    console.log(this.thisTabLang);
+  }
   // computed
   get getRangeVal() {
+    console.log(this.thisTabLang);
+    const thisColor = this.currrentTab === this.thisTabLang ? 'cricle-green' : 'cricle-red';
+    const getCount = Math.floor(this.rangeVal / 25) + 1;
+    if (getCount === 0) {
+      this.classArr = ['cricle', 'cricle', 'cricle', 'cricle', 'cricle'];
+    } else {
+      this.classArr = ['cricle', 'cricle', 'cricle', 'cricle', 'cricle'];
+      for (let i = 0; i < getCount; i++) {
+        this.classArr[i] = `cricle ${thisColor}`;
+      }
+    }
+    // if (this.rangeVal === 0) {
+    //   this.classArr = ['cricle', 'cricle', 'cricle', 'cricle', 'cricle'];
+    // } else if (this.rangeVal > 0 && this.rangeVal <= 25) {
+    //   this.classArr[0] = `${this.classArr[0]} ${thisColor}`;
+    // } else if (this.rangeVal > 25 && this.rangeVal <= 50) {
+    //   this.classArr[0] = `${this.classArr[0]} ${thisColor}`;
+    // } else if (this.rangeVal > 50 && this.rangeVal <= 75) {
+    //   this.classArr[0] = `${this.classArr[0]} ${thisColor}`;
+    // } else if (this.rangeVal > 75 && this.rangeVal < 100) {
+    //   this.classArr[0] = `${this.classArr[0]} ${thisColor}`;
+    // } else if (this.rangeVal === 100) {
+    //   this.classArr[0] = `${this.classArr[0]} ${thisColor}`;
+    // }
     return this.$emit('getRangeValue', this.rangeVal);
   }
 }
@@ -64,8 +94,8 @@ export default class BusinessRange extends Vue {
     top: 50%;
     transform: translateY(-50%);
     z-index: 1;
-    left: -1px;
-    @include wh(0.15rem, 0.15rem);
+    left: 0px;
+    @include wh(0.13rem, 0.13rem);
     background: rgba(255, 255, 255, 1);
     @include borderRadius(50%);
     border: 2px solid rgba(216, 215, 216, 1);
@@ -80,7 +110,13 @@ export default class BusinessRange extends Vue {
     left: 69%;
   }
   .cricle:nth-child(5) {
-    left: 92%;
+    left: 91.89%;
+  }
+  .cricle-green{
+    border-color: #07c74e;
+  }
+  .cricle-red{
+    border-color: red;
   }
 }
 .business-range {
