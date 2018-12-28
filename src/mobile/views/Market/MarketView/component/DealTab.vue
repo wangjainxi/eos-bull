@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { marketRecentDeal } from '@/utils/restful.ts';
+import { getMarketTrades } from '@/utils/apis';
 import DealItem from './DealItem.vue';
 import { observer } from 'mobx-vue';
 
@@ -36,10 +36,9 @@ export default class extends Vue {
   }
   async getDealData() {
     try {
-      const res = await marketRecentDeal({
-        marketId: 1,
-      });
+      const res = await getMarketTrades(Number(this.$route.params.id));
       this.dealData = res;
+      console.log(res);
     } catch (err) {
       console.log(err);
     }
