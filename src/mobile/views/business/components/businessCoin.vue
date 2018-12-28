@@ -1,8 +1,8 @@
 <template>
   <mt-popup
-    v-model="thisPopupVisible"
+    :value="value"
     popup-transition="popup-fade"
-    :getPopupVisible="getPopupVisible"
+    @input="handleVisibleChange"
   >
     <div class="coin-body">
       <div class="coin-tab">
@@ -18,8 +18,11 @@
       </div>
       <div class="coin-body-list">
         <div class="coin-body-item" v-for="(item, index) in dataList" :key="index">
-          <div class="coin-name">{{item.name}}</div>
-          <div class="coin-price">{{item.price}}</div>
+          <div class="coin-name">
+            {{ item.pair.baseCurrency.symbol.name }}/
+            {{ item.pair.quoteCurrency.symbol.name }}
+          </div>
+          <div class="coin-price">{{item.lastPrice}}</div>
           <div class="coin-change">{{item.change}}</div>
         </div>
       </div>
@@ -30,27 +33,17 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import { Observer } from 'mobx-vue';
 import languageStore from '@/stores/language';
-// import fixHeader from './components/fixHeader.vue';
 
 @Observer
-@Component({
-  components: {
-    // fixHeader,
-  },
-})
+@Component
 export default class ShowCoinList extends Vue {
-  // name: 'show-coin-list',
-  @Prop() popupVisible!: boolean;
-
+  @Prop()
+  value!: boolean;
   @Prop() dataCoinList!: any;
   @Prop() changePopupVisible!: boolean;
-  // props: ['popupVisible', 'dataCoinList', 'changePopupVisible'],
-  // data
   currentTab: string = 'EOS';
   tabs: Array<any> = [languageStore.getIntlText('business.Favorites'), 'EOS'];
   dataList: any = this.dataCoinList;
-  thisPopupVisible: boolean = this.popupVisible;
-  // methods
   getDataList(item: any, index: number) {
     this.currentTab = item;
     if (index === 0) {
@@ -59,19 +52,9 @@ export default class ShowCoinList extends Vue {
       this.dataList = this.dataCoinList;
     }
   }
-  // computed
-  get getPopupVisible() {
-    return this.$emit('changePopupVisible', this.thisPopupVisible);
-  }
-  // watch: {
-  //   popupVisible(newVal) {
-  //     this.thisPopupVisible = newVal;
-  //   },
-  // },
-  // watch
-  @Watch('popupVisible')
-  watchpopupVisible(newVal: any) {
-    this.thisPopupVisible = newVal;
+
+  handleVisibleChange(val: boolean) {
+    this.$emit('input', val);
   }
 }
 </script>
