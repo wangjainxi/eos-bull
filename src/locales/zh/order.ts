@@ -25,4 +25,6 @@ export default {
   Buying_Details: '买入明细',
   Selling_Details: '买入明细',
   Entrusted: '委托',
+  buy: '买入',
+  sell: '卖出',
 };

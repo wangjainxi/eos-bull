@@ -133,6 +133,7 @@ export default class extends Vue {
   position: fixed;
   bottom: 0;
   left: 0;
+  z-index: 999;
   @include flexLayout(row, space-between, center);
   > div {
     flex: 1;
