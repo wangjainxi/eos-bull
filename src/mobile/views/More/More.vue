@@ -12,14 +12,15 @@
         <div class="left-part">
           <img :src="item.icon" alt>
           <span>{{language.getIntlText(item.text)}}</span>
-
           <span>{{language.getIntlText(item.common)}}</span>
         </div>
         <img :src="item.rightIcon" alt>
       </div>
     </div>
     <mt-popup v-model="popupVisible" position="bottom">
-      <h4 @click="onClick(2)">确定</h4>
+      <h4 @click="onClick(2)">
+        <Language resource="myWallet.OK"/>
+      </h4>
       <div
         v-for="(item,index) in language.locales"
         :key="index"

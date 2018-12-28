@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_warning</title>
+    <desc>Created with Sketch.</desc>
+    <g id="PC-币币交易所" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="弹窗和提示窗口" transform="translate(-968.000000, -626.000000)" fill="#D6A93B" fill-rule="nonzero">
+            <g id="Limit-Order" transform="translate(408.000000, 613.000000)">
+                <g id="header">
+                    <g id="Gentle" transform="translate(560.000000, 11.000000)">
+                        <g id="ic_warning" transform="translate(0.000000, 2.000000)">
+                            <path d="M8,16 C3.581722,16 0,12.418278 0,8 C0,3.581722 3.581722,0 8,0 C12.418278,0 16,3.581722 16,8 C16,12.418278 12.418278,16 8,16 Z M8,15 C11.8659932,15 15,11.8659932 15,8 C15,4.13400675 11.8659932,1 8,1 C4.13400675,1 1,4.13400675 1,8 C1,11.8659932 4.13400675,15 8,15 Z" id="Combined-Shape"></path>
+                            <path d="M8,12 C7.44771525,12 7,11.5522847 7,11 C7,10.4477153 7.44771525,10 8,10 C8.55228475,10 9,10.4477153 9,11 C9,11.5522847 8.55228475,12 8,12 Z M7.3,4 L8.8,4 L8.8,9 L7.3,9 L7.3,4 Z" id="Combined-Shape"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

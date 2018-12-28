@@ -19,18 +19,14 @@
           <img src="@/images/web/ic_order.svg" alt>
           <span class="text-style exit">Orders</span>
         </span>
+        <select id="ch" :value="language.currentLocale" @change="changeLanguageType">
+          <option
+            v-for="(item,index) in language.locales"
+            :key="index"
+            :value="item.mark"
+          >{{item.label}}</option>
+        </select>
         <!-- {{$t('m.transaction.homepage')}} -->
-        <span class="language-box">
-          <img class="mark" src="@/images/web/ic_eos.svg" alt>
-          <select class="text-style" v-model="selected" @change="selectPamas">
-            <option
-              v-for="option in options"
-              :key="option.text"
-              v-bind:value="option.value"
-            >{{ option.text }}</option>
-          </select>
-          <img class="arrow" src="@/images/web/ic_arrow_down.svg" alt>
-        </span>
       </div>
     </div>
   </div>
@@ -39,34 +35,23 @@
 import { Vue, Component } from 'vue-property-decorator';
 import { Observer } from 'mobx-vue';
 import language from '@/stores/language';
+
 import dataStore from '@/stores/data';
 
 @Observer
 @Component
 export default class extends Vue {
   dataStore = dataStore;
-  lang = 'en-US';
-  selected = 'en-US';
   activeName = 'first';
-  options = [{ text: 'chinese', value: 'zh-CN' }, { text: 'english', value: 'en-US' }];
-
-  selectPamas() {
-    if (this.selected === 'en-US') {
-      this.lang = 'en-US';
-    } else {
-      this.lang = 'zh-CN';
-    }
-    language.changeLanguage(this.lang);
-  }
-
-  created() {
-    this.selectPamas();
-  }
+  language = language;
   goWallet() {
     this.$router.push({
       path: '/myWallet',
       name: 'myWallet',
     });
+  }
+  changeLanguageType(data: any) {
+    language.changeLanguage(data.currentTarget.value);
   }
 }
 </script>
@@ -76,7 +61,28 @@ export default class extends Vue {
   background: #142e4d;
   height: 50px;
   width: 100%;
-
+  select {
+    color: #fff;
+    padding-left: 10px;
+    height: 22px;
+    width: 90px;
+    border-radius: 10px;
+    border: 1px solid #007aff;
+    /*很关键：将默认的select选择框样式清除*/
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    /*为下拉小箭头留出一点位置，避免被文字覆盖*/
+    padding-right: 14px;
+    background: url('../../images/mobile/ic_arrow_under.svg') 70px 4px no-repeat #142e4d;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+  }
+  /*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+  select::-ms-expand {
+    display: none;
+  }
   .top-view {
     display: flex;
     flex-direction: row;

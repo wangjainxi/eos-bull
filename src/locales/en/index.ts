@@ -5,6 +5,7 @@ import asset from './assetAndMarket';
 import business from './business';
 import order from './order';
 import more from './more';
+import exchange from './exchange';
 
 const foot = {
   Homepage: 'Home',
@@ -23,4 +24,5 @@ export default {
   order,
   business,
   more,
+  exchange,
 };

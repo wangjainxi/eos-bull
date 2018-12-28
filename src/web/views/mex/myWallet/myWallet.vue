@@ -92,7 +92,7 @@
           <div class="assets-th-left">
             <!-- <span>Tradable Assets</span>
             <i></i>-->
-            <el-select v-model="value" placeholder="请选择">
+            <el-select v-model="value" placeholder="select">
               <el-option
                 v-for="item in options"
                 :key="item.value"
