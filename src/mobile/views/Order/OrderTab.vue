@@ -16,64 +16,53 @@
     <div class="order-container-box">
       <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
-          <OrderItem :data="transData"/>
+          <OrderItem
+            v-for="order of openOrderStore.orders"
+            :key="order.orderId"
+            :order="order" />
         </mt-tab-container-item>
-        <mt-tab-container-item id="2">深度图</mt-tab-container-item>
+        <mt-tab-container-item id="2">
+          <OrderItem
+            v-for="order of historyOrderStore.orders"
+            :key="order.orderId"
+            :order="order" />
+        </mt-tab-container-item>
       </mt-tab-container>
     </div>
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue';
-import OrderItem from './OrderItem.vue';
+import { Vue, Component } from 'vue-property-decorator';
+import { Observer } from 'mobx-vue';
+import OrderItem from './order-item.vue';
 import FilterPopup from './FilterPopup.vue';
-export default {
-  name: 'bom-view',
-  data() {
-    return {
-      showPopup: false,
-      selected: '1',
-      transData: [
-        {
-          type: 1, //1买 2卖
-          status: 1, //1挂单中 0已撤销 2已成交
-          language: 1, //1中文 0英文
-          price: '',
-          size: '',
-          amount: '',
-        },
-        {
-          type: 1, //1买 2卖
-          status: 0, //1挂单中 0已撤销 2已成交
-          language: 1, //1中文 0英文
-          price: '',
-          size: '',
-          amount: '',
-        },
-        {
-          type: 2, //1买 2卖
-          status: 2, //1挂单中 0已撤销 2已成交
-          language: 1, //1中文 0英文
-          price: '',
-          size: '',
-          amount: '',
-          evePrice: 111,
-          totalAmount: 1222,
-          fee: '111',
-        },
-      ],
-    };
-  },
-  methods: {
-    showFilter() {
-      // this.showPopup = !this.showPopup;
-    },
-  },
+import dataStore from '@/stores/data';
+import openOrderStore from '@/stores/open-order';
+import historyOrderStore from '@/stores/history-order';
+
+@Observer
+@Component({
   components: {
     OrderItem,
     FilterPopup,
   },
-};
+})
+export default class Orders extends Vue {
+  historyOrderStore = historyOrderStore;
+  openOrderStore = openOrderStore;
+  showPopup = false;
+  selected = '1';
+
+  created() {
+    openOrderStore.fetchOrders(dataStore.accountName);
+    historyOrderStore.setParams({ page: 1 });
+    historyOrderStore.fetchMobileOrders(dataStore.accountName);
+  }
+
+  showFilter() {
+    this.showPopup = !this.showPopup;
+  }
+}
 </script>
 <style lang="scss">
 @import '@/style/mixin.scss';
@@ -82,7 +71,7 @@ export default {
   width: 100%;
   height: 100%;
   background: rgba(31, 31, 31, 0.67);
-  z-index: 10;
+  z-index: 1000;
   top: 0;
   left: 0;
 }
