@@ -2,9 +2,9 @@
   <div class="deal-box">
     <div class="order-top">
       <div class="tab-box">
-        <span class="tab-title time-mark">时间</span>
-        <span class="tab-title price-mark">价格(EOS)</span>
-        <span class="tab-title size-mark">数量(WIZBOX)</span>
+        <span class="tab-title time-mark"><Language resource="transaction.time"/></span>
+        <span class="tab-title price-mark"><Language resource="transaction.price"/>(EOS)</span>
+        <span class="tab-title size-mark"><Language resource="transaction.amount"/>(WIZBOX)</span>
       </div>
     </div>
     <div class="order-content">

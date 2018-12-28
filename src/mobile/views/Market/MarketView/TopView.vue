@@ -1,9 +1,9 @@
 <template>
   <div class="view-box-top">
     <div class="currency-box flex-row-between">
-      <span class="currency-name">LTC/EOS</span>
+      <span class="currency-name">{{marketData.pair.baseCurrency.symbol.name}}/{{marketData.pair.quoteCurrency.symbol.name}}</span>
       <div class="collect-box">
-        <img v-if="isCollect" @click="collect" src="@/images/mobile/ic_collection_normal.svg" alt>
+        <img v-if="isCollect" @click="collect" src="@/images/mobile/ic_collection_s.svg" alt>
         <img
           v-else="isCollect"
           @click="collect"
@@ -52,20 +52,13 @@ import { observer } from 'mobx-vue';
 @Component
 export default class extends Vue {
   @Prop() marketData!: any;
-  isCollect: boolean = this.marketData;
-
-  mounted() {
-    console.log(this);
-    console.log(this.marketData);
-  }
+  // marketData = {};
+  isCollect: boolean = false;
 
   collect() {
-    this.isCollect = !this.isCollect;
+    this.isCollect = false;
   }
 }
-// export default {
-//   name: 'top-view',
-// };
 </script>
 <style lang="scss" scoped>
 @import '@/style/mixin.scss';
@@ -81,6 +74,7 @@ export default class extends Vue {
   height: 1.68rem;
   padding: 0.14rem 0.2rem;
   background-color: #fff;
+  margin-bottom: 0.04rem;
   .collect-box {
     > img {
       width: 0.18rem;

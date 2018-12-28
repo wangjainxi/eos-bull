@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="order-item" v-for="item in data">
+    <div class="order-item" v-for="(item, index) in data" :key="index">
       <div class="type-buy" v-if="item.type === 1">
         <div class="top">
           <span class="left-info">
@@ -108,7 +108,7 @@
     </div>
   </div>
 </template>
-<script>
+<script  lang="ts">
 export default {
   name: 'order-item',
   props: {
