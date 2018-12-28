@@ -1,84 +1,112 @@
 <template>
   <div>
-    <el-dialog
-      title="MEV/EOS Deal Details"
-      :visible.sync="dialogVisible"
-      width="900"
-      @close="close"
-      center
-    >
+    <el-dialog :title="title" :visible.sync="dialogVisible" width="900" @close="close" center>
       <div class="popup-inner-package">
         <div class="popup-top-info-package">
           <div class="popup-top-info-box">
-            <h4>Deal Price</h4>
+            <h4>
+              <Language resource="exchange.Deal_Price"/>
+            </h4>
             <p class="popup-top-info-p">
               0.01221
               <span>EOS</span>
             </p>
           </div>
           <div class="popup-top-info-box">
-            <h4>Amount</h4>
+            <h4>
+              <Language resource="exchange.Deal_num"/>
+            </h4>
             <p class="popup-top-info-p">
               0.01221
               <span>MEV</span>
             </p>
           </div>
           <div class="popup-top-info-box">
-            <h4>Total</h4>
+            <h4>
+              <Language resource="exchange.Deal_Total"/>
+            </h4>
             <p class="popup-top-info-p">
               0.01221
               <span>EOS</span>
             </p>
           </div>
           <div class="popup-top-info-box">
-            <h4>Deal Time</h4>
+            <h4>
+              <Language resource="exchange.Deal_Time"/>
+            </h4>
             <p class="popup-top-info-p">2018-12-09 14:56:06</p>
           </div>
         </div>
         <div class="popup-moddle-info-package">
           <div class="popup-moddle-info-box">
-            <button class="buttonBuy">Buyer</button>
+            <button class="buttonBuy">
+              <Language resource="exchange.Buyer"/>
+            </button>
             <div class="moddle-info">
-              <h4>EOS Account Name:</h4>
+              <h4>
+                <Language resource="exchange.EOS_Account_Name"/>:
+              </h4>
               <p class="blue">gqztinrqgige</p>
             </div>
             <div class="moddle-info">
-              <h4>Total:</h4>
+              <h4>
+                <Language resource="exchange.Settlement_Total"/>:
+              </h4>
               <p class="white">73.0519 MEV</p>
             </div>
             <div class="moddle-info">
-              <h4>Fee:</h4>
+              <h4>
+                <Language resource="exchange.Fee"/>:
+              </h4>
               <p class="white">0.0731 MEV</p>
             </div>
             <div class="moddle-info">
-              <h4>Entrusted TrxID:</h4>
+              <h4>
+                <Language resource="exchange.Entrusted_TrxID"/>:
+              </h4>
               <p class="blue">gqztinrqgige</p>
             </div>
             <div class="moddle-info">
-              <h4>Dealt TrxID:</h4>
+              <h4>
+                <Language resource="exchange.Dealt_TrxID"/>:
+              </h4>
               <p class="blue">gqztinrqgige</p>
             </div>
           </div>
           <div class="popup-moddle-info-box">
-            <button class="buttonSell">Seller</button>
+            <button class="buttonSell">
+              <Language resource="exchange.Seller"/>
+            </button>
             <div class="moddle-info">
-              <h4>EOS Account Name:</h4>
+              <h4>
+                <Language resource="exchange.EOS_Account_Name"/>:
+              </h4>
               <p class="blue">gqztinrqgige</p>
             </div>
             <div class="moddle-info">
-              <h4>Total:</h4>
+              <h4>
+                <Language resource="exchange.Settlement_Total"/>
+
+                :
+              </h4>
               <p class="white">73.0519 MEV</p>
             </div>
             <div class="moddle-info">
-              <h4>Fee:</h4>
+              <h4>
+                <Language resource="exchange.Fee"/>:
+              </h4>
               <p class="white">0.0731 MEV</p>
             </div>
             <div class="moddle-info">
-              <h4>Entrusted TrxID:</h4>
+              <h4>
+                <Language resource="exchange.Entrusted_TrxID"/>:
+              </h4>
               <p class="blue">gqztinrqgige</p>
             </div>
             <div class="moddle-info">
-              <h4>Dealt TrxID:</h4>
+              <h4>
+                <Language resource="exchange.Dealt_TrxID"/>:
+              </h4>
               <p class="blue">gqztinrqgige</p>
             </div>
           </div>
@@ -89,13 +117,18 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
+import language from '@/stores/language';
 
 @Component
 export default class OrderPopup extends Vue {
   @Prop(Boolean) dialogVisible!: false;
+  @Prop(String) title!: string;
 
   close() {
     this.$emit('closePopup');
+  }
+  created() {
+    this.title = this.title + language.getIntlText('exchange.Deal_Details');
   }
 }
 </script>

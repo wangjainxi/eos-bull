@@ -11,6 +11,7 @@ import {
   TabContainerItem,
   Loadmore,
 } from 'mint-ui';
+import 'mint-ui/lib/style.css';
 import Language from '@/components/Language';
 import App from './App.vue';
 import router from './router';
@@ -18,6 +19,7 @@ import VueTradingView from 'vue-trading-view';
 import '../registerServiceWorker';
 import '../stores/data';
 import VueHighcharts from 'vue2-highcharts';
+import { formatDate } from '@/utils/common';
 
 Vue.config.productionTip = false;
 
@@ -35,6 +37,8 @@ Vue.component(VueHighcharts);
 
 Vue.component('Language', Language);
 Vue.component('VueTradingView', VueTradingView);
+Vue.filter('formatDate', formatDate);
+
 new Vue({
   router,
   render: h => h(App),

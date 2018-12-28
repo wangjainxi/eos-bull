@@ -5,16 +5,24 @@
         <div class="place-order-info">
           <div class="buy">
             <div class="place-order-info-title">
-              <h4>Buy MAX</h4>
-              <p>Balance:5.8501 EOS</p>
+              <h4>
+                <Language resource="exchange.Buy_In"/>MAX
+              </h4>
+              <p>
+                <Language resource="exchange.Balance"/>:5.8501 EOS
+              </p>
             </div>
             <div class="place-order-info-input">
-              <p>Price</p>
+              <p>
+                <Language resource="exchange.Buy_In_Price"/>
+              </p>
               <input type="number" placeholder="0.009999">
               <p>EOS</p>
             </div>
             <div class="place-order-info-input">
-              <p>Price</p>
+              <p>
+                <Language resource="exchange.Buy_In_Amount"/>
+              </p>
               <input type="number" placeholder="0.009999">
               <p>EOS</p>
             </div>
@@ -22,24 +30,36 @@
               <el-slider v-model="sliderValueBuy" :step="25" show-stops></el-slider>
             </div>
             <div class="place-order-info-input">
-              <p>Price</p>
+              <p>
+                <Language resource="exchange.Exchange_Total"/>
+              </p>
               <input type="number" placeholder="0.009999">
               <p>EOS</p>
             </div>
-            <el-button type="primary">Buy</el-button>
+            <el-button type="primary">
+              <Language resource="exchange.Buy_In"/>
+            </el-button>
           </div>
           <div class="sell">
             <div class="place-order-info-title">
-              <h4>Sell MAX</h4>
-              <p>Balance:5.8501 EOS</p>
+              <h4>
+                <Language resource="exchange.Sell_out"/>MAX
+              </h4>
+              <p>
+                <Language resource="exchange.Balance"/>:5.8501 EOS
+              </p>
             </div>
             <div class="place-order-info-input">
-              <p>Price</p>
+              <p>
+                <Language resource="exchange.Sell_Out_Price"/>
+              </p>
               <input type="number" placeholder="0.009999">
               <p>EOS</p>
             </div>
             <div class="place-order-info-input">
-              <p>Price</p>
+              <p>
+                <Language resource="exchange.Sell_Out_Amount"/>
+              </p>
               <input type="number" placeholder="0.009999">
               <p>EOS</p>
             </div>
@@ -47,11 +67,15 @@
               <el-slider v-model="sliderValueSell" :step="25" show-stops></el-slider>
             </div>
             <div class="place-order-info-input">
-              <p>Price</p>
+              <p>
+                <Language resource="exchange.Exchange_Total"/>
+              </p>
               <input type="number" placeholder="0.009999">
               <p>EOS</p>
             </div>
-            <el-button type="primary">Sell</el-button>
+            <el-button type="primary">
+              <Language resource="exchange.Sell_out"/>
+            </el-button>
           </div>
         </div>
       </el-tab-pane>
@@ -142,6 +166,7 @@ export default {
           background: none;
           border: none;
           font-size: 16px;
+          flex: 1 1;
         }
       }
       .slider-box {

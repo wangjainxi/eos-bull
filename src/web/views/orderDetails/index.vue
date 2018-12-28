@@ -30,14 +30,16 @@
           <el-date-picker
             v-model="dateValue"
             type="datetimerange"
-            start-placeholder="endDate"
+            start-placeholder="Start Date"
             end-placeholder="End Date"
             :default-time="['12:00:00']"
             @change="ondateValue"
           ></el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">search</el-button>
+          <el-button type="primary" @click="onSubmit">
+            <Language resource="exchange.Search"/>
+          </el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -51,8 +53,15 @@
                 style="width: 100%"
                 empty-text="There's no data yet"
               >
-                <el-table-column prop="dealTime" label="Deal Time" align="center"></el-table-column>
-                <el-table-column prop="price" label="Price" align="right">
+                <el-table-column prop="dealTime" align="center">
+                  <template slot="header" slot-scope="scope">
+                    <Language resource="exchange.Deal_Time"/>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="price" align="right">
+                  <template slot="header" slot-scope="scope">
+                    <Language resource="exchange.Deal_Price"/>
+                  </template>
                   <template slot-scope="props">
                     <p class="price-box">
                       {{props.row.price}}
@@ -61,6 +70,9 @@
                   </template>
                 </el-table-column>
                 <el-table-column prop="amount" label="Amount" align="right">
+                  <template slot="header" slot-scope="scope">
+                    <Language resource="exchange.Deal_num"/>
+                  </template>
                   <template slot-scope="props">
                     <p class="amount-box">
                       {{props.row.amount}}
@@ -68,7 +80,10 @@
                     </p>
                   </template>
                 </el-table-column>
-                <el-table-column prop="total" label="total" align="right">
+                <el-table-column prop="total" align="right">
+                  <template slot="header" slot-scope="scope">
+                    <Language resource="exchange.Deal_Total"/>
+                  </template>
                   <template slot-scope="props">
                     <p class="price-box">
                       {{props.row.total}}
@@ -76,7 +91,10 @@
                     </p>
                   </template>
                 </el-table-column>
-                <el-table-column prop="fee" label="Fee" align="right">
+                <el-table-column prop="fee" align="right">
+                  <template slot="header" slot-scope="scope">
+                    <Language resource="exchange.Fee"/>
+                  </template>
                   <template slot-scope="props">
                     <p class="amount-box">
                       {{props.row.amount}}
@@ -84,7 +102,10 @@
                     </p>
                   </template>
                 </el-table-column>
-                <el-table-column label="Action" align="right">
+                <el-table-column align="right">
+                  <template slot="header" slot-scope="scope">
+                    <Language resource="exchange.Action"/>
+                  </template>
                   <template slot-scope="props">
                     <p class="action-box" @click="greet(props.row.id)">Details</p>
                   </template>
@@ -94,7 +115,10 @@
             <!-- 下拉详情 -->
           </template>
         </el-table-column>
-        <el-table-column prop="coin" label="Coin" width="155">
+        <el-table-column prop="coin" width="155">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Pairs"/>
+          </template>
           <template slot-scope="props">
             <div class="coin-box">
               <img src="../../../images/web/logo_box.svg" alt>
@@ -102,13 +126,23 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="type" label="Type" align="center">
+        <el-table-column prop="type" align="center">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Type"/>
+          </template>
           <template slot-scope="props">
             <p :class="props.row.type === 'Buy'?'buy-box':'sell-box'">{{props.row.type}}</p>
           </template>
         </el-table-column>
-        <el-table-column prop="time" label="Entrusted Time" align="center" width="200"></el-table-column>
-        <el-table-column prop="price" label="Price" align="right" width="120">
+        <el-table-column prop="time" align="center" width="200">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Entrusted_Time"/>
+          </template>
+        </el-table-column>
+        <el-table-column prop="price" align="right" width="120">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Entrusted_Price"/>
+          </template>
           <template slot-scope="props">
             <p class="props-box">
               {{props.row.price}}
@@ -116,8 +150,15 @@
             </p>
           </template>
         </el-table-column>
-        <el-table-column prop="average" label="Average" align="right"></el-table-column>
-        <el-table-column prop="amount" label="Amount" align="right">
+        <el-table-column prop="average" align="right">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Deal_Average"/>
+          </template>
+        </el-table-column>
+        <el-table-column prop="amount" align="right">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Entrusted_Amount"/>
+          </template>
           <template slot-scope="props">
             <p class="amount-box">
               {{props.row.amount}}
@@ -125,8 +166,20 @@
             </p>
           </template>
         </el-table-column>
-        <el-table-column prop="dealt" label="Dealt" align="right"></el-table-column>
+        <el-table-column prop="dealt" align="right">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Dealt_Num"/>
+          </template>
+        </el-table-column>
+        <el-table-column prop="dealt" align="right">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Entrusted_Total"/>
+          </template>
+        </el-table-column>
         <el-table-column prop="entrusted" label="Entrusted" align="right">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Deal_Total"/>
+          </template>
           <template slot-scope="props">
             <p class="entrusted-box">
               {{props.row.entrusted}}
@@ -134,8 +187,15 @@
             </p>
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="Status" align="center"></el-table-column>
-        <el-table-column label="Action" align="center">
+        <el-table-column prop="status" align="center">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Status"/>
+          </template>
+        </el-table-column>
+        <el-table-column align="center">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Action"/>
+          </template>
           <template slot-scope="props">
             <p class="action-box" @click="greet(props.row.id)">Details</p>
           </template>

@@ -1,63 +1,76 @@
 <template>
-<div class="market-list">
-  <div class="list-header">
-    <transition>
-      <span :class="{active:shows ===3 }" @click="showView(3)">
-        <img src="../../../../images/web/ic_top.svg" alt="">
-       </span>
-    </transition>
-    <transition>
-      <span :class="{active:shows ===2 }" @click="showView(2)">
-         <img src="../../../../images/web/ic_bottom.svg" alt=""></span></transition>
-    <transition>
-      <span :class="{active:shows ===1 }" @click="showView(1)">
-         <img src="../../../../images/web/ic_middle.svg" alt=""></span></transition>
-  </div>
-  <div class="list-title">
-    <span class="left-text">Price(EOS)</span>
-    <span class="center-text">Amount(MAX)</span>
-    <span class="right-text">Total(EOS)</span>
-  </div>
-  <div class="list-content">
-    <!-- 买卖 -->
-    <div v-if="shows === 1 ">
-      <div class="sell-part">
-        <ListItem v-bind:sellData="sellData" class="sell-box" />
-      </div>
-      <div class="real-price-part">
-        <div>
-          <span>0.000360</span><span>!</span>
+  <div class="market-list">
+    <div class="list-header">
+      <transition>
+        <span :class="{active:shows ===3 }" @click="showView(3)">
+          <img src="../../../../images/web/ic_top.svg" alt>
+        </span>
+      </transition>
+      <transition>
+        <span :class="{active:shows ===2 }" @click="showView(2)">
+          <img src="../../../../images/web/ic_bottom.svg" alt>
+        </span>
+      </transition>
+      <transition>
+        <span :class="{active:shows ===1 }" @click="showView(1)">
+          <img src="../../../../images/web/ic_middle.svg" alt>
+        </span>
+      </transition>
+    </div>
+    <div class="list-title">
+      <span class="left-text">
+        <Language resource="exchange.Price"/>(EOS)
+      </span>
+      <span class="center-text">
+        <Language resource="exchange.Amount"/>(MAX)
+      </span>
+      <span class="right-text">
+        <Language resource="exchange.Total"/>(EOS)
+      </span>
+    </div>
+    <div class="list-content">
+      <!-- 买卖 -->
+      <div v-if="shows === 1 ">
+        <div class="sell-part">
+          <ListItem v-bind:sellData="sellData" class="sell-box"/>
+        </div>
+        <div class="real-price-part">
+          <div>
+            <span>0.000360</span>
+            <span>!</span>
+          </div>
+        </div>
+        <div class="buy-part">
+          <ListItem v-bind:sellData="sellData" class="buy-box"/>
         </div>
       </div>
-      <div class="buy-part">
-        <ListItem v-bind:sellData="sellData" class="buy-box" />
-      </div>
-    </div>
 
-    <!-- 买 -->
-    <div v-if="shows === 2 ">
-      <div class="real-price-part">
-        <div>
-          <span>0.000360</span><span>!</span>
+      <!-- 买 -->
+      <div v-if="shows === 2 ">
+        <div class="real-price-part">
+          <div>
+            <span>0.000360</span>
+            <span>!</span>
+          </div>
+        </div>
+        <div class="buy-part">
+          <ListItem v-bind:sellData="sellData" class="buy-box"/>
         </div>
       </div>
-      <div class="buy-part">
-        <ListItem v-bind:sellData="sellData" class="buy-box" />
-      </div>
-    </div>
-    <!-- 卖 -->
-    <div v-if="shows === 3 ">
-      <div class="sell-part">
-        <ListItem v-bind:sellData="sellData" class="sell-box" />
-      </div>
-      <div class="real-price-part">
-        <div>
-          <span>0.000360</span><span>!</span>
+      <!-- 卖 -->
+      <div v-if="shows === 3 ">
+        <div class="sell-part">
+          <ListItem v-bind:sellData="sellData" class="sell-box"/>
+        </div>
+        <div class="real-price-part">
+          <div>
+            <span>0.000360</span>
+            <span>!</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <script lang="ts">
