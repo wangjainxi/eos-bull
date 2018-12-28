@@ -1,29 +1,27 @@
 <template>
-<div class="item-out-box">
-  <div class="item-box" v-for="(item,index) in data" :key="key" @click="onTapItem(item)">
-    <span class="time-mark time">{{item.time|formatTime}}</span>
-    <span class="price-mark price">{{item.price}}</span>
-    <span class="size-mark size">{{item.size}}</span>
+  <div class="item-out-box">
+    <div class="item-box" v-for="(item,index) in data" :key="index" @click="onTapItem(item)">
+      <span class="time-mark time">{{item.time|formatTime}}</span>
+      <span class="price-mark price">{{item.price}}</span>
+      <span class="size-mark size">{{item.size}}</span>
+    </div>
   </div>
-</div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-
 import { formatTimes } from '@/utils/formatTime';
-import marketViewStore from '@/mobile/views/Market/MarketView/component/marketViewStore';
 
 @Component({
   filters: {
     formatTime: formatTimes,
   },
 })
-export default class extends Vue {
+export default class DealItem extends Vue {
   @Prop({ required: true })
   data = [];
   onTapItem(item: any) {
-    marketViewStore.onTap(item);
+    this.$emit('tap');
   }
 }
 </script>

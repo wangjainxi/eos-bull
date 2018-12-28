@@ -1,9 +1,8 @@
 <template>
   <div class="market-view-box">
-    <TransactionDetail v-if="showAlert" :onTransaction="onTransaction"/>
-
+    <TransactionDetail v-if="false" :onTransaction="onTransaction"/>
     <div class="market-container">
-      <TopView :marketData="marketData"/>
+      <TopView :market="dataStore.currentMarket"/>
       <div class="trading-box">
         <VueTradingView/>
       </div>
@@ -44,7 +43,6 @@ import { observer } from 'mobx-vue';
 import { Market, Trade } from '@/define';
 import { computed } from 'mobx';
 import { getMarketOrderbook, getMarketTrades } from '@/utils/apis';
-import marketViewStore from './component/marketViewStore';
 
 @observer
 @Component({
@@ -56,12 +54,11 @@ import marketViewStore from './component/marketViewStore';
   },
 })
 export default class extends Vue {
-  showAlert = marketViewStore.showAlert;
+  dataStore = dataStore;
   marketData = {};
   OrderData = {};
   recentDealData: Array<Trade> = [];
   mounted() {
-    console.log(dataStore.markets);
     this.filterData();
     this.getOrderData();
     this.getRecentData();
