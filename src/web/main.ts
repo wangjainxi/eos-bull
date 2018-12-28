@@ -27,6 +27,8 @@ import {
   DatePicker,
   Dialog,
   Loading,
+  Carousel,
+  CarouselItem,
 } from 'element-ui';
 import { formatDate } from '@/utils/common';
 
@@ -53,6 +55,8 @@ Vue.use(Option);
 Vue.use(Input);
 Vue.use(DatePicker);
 Vue.use(Loading);
+Vue.use(Carousel);
+Vue.use(CarouselItem);
 Vue.component('Language', Language);
 Vue.filter('formatDate', formatDate);
 
