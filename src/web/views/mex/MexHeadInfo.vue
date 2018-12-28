@@ -2,7 +2,7 @@
   <div id="mex-head-info-page">
     <div class="head-info-title">
       <div class="head-info-title-logo">
-        <img class="symbol-icon" :src="market && market.baseCurrencyIcon.iconUrl" />
+        <img class="symbol-icon" :src="market && market.baseCurrencyIcon.iconUrl">
         <div @click="setInfoTitleState" class="click-range">
           <h4 v-if="market">
             <span>{{ market.pair.baseCurrency.symbol.name }}</span>
@@ -12,40 +12,52 @@
             <span>-</span>
             /-
           </h4>
-          <p>Introduction</p>
+          <p>
+            <Language resource="exchange.Introduction"/>
+          </p>
         </div>
       </div>
       <div class="head-info-title-info">
         <div>
-          <h4>last Price</h4>
+          <h4>
+            <Language resource="exchange.Last_price"/>
+          </h4>
           <p>
             <span>{{ market ? market.lastPrice : '-' }}</span>
             EOS
           </p>
         </div>
         <div>
-          <h4>24H Change</h4>
+          <h4>
+            <Language resource="exchange.Change24H"/>
+          </h4>
           <p>
             <span>{{ market ? market.change : '-' }}</span>
             EOS
           </p>
         </div>
         <div>
-          <h4>24H High</h4>
+          <h4>
+            <Language resource="exchange.High24H"/>
+          </h4>
           <p>
             <span>{{ market ? market.high : '-' }}</span>
             EOS
           </p>
         </div>
         <div>
-          <h4>24H Low</h4>
+          <h4>
+            <Language resource="exchange.Low24H"/>
+          </h4>
           <p>
             <span>{{ market ? market.low : '-' }}</span>
             EOS
           </p>
         </div>
         <div>
-          <h4>24H Volume</h4>
+          <h4>
+            <Language resource="exchange.Volume24H"/>
+          </h4>
           <p>
             <span>{{ market ? market.volumeQuote : '-' }}</span>
             EOS
@@ -56,7 +68,9 @@
 
     <div class="head-info-inner" v-if="infoTitleState">
       <div>
-        <h4>Introduction</h4>
+        <h4>
+          <Language resource="exchange.Introduction"/>
+        </h4>
         <p>
           EOSMax is a gaming entertainment platform based
           on the intelligent contract of Eos main network.
@@ -72,21 +86,29 @@
       </div>
       <div>
         <div>
-          <h4>Max Supply</h4>
+          <h4>
+            <Language resource="exchange.Max_Supply"/>
+          </h4>
           <p>10,000,000,000</p>
         </div>
         <div>
-          <h4>Max Supply</h4>
+          <h4>
+            <Language resource="exchange.Contract"/>
+          </h4>
           <p>10,000,000,000</p>
         </div>
       </div>
       <div>
         <div>
-          <h4>Max Supply</h4>
+          <h4>
+            <Language resource="exchange.Circulating_Supply"/>
+          </h4>
           <p>10,000,000,000</p>
         </div>
         <div>
-          <h4>Max Supply</h4>
+          <h4>
+            <Language resource="exchange.Website"/>
+          </h4>
           <p>10,000,000,000</p>
         </div>
       </div>

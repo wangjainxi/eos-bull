@@ -1,11 +1,17 @@
 <template>
   <div id="mex-table-roder-page" v-loading="loading">
     <div class="table-roder-title">
-      <h4>Open Order</h4>
+      <h4>
+        <Language resource="exchange.Open_Orders"/>
+      </h4>
       <div>
         <img src="../../../images/web/ic_refresh.svg" alt>
-        <p @click="handleRevokeAllBtnClick">Revoke All</p>
-        <el-checkbox v-model="checked" @change="handleHideMarketCheck">Hide Other Pair</el-checkbox>
+        <p @click="handleRevokeAllBtnClick">
+          <Language resource="exchange.Revoke_All"/>
+        </p>
+        <el-checkbox v-model="checked" @change="handleHideMarketCheck">
+          <Language resource="exchange.Hide_Other_Pairs"/>
+        </el-checkbox>
         <img src="../../../images/web/ic_refresh.svg" alt>
       </div>
     </div>
@@ -13,9 +19,12 @@
       <el-table
         :data="Array.from(openOrderStore.orders)"
         style="width: 100%"
-        empty-text="There's no data yet"
+        :empty-text="ThereSNoDataYet"
       >
-        <el-table-column prop="coin" label="Coin" width="200">
+        <el-table-column prop="coin" width="200">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Coin"/>
+          </template>
           <template slot-scope="props">
             <div class="coin-box">
               <h4>{{props.row.coin}} / EOS</h4>
@@ -23,13 +32,23 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="type" label="Type" align="center">
+        <el-table-column prop="type" align="center">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Type"/>
+          </template>
           <template slot-scope="props">
             <p :class="props.row.type === 'Buy'?'buy-box':'sell-box'">{{props.row.type}}</p>
           </template>
         </el-table-column>
-        <el-table-column prop="time" label="Entrusted Time" align="center" width="200"></el-table-column>
-        <el-table-column prop="price" label="Price" align="right" width="120">
+        <el-table-column prop="time" align="center" width="200">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Entrusted_Time"/>
+          </template>
+        </el-table-column>
+        <el-table-column prop="price" align="right" width="120">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Entrusted_Price"/>
+          </template>
           <template slot-scope="props">
             <p class="props-box">
               {{props.row.price.amount}}
@@ -37,8 +56,15 @@
             </p>
           </template>
         </el-table-column>
-        <el-table-column prop="average" label="Average" align="right"></el-table-column>
-        <el-table-column prop="amount" label="Amount" align="right">
+        <el-table-column prop="average" align="right">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Deal_Average"/>
+          </template>
+        </el-table-column>
+        <el-table-column prop="amount" align="right">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Entrusted_Amount"/>
+          </template>
           <template slot-scope="props">
             <p class="amount-box">
               {{props.row.amount}}
@@ -46,8 +72,15 @@
             </p>
           </template>
         </el-table-column>
-        <el-table-column prop="dealt" label="Dealt" align="right"></el-table-column>
-        <el-table-column prop="entrusted" label="Entrusted" align="right">
+        <el-table-column prop="dealt" align="right">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Dealt_Num"/>
+          </template>
+        </el-table-column>
+        <el-table-column prop="entrusted" align="right">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Entrusted_Total"/>
+          </template>
           <template slot-scope="props">
             <p class="entrusted-box">
               {{props.row.entrusted}}
@@ -55,10 +88,19 @@
             </p>
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="Status" align="center"></el-table-column>
-        <el-table-column label="Action" align="center">
+        <el-table-column prop="status" :label="Status" align="center">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Status"/>
+          </template>
+        </el-table-column>
+        <el-table-column align="center">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Action"/>
+          </template>
           <template slot-scope="props">
-            <p class="action-box" @click="greet(props.row.id)">Revoke</p>
+            <p class="action-box" @click="greet(props.row.id)">
+              <Language resource="exchange.Revoke"/>
+            </p>
           </template>
         </el-table-column>
       </el-table>
@@ -90,6 +132,7 @@ import { Observer } from 'mobx-vue';
 import languageStore from '@/stores/language';
 import dataStore from '@/stores/data';
 import openOrderStore from '@/stores/open-order';
+import language from '@/stores/language';
 
 @Observer
 @Component
@@ -100,6 +143,7 @@ export default class MexOpenOrders extends Vue {
   loading = false;
   dialogVisible = false;
 
+  ThereSNoDataYet = language.getIntlText('exchange.There_s_no_data_yet');
   handleRevokeAllBtnClick() {
     this.loading = true;
     openOrderStore.fetchOrders('user1').finally(() => {
