@@ -5,7 +5,7 @@
       <div class="collect-box">
         <img v-if="isCollect" @click="collect" src="@/images/mobile/ic_collection_normal.svg" alt>
         <img
-          v-else="isCollect"
+          v-else
           @click="collect"
           src="@/images/mobile/ic_collection_current_s.svg"
           alt
