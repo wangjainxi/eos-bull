@@ -137,6 +137,7 @@
               v-for="(item,index) in entrustData.pendingOrders"
               :item="item"
               :routeParam="routeParam"
+              :entrustType="entrustType"
               :key="index"
             ></BusinessEntrust>
             <div slot="bottom" class="mint-loadmore-bottom">
@@ -169,6 +170,7 @@
               v-for="(item,index) in entrustData.historyOrders.orders"
               :item="item"
               :routeParam="routeParam"
+              :entrustType="entrustType"
               :key="index"
             ></BusinessEntrust>
             <div slot="bottom" class="mint-loadmore-bottom">
@@ -184,11 +186,9 @@
     </div>
     <mt-actionsheet :actions="sheetActions" :cancelText="cancel" v-model="sheetVisible"></mt-actionsheet>
     <ShowCoinList
-      :popupVisible="popupVisible"
-      :dataCoinList="dataCoinList"
-      @changePopupVisible="changePopupVisible"
+      v-model="popupVisible"
+      :dataCoinList="entrustData.markets"
     ></ShowCoinList>
-    <!-- <mt-popup v-model="popupVisible" popup-transition="popup-fade"></mt-popup> -->
   </div>
 </template>
 
@@ -240,134 +240,7 @@ const tradeData = [
     mount: 132,
   },
 ];
-const dataList = [
-  //币种及价格
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0002094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.02333094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0002094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.02333094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0002094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.02333094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0002094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.02333094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0002094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.02333094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-];
+
 const entrustData = [{}];
 interface PageParam {
   page?: number;
@@ -401,14 +274,13 @@ export default class extends Vue {
   currrentTab = '卖出';
   thisBal = languageStore.getIntlText('business.Bal');
   tabs = [languageStore.getIntlText('business.Buy'), languageStore.getIntlText('business.Sell')];
-  entrustData: any = dataStore;
+  entrustData = dataStore;
   imgUrl = require('./../../../images/mobile/ic_nodata.png');
   imgMsg = languageStore.getIntlText('business.nodata');
   tradeData = tradeData;
   tradeDataMountSum = 0;
   useMount = 0;
   showSheetName = languageStore.getIntlText('business.Limit');
-  dataCoinList = dataList;
 
   // 刷新
   bottomStatus = '';
@@ -433,14 +305,12 @@ export default class extends Vue {
   created() {
     this.getSumMount();
 
-    // this.entrustData = entrustData
     const arr = localStorage.getItem('isFavorite');
     if (!arr) return;
     this.isFavorite = JSON.parse(arr);
   }
 
   mounted() {
-    // const eventObj = onfire.on('tickerUpdate', callback);
     this.routeParam = this.$route.params;
 
     console.log(this.$route.params);
@@ -449,10 +319,6 @@ export default class extends Vue {
       this.$route.params.type === 'buy'
         ? languageStore.getIntlText('business.Buy')
         : languageStore.getIntlText('business.Sell');
-  }
-
-  beforeDestory() {
-    // onfire.un(eventObj);
   }
 
   async getOrderHistory() {

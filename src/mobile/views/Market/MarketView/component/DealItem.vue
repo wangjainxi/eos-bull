@@ -1,29 +1,27 @@
 <template>
-<div class="item-out-box">
-  <div class="item-box" v-for="(item,index) in data" :key="key" @click="onTapItem(item)">
-    <span class="time-mark time">{{item.time|formatTime}}</span>
-    <span class="price-mark price">{{item.price}}</span>
-    <span class="size-mark size">{{item.size}}</span>
+  <div class="item-out-box">
+    <div class="item-box" v-for="(item,index) in data" :key="index" @click="onTapItem(item)">
+      <span class="time-mark time">{{item.time|formatTime}}</span>
+      <span class="price-mark price">{{item.price}}</span>
+      <span class="size-mark size">{{item.size}}</span>
+    </div>
   </div>
-</div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-
 import { formatTimes } from '@/utils/formatTime';
-import marketViewStore from '@/mobile/views/Market/MarketView/component/marketViewStore';
 
 @Component({
   filters: {
     formatTime: formatTimes,
   },
 })
-export default class extends Vue {
+export default class DealItem extends Vue {
   @Prop({ required: true })
   data = [];
   onTapItem(item: any) {
-    marketViewStore.onTap(item);
+    this.$emit('tap');
   }
 }
 </script>
@@ -35,6 +33,9 @@ export default class extends Vue {
     @include flexLayout(row, space-between, center);
     .price {
       color: rgba(7, 199, 78, 1);
+      font-size: 12px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
     }
   }
 }
@@ -42,12 +43,19 @@ export default class extends Vue {
 .sell-part {
   .item-box {
     @include flexLayout(row-reverse, space-between, center);
+      .price {
+      font-size: 12px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(255, 0, 0, 1);
+    }
   }
 }
 
 .item-out-box {
   width: 100%;
   .item-box {
+    height: 0.25rem;
     font-size: 12px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
@@ -55,9 +63,7 @@ export default class extends Vue {
     > span {
       flex: 1;
     }
-    .price {
-      color: rgba(255, 0, 0, 1);
-    }
+
     .time-mark {
       text-align: left;
     }

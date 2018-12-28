@@ -1,9 +1,8 @@
 <template>
   <div class="market-view-box">
-    <TransactionDetail v-if="showAlert" :onTransaction="onTransaction"/>
-
+    <TransactionDetail v-if="false" :onTransaction="onTransaction"/>
     <div class="market-container">
-      <TopView :marketData="marketData"/>
+      <TopView :market="dataStore.currentMarket"/>
       <div class="trading-box">
         <VueTradingView/>
       </div>
@@ -31,7 +30,6 @@
     </div>
   </div>
 </template>
-
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import data from '@/stores/data';
@@ -44,7 +42,6 @@ import { observer } from 'mobx-vue';
 import { Market, Trade } from '@/define';
 import { computed } from 'mobx';
 import { getMarketOrderbook, getMarketTrades } from '@/utils/apis';
-import marketViewStore from './component/marketViewStore';
 
 @observer
 @Component({
@@ -56,12 +53,11 @@ import marketViewStore from './component/marketViewStore';
   },
 })
 export default class extends Vue {
-  showAlert = marketViewStore.showAlert;
+  dataStore = dataStore;
   marketData = {};
   OrderData = {};
   recentDealData: Array<Trade> = [];
   mounted() {
-    console.log(dataStore.markets);
     this.filterData();
     this.getOrderData();
     this.getRecentData();
@@ -82,15 +78,6 @@ export default class extends Vue {
 
   async getOrderData() {
     this.OrderData = await getMarketOrderbook(Number(this.$route.params.id));
-  }
-
-  @computed
-  filterResData() {
-    dataStore.markets.forEach((ele: any) => {
-      if (this.$route.params.id === ele.marketId) {
-        this.marketData = ele;
-      }
-    });
   }
 
   onTransaction(t: any) {
@@ -115,6 +102,7 @@ export default class extends Vue {
 .red-color {
   color: rgba(229, 55, 87, 1);
 }
+
 .market-view-box {
   background: rgba(242, 245, 251, 1);
   position: relative;
@@ -134,26 +122,32 @@ export default class extends Vue {
     height: 4.3rem;
     font-size: 0.14rem;
   }
-  .btn-box {
-    height: 0.62rem;
-    padding-left: 0.2rem;
-    padding-right: 0.2rem;
-    width: 100%;
-    background-color: #fff;
-    box-shadow: 0px 0 1px 0px rgba(92, 102, 119, 0.2);
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    @include flexLayout(row, space-between, center);
-    > div {
-      flex: 1;
-      > button {
-        width: 100%;
-      }
+}
+.btn-box {
+  height: 0.62rem;
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0px 0 1px 0px rgba(92, 102, 119, 0.2);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  @include flexLayout(row, space-between, center);
+  > div {
+    flex: 1;
+    > button {
+      width: 100%;
+      height: 0.38rem;
+      border-radius: 0.02rem;
+      font-size: 15px;
+      font-family: PingFangSC-Medium;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 1);
     }
-    div:nth-child(1) {
-      margin-right: 0.09rem;
-    }
+  }
+  div:nth-child(1) {
+    margin-right: 0.09rem;
   }
 }
 </style>

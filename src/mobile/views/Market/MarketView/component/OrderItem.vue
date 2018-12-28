@@ -1,7 +1,7 @@
 <template>
   <div  class="item-out-box">
     <div class="item-box" v-for="(item,index) in data" :key="index">
-      <span class="total greenbg"></span>
+      <span class="total greenbg" :style="width"></span>
       <span class="price">{{item.price}}</span>
       <span class="size">{{item.size}}</span>
     </div>
@@ -23,6 +23,10 @@ export default {
 .buy-part {
   .item-box {
     @include flexLayout(row, space-between, center);
+    .total{
+   background:rgba(7,199,78,0.1);
+   border-radius: 0.01rem;
+    }
     .size {
       color: rgba(7, 199, 78, 1);
     }
@@ -35,6 +39,10 @@ export default {
   .size {
     color: rgba(255, 0, 0, 1);
   }
+    .total{
+   background:rgba(255,0,0,0.1);
+   border-radius: 0.01rem;
+    }
 }
 .item-out-box {
   width: 100%;
@@ -44,10 +52,11 @@ export default {
     .total {
       position: absolute;
       right: 0;
-      top: 0;
+      top: 50%;
       height: 0.13rem;
       line-height: 0.13rem;
       width: 50%;
+      transform: translateY(-50%);
     }
     .price {
       font-size: 12px;

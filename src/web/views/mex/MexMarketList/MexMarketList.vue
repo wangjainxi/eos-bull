@@ -93,10 +93,6 @@ export default class extends Vue {
       total: 56.3365,
       width: '10%',
     };
-    while (true) {
-      // this.sellData.push(obj);
-      if (this.sellData.length > 17) return;
-    }
   }
   showView(type: any) {
     this.shows = type;
@@ -107,15 +103,6 @@ export default class extends Vue {
       width: '10%',
     };
     this.sellData = [];
-    while (true) {
-      obj.width = Math.random() * 100 + '100%';
-      if (this.shows === 1) {
-        if (this.sellData.length > 17) return;
-      } else {
-        if (this.sellData.length > 29) return;
-      }
-      // this.sellData.push(obj);
-    }
   }
 }
 </script>

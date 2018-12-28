@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="order-item" v-for="item in data" :key="item.orderId">
-      <div class="type-buy">
+    <div class="order-item" v-for="(item, index) in data" :key="index">
+      <div class="type-buy" v-if="item.type === 1">
         <div class="top">
           <span class="left-info">
             <img v-if="item.side === 1" class="type" src="@/images/mobile/ic_buy_c.svg" />
@@ -75,8 +75,7 @@
     <div style="height: 0.5rem;" />
   </div>
 </template>
-
-<script lang="ts">
+<script  lang="ts">
 export default {
   name: 'order-item',
   props: {

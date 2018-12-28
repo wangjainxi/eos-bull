@@ -634,7 +634,7 @@ export default class extends Vue {
           width: 198px;
           height: 88px;
           border: 1px dashed #ddd;
-          margin-right: 52px;
+          margin-right: 50px;
           display: inline-block;
         }
         img:nth-child(5) {

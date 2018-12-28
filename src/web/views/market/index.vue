@@ -68,12 +68,16 @@ export default class extends Vue {
 </script>
 <style lang="scss">
 #web-market-page {
-  padding-top: 40px;
   padding-bottom: 12px;
+  border-radius: 8px;
+  padding-top: 40px;
   .inner-box {
     border-radius: 8px;
     background: #142e4d;
     overflow: hidden;
+  }
+  .el-tabs__header {
+    margin: 0;
   }
   .el-tabs__nav-wrap::after {
     display: none;

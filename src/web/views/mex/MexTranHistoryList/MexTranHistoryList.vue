@@ -54,7 +54,6 @@ export default class extends Vue {
 .mex-tran-history-list {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-
   .list-header {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;

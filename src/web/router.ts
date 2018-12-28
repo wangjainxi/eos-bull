@@ -6,6 +6,7 @@ import MyWallet from './views/mex/myWallet/myWallet.vue';
 import Market from './views/market/index.vue';
 import OrderDetails from './views/orderDetails/index.vue';
 import WebPackage from './WebPackage.vue';
+import homeExchange from './views/homeExchange/homeExchange.vue';
 Vue.use(Router);
 
 export default new Router({
@@ -16,6 +17,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home,
+    },
+    {
+      path: '/home-exchange',
+      name: 'homeExchange',
+      component: homeExchange,
     },
     {
       path: '/mex',
