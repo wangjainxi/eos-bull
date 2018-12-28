@@ -2,7 +2,7 @@
   <div class="business" id="business">
     <div class="business-coin-title">
       <div class="business-coin-name" @click="showCoinData">
-        <span>{{routeParam.coinName}}</span>
+        <span>{{coinName}}</span>
         <i></i>
       </div>
       <div class="business-coin-image">
@@ -127,27 +127,13 @@
           :imgMsg="imgMsg"
         ></ShowMessageImg>
         <div class="loadmore-list" v-else>
-          <mt-loadmore
-            :bottom-method="loadBottom"
-            :bottom-all-loaded="allLoaded"
-            @bottom-status-change="handleBottomChange"
-            ref="loadmore"
-          >
-            <BusinessEntrust
-              v-for="(item,index) in entrustData.pendingOrders"
-              :item="item"
-              :routeParam="routeParam"
-              :entrustType="entrustType"
-              :key="index"
-            ></BusinessEntrust>
-            <div slot="bottom" class="mint-loadmore-bottom">
-              <span
-                v-show="bottomStatus !== 'loading'"
-                :class="{ 'rotate': bottomStatus === 'drop' }"
-              >↑</span>
-              <span v-show="bottomStatus === 'loading'">Loading...</span>
-            </div>
-          </mt-loadmore>
+          <BusinessEntrust
+            v-for="(item,index) in entrustData.pendingOrders"
+            :item="item"
+            :routeParam="routeParam"
+            :entrustType="entrustType"
+            :key="index"
+          ></BusinessEntrust>
         </div>
       </div>
       <div
@@ -160,7 +146,7 @@
           :imgMsg="imgMsg"
         ></ShowMessageImg>
         <div class="loadmore-list" v-else>
-          <mt-loadmore
+          <Loadmore
             :bottom-method="loadBottom"
             :bottom-all-loaded="allLoaded"
             @bottom-status-change="handleBottomChange"
@@ -180,7 +166,7 @@
               >↑</span>
               <span v-show="bottomStatus === 'loading'">Loading...</span>
             </div>
-          </mt-loadmore>
+          </Loadmore>
         </div>
       </div>
     </div>
@@ -203,6 +189,7 @@ import BusinessRange from './components/businessRange.vue';
 import ShowCoinList from './components/businessCoin.vue';
 import { MessageBox, Toast, Loadmore } from 'mint-ui';
 import languageStore from '@/stores/language';
+import { Market } from '@/define';
 import { orderHistory } from '../../../utils/restful';
 import dataStore from '@/stores/data';
 
@@ -255,6 +242,7 @@ interface PageParam {
     BusinessEntrust,
     BusinessRange,
     ShowCoinList,
+    Loadmore,
   },
 })
 export default class extends Vue {
@@ -268,6 +256,7 @@ export default class extends Vue {
   businessPrice = 3422.02; //交易价
   inputVal = 0; //交易
   routeParam: any = '';
+  coinName: any = '';
   isFavorite: any = [];
   routeId: number = -1;
   changeEos = 0.00001;
@@ -308,9 +297,16 @@ export default class extends Vue {
     const arr = localStorage.getItem('isFavorite');
     if (!arr) return;
     this.isFavorite = JSON.parse(arr);
+    const transPair = localStorage.getItem('transPair');
+    if (!transPair) return;
+    this.coinName = transPair || this.$route.params.coinName;
+    this.$route.params.coinName = this.coinName;
+    console.log(this.coinName);
   }
 
   mounted() {
+    dataStore.updateMarkets();
+    // const eventObj = onfire.on('tickerUpdate', callback);
     this.routeParam = this.$route.params;
     this.routeId = Number(this.$route.params.id);
     this.currrentTab =
@@ -346,10 +342,16 @@ export default class extends Vue {
   loadBottom() {
     // 加载更多数据
     if (!this.pageparams.page) return;
+    if (!this.pageparams.pageSize) return;
     this.pageparams.page += 1;
     dataStore.updateHistoryOrders(this.pageparams);
-    this.allLoaded = true; // 若数据已全部获取完毕
-    // this.$refs.loadmore.onBottomLoaded();
+    console.log(dataStore.historyOrders);
+    if (
+      Math.ceil(dataStore.historyOrders.count / this.pageparams.pageSize) === this.pageparams.page
+    ) {
+      this.allLoaded = true; // 若数据已全部获取完毕
+    }
+    this.$refs.loadmore.onBottomLoaded();
   }
 
   changeTab(val: any) {
@@ -360,6 +362,7 @@ export default class extends Vue {
     if (type === 0) {
       dataStore.updatePendingOrders();
       this.entrustData = dataStore;
+      console.log(dataStore);
     } else {
       dataStore.updateHistoryOrders(this.pageparams);
       this.entrustData = dataStore;
