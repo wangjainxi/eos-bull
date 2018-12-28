@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div>111</div>
     <el-dialog
       title="MEV/EOS Deal Details"
       :visible.sync="dialogVisible"

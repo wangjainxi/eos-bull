@@ -5,6 +5,7 @@ import asset from './assetAndMarket';
 import order from './order';
 import business from './business';
 import more from './more';
+import exchange from './exchange';
 
 const foot = {
   Homepage: '首页',
@@ -22,4 +23,5 @@ export default {
   order,
   business,
   more,
+  exchange,
 };
