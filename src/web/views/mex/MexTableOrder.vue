@@ -10,7 +10,11 @@
       </div>
     </div>
     <div class="table-box">
-      <el-table :data="Array.from(openOrderStore.orders)" style="width: 100%" empty-text="There's no data yet">
+      <el-table
+        :data="Array.from(openOrderStore.orders)"
+        style="width: 100%"
+        empty-text="There's no data yet"
+      >
         <el-table-column prop="coin" label="Coin" width="200">
           <template slot-scope="props">
             <div class="coin-box">
@@ -28,7 +32,7 @@
         <el-table-column prop="price" label="Price" align="right" width="120">
           <template slot-scope="props">
             <p class="props-box">
-              {{props.row.price}}
+              {{props.row.price.amount}}
               <span>EOS</span>
             </p>
           </template>
@@ -59,12 +63,72 @@
         </el-table-column>
       </el-table>
     </div>
+    <el-dialog
+      :title="thisTip"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose"
+    >
+      <div class="content">
+        <img src="./../../../images/web/ic_warning_big.svg" alt>
+        <Language resource="home.revoke_order"/>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">
+          <Language resource="home.Cancel"/>
+        </el-button>
+        <el-button type="primary" @click="dialogVisible = false">
+          <Language resource="home.OK"/>
+        </el-button>
+      </span>
+    </el-dialog>
+    <!-- <el-dialog
+      :title="thisTip"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose"
+    >
+      <div class="content">
+        <img src="./../../../images/web/ic_warning_big.svg" alt>
+        <Language resource="home.unlocked_Scatter"/>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">
+          <Language resource="home.Give_up"/>
+        </el-button>
+        <el-button type="primary" @click="dialogVisible = false">
+          <Language resource="home.Unlocked"/>
+        </el-button>
+      </span>
+    </el-dialog>-->
+
+
+    <!-- <el-dialog
+      :title="noTitle"
+      :visible.sync="dialogVisible"
+      width="600px"
+      custom-class="scatter-dialog"
+      :before-close="handleClose"
+    >
+      <div class="content scatter">
+        <img src="./../../../images/ic_scatter_sign_in.png" alt>
+        <Language resource="home.Sign_Sca"/>
+        <div>
+          <p>
+            <Language resource="home.Scatter_allows"/>
+          </p>
+          <Language resource="home.How_use_Scatter"/>
+        </div>
+      </div>
+      <span slot="footer" class="dialog-footer"></span>
+    </el-dialog>-->
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import { Observer } from 'mobx-vue';
+import languageStore from '@/stores/language';
 import dataStore from '@/stores/data';
 import openOrderStore from '@/stores/open-order';
 
@@ -75,6 +139,9 @@ export default class MexOpenOrders extends Vue {
   openOrderStore = openOrderStore;
   checked = false;
   loading = false;
+  dialogVisible = false;
+  noTitle = `  `;
+  thisTip = languageStore.getIntlText('home.Tips');
 
   handleRevokeAllBtnClick() {
     this.loading = true;
@@ -85,6 +152,9 @@ export default class MexOpenOrders extends Vue {
     });
   }
 
+  // created() {
+  //   this.noTitle = `${&nbsp}`;
+  // }
   handleHideMarketCheck(val: boolean) {
     const marketId = dataStore.currentMarket.marketId;
     if (val) openOrderStore.hideOtherMarket(marketId);
@@ -93,6 +163,9 @@ export default class MexOpenOrders extends Vue {
 
   handleDetailBtnClick() {
     // TODO：展示订单详情
+  }
+  greet(id: number) {
+    this.dialogVisible = true;
   }
 }
 </script>
@@ -160,6 +233,101 @@ export default class MexOpenOrders extends Vue {
     .action-box {
       color: #2d7be5;
       cursor: pointer;
+    }
+  }
+  .el-dialog {
+    & > div {
+      background: rgba(20, 46, 77, 1);
+    }
+
+    .el-button {
+      width: 100px;
+      height: 40px;
+    }
+  }
+  .scatter-dialog {
+    .el-button {
+      width: 100px;
+      height: 40px;
+    }
+  }
+  .el-dialog__header {
+    display: flex;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(30, 58, 93, 1);
+    span {
+      font-size: 18px;
+      height: 25px;
+      font-family: PingFangSC-Medium;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 1);
+    }
+    i {
+      color: rgba(226, 101, 101, 1);
+    }
+  }
+  .el-button--default {
+    border: 1px solid rgba(110, 132, 163, 1);
+    background: rgba(20, 46, 77, 1);
+    color: rgba(146, 167, 197, 1);
+  }
+  .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    img {
+      margin: 10px auto 30px;
+      width: 36px;
+      height: 36px;
+    }
+    span {
+      height: 57px;
+      font-size: 16px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(146, 167, 197, 1);
+      line-height: 22px;
+    }
+  }
+  .scatter {
+    margin: 0 45px;
+    img {
+      margin: 5px auto 40px;
+      width: 90px;
+      height: 90px;
+    }
+    & > span {
+      border-radius: 4px;
+      padding: 0 25px;
+      height: 42px;
+      font-size: 16px;
+      color: rgba(45, 123, 229, 1);
+      line-height: 42px;
+      margin-bottom: 88px;
+      border: 1px solid rgba(110, 132, 163, 1);
+    }
+    & > div {
+      p {
+        display: inline;
+        & > span {
+          font-size: 14px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: #2d7be5;
+          line-height: 20px;
+          color: rgba(146, 167, 197, 1);
+        }
+      }
+      span {
+        padding: 0;
+        font-size: 14px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: #2d7be5;
+        line-height: 20px;
+        color: rgba(45, 123, 229, 1);
+      }
     }
   }
 }

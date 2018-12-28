@@ -431,6 +431,7 @@ export default class extends Vue {
     const transPair = localStorage.getItem('transPair');
     if (!transPair) return;
     this.coinName = transPair || this.$route.params.coinName;
+    this.$route.params.coinName = this.coinName;
   }
 
   mounted() {
