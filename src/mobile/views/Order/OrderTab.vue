@@ -90,7 +90,29 @@ export default class Orders extends Vue {
     transform: translateY(-50%);
   }
 }
+.mint-navbar{
+  @include flexLayout(row, space-between, center);
 
+}
+ .mint-navbar .mint-tab-item {
+      flex: 1;
+      height: 0.42rem;
+      padding: 0px;
+      .mint-tab-item-label {
+        font-size: 0.2rem;
+        height: 0.16rem;
+        font-size: 0.14rem;
+        font-family: PingFangSC-Semibold;
+        font-weight: 600;
+        color: rgba(141, 141, 141, 1);
+        line-height: 0.16rem;
+        margin-top: 0.14rem;
+      }
+    }
+      .type-select-box {
+    background-color: #fff;
+    width: 100%;
+  }
 #order-tab-container {
   font-size: 0.16rem !important;
   > div {
@@ -118,10 +140,6 @@ export default class Orders extends Vue {
     font-family: PingFangSC-Medium;
     font-weight: 300;
     color: rgba(141, 141, 141, 1);
-  }
-  .mint-navbar .mint-tab-item {
-    padding: 0px;
-    margin-top: 0.2rem;
   }
   .mint-navbar .mint-tab-item.is-selected {
     border-bottom: none;

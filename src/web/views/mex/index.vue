@@ -6,7 +6,7 @@
     <div class="mex-keynote-page">
       <div class="mex-keynote-first">
         <div class="mex-market-page">
-          <!-- <mex-market-list></mex-market-list> -->
+          <MexMarketList/>
         </div>
       </div>
       <div class="mex-keynote-second">
@@ -47,6 +47,7 @@ import MexPlaceOrder from './MexPlaceOrder.vue';
 import MexTableHistory from './MexTableHistory.vue';
 import MexTableOrder from './MexTableOrder.vue';
 import MexTranHistoryList from './MexTranHistoryList/MexTranHistoryList.vue';
+import MexMarketList from './MexMarketList/MexMarketList.vue';
 
 @Observer
 @Component({
@@ -58,6 +59,7 @@ import MexTranHistoryList from './MexTranHistoryList/MexTranHistoryList.vue';
     MexTableHistory,
     MexTableOrder,
     MexTranHistoryList,
+    MexMarketList,
   },
 })
 export default class Mex extends Vue {
