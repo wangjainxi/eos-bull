@@ -5,7 +5,7 @@
         {{ market.pair.baseCurrency.symbol.name }}/{{ market.pair.quoteCurrency.symbol.name }}
       </span>
       <div class="collect-box">
-        <img v-if="isCollect" @click="collect" src="@/images/mobile/ic_collection_normal.svg" alt>
+        <img v-if="isCollect" @click="collect" src="@/images/mobile/ic_collection_s.svg" alt>
         <img
           v-else
           @click="collect"
@@ -60,7 +60,7 @@ export default class MarketInfo extends Vue {
   isCollect = false;
 
   collect() {
-    this.isCollect = !this.isCollect;
+    this.isCollect = false;
   }
 
   created() {
@@ -82,6 +82,7 @@ export default class MarketInfo extends Vue {
   height: 1.68rem;
   padding: 0.14rem 0.2rem;
   background-color: #fff;
+  margin-bottom: 0.04rem;
   .collect-box {
     > img {
       width: 0.18rem;

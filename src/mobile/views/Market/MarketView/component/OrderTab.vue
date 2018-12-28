@@ -3,13 +3,13 @@
     <div class="order-top">
       <div class="tab-box">
         <span>
-          <span class="buy-text">买</span>
-          <span class="tab-title">数量(WIZBOX)</span>
+          <span class="buy-text"><Language resource="transaction.buy"/></span>
+          <span class="tab-title"><Language resource="transaction.amount"/></span>
         </span>
-        <span class="tab-title">价格(EOS)</span>
+        <span class="tab-title"><Language resource="transaction.price"/></span>
         <span>
-          <span class="tab-title">数量(WIZBOX)</span>
-          <span class="sell-text">卖</span>
+          <span class="tab-title"><Language resource="transaction.amount"/></span>
+          <span class="sell-text"><Language resource="transaction.sell"/></span>
         </span>
       </div>
     </div>

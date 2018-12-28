@@ -33,6 +33,9 @@ export default class DealItem extends Vue {
     @include flexLayout(row, space-between, center);
     .price {
       color: rgba(7, 199, 78, 1);
+      font-size: 12px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
     }
   }
 }
@@ -40,12 +43,19 @@ export default class DealItem extends Vue {
 .sell-part {
   .item-box {
     @include flexLayout(row-reverse, space-between, center);
+      .price {
+      font-size: 12px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(255, 0, 0, 1);
+    }
   }
 }
 
 .item-out-box {
   width: 100%;
   .item-box {
+    height: 0.25rem;
     font-size: 12px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
@@ -53,9 +63,7 @@ export default class DealItem extends Vue {
     > span {
       flex: 1;
     }
-    .price {
-      color: rgba(255, 0, 0, 1);
-    }
+
     .time-mark {
       text-align: left;
     }

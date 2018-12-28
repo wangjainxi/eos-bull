@@ -137,6 +137,7 @@
               v-for="(item,index) in entrustData.pendingOrders"
               :item="item"
               :routeParam="routeParam"
+              :entrustType="entrustType"
               :key="index"
             ></BusinessEntrust>
             <div slot="bottom" class="mint-loadmore-bottom">
@@ -169,6 +170,7 @@
               v-for="(item,index) in entrustData.historyOrders.orders"
               :item="item"
               :routeParam="routeParam"
+              :entrustType="entrustType"
               :key="index"
             ></BusinessEntrust>
             <div slot="bottom" class="mint-loadmore-bottom">
