@@ -1,8 +1,8 @@
 <template>
   <div class="market-view-box">
-    <TransactionDetail v-if="showAlert" :onTransaction="onTransaction"/>
+    <TransactionDetail v-if="false" :onTransaction="onTransaction"/>
     <div class="market-container">
-      <TopView :marketData="marketData"/>
+      <TopView :market="dataStore.currentMarket"/>
       <div class="trading-box">
         <VueTradingView/>
       </div>
@@ -42,7 +42,6 @@ import { observer } from 'mobx-vue';
 import { Market, Trade } from '@/define';
 import { computed } from 'mobx';
 import { getMarketOrderbook, getMarketTrades } from '@/utils/apis';
-import marketViewStore from './component/marketViewStore';
 
 @observer
 @Component({
@@ -54,12 +53,11 @@ import marketViewStore from './component/marketViewStore';
   },
 })
 export default class extends Vue {
-  showAlert = marketViewStore.showAlert;
-  marketData: any = {};
+  dataStore = dataStore;
+  marketData = {};
   OrderData = {};
   recentDealData: Array<Trade> = [];
   mounted() {
-    console.log(dataStore.markets);
     this.filterData();
     this.getOrderData();
     this.getRecentData();
@@ -82,15 +80,6 @@ export default class extends Vue {
     this.OrderData = await getMarketOrderbook(Number(this.$route.params.id));
   }
 
-  @computed
-  filterResData() {
-    dataStore.markets.forEach((ele: any) => {
-      if (this.$route.params.id === ele.marketId) {
-        this.marketData = ele;
-      }
-    });
-  }
-
   onTransaction(t: any) {
     const data = {
       name: 'business',
@@ -100,9 +89,6 @@ export default class extends Vue {
         type: t,
       },
     };
-    const baseCurrency = this.marketData.pair.baseCurrency.symbol.name;
-    const quoteCurrency = this.marketData.pair.quoteCurrency.symbol.name;
-    localStorage.setItem('transPair', baseCurrency + '/' + quoteCurrency);
     this.$router.push(data);
   }
 }
