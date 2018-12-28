@@ -3,15 +3,17 @@
     <div class="table-roder-title">
       <h4>Order History</h4>
       <div>
-        <el-checkbox v-model="hideRevoked" @change="handleHideRevokedCheck">
-          Hide Revoked Orde
-        </el-checkbox>
+        <el-checkbox v-model="hideRevoked" @change="handleHideRevokedCheck">Hide Revoked Orde</el-checkbox>
         <el-checkbox v-model="hideOther">Hide Other Pair</el-checkbox>
         <img src="../../../images/web/ic_refresh.svg" alt>
       </div>
     </div>
     <div class="table-box">
-      <el-table :data="Array.from(historyOrderStore.orders)" style="width: 100%" empty-text="There's no data yet">
+      <el-table
+        :data="Array.from(historyOrderStore.orders)"
+        style="width: 100%"
+        empty-text="There's no data yet"
+      >
         <el-table-column type="expand">
           <template slot-scope="props">
             <div class="expand-box">
@@ -55,19 +57,11 @@
                 </el-table-column>
                 <el-table-column label="Action" align="right">
                   <template slot-scope="props">
-                    <p class="action-box" @click="showdialogVisible(props.row.id)">Details</p>
+                    <p class="action-box" @click="PopupStatus(props.row.id)">Details</p>
                   </template>
                 </el-table-column>
               </el-table>
             </div>
-            <el-dialog
-              title="提示"
-              :visible.sync="dialogVisible"
-              width="30%"
-              :before-close="handleClose"
-            >
-              <span>这是一段信息{{props.row.coin}}</span>
-            </el-dialog>
           </template>
         </el-table-column>
         <!-- 下拉详情 -->
@@ -86,9 +80,7 @@
         </el-table-column>
         <el-table-column prop="time" label="Entrusted Time" align="center" width="200">
           <template slot-scope="props">
-            <span>
-              {{props.row.time | formatDate}}
-            </span>
+            <span>{{props.row.time | formatDate}}</span>
           </template>
         </el-table-column>
         <el-table-column prop="price" label="Price" align="right" width="120">
@@ -140,6 +132,7 @@
         :total="historyOrderStore.totalCount"
       ></el-pagination>
     </div>
+    <OrderPopup :dialogVisible="dialogVisible" v-on:closePopup="PopupStatus"></OrderPopup>
   </div>
 </template>
 
@@ -148,10 +141,15 @@ import { Vue, Component } from 'vue-property-decorator';
 import { Observer } from 'mobx-vue';
 import dataStore from '@/stores/data';
 import historyOrderStore from '@/stores/history-order';
+import OrderPopup from './components/OrderPopup.vue';
 import { ORDER_STATUS } from '@/define';
 
 @Observer
-@Component
+@Component({
+  components: {
+    OrderPopup,
+  },
+})
 export default class MexHistoryOrder extends Vue {
   historyOrderStore = historyOrderStore;
   hideOther = false;
@@ -163,6 +161,10 @@ export default class MexHistoryOrder extends Vue {
   page = 1;
   pageSize = 10;
 
+  PopupStatus() {
+    this.dialogVisible = !this.dialogVisible;
+    console.log(this.dialogVisible);
+  }
   handleHideRevokedCheck(val: boolean) {
     this.page = 1;
     const params = {
