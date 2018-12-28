@@ -67,7 +67,6 @@
       :title="thisTip"
       :visible.sync="dialogVisible"
       width="30%"
-      :before-close="handleClose"
     >
       <div class="content">
         <img src="./../../../images/web/ic_warning_big.svg" alt>
@@ -82,46 +81,6 @@
         </el-button>
       </span>
     </el-dialog>
-    <!-- <el-dialog
-      :title="thisTip"
-      :visible.sync="dialogVisible"
-      width="30%"
-      :before-close="handleClose"
-    >
-      <div class="content">
-        <img src="./../../../images/web/ic_warning_big.svg" alt>
-        <Language resource="home.unlocked_Scatter"/>
-      </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">
-          <Language resource="home.Give_up"/>
-        </el-button>
-        <el-button type="primary" @click="dialogVisible = false">
-          <Language resource="home.Unlocked"/>
-        </el-button>
-      </span>
-    </el-dialog>-->
-
-
-    <!-- <el-dialog
-      :title="noTitle"
-      :visible.sync="dialogVisible"
-      width="600px"
-      custom-class="scatter-dialog"
-      :before-close="handleClose"
-    >
-      <div class="content scatter">
-        <img src="./../../../images/ic_scatter_sign_in.png" alt>
-        <Language resource="home.Sign_Sca"/>
-        <div>
-          <p>
-            <Language resource="home.Scatter_allows"/>
-          </p>
-          <Language resource="home.How_use_Scatter"/>
-        </div>
-      </div>
-      <span slot="footer" class="dialog-footer"></span>
-    </el-dialog>-->
   </div>
 </template>
 
@@ -140,8 +99,6 @@ export default class MexOpenOrders extends Vue {
   checked = false;
   loading = false;
   dialogVisible = false;
-  noTitle = `  `;
-  thisTip = languageStore.getIntlText('home.Tips');
 
   handleRevokeAllBtnClick() {
     this.loading = true;

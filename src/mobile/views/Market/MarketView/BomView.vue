@@ -1,16 +1,16 @@
 <template>
   <div id="bom-container">
-    <div id="tab-box-container" class="flex-row-start">
-      <div class="type-select-box">
+    <div id="tab-box-container" >
+      <div class="type-select-box ">
         <mt-navbar v-model="selected">
-          <mt-tab-item id="1">委托订单</mt-tab-item>
-          <mt-tab-item id="2">深度</mt-tab-item>
-          <mt-tab-item id="3">最新成交</mt-tab-item>
-          <mt-tab-item id="4">简介</mt-tab-item>
+          <mt-tab-item id="1"><Language resource="transaction.order_Book"/></mt-tab-item>
+          <mt-tab-item id="2"><Language resource="transaction.depth"/></mt-tab-item>
+          <mt-tab-item id="3"><Language resource="transaction.latest_Deal"/></mt-tab-item>
+          <mt-tab-item id="4"><Language resource="transaction.introduction"/></mt-tab-item>
         </mt-navbar>
       </div>
       <!-- tab-container -->
-      <div>
+      <div >
         <mt-tab-container v-model="selected">
           <mt-tab-container-item id="1">
             <OrderTab :OrderData="OrderData"/>
@@ -57,36 +57,40 @@ export default class extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" >
 @import '../../../../style/mixin.scss';
+#nav {
+  padding: 30px;
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
+}
+
 #bom-container {
   width: 100vw;
   background-color: #fff;
-  .mint-tab-item-label {
-    font-size: 0.2rem;
-  }
+  margin-top: 0.04rem;
   .type-select-box {
-    background-color: #ddd;
+    background-color: #fff;
     width: 100%;
   }
+
   #tab-box-container {
     font-size: 0.16rem !important;
     > div {
       width: 100%;
     }
-    @include flexLayout(column, flex-start, flex-start);
+
     .mint-navbar {
       border-bottom: 0.01rem solid rgba(242, 245, 251, 1);
       border-top: 0.01rem solid rgba(242, 245, 251, 1);
+      @include flexLayout('row', 'space-between', 'center');
     }
-    .mint-tab-item-label {
-      height: 0.16rem;
-      font-size: 0.14rem;
-      font-family: PingFangSC-Semibold;
-      font-weight: 600;
-      color: rgba(141, 141, 141, 1);
-      line-height: 0.16rem;
-    }
+
     .tab-item {
       margin-right: 0.25rem;
       p {
@@ -94,17 +98,25 @@ export default class extends Vue {
       }
     }
     .mint-navbar .mint-tab-item {
+      flex: 1;
       height: 0.42rem;
       padding: 0px;
+      .mint-tab-item-label {
+        font-size: 0.2rem;
+        height: 0.16rem;
+        font-size: 0.14rem;
+        font-family: PingFangSC-Semibold;
+        font-weight: 600;
+        color: rgba(141, 141, 141, 1);
+        line-height: 0.16rem;
+        margin-top: 0.14rem;
+      }
     }
     .mint-navbar .mint-tab-item.is-selected {
       border-bottom: none;
       .mint-tab-item-label {
         color: rgba(0, 122, 255, 1);
       }
-    }
-    .mint-tab-item-label {
-      margin-top: 0.14rem;
     }
     .mint-navbar .mint-tab-item.is-selected::after {
       content: '1';

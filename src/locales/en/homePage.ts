@@ -68,4 +68,5 @@ export default {
   Sign_Sca: 'Sign In via Scatter',
   Scatter_allows: 'Scatter allows convenient transactions without password, refer to',
   How_use_Scatter: '《How to use Scatter》',
+  sign_in: 'Sign In',
 };

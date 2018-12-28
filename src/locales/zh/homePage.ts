@@ -66,4 +66,5 @@ export default {
   Sign_Sca: 'Scatter登录',
   Scatter_allows: 'Scatter支持免密码的便捷交易，了解',
   How_use_Scatter: '《如何使用Scatter》',
+  sign_in: '登录',
 };

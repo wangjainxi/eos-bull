@@ -12,9 +12,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./../style/common.scss";
+@import './../style/common.scss';
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -26,7 +26,10 @@ export default {
   display: block;
   background: #fff;
 }
-
+.home-tab-title-box .mint-navbar {
+  display: flex;
+  justify-content: space-evenly;
+}
 #nav {
   padding: 30px;
   a {
