@@ -2,14 +2,16 @@ import { observable, action } from 'mobx';
 
 class MarketViewStore {
   @observable
-  showAlert: boolean = false;
+  showAlert: boolean = true;
+
   @observable
   itemData: any = {};
 
   @action
-  onTap = (item: any) => {
-    this.showAlert = !this.showAlert;
-    this.itemData = item;
+  changeStatus = (bool: boolean, itemData?: any) => {
+    this.showAlert = bool;
+    this.itemData = itemData;
+    console.log(this.itemData);
   };
 }
 export default new MarketViewStore();

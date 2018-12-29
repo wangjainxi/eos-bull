@@ -1,10 +1,18 @@
 <template>
   <div class="mex-tran-history-list">
-    <div class="list-header">Latest Deal</div>
+    <div class="list-header">
+      <Language resource="exchange.Latest_Deal"/>
+    </div>
     <div class="list-title">
-      <span class="left-text">Price(EOS)</span>
-      <span class="center-text">Amount(MAX)</span>
-      <span class="right-text">Time</span>
+      <span class="left-text">
+        <Language resource="exchange.Price"/>(EOS)
+      </span>
+      <span class="center-text">
+        <Language resource="exchange.Deal_num"/>(MAX)
+      </span>
+      <span class="right-text">
+        <Language resource="exchange.Time"/>
+      </span>
     </div>
     <div class="list-content">
       <div>
@@ -46,7 +54,6 @@ export default class extends Vue {
 .mex-tran-history-list {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-
   .list-header {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;

@@ -37,17 +37,19 @@
       </div>
       <div class="data-list-body" v-if="currentTab.id === 1">
         <MexCurrentcyListDataItem
-          v-for="(item, index) in items.freeMarketList"
+          v-for="(item, index) in dataStore.freeMarketList"
           :item="item"
           :key="index"
-        ></MexCurrentcyListDataItem>
+          @click="handleMarketItemClick"
+        />
       </div>
       <div class="data-list-body" v-else>
         <MexCurrentcyListDataItem
-          v-for="(item, index) in items.marketList"
+          v-for="(item, index) in dataStore.marketList"
           :item="item"
           :key="index"
-        ></MexCurrentcyListDataItem>
+          @click="handleMarketItemClick"
+        />
       </div>
     </div>
   </div>
@@ -58,8 +60,8 @@ import { Observer } from 'mobx-vue';
 import { getMrkets, getAccountInfo } from '@/utils/apis';
 import languageStore from '@/stores/language';
 import MexCurrentcyListDataItem from './MexCurrentcyListDataItem.vue';
-// import socket from '@/utils/socket';
 import dataStore from '@/stores/data';
+import { Market } from '@/define';
 
 interface ObjectData {
   id: number;
@@ -99,7 +101,7 @@ const dataList = [
 })
 export default class MexCurrentcyList extends Vue {
   // data
-  items: any = dataStore;
+  dataStore = dataStore;
   sort: string = '';
   inputValue: string = '';
   currentTab: ObjectData = tabs[1];
@@ -111,9 +113,8 @@ export default class MexCurrentcyList extends Vue {
   get inputSearch() {
     if (!this.inputValue) {
       dataStore.updateMarkets();
-      this.items = dataStore;
     } else {
-      return (this.items.markets = dataStore.getMarketSearchList(this.inputValue));
+      return (dataStore.markets = dataStore.getMarketSearchList(this.inputValue));
     }
   }
   // methods
@@ -129,12 +130,9 @@ export default class MexCurrentcyList extends Vue {
     dataStore.marketParams.sortby = '';
     dataStore.marketParams.order = '';
     if (num === 1) {
-      // dataStore.getFavouriteList();
-      // this.items.markets = dataStore.favouriteList;
-      console.log(this.items.markets);
+      console.log(dataStore.markets);
     } else {
       dataStore.updateMarkets();
-      this.items = dataStore;
     }
   }
   sortDataList() {
@@ -147,6 +145,10 @@ export default class MexCurrentcyList extends Vue {
       dataStore.updateMarketListSort('change');
     }
     this.sort === 'sort-up' ? (this.sort = 'sort-down') : (this.sort = 'sort-up');
+  }
+
+  handleMarketItemClick(market: Market) {
+    this.$emit('change', market);
   }
 }
 </script>

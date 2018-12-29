@@ -2,57 +2,75 @@
   <div id="mex-head-info-page">
     <div class="head-info-title">
       <div class="head-info-title-logo">
-        <img src="../../../images/web/logo_box.svg" alt>
+        <img class="symbol-icon" :src="market && market.baseCurrencyIcon.iconUrl">
         <div @click="setInfoTitleState" class="click-range">
-          <h4>
-            <span>MAX</span>
-            /EOS
+          <h4 v-if="market">
+            <span>{{ market.pair.baseCurrency.symbol.name }}</span>
+            /{{ market.pair.quoteCurrency.symbol.name }}
           </h4>
-          <p>Introduction</p>
+          <h4 v-else>
+            <span>-</span>
+            /-
+          </h4>
+          <p>
+            <Language resource="exchange.Introduction"/>
+          </p>
         </div>
       </div>
       <div class="head-info-title-info">
         <div>
-          <h4>last Price</h4>
+          <h4>
+            <Language resource="exchange.Last_price"/>
+          </h4>
           <p>
-            <span>1.2222</span>
+            <span>{{ market ? market.lastPrice : '-' }}</span>
             EOS
           </p>
         </div>
         <div>
-          <h4>last Price</h4>
+          <h4>
+            <Language resource="exchange.Change24H"/>
+          </h4>
           <p>
-            <span>1.2222</span>
+            <span>{{ market ? market.change : '-' }}</span>
             EOS
           </p>
         </div>
         <div>
-          <h4>last Price</h4>
+          <h4>
+            <Language resource="exchange.High24H"/>
+          </h4>
           <p>
-            <span>1.2222</span>
+            <span>{{ market ? market.high : '-' }}</span>
             EOS
           </p>
         </div>
         <div>
-          <h4>last Price</h4>
+          <h4>
+            <Language resource="exchange.Low24H"/>
+          </h4>
           <p>
-            <span>1.2222</span>
+            <span>{{ market ? market.low : '-' }}</span>
             EOS
           </p>
         </div>
         <div>
-          <h4>last Price</h4>
+          <h4>
+            <Language resource="exchange.Volume24H"/>
+          </h4>
           <p>
-            <span>1.2222</span>
+            <span>{{ market ? market.volumeQuote : '-' }}</span>
             EOS
           </p>
         </div>
       </div>
     </div>
 
-    <div class="head-info-inner" v-if="InfoTitleState">
+    <div class="head-info-inner" v-if="infoTitleState">
       <div>
-        <h4>Introduction</h4>
+        <h4>
+          <Language resource="exchange.Introduction"/>
+        </h4>
         <p>
           EOSMax is a gaming entertainment platform based
           on the intelligent contract of Eos main network.
@@ -68,43 +86,59 @@
       </div>
       <div>
         <div>
-          <h4>Max Supply</h4>
+          <h4>
+            <Language resource="exchange.Max_Supply"/>
+          </h4>
           <p>10,000,000,000</p>
         </div>
         <div>
-          <h4>Max Supply</h4>
+          <h4>
+            <Language resource="exchange.Contract"/>
+          </h4>
           <p>10,000,000,000</p>
         </div>
       </div>
       <div>
         <div>
-          <h4>Max Supply</h4>
+          <h4>
+            <Language resource="exchange.Circulating_Supply"/>
+          </h4>
           <p>10,000,000,000</p>
         </div>
         <div>
-          <h4>Max Supply</h4>
+          <h4>
+            <Language resource="exchange.Website"/>
+          </h4>
           <p>10,000,000,000</p>
         </div>
       </div>
     </div>
   </div>
 </template>
-<script>
-export default {
-  name: 'mex-head-info',
-  data() {
-    return {
-      InfoTitleState: 0,
-    };
-  },
-  methods: {
-    setInfoTitleState() {
-      this.InfoTitleState = !this.InfoTitleState;
-    },
-  },
-};
+
+<script lang="ts">
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Market } from '@/define';
+
+@Component
+export default class MexHead extends Vue {
+  infoTitleState = false;
+
+  @Prop()
+  market?: Market;
+
+  setInfoTitleState() {
+    this.infoTitleState = !this.infoTitleState;
+  }
+}
 </script>
-<style lang="scss">
+
+<style lang="scss" scoped>
+.symbol-icon {
+  width: 44px;
+  height: 44px;
+}
+
 #mex-head-info-page {
   height: 100%;
   width: 100%;
@@ -116,17 +150,14 @@ export default {
     padding: 10px 0;
     .head-info-title-logo {
       display: flex;
-      padding: 0 61px 0 51px;
+      align-items: center;
+      padding: 0 0 0 51px;
       border-right: 1px solid #2a4a72;
       color: #677bb7;
-      text-align: left;
       width: 23%;
       margin-right: 2%;
       div {
         margin-left: 10px;
-      }
-      h4 {
-        margin-top: 10px;
       }
       h4 > span {
         font-size: 24px;
@@ -223,5 +254,7 @@ export default {
 }
 .click-range {
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
 }
 </style>

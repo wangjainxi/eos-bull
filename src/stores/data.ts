@@ -1,9 +1,19 @@
 import onfire from 'onfire.js';
 import { observable, computed, action, runInAction } from 'mobx';
-import { getMrkets, getAccountInfo, getUserPendingOrders, getAnnouncementList } from '@/utils/apis';
+import {
+  getMrkets,
+  getAccountInfo,
+  getUserPendingOrders,
+  getUserHistoryOrders,
+  getAnnouncementList,
+} from '@/utils/apis';
 import { TickerUpdate, Order, Market, AccountInfo, BalanceUpdate, Announcement } from '@/define';
 import { getAccount } from '@/utils/scatter';
 
+interface Historyobject {
+  orders: Array<Order>;
+  count: number;
+}
 class DataStore {
   @observable
   accountName = 'user1';
@@ -12,7 +22,18 @@ class DataStore {
   markets: Array<Market> = [];
 
   @observable
-  historyOrders: Array<Order> = [];
+  currentMarketId?: number;
+
+  @computed
+  get currentMarket() {
+    return this.markets.find(e => e.marketId === this.currentMarketId) || this.markets[0];
+  }
+
+  @observable
+  historyOrders: Historyobject = {
+    orders: [],
+    count: 0,
+  };
 
   @observable
   pendingOrders: Array<Order> = [];
@@ -271,6 +292,14 @@ class DataStore {
   }
 
   @action
+  async updateHistoryOrders(params: { page?: number; pageSize?: number }) {
+    const res = await getUserHistoryOrders(this.accountName, params);
+    runInAction(() => {
+      this.historyOrders = res;
+    });
+  }
+
+  @action
   async updateAnnouncements() {
     const res = await getAnnouncementList({ page: 1, pageSize: 5 });
     runInAction(() => {
@@ -279,35 +308,6 @@ class DataStore {
   }
 
   setTop(index: number) {
-    const growList = [
-      {
-        currency: 'EOS',
-        dealSize: 3333,
-        price: 0.0023,
-        statu: 1,
-        percentage: 10,
-        collectionState: 1,
-        id: 1,
-      },
-      {
-        currency: 'EOS',
-        dealSize: 3333,
-        price: 0.0023,
-        statu: 0,
-        percentage: 10,
-        collectionState: 0,
-        id: 2,
-      },
-      {
-        currency: 'EOS',
-        dealSize: 3333,
-        price: 0.0023,
-        statu: 2,
-        percentage: 10,
-        collectionState: 0,
-        id: 3,
-      },
-    ];
     console.log(index);
   }
 
@@ -328,6 +328,11 @@ class DataStore {
   @action
   handleBalanceUpdate(data: BalanceUpdate) {
     this.updateAccountInfo();
+  }
+
+  @action
+  setCurrentMarketId(id: number) {
+    this.currentMarketId = id;
   }
 }
 

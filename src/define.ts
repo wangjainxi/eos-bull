@@ -102,6 +102,20 @@ export interface Market {
 }
 
 /**
+ * 历史订单参数
+ */
+export interface HistoryOrderParams {
+  page?: number; // 页数，从1开始
+  pageSize?: number; // 每页条目数
+  baseCurrency?: string; // 基础货币符号
+  side?: ORDER_SIDE; // 订单方向
+  status?: ORDER_STATUS; // 订单状态
+  startTime?: string; // 开始时间
+  endTime?: string; // 结束时间
+  ignoreCanceled?: boolean; // 是否显示取消订单
+}
+
+/**
  * 代表一个订单
  */
 export interface Order {

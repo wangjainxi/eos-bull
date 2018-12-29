@@ -7,14 +7,14 @@
           <div class="logo">
             <img src="./home-page-img/logo_eosmex01.svg" alt>
           </div>
-          <div class="nav">
-            <p>
+          <div class="navs">
+            <p class="nav">
               <Language resource="home.homepage"/>
             </p>
-            <p>
+            <router-link class="nav" to="/mex">
               <Language resource="home.exchange"/>
-            </p>
-            <p>
+            </router-link>
+            <p class="nav">
               <Language resource="home.white_paper"/>
             </p>
             <select id="ch" :value="language.currentLocale" @change="changeLanguageType">
@@ -314,14 +314,16 @@ export default class extends Vue {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .nav {
+    .navs {
       display: flex;
       justify-content: space-between;
-      color: #fff;
-      p {
+
+      .nav {
         margin-right: 40px;
         font-size: 16px;
+        color: #fff;
       }
+
       select {
         color: #fff;
         padding-left: 10px;
@@ -632,7 +634,7 @@ export default class extends Vue {
           width: 198px;
           height: 88px;
           border: 1px dashed #ddd;
-          margin-right: 52px;
+          margin-right: 50px;
           display: inline-block;
         }
         img:nth-child(5) {

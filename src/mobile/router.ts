@@ -13,7 +13,6 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'TabPackage',
       component: TabPackage,
       children: [
         {
@@ -43,6 +42,12 @@ export default new Router({
           name: 'assets',
           component: () => import(/* webpackChunkName: "assets" */ './views/Assets/Assets.vue'),
         },
+        {
+          path: '/business/:id',
+          name: 'business',
+          component: () =>
+            import(/* webpackChunkName: "business" */ './views/business/Business.vue'),
+        },
       ],
     },
     {
@@ -54,11 +59,6 @@ export default new Router({
       path: '/market-optional',
       name: 'market-optional',
       component: MarketOptional,
-    },
-    {
-      path: '/business/:id',
-      name: 'business',
-      component: () => import(/* webpackChunkName: "business" */ './views/business/Business.vue'),
     },
 
     {

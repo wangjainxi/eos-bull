@@ -1,13 +1,13 @@
 <template>
   <div id="order-tab-container" class="flex-row-start">
-    <FilterPopup class="filterPopup" @onClose="showFilter" v-if="showPopup"/>
+    <FilterPopup  @onClose="showFilter" v-if="showPopup"/>
     <div class="type-select-box">
       <mt-navbar v-model="selected">
         <mt-tab-item id="1">
-          <Language resource="order.Changed_Time"/>
+          <Language resource="business.Open_Orders"/>
         </mt-tab-item>
         <mt-tab-item id="2">
-          <Language resource="order.Entrusted_Time"/>
+          <Language resource="business.Order_History"/>
         </mt-tab-item>
         <img @click="showFilter" src="@/images/mobile/ic_filter.svg" alt>
       </mt-navbar>
@@ -16,76 +16,58 @@
     <div class="order-container-box">
       <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
-          <OrderItem :data="transData"/>
+          <OrderItem
+            v-for="order of openOrderStore.orders"
+            :key="order.orderId"
+            :order="order" />
         </mt-tab-container-item>
-        <mt-tab-container-item id="2">深度图</mt-tab-container-item>
+        <mt-tab-container-item id="2">
+          <OrderItem
+            v-for="order of historyOrderStore.orders"
+            :key="order.orderId"
+            :order="order" />
+        </mt-tab-container-item>
       </mt-tab-container>
     </div>
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue';
-import OrderItem from './OrderItem.vue';
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Observer } from 'mobx-vue';
+import OrderItem from './order-item.vue';
+
+import dataStore from '@/stores/data';
+import openOrderStore from '@/stores/open-order';
+import historyOrderStore from '@/stores/history-order';
 import FilterPopup from './FilterPopup.vue';
-export default {
-  name: 'bom-view',
-  data() {
-    return {
-      showPopup: false,
-      selected: '1',
-      transData: [
-        {
-          type: 1, //1买 2卖
-          status: 1, //1挂单中 0已撤销 2已成交
-          language: 1, //1中文 0英文
-          price: '',
-          size: '',
-          amount: '',
-        },
-        {
-          type: 1, //1买 2卖
-          status: 0, //1挂单中 0已撤销 2已成交
-          language: 1, //1中文 0英文
-          price: '',
-          size: '',
-          amount: '',
-        },
-        {
-          type: 2, //1买 2卖
-          status: 2, //1挂单中 0已撤销 2已成交
-          language: 1, //1中文 0英文
-          price: '',
-          size: '',
-          amount: '',
-          evePrice: 111,
-          totalAmount: 1222,
-          fee: '111',
-        },
-      ],
-    };
-  },
-  methods: {
-    showFilter() {
-      // this.showPopup = !this.showPopup;
-    },
-  },
+
+@Observer
+@Component({
   components: {
     OrderItem,
     FilterPopup,
   },
-};
+})
+export default class Orders extends Vue {
+  // @Prop() showPopup!: boolean;
+  historyOrderStore = historyOrderStore;
+  openOrderStore = openOrderStore;
+  showPopup = false;
+  selected = '1';
+
+  showFilter() {
+    this.showPopup = !this.showPopup;
+  }
+
+  created() {
+    openOrderStore.fetchOrders(dataStore.accountName);
+    historyOrderStore.setParams({ page: 1 });
+    historyOrderStore.fetchMobileOrders(dataStore.accountName);
+  }
+}
 </script>
 <style lang="scss">
 @import '@/style/mixin.scss';
-.filterPopup {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(31, 31, 31, 0.67);
-  z-index: 10;
-  top: 0;
-  left: 0;
-}
 .mint-tab-item-label {
   font-size: 0.2rem;
 }
@@ -101,7 +83,28 @@ export default {
     transform: translateY(-50%);
   }
 }
-
+.mint-navbar {
+  @include flexLayout(row, space-between, center);
+}
+.mint-navbar .mint-tab-item {
+  flex: 1;
+  height: 0.42rem;
+  padding: 0px;
+  .mint-tab-item-label {
+    font-size: 0.2rem;
+    height: 0.16rem;
+    font-size: 0.14rem;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(141, 141, 141, 1);
+    line-height: 0.16rem;
+    margin-top: 0.14rem;
+  }
+}
+.type-select-box {
+  background-color: #fff;
+  width: 100%;
+}
 #order-tab-container {
   font-size: 0.16rem !important;
   > div {
@@ -129,10 +132,6 @@ export default {
     font-family: PingFangSC-Medium;
     font-weight: 300;
     color: rgba(141, 141, 141, 1);
-  }
-  .mint-navbar .mint-tab-item {
-    padding: 0px;
-    margin-top: 0.2rem;
   }
   .mint-navbar .mint-tab-item.is-selected {
     border-bottom: none;

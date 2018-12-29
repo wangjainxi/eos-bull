@@ -27,10 +27,10 @@
             <Language resource="myWallet.H_Total"/>&nbsp; 265172.3326 EOS
           </div>
           <div>GBI：3980.3</div>
-          <div class="wifi" @click="showAddress">
+          <!-- <div class="wifi" @click="showAddress">
             <img src="@/images/web/ic_wifi.svg" alt>
             <span>HongKong</span>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -120,9 +120,12 @@ export default class Footer extends Vue {
       font-size: 14px;
       font-family: PingFangSC-Regular;
       font-weight: 400;
+
+      &:last-child {
+        margin-right: 0;
+      }
     }
     & > div:nth-child(3) {
-      margin-right: 0;
       display: flex;
       align-items: center;
       justify-content: center;

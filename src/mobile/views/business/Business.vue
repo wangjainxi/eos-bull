@@ -2,7 +2,7 @@
   <div class="business" id="business">
     <div class="business-coin-title">
       <div class="business-coin-name" @click="showCoinData">
-        <span>LTC/EOS</span>
+        <span>{{coinName}}</span>
         <i></i>
       </div>
       <div class="business-coin-image">
@@ -117,36 +117,79 @@
           <Language resource="business.Tips"/>
         </div>
       </div>
-      <div :class="['business-entrust-body',{'show-item':entrustData.length !== 0}]">
-        <ShowMessageImg v-if="entrustData.length === 0" :imgUrl="imgUrl" :imgMsg="imgMsg"></ShowMessageImg>
-        <BusinessEntrust
-          v-else
-          v-for="(item,index) in entrustData"
-          :entrustType="entrustType"
-          :key="index"
-        ></BusinessEntrust>
+      <div
+        :class="['business-entrust-body',{'show-item':entrustData.pendingOrders.length !== 0}]"
+        v-if="entrustType === 0"
+      >
+        <ShowMessageImg
+          v-if="entrustData.pendingOrders.length === 0"
+          :imgUrl="imgUrl"
+          :imgMsg="imgMsg"
+        ></ShowMessageImg>
+        <div class="loadmore-list" v-else>
+          <BusinessEntrust
+            v-for="(item,index) in entrustData.pendingOrders"
+            :item="item"
+            :routeParam="routeParam"
+            :entrustType="entrustType"
+            :key="index"
+          ></BusinessEntrust>
+        </div>
+      </div>
+      <div
+        :class="['business-entrust-body',{'show-item':entrustData.historyOrders.orders.length !== 0}]"
+        v-else
+      >
+        <ShowMessageImg
+          v-if="entrustData.historyOrders.orders.length === 0"
+          :imgUrl="imgUrl"
+          :imgMsg="imgMsg"
+        ></ShowMessageImg>
+        <div class="loadmore-list" v-else>
+          <Loadmore
+            :bottom-method="loadBottom"
+            :bottom-all-loaded="allLoaded"
+            @bottom-status-change="handleBottomChange"
+            ref="loadmore"
+          >
+            <BusinessEntrust
+              v-for="(item,index) in entrustData.historyOrders.orders"
+              :item="item"
+              :routeParam="routeParam"
+              :entrustType="entrustType"
+              :key="index"
+            ></BusinessEntrust>
+            <div slot="bottom" class="mint-loadmore-bottom">
+              <span
+                v-show="bottomStatus !== 'loading'"
+                :class="{ 'rotate': bottomStatus === 'drop' }"
+              >↑</span>
+              <span v-show="bottomStatus === 'loading'">Loading...</span>
+            </div>
+          </Loadmore>
+        </div>
       </div>
     </div>
     <mt-actionsheet :actions="sheetActions" :cancelText="cancel" v-model="sheetVisible"></mt-actionsheet>
     <ShowCoinList
-      :popupVisible="popupVisible"
-      :dataCoinList="dataCoinList"
-      @changePopupVisible="changePopupVisible"
+      v-model="popupVisible"
+      :dataCoinList="entrustData.markets"
     ></ShowCoinList>
-    <!-- <mt-popup v-model="popupVisible" popup-transition="popup-fade"></mt-popup> -->
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import onfire from 'onfire.js';
 import { Observer } from 'mobx-vue';
 import ShowMessageImg from './../../../components/messageImage.vue';
 import BusinessTradeItem from './components/businessTrade.vue';
 import BusinessEntrust from './components/businessEntrust.vue';
 import BusinessRange from './components/businessRange.vue';
 import ShowCoinList from './components/businessCoin.vue';
-import { MessageBox, Toast } from 'mint-ui';
+import { MessageBox, Toast, Loadmore } from 'mint-ui';
 import languageStore from '@/stores/language';
+import { Market } from '@/define';
 import { orderHistory } from '../../../utils/restful';
 import dataStore from '@/stores/data';
 
@@ -184,135 +227,12 @@ const tradeData = [
     mount: 132,
   },
 ];
-const dataList = [
-  //币种及价格
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0002094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.02333094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0002094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.02333094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0002094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.02333094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0002094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.02333094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0002094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.02333094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-  {
-    name: 'LTC/EOS',
-    price: 0.0000094,
-    change: '+ 104.019%',
-  },
-];
+
 const entrustData = [{}];
+interface PageParam {
+  page?: number;
+  pageSize?: number;
+}
 
 @Observer
 @Component({
@@ -322,31 +242,38 @@ const entrustData = [{}];
     BusinessEntrust,
     BusinessRange,
     ShowCoinList,
+    Loadmore,
   },
 })
 export default class extends Vue {
   cricleMount = [0, 1, 2, 3, 4];
   rangeValue = 0;
   entrustType = 0;
+  pageparams: PageParam = { page: 1, pageSize: 10 };
   cancel = languageStore.getIntlText('business.cancel');
   popupVisible = false; //币种弹
   sheetVisible = false; //价格弹
   businessPrice = 3422.02; //交易价
   inputVal = 0; //交易
+  routeParam: any = '';
+  coinName: any = '';
   isFavorite: any = [];
   routeId: number = -1;
   changeEos = 0.00001;
   currrentTab = '卖出';
   thisBal = languageStore.getIntlText('business.Bal');
   tabs = [languageStore.getIntlText('business.Buy'), languageStore.getIntlText('business.Sell')];
-  entrustData = entrustData;
+  entrustData = dataStore;
   imgUrl = require('./../../../images/mobile/ic_nodata.png');
   imgMsg = languageStore.getIntlText('business.nodata');
   tradeData = tradeData;
   tradeDataMountSum = 0;
   useMount = 0;
   showSheetName = languageStore.getIntlText('business.Limit');
-  dataCoinList = dataList;
+
+  // 刷新
+  bottomStatus = '';
+  allLoaded = false;
 
   sheetActions = [
     {
@@ -370,9 +297,17 @@ export default class extends Vue {
     const arr = localStorage.getItem('isFavorite');
     if (!arr) return;
     this.isFavorite = JSON.parse(arr);
+    const transPair = localStorage.getItem('transPair');
+    if (!transPair) return;
+    this.coinName = transPair || this.$route.params.coinName;
+    this.$route.params.coinName = this.coinName;
+    console.log(this.coinName);
   }
 
   mounted() {
+    dataStore.updateMarkets();
+    // const eventObj = onfire.on('tickerUpdate', callback);
+    this.routeParam = this.$route.params;
     this.routeId = Number(this.$route.params.id);
     this.currrentTab =
       this.$route.params.type === 'buy'
@@ -401,11 +336,39 @@ export default class extends Vue {
     dataStore.freeMarketList;
   }
 
+  handleBottomChange(status: any) {
+    this.bottomStatus = status;
+  }
+  loadBottom() {
+    // 加载更多数据
+    if (!this.pageparams.page) return;
+    if (!this.pageparams.pageSize) return;
+    this.pageparams.page += 1;
+    dataStore.updateHistoryOrders(this.pageparams);
+    console.log(dataStore.historyOrders);
+    if (
+      Math.ceil(dataStore.historyOrders.count / this.pageparams.pageSize) === this.pageparams.page
+    ) {
+      this.allLoaded = true; // 若数据已全部获取完毕
+    }
+    this.$refs.loadmore.onBottomLoaded();
+  }
+
   changeTab(val: any) {
     this.currrentTab = val;
   }
   changeEntrustType(type: any) {
     this.entrustType = type;
+    if (type === 0) {
+      dataStore.updatePendingOrders();
+      this.entrustData = dataStore;
+      console.log(dataStore);
+    } else {
+      dataStore.updateHistoryOrders(this.pageparams);
+      this.entrustData = dataStore;
+      console.log(dataStore);
+      // this.entrustData = dataStore.pendingOrders;
+    }
   }
   getSumMount() {
     this.tradeData.forEach(item => {
@@ -797,10 +760,14 @@ $marginwidth: 0.12rem;
   }
 }
 .business-entrust-body {
-  @include wh(100%, 1.85rem);
+  width: 100%;
+  margin-bottom: 0.5rem;
   background: rgba(247, 247, 247, 1);
   @include flex(flex, center, center);
   max-height: inherit;
+  .loadmore-list {
+    @include wh(100%, auto);
+  }
 }
 .show-item {
   @include flex(flex, flex-start, flex-start);

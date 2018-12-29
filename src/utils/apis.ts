@@ -9,6 +9,7 @@ import {
   Announcement,
   ORDER_SIDE,
   ORDER_STATUS,
+  HistoryOrderParams,
 } from '@/define';
 
 interface ResponseData<T = any> {
@@ -73,18 +74,7 @@ export const getUserPendingOrders = async (accountName: string) => {
 /**
  * 获取用户订单历史
  */
-export const getUserHistoryOrders = async (
-  accountName: string,
-  params?: {
-    page?: number; // 页数，从1开始
-    pageSize?: number; // 每页条目数
-    baseCurrency?: string; // 基础货币符号
-    side?: ORDER_SIDE; // 订单方向
-    status?: string; // 订单状态
-    startTime?: string; // 开始时间
-    endTime?: string; // 结束时间
-  }
-) => {
+export const getUserHistoryOrders = async (accountName: string, params?: HistoryOrderParams) => {
   const res = await instance.get(`/v1/orders/history/${accountName}`, { params });
   return resWrapper<{
     orders: Order[];

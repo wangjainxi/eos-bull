@@ -1,15 +1,25 @@
 <template>
   <div id="mex-table-history-page">
     <div class="table-roder-title">
-      <h4>Order History</h4>
+      <h4>
+        <Language resource="exchange.Order_History"/>
+      </h4>
       <div>
-        <el-checkbox v-model="OrdeChecked">Hide Revoked Orde</el-checkbox>
-        <el-checkbox v-model="PairChecked">Hide Other Pair</el-checkbox>
+        <el-checkbox v-model="hideRevoked" @change="handleHideRevokedCheck">
+          <Language resource="exchange.Hide_Revoked_Order"/>
+        </el-checkbox>
+        <el-checkbox v-model="hideOther">
+          <Language resource="exchange.Hide_Revoked_Order"/>
+        </el-checkbox>
         <img src="../../../images/web/ic_refresh.svg" alt>
       </div>
     </div>
     <div class="table-box">
-      <el-table :data="tableData" style="width: 100%" empty-text="There's no data yet">
+      <el-table
+        :data="Array.from(historyOrderStore.orders)"
+        style="width: 100%"
+        :empty-text="ThereSNoDataYet"
+      >
         <el-table-column type="expand">
           <template slot-scope="props">
             <div class="expand-box">
@@ -18,16 +28,26 @@
                 style="width: 100%"
                 empty-text="There's no data yet"
               >
-                <el-table-column prop="dealTime" label="Deal Time" align="center"></el-table-column>
-                <el-table-column prop="price" label="Price" align="right">
+                <el-table-column prop="dealTime" align="center">
+                  <template slot="header" slot-scope="scope">
+                    <Language resource="exchange.Deal_Time"/>
+                  </template>
+                </el-table-column>
+                <el-table-column align="right">
+                  <template slot="header" slot-scope="scope">
+                    <Language resource="exchange.Entrusted_Price"/>
+                  </template>
                   <template slot-scope="props">
                     <p class="price-box">
-                      {{props.row.price}}
+                      {{props.row.price.amount}} {{props.row.price.symbol.name}}
                       <span>EOS</span>
                     </p>
                   </template>
                 </el-table-column>
-                <el-table-column prop="amount" label="Amount" align="right">
+                <el-table-column prop="amount" align="right">
+                  <template slot="header" slot-scope="scope">
+                    <Language resource="exchange.Entrusted_Amount"/>
+                  </template>
                   <template slot-scope="props">
                     <p class="amount-box">
                       {{props.row.amount}}
@@ -35,7 +55,10 @@
                     </p>
                   </template>
                 </el-table-column>
-                <el-table-column prop="total" label="total" align="right">
+                <el-table-column prop="total" align="right">
+                  <template slot="header" slot-scope="scope">
+                    <Language resource="exchange.Deal_Total"/>
+                  </template>
                   <template slot-scope="props">
                     <p class="price-box">
                       {{props.row.total}}
@@ -43,7 +66,10 @@
                     </p>
                   </template>
                 </el-table-column>
-                <el-table-column prop="fee" label="Fee" align="right">
+                <el-table-column prop="fee" align="right">
+                  <template slot="header" slot-scope="scope">
+                    <Language resource="exchange.Fee"/>
+                  </template>
                   <template slot-scope="props">
                     <p class="amount-box">
                       {{props.row.amount}}
@@ -51,48 +77,69 @@
                     </p>
                   </template>
                 </el-table-column>
-                <el-table-column label="Action" align="right">
+                <el-table-column align="right">
+                  <template slot="header" slot-scope="scope">
+                    <Language resource="exchange.Action"/>
+                  </template>
                   <template slot-scope="props">
-                    <p class="action-box" @click="showdialogVisible(props.row.id)">Details</p>
+                    <p class="action-box" @click="PopupStatus(props.row.id)">Details</p>
                   </template>
                 </el-table-column>
               </el-table>
             </div>
-            <el-dialog
-              title="提示"
-              :visible.sync="dialogVisible"
-              width="30%"
-              :before-close="handleClose"
-            >
-              <span>这是一段信息{{props.row.coin}}</span>
-            </el-dialog>
           </template>
         </el-table-column>
         <!-- 下拉详情 -->
-        <el-table-column prop="coin" label="Coin" width="155">
+        <el-table-column :prop="coin" width="155">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Coin"/>
+          </template>
           <template slot-scope="props">
             <div class="coin-box">
               <img src="../../../images/web/logo_box.svg" alt>
-              <p>{{props.row.coin}} / EOS</p>
+              <p>{{props.row.size.symbol.name}} / {{ props.row.price.symbol.name }}</p>
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="type" label="Type" align="center">
+        <el-table-column :prop="type" align="center">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Type"/>
+          </template>
           <template slot-scope="props">
             <p :class="props.row.type === 'Buy'?'buy-box':'sell-box'">{{props.row.type}}</p>
           </template>
         </el-table-column>
-        <el-table-column prop="time" label="Entrusted Time" align="center" width="200"></el-table-column>
-        <el-table-column prop="price" label="Price" align="right" width="120">
+        <el-table-column prop="time" align="center" width="200">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Entrusted_Time"/>
+          </template>
+          <template slot-scope="props">
+            <span>{{props.row.time | formatDate}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="price" align="right" width="120">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Entrusted_Price"/>
+          </template>
           <template slot-scope="props">
             <p class="props-box">
-              {{props.row.price}}
-              <span>EOS</span>
+              {{props.row.price.amount}}
+              <span>{{props.row.price.symbol.name}}</span>
             </p>
           </template>
         </el-table-column>
-        <el-table-column prop="average" label="Average" align="right"></el-table-column>
-        <el-table-column prop="amount" label="Amount" align="right">
+        <el-table-column align="right">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Deal_Average"/>
+          </template>
+          <template slot-scope="props">
+            <span>{{ props.row.avgPrice.amount }} {{ props.row.avgPrice.symbol.name }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="amount" align="right">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Entrusted_Amount"/>
+          </template>
           <template slot-scope="props">
             <p class="amount-box">
               {{props.row.amount}}
@@ -100,8 +147,15 @@
             </p>
           </template>
         </el-table-column>
-        <el-table-column prop="dealt" label="Dealt" align="right"></el-table-column>
-        <el-table-column prop="entrusted" label="Entrusted" align="right">
+        <el-table-column prop="dealt" align="right">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Dealt_Num"/>
+          </template>
+        </el-table-column>
+        <el-table-column prop="entrusted" align="right">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Deal_Total"/>
+          </template>
           <template slot-scope="props">
             <p class="entrusted-box">
               {{props.row.entrusted}}
@@ -109,10 +163,19 @@
             </p>
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="Status" align="center"></el-table-column>
-        <el-table-column label="Action" align="center">
+        <el-table-column prop="status" align="center">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Status"/>
+          </template>
+        </el-table-column>
+        <el-table-column align="center">
+          <template slot="header" slot-scope="scope">
+            <Language resource="exchange.Action"/>
+          </template>
           <template slot-scope="props">
-            <p class="action-box" @click="greet(props.row.id)">Details</p>
+            <p class="action-box" @click="greet(props.row.id)">
+              <Language resource="exchange.Details"/>
+            </p>
           </template>
         </el-table-column>
       </el-table>
@@ -125,110 +188,99 @@
         :page-sizes="[10, 20, 30, 40]"
         :page-size="10"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
+        :total="historyOrderStore.totalCount"
       ></el-pagination>
     </div>
+    <OrderPopup :dialogVisible="dialogVisible" :title="title" v-on:closePopup="PopupStatus"></OrderPopup>
   </div>
 </template>
-<script>
-export default {
-  name: 'mex-table-history',
-  data() {
-    return {
-      dialogVisible: false,
-      OrdeChecked: false,
-      PairChecked: false,
-      currentPage4: 1,
-      total: 200,
-      tableData: [
-        {
-          coin: 'ZKS',
-          type: 'Buy',
-          time: '2018-12-07 14:15:55',
-          price: 0.00008,
-          average: 0,
-          amount: 21,
-          dealt: 0,
-          entrusted: 0.003,
-          status: 'Not deal',
-          odd: 'eosdkeigjndlie',
-          id: 1,
-          dealData: [
-            {
-              coin: 'ZKS',
-              dealTime: '2018-12-07 14:15:55',
-              price: 0.00008,
-              amount: 21,
-              total: 3333,
-              fee: 2,
-              id: 101,
-            },
-            {
-              coin: 'ZKS2',
-              dealTime: '2018-12-07 14:15:55',
-              price: 0.00008,
-              amount: 21,
-              total: 3333,
-              fee: 2,
-              id: 102,
-            },
-          ],
-        },
-        {
-          coin: 'ZKS',
-          type: 'Sell',
-          time: '2018-12-07 14:15:55',
-          price: 0.00008,
-          average: 0,
-          amount: 21,
-          dealt: 0,
-          entrusted: 0.003,
-          status: 'Not deal',
-          odd: 'eosdkeigjndlie',
-          id: 2,
-          dealData: [
-            {
-              coin: 'ZKS',
-              dealTime: '2018-12-07 14:15:55',
-              price: 0.00008,
-              amount: 21,
-              total: 3333,
-              fee: 2,
-              id: 201,
-            },
-            {
-              coin: 'ZKS2',
-              dealTime: '2018-12-07 14:15:55',
-              price: 0.00008,
-              amount: 21,
-              total: 3333,
-              fee: 2,
-              id: 202,
-            },
-          ],
-        },
-      ],
+
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+import { Observer } from 'mobx-vue';
+import dataStore from '@/stores/data';
+import historyOrderStore from '@/stores/history-order';
+import OrderPopup from './components/OrderPopup.vue';
+import { ORDER_STATUS } from '@/define';
+import language from '@/stores/language';
+
+@Observer
+@Component({
+  components: {
+    OrderPopup,
+  },
+})
+export default class MexHistoryOrder extends Vue {
+  historyOrderStore = historyOrderStore;
+  hideOther = false;
+  hideRevoked = false;
+  dialogVisible = false;
+  OrdeChecked = false;
+  PairChecked = false;
+  currentPage4 = 1;
+  page = 1;
+  pageSize = 10;
+  title = 'DPY/EOS ';
+  ThereSNoDataYet = language.getIntlText('exchange.There_s_no_data_yet');
+  PopupStatus() {
+    this.dialogVisible = !this.dialogVisible;
+    console.log(this.dialogVisible);
+  }
+  handleHideRevokedCheck(val: boolean) {
+    this.page = 1;
+    const params = {
+      page: this.page,
+      pageSize: this.pageSize,
     };
-  },
-  methods: {
-    handleSizeChange(val) {
-      console.log(val);
-    },
-    handleCurrentChange(val) {
-      console.log(val);
-    },
-    greet(id) {
-      console.log(id);
-    },
-    showdialogVisible(id) {
-      console.log(id);
-      this.dialogVisible = true;
-    },
-    handleClose(done) {
-      done();
-    },
-  },
-};
+    if (val) {
+      Object.assign(params, {
+        ignoreCanceled: true,
+      });
+    }
+    historyOrderStore.fetchWebOrders(dataStore.accountName, params);
+  }
+
+  handleHideOtherCheck(val: boolean) {
+    this.page = 1;
+    const params = {
+      page: this.page,
+      pageSize: this.pageSize,
+    };
+    if (val) {
+      Object.assign(params, {
+        baseCurrency: dataStore.currentMarket.pair.baseCurrency.symbol.name,
+      });
+    }
+    historyOrderStore.fetchWebOrders(dataStore.accountName, params);
+  }
+
+  handleSizeChange(val: number) {
+    this.page = 1;
+    this.pageSize = val;
+    const params = {
+      page: this.page,
+      pageSize: this.pageSize,
+    };
+    historyOrderStore.fetchWebOrders(dataStore.accountName, params);
+  }
+
+  handleCurrentChange(val: number) {
+    this.page = val;
+    const params = {
+      page: this.page,
+      pageSize: this.pageSize,
+    };
+    historyOrderStore.fetchWebOrders(dataStore.accountName, params);
+  }
+
+  greet(id: number) {
+    console.log(id);
+  }
+
+  handleClose(done: Function) {
+    done();
+  }
+}
 </script>
 <style lang="scss">
 #mex-table-history-page {

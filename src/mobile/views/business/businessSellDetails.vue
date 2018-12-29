@@ -1,15 +1,15 @@
 <template>
-  <div class="business-sell-details" :getParams="getParams">
+  <div class="business-sell-details" :getParams="getParams" >
     <FixHeader :msg="msg"></FixHeader>
     <div class="sell-body">
       <div class="line"></div>
       <div class="details-item">
         <div class="details-item-header">
           <div class="item-header-left">
-            <span>2018/12/07 15:29:27</span>
+            <span>{{dataTime}}</span>
             <Language resource="business.Order"/>
           </div>
-          <div class="item-header-right">
+          <div :class="['item-header-right',{green:thisOrderType === 'buy'}]">
             <Language resource="business.Dealt"/>
           </div>
         </div>
@@ -19,19 +19,21 @@
               <div class="box-title">
                 <Language resource="business.Order_Price"/>(EOS)
               </div>
-              <div class="box-data">0.000150</div>
+              <div class="box-data">{{tradeItem.price.amount}}</div>
             </div>
             <div class="entrust-box2">
               <div class="box-title">
                 <Language resource="business.Order_VOL"/>(POKER)
               </div>
-              <div class="box-data">64274.6666</div>
+              <div class="box-data">{{tradeItem.size.amount}}</div>
             </div>
             <div class="entrust-box3">
               <div class="box-title">
                 <Language resource="business.VOL"/>(POKER)
               </div>
-              <div class="box-data">36.4575</div>
+              <div
+                class="box-data"
+              >{{tradeItem.filled.amount === 0 ? '—' : tradeItem.filled.amount}}</div>
             </div>
           </div>
           <div class="item-body-bottom">
@@ -39,97 +41,68 @@
               <div class="box-title">
                 <Language resource="business.AVG_Price"/>(EOS)
               </div>
-              <div class="box-data">0.000150</div>
+              <div class="box-data">{{tradeItem.avgPrice.amount}}</div>
             </div>
             <div class="entrust-box2">
               <div class="box-title">
                 <Language resource="business.Total"/>(EOS)
               </div>
-              <div class="box-data">64274.6666</div>
+              <div class="box-data">{{tradeItem.filledQuote.amount}}</div>
             </div>
             <div class="entrust-box3">
               <div class="box-title">
                 <Language resource="business.Fee"/>(EOS)
               </div>
-              <div class="box-data">0.0085</div>
+              <div class="box-data">{{tradeItem.fees.amount}}</div>
             </div>
           </div>
         </div>
       </div>
-      <div class="details-item gray">
-        <div class="details-item-header">
-          <div class="item-header-left">
-            <span>TrxID</span>
-            <span
-              class="show-address"
-            >619e7f0434344d03432434g34535534522619e7f0434344d03432434g34535534522…</span>
-          </div>
-          <div class="item-header-right">
-            <span></span>
-          </div>
-        </div>
-        <div class="details-item-body details-item-body-gray">
-          <div class="item-body-top">
-            <div class="entrust-box1">
-              <div class="box-title">
-                <Language resource="transaction.deal_price"/>(EOS)
-              </div>
-              <div class="box-data">0.000150</div>
-            </div>
-            <div class="entrust-box2">
-              <div class="box-title">
-                <Language resource="transaction.deal_amount"/>(POKER)
-              </div>
-              <div class="box-data">64274.6666</div>
-            </div>
-            <div class="entrust-box3">
-              <div class="box-title">
-                <Language resource="business.total"/>(POKER)
-              </div>
-              <div class="box-data">36.4575</div>
-            </div>
-          </div>
-          <div class="item-body-bottom">
-            <div class="entrust-box1">
-              <div class="box-title">
-                <Language resource="business.Deal_Account"/>
-              </div>
-              <div class="box-data blue-color">WantLine</div>
-            </div>
-            <div class="entrust-box2">
-              <div class="box-title">
-                <Language resource="transaction.deal_Time"/>
-              </div>
-              <div class="box-data">12/07 15:29</div>
-            </div>
-            <div class="entrust-box3">
-              <div class="box-title">
-                <Language resource="business.Fee"/>(EOS)
-              </div>
-              <div class="box-data">0.0085</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <SellDetailsItem v-for="(item,index) in items" :key="index" :item="item"></SellDetailsItem>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator';
+import { getOrderFills } from '@/utils/apis';
 import { Observer } from 'mobx-vue';
+import { Orderbook } from '@/define';
+import { formatTimes } from '@/utils/formatTime';
+import dataStore from '@/stores/data';
 import FixHeader from './components/fixHeader.vue';
+import SellDetailsItem from './components/sellDetailsItem.vue';
 
 @Observer
 @Component({
   components: {
     FixHeader,
+    SellDetailsItem,
   },
 })
 export default class BusinessSellDetails extends Vue {
-  // name: 'business-history-page',
   // data
   msg: any = '';
-
+  orderId: number = 0;
+  items: any = [];
+  dataTime: any = '';
+  thisOrderType: string = '';
+  tradeItem: any = {
+    orderId: 0, // 订单ID
+    marketId: 0, // 市场ID
+    account: '', // 用户名
+    time: '', // 下单时间
+    side: '',
+    type: '',
+    timeInForce: '',
+    status: '',
+    price: { amount: 0 }, // 订单价格
+    size: { amount: 0 }, // 订单数量
+    filled: { amount: 0 }, // 已撮合数量
+    avgPrice: { amount: 0 }, // 订单价格
+    filledQuote: { amount: 0 }, // 订单数量
+    fees: { amount: 0 }, // 已撮合数量
+    trxId: '', // 下单交易哈希
+  };
   get getParams() {
     // 取到路由带过来的参数
     const routerParams = this.$route.params;
@@ -137,6 +110,31 @@ export default class BusinessSellDetails extends Vue {
     this.msg = routerParams;
     console.log(this.msg);
     return this.msg;
+  }
+  mounted() {
+    this.orderId = Number(this.$route.params.orderId);
+    this.tradeItem = this.$route.params.tradeItem;
+    console.log(this.tradeItem);
+    this.dataTime = formatTimes(this.tradeItem.time, 'YYYY-MM-DD HH:mm:ss');
+    this.thisOrderType = this.$route.params.type;
+    this.orderFills();
+  }
+  get setTradeItem() {
+    this.tradeItem = dataStore.historyOrders.orders.filter((e: any) => {
+      return e.orderId === this.orderId;
+    });
+    console.log(this.tradeItem);
+    return this.tradeItem;
+  }
+  // @computed{
+
+  orderFills() {
+    getOrderFills(this.orderId).then(res => {
+      this.items = res;
+      console.log(this.items);
+    });
+
+    return this.items;
   }
   // @Watch('this.$route')
   // watchthisRoute() {
@@ -208,9 +206,11 @@ export default class BusinessSellDetails extends Vue {
       text-align: right;
     }
   }
-}
-.details-item-body-gray {
-  border-top: 0.01rem solid rgba(216, 216, 216, 1);
+  .green {
+    span {
+      color: rgba(7, 199, 78, 1);
+    }
+  }
 }
 .details-item-body {
   @include wh(100%, auto);

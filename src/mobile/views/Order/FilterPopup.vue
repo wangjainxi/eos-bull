@@ -1,11 +1,11 @@
 <template>
-  <div class="popup-box-out" @click="onClose">
-    <div class="popup-box" @click.stop>
+  <div class="popup-box-out filterPopup"  @touchmove.prevent @click="onCloseMethod">
+    <div class="popup-box" @click.stop >
       <p class="ptilte">
         <Language resource="order.Pair"/>
       </p>
       <div class="trans-box">
-        <input type="number">
+        <input type="text">
         <span class="pop">/</span>
         <button>EOS</button>
       </div>
@@ -13,30 +13,31 @@
         <Language resource="order.Order_Status"/>
       </p>
       <div class="btn-box mb11">
-        <mt-button type="defalut" :class="isSelected? 'border-blue':''" @click="onClick">全部</mt-button>
-        <mt-button type="defalut" :class="isSelected? 'border-blue':''" @click="onClick">进行中</mt-button>
+        <mt-button  :class="isAll? 'border-blue':''" @click="onClick(1)">  <Language resource="order.All"/></mt-button>
+        <mt-button  :class="isProcess? 'border-blue':''" @click="onClick(2)">  <Language resource="order.In_progress"/></mt-button>
       </div>
       <div class="btn-box">
-        <mt-button type="defalut" :class="isSelected? 'border-blue':''" @click="onClick">全部</mt-button>
-        <mt-button type="defalut" :class="isSelected? 'border-blue':''" @click="onClick">进行中</mt-button>
+        <mt-button  :class="isComplete? 'border-blue':''" @click="onClick(3)">  <Language resource="order.Completed"/></mt-button>
+        <mt-button  :class="isRevoke? 'border-blue':''" @click="onClick(4)">  <Language resource="order.Revoked"/></mt-button>
       </div>
       <p class="ptilte">
         <Language resource="order.Trade_Type"/>
       </p>
       <div class="btn-box">
-        <mt-button type="defalut" :class="isSelected? 'border-blue':''" @click="onClick">全部</mt-button>
-        <mt-button type="defalut" :class="isSelected? 'border-blue':''" @click="onClick">进行中</mt-button>
+        <mt-button  :class="isBuy? 'border-blue':''" @click="onClick(5)">  <Language resource="order.buy"/></mt-button>
+        <mt-button  :class="isSell? 'border-blue':''" @click="onClick(6)">  <Language resource="order.sell"/></mt-button>
       </div>
       <p class="defaut-select">
+        <input type="checkbox" @change="onChecked" checked="isChecked">
         <span>
           <Language resource="order.Hide_Revoked_Order"/>
         </span>
       </p>
       <div class="btn-box handle-box">
-        <mt-button type="defalut" @click="onClick">
+        <mt-button  @click="onReset">
           <Language resource="order.Reset"/>
         </mt-button>
-        <mt-button type="defalut" @click="onClick">
+        <mt-button  @click="onOk">
           <Language resource="order.OK"/>
         </mt-button>
       </div>
@@ -44,21 +45,77 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
+
+@Component({})
 export default class extends Vue {
-  isSelected = true;
-  onClose() {
-    console.log(111);
+  isAll = false;
+  isProcess = false;
+  isComplete = false;
+  isRevoke = false;
+  isBuy = false;
+  isSell = false;
+  isChecked = true;
+  onCloseMethod() {
     this.$emit('onClose');
   }
-  onClick() {
-    console.log(1);
-    this.isSelected = !this.isSelected;
+
+  onClick(type: number) {
+    if (type === 1) {
+      this.isAll = !this.isAll;
+    }
+    if (type === 2) {
+      this.isProcess = !this.isProcess;
+    }
+    if (type === 3) {
+      this.isComplete = !this.isComplete;
+    }
+    if (type === 4) {
+      this.isRevoke = !this.isRevoke;
+    }
+    if (type === 5) {
+      this.isBuy = !this.isBuy;
+    }
+    if (type === 6) {
+      this.isSell = !this.isSell;
+    }
+  }
+
+  onChecked() {
+    this.isChecked = !this.isChecked;
+  }
+
+  onReset() {
+    this.isAll = false;
+    this.isProcess = false;
+    this.isComplete = false;
+    this.isRevoke = false;
+    this.isBuy = false;
+    this.isSell = false;
+  }
+
+  onOk() {
+    this.$emit('onClose');
   }
 }
 </script>
 <style lang="scss" scoped>
 @import '@/style/mixin.scss';
+.filterPopup {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(31, 31, 31, 0.67);
+  top: 0;
+  left: 0;
+  z-index: 999999;
+}
+.pop {
+  font-size: 15px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+}
 .popup-box-out {
   @include flexLayout(column, center, center);
   .mb11 {
@@ -106,7 +163,6 @@ export default class extends Vue {
     margin-right: 0.11rem;
   }
 }
-
 .trans-box {
   @include flexLayout(row, space-between, center);
   .pop {
@@ -145,6 +201,7 @@ export default class extends Vue {
   padding: 0 0.2rem 0.3rem;
   height: 4.9rem;
   background-color: #fff;
+  z-index: 999999;
   @include flexLayout(column, flex-start, flex-start);
 }
 .border-blue {

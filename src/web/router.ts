@@ -6,6 +6,7 @@ import MyWallet from './views/mex/myWallet/myWallet.vue';
 import Market from './views/market/index.vue';
 import OrderDetails from './views/orderDetails/index.vue';
 import WebPackage from './WebPackage.vue';
+import homeExchange from './views/homeExchange/homeExchange.vue';
 Vue.use(Router);
 
 export default new Router({
@@ -18,8 +19,12 @@ export default new Router({
       component: Home,
     },
     {
+      path: '/home-exchange',
+      name: 'homeExchange',
+      component: homeExchange,
+    },
+    {
       path: '/mex',
-      name: 'Package',
       component: WebPackage,
       children: [
         {
@@ -37,14 +42,7 @@ export default new Router({
           name: 'orderDetails',
           component: OrderDetails,
         },
-        {
-          path: '/about',
-          name: 'about',
-          // route level code-splitting
-          // this generates a separate chunk (about.[hash].js) for this route
-          // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
-        },
+
         {
           path: '/markets',
           name: 'markets',

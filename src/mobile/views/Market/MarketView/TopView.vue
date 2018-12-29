@@ -1,25 +1,26 @@
 <template>
   <div class="view-box-top">
-    <div class="currency-box flex-row-between">
-      <span class="currency-name">LTC/EOS</span>
+    <div class="currency-box flex-row-between" v-if="market">
+      <span class="currency-name">
+        {{ market.pair.baseCurrency.symbol.name }}/{{ market.pair.quoteCurrency.symbol.name }}
+      </span>
       <div class="collect-box">
-        <img v-if="isCollect" @click="collect" src="@/images/mobile/ic_collection_normal.svg" alt>
+        <img v-if="isCollect" @click="collect" src="@/images/mobile/ic_collection_s.svg" alt>
         <img
-          v-else="isCollect"
+          v-else
           @click="collect"
           src="@/images/mobile/ic_collection_current_s.svg"
-          alt
-        >
+        />
       </div>
     </div>
     <div class="real-data flex-row-between-start">
       <div class="real-name-box">
-        <span class="real-text green-color">0.00000314</span>
+        <span class="real-text green-color">{{ market.lastPrice }}</span>
         <img src="@/images/mobile/ic_rise.svg" alt>
       </div>
       <span>
-      <span v-if="Number(marketData.change)>0" class="long-text green-color" >{{marketData.change}}</span>
-      <span v-else class="long-text red-color" >{{marketData.change}}</span>
+      <span v-if="Number(market.change) > 0" class="long-text green-color" >{{market.change}}</span>
+      <span v-else class="long-text red-color" >{{ market.change }}</span>
       </span>
     </div>
     <div class="max24-box">
@@ -27,19 +28,19 @@
         <span class="real-title">
           <Language resource="transaction.H24_Hig"/>：
         </span>
-        <span class="real-text">{{marketData.high}}</span>
+        <span class="real-text">{{ market.high }}</span>
       </div>
       <div>
         <span class="real-title">
           <Language resource="transaction.H24_Low"/>：
         </span>
-        <span class="real-text">{{marketData.low}}</span>
+        <span class="real-text">{{ market.low }}</span>
       </div>
       <div>
         <span class="real-title">
           <Language resource="transaction.H24_Volume"/>：
         </span>
-        <span class="real-text">{{marketData.volumeQuote}}</span>
+        <span class="real-text">{{ market.volumeQuote }}</span>
       </div>
     </div>
   </div>
@@ -47,25 +48,25 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { observer } from 'mobx-vue';
+import { Market } from '@/define';
+import dataStore from '@/stores/data';
 
 @observer
 @Component
-export default class extends Vue {
-  @Prop() marketData!: any;
-  isCollect: boolean = this.marketData;
+export default class MarketInfo extends Vue {
+  @Prop()
+  market?: Market;
 
-  mounted() {
-    console.log(this);
-    console.log(this.marketData);
-  }
+  isCollect = false;
 
   collect() {
-    this.isCollect = !this.isCollect;
+    this.isCollect = false;
+  }
+
+  created() {
+    dataStore.setCurrentMarketId(parseInt(this.$route.params.id, 10));
   }
 }
-// export default {
-//   name: 'top-view',
-// };
 </script>
 <style lang="scss" scoped>
 @import '@/style/mixin.scss';
@@ -81,6 +82,7 @@ export default class extends Vue {
   height: 1.68rem;
   padding: 0.14rem 0.2rem;
   background-color: #fff;
+  margin-bottom: 0.04rem;
   .collect-box {
     > img {
       width: 0.18rem;

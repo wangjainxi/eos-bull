@@ -3,8 +3,8 @@
     <div class="home-tab-title-box">
       <mt-navbar class="page-part" v-model="selectTab">
         <mt-tab-item v-for="item of tabs" :id="item.id" :key="item.id">
-          <img class="table-icon" :src="selectTab === item.id ? item.selectIcon : item.icon" />
-          <Language :resource="item.key" />
+          <img class="table-icon" :src="selectTab === item.id ? item.selectIcon : item.icon">
+          <Language :resource="item.key"/>
         </mt-tab-item>
       </mt-navbar>
       <router-link to="market-search">
@@ -21,12 +21,19 @@
             v-for="item of filters"
             :key="item.type"
             :class="{ special: dataStore.freeMarketParams.sortby === item.type}"
-            @click="dataStore.updateFreeMarketListSort(item.type)">
+            @click="dataStore.updateFreeMarketListSort(item.type)"
+          >
             <Language :resource="item.key"/>
-            <img v-if="item.type !== dataStore.freeMarketParams.sortby" src="../../../images/ic_sort_normal.png" />
+            <img
+              v-if="item.type !== dataStore.freeMarketParams.sortby"
+              src="../../../images/ic_sort_normal.png"
+            >
             <template v-else>
-              <img v-if="dataStore.freeMarketParams.order === 'asc'" src="../../../images/ic_sort_down.png" />
-              <img v-else src="../../../images/ic_sort_up.png" />
+              <img
+                v-if="dataStore.freeMarketParams.order === 'asc'"
+                src="../../../images/ic_sort_down.png"
+              >
+              <img v-else src="../../../images/ic_sort_up.png">
             </template>
           </div>
         </div>
@@ -51,12 +58,19 @@
             v-for="item of filters"
             :key="item.type"
             :class="{ special: dataStore.marketParams.sortby === item.type}"
-            @click="dataStore.updateMarketListSort(item.type)">
+            @click="dataStore.updateMarketListSort(item.type)"
+          >
             <Language :resource="item.key"/>
-            <img v-if="item.type !== dataStore.marketParams.sortby" src="../../../images/ic_sort_normal.png" />
+            <img
+              v-if="item.type !== dataStore.marketParams.sortby"
+              src="../../../images/ic_sort_normal.png"
+            >
             <template v-else>
-              <img v-if="dataStore.marketParams.order === 'asc'" src="../../../images/ic_sort_down.png" />
-              <img v-else src="../../../images/ic_sort_up.png" />
+              <img
+                v-if="dataStore.marketParams.order === 'asc'"
+                src="../../../images/ic_sort_down.png"
+              >
+              <img v-else src="../../../images/ic_sort_up.png">
             </template>
           </div>
         </div>
@@ -83,7 +97,6 @@ import { computed } from 'mobx';
 })
 export default class MarketList extends Vue {
   dataStore = dataStore;
-
   selectTab = 'eos';
   tabs = [
     {
@@ -99,7 +112,6 @@ export default class MarketList extends Vue {
       selectIcon: require('../../../images/mobile/ic_current_eos.svg'),
     },
   ];
-
   selectFreeFilter = 'pair';
   selectAllFilter = 'pair';
   filters = [
