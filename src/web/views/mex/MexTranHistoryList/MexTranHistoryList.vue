@@ -1,5 +1,6 @@
 <template>
   <div class="mex-tran-history-list">
+    <DetailPoup v-show="showPoup" @changePoup="changeDetailPoup"/>
     <div class="list-header">
       <Language resource="exchange.Latest_Deal"/>
     </div>
@@ -30,16 +31,23 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import ListItem from './ListItem.vue';
+import DetailPoup from './ DetailPoup.vue';
 
 @Component({
   components: {
     ListItem,
+    DetailPoup,
   },
 })
 export default class extends Vue {
   weight = 400;
   sellData = [];
   shows = 1;
+  showPoup = false;
+
+  changeDetailPoup() {
+    this.showPoup = !this.showPoup;
+  }
 
   beforeMount() {
     //
