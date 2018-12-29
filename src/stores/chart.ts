@@ -16,16 +16,19 @@ class ChartStore {
       type: 'area',
     },
     title: {
-      text: '交易深度图',
+      text: '',
+    },
+    credits: {
+      enabled: false,
     },
     subtitle: {
-      text:
-        '数据来源: <a href="https://thebulletin.metapress.com/content/c4120650912x74k7/fulltext.pdf">' +
-        'thebulletin.metapress.com</a>',
+      text: '',
+      // '数据来源: <a href="https://thebulletin.metapress.com/content/c4120650912x74k7/fulltext.pdf">' +
+      // 'thebulletin.metapress.com</a>',
     },
     xAxis: {
       title: {
-        text: '交易深度图',
+        text: '',
       },
       // labels: {
       //   formatter() {
@@ -74,6 +77,7 @@ class ChartStore {
     },
     series: [
       {
+        showInLegend: false,
         zoneAxis: 'x',
         color: '#ffd6d6',
         zones: [
