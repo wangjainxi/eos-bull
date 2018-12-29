@@ -80,7 +80,7 @@ export const getUserHistoryOrders = async (
     pageSize?: number; // 每页条目数
     baseCurrency?: string; // 基础货币符号
     side?: ORDER_SIDE; // 订单方向
-    status?: ORDER_STATUS; // 订单状态
+    status?: string; // 订单状态
     startTime?: string; // 开始时间
     endTime?: string; // 结束时间
   }
