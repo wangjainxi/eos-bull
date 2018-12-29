@@ -22,7 +22,7 @@
       </el-table-column>
       <el-table-column prop="lastPrice" label="Last price" align="right">
         <template slot-scope="props">
-          <div class="last-price-box-rise" v-if="props.row.change.indexOf('+') != -1">
+          <div class="last-price-box-rise" v-if="parseFloat(props.row.change) >= 0">
             <p>{{props.row.lastPrice}}</p>
           </div>
           <div class="last-price-box-fall" v-else>
@@ -32,7 +32,7 @@
       </el-table-column>
       <el-table-column prop="change" label="24H Change" sortable align="right">
         <template slot-scope="props">
-          <div class="change-box-rise" v-if="props.row.status">
+          <div class="change-box-rise" v-if="parseFloat(props.row.change) >= 0">
             <p>{{props.row.change}}</p>
           </div>
           <div class="change-box-fall" v-else>

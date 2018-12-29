@@ -37,7 +37,7 @@ export default {
   User_rejected_the_signature_request: '抱歉，用户拒绝了签名请求！',
   your_order_placed_succeeded: '恭喜，您的委托成功提交！',
   EOSmex_is_a_decentralized_exchange:
-    'EOSmex 是去中心化交易平台，不对任何项目作主观判断，亦不对投资结果负责。因此强烈建议您在详细了解项目后再做投资决定。',
+    'DaDEX 是去中心化交易平台，不对任何项目作主观判断，亦不对投资结果负责。因此强烈建议您在详细了解项目后再做投资决定。',
   Used: '已用',
   Latest_Deal: '最新成交',
   Time: '时间',

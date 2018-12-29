@@ -12,7 +12,7 @@
         <Language resource="asset.Notice"/>:
       </h4>
       <p id="noticeBox">
-        <nobr id="notice">EOS新交易对EOSmex上线PSIEOS新交易对EOSmex上线PSIEOS新交易对EOSmex上线PSI/EOS新交易对。</nobr>
+        <nobr id="notice">EOS新交易对DaDEX上线PSIEOS新交易对DaDEX上线PSIEOS新交易对DaDEX上线PSI/EOS新交易对。</nobr>
       </p>
     </div>
     <div class="home-user-info-box">

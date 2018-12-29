@@ -5,7 +5,7 @@
         :class="['star',{starActive: item.favourited || localFavourite.indexOf(item.marketId) >= 0}]"
         @click="addStar(item.marketId,$event)"
       ></div>
-      <img :src="item.baseCurrencyIcon.iconUrl" class="market-logo" />
+      <img :src="item.baseCurrencyIcon.iconUrl" class="market-logo">
       <div class="market-content">
         <div
           class="content-name"
@@ -13,8 +13,14 @@
         <div class="content-dec">{{item.pair.baseCurrency.contract}}</div>
       </div>
     </div>
-    <div :class="getShowColor ? 'market-price green' : 'market-price red'">{{item.lastPrice}}</div>
-    <div :class="getShowColor ? 'market-change green' : 'market-change red'">{{item.change}}</div>
+    <div v-show="getShowColor === 1" class="market-price green">{{item.lastPrice}}</div>
+    <div v-show="getShowColor === 1" class="market-change green">{{item.change}}</div>
+
+    <div v-show="getShowColor === 2" class="market-price red">{{item.lastPrice}}</div>
+    <div v-show="getShowColor === 2" class="market-change red">{{item.change}}</div>
+
+    <div v-show="getShowColor === 0" class="market-price">{{item.lastPrice}}</div>
+    <div v-show="getShowColor === 0" class="market-change">{{item.change}}</div>
   </div>
 </template>
 <script lang="ts">
@@ -34,7 +40,7 @@ export default class MexCurrentcyListDataItem extends Vue {
     const loData = localStorage.getItem('localFavourite');
     if (!loData) return (this.localFavourite = []);
     this.localFavourite = JSON.parse(loData);
-    console.log(this.item.favourited || this.localFavourite.indexOf(this.item.marketId) >= 0);
+    // console.log(this.item.favourited || this.localFavourite.indexOf(this.item.marketId) >= 0);
   }
 
   handleClick() {
@@ -56,11 +62,13 @@ export default class MexCurrentcyListDataItem extends Vue {
     dataStore.freeMarketList;
   }
 
-  getShowColor() {
-    if (this.item.change.indexOf('+') >= 0) {
-      return true;
+  get getShowColor() {
+    if (parseFloat(this.item.change) > 0) {
+      return 1;
+    } else if (parseFloat(this.item.change) < 0) {
+      return 2;
     } else {
-      return false;
+      return 0;
     }
   }
 }

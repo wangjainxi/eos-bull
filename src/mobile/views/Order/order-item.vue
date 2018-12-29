@@ -118,14 +118,15 @@ export default class OrderItem extends Vue {
     }
   }
   .btn {
-    width: 42px;
-    height: 22px;
+    height: 0.22rem;
     background: rgba(0, 122, 255, 1);
-    border-radius: 3px;
+    border-radius: 0.03rem;
     font-size: 14px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
+    padding-left: 0.07rem;
+    padding-right: 0.07rem;
   }
   .bom2 {
     margin-top: 0.1rem;

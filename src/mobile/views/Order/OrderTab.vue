@@ -1,13 +1,13 @@
 <template>
   <div id="order-tab-container" class="flex-row-start">
-    <FilterPopup class="filterPopup" @onClose="showFilter" v-if="showPopup"/>
+    <FilterPopup  @onClose="showFilter" v-if="showPopup"/>
     <div class="type-select-box">
       <mt-navbar v-model="selected">
         <mt-tab-item id="1">
-          <Language resource="order.Changed_Time"/>
+          <Language resource="business.Open_Orders"/>
         </mt-tab-item>
         <mt-tab-item id="2">
-          <Language resource="order.Entrusted_Time"/>
+          <Language resource="business.Order_History"/>
         </mt-tab-item>
         <img @click="showFilter" src="@/images/mobile/ic_filter.svg" alt>
       </mt-navbar>
@@ -32,13 +32,14 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import { Observer } from 'mobx-vue';
 import OrderItem from './order-item.vue';
-import FilterPopup from './FilterPopup.vue';
+
 import dataStore from '@/stores/data';
 import openOrderStore from '@/stores/open-order';
 import historyOrderStore from '@/stores/history-order';
+import FilterPopup from './FilterPopup.vue';
 
 @Observer
 @Component({
@@ -48,33 +49,25 @@ import historyOrderStore from '@/stores/history-order';
   },
 })
 export default class Orders extends Vue {
+  // @Prop() showPopup!: boolean;
   historyOrderStore = historyOrderStore;
   openOrderStore = openOrderStore;
   showPopup = false;
   selected = '1';
+
+  showFilter() {
+    this.showPopup = !this.showPopup;
+  }
 
   created() {
     openOrderStore.fetchOrders(dataStore.accountName);
     historyOrderStore.setParams({ page: 1 });
     historyOrderStore.fetchMobileOrders(dataStore.accountName);
   }
-
-  showFilter() {
-    this.showPopup = !this.showPopup;
-  }
 }
 </script>
 <style lang="scss">
 @import '@/style/mixin.scss';
-.filterPopup {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(31, 31, 31, 0.67);
-  z-index: 1000;
-  top: 0;
-  left: 0;
-}
 .mint-tab-item-label {
   font-size: 0.2rem;
 }
@@ -90,29 +83,28 @@ export default class Orders extends Vue {
     transform: translateY(-50%);
   }
 }
-.mint-navbar{
+.mint-navbar {
   @include flexLayout(row, space-between, center);
-
 }
- .mint-navbar .mint-tab-item {
-      flex: 1;
-      height: 0.42rem;
-      padding: 0px;
-      .mint-tab-item-label {
-        font-size: 0.2rem;
-        height: 0.16rem;
-        font-size: 0.14rem;
-        font-family: PingFangSC-Semibold;
-        font-weight: 600;
-        color: rgba(141, 141, 141, 1);
-        line-height: 0.16rem;
-        margin-top: 0.14rem;
-      }
-    }
-      .type-select-box {
-    background-color: #fff;
-    width: 100%;
+.mint-navbar .mint-tab-item {
+  flex: 1;
+  height: 0.42rem;
+  padding: 0px;
+  .mint-tab-item-label {
+    font-size: 0.2rem;
+    height: 0.16rem;
+    font-size: 0.14rem;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(141, 141, 141, 1);
+    line-height: 0.16rem;
+    margin-top: 0.14rem;
   }
+}
+.type-select-box {
+  background-color: #fff;
+  width: 100%;
+}
 #order-tab-container {
   font-size: 0.16rem !important;
   > div {

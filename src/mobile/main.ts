@@ -22,7 +22,6 @@ import VueHighcharts from 'vue2-highcharts';
 import { formatDate } from '@/utils/common';
 
 Vue.config.productionTip = false;
-
 Vue.component(Button.name, Button);
 Vue.component(Popup.name, Popup);
 Vue.component(Actionsheet.name, Actionsheet);

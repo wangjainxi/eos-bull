@@ -85,7 +85,7 @@
       placement="bottom"
       width="300"
       trigger="hover"
-      content="EOSmex is a decentralized exchange，which does not make subjective judgment on any project and is not responsible for the investment results. It is strongly recommended that you make investment decisions after knowing the project in details."
+      content="DaDEX is a decentralized exchange，which does not make subjective judgment on any project and is not responsible for the investment results. It is strongly recommended that you make investment decisions after knowing the project in details."
     >
       <div class="mex-place-order" slot="reference">
         <img src="@/images/mobile/ic_warning.svg" alt>
