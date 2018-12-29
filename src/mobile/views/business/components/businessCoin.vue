@@ -58,7 +58,7 @@ export default class ShowCoinList extends Vue {
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import './../../../../style/mixin.scss';
 $tabHeight: 44px;
 .mint-popup {

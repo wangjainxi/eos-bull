@@ -1,6 +1,6 @@
 <template>
   <div id="order-tab-container" class="flex-row-start">
-    <FilterPopup  @onClose="showFilter" v-if="showPopup"/>
+    <FilterPopup @onClose="showFilter" v-if="showPopup"/>
     <div class="type-select-box">
       <mt-navbar v-model="selected">
         <mt-tab-item id="1">
@@ -16,16 +16,10 @@
     <div class="order-container-box">
       <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
-          <OrderItem
-            v-for="order of openOrderStore.orders"
-            :key="order.orderId"
-            :order="order" />
+          <OrderItem v-for="order of openOrderStore.orders" :key="order.orderId" :order="order"/>
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
-          <OrderItem
-            v-for="order of historyOrderStore.orders"
-            :key="order.orderId"
-            :order="order" />
+          <OrderItem v-for="order of historyOrderStore.orders" :key="order.orderId" :order="order"/>
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
@@ -66,7 +60,7 @@ export default class Orders extends Vue {
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/style/mixin.scss';
 .mint-tab-item-label {
   font-size: 0.2rem;
@@ -88,8 +82,14 @@ export default class Orders extends Vue {
 }
 .mint-navbar .mint-tab-item {
   flex: 1;
-  height: 0.42rem;
   padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  span {
+    font-size: 0.16rem !important;
+  }
   .mint-tab-item-label {
     font-size: 0.2rem;
     height: 0.16rem;
@@ -141,15 +141,14 @@ export default class Orders extends Vue {
     }
   }
   .mint-navbar .mint-tab-item.is-selected::after {
-    content: '1';
-    background-color: red;
-    color: transparent;
-    display: inline-block;
-    width: 0.15rem;
+    position: absolute;
+    content: '';
     height: 0.03rem;
-    background: rgba(0, 122, 255, 1);
-    border-radius: 0.03rem;
-    margin-top: 0.14rem;
+    width: 0.24rem;
+    bottom: 0;
+    margin-left: -0.12rem;
+    background: #007aff;
+    border-radius: 0.02rem;
   }
 }
 </style>

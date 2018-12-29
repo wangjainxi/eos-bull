@@ -1,7 +1,7 @@
 <template>
   <div id="home-page">
     <div class="home-banner-box">
-      <img src="../../../images/mobile/logo_eosmex.svg" alt>
+      <img src="../../../images/mobile/logo_dadex.svg" alt>
       <p>
         <Language resource="asset.the_Worlds_1st_Decentralized_EOS_Exchange"/>
       </p>
@@ -17,7 +17,7 @@
     </div>
     <div class="home-user-info-box">
       <div>
-        <img src="../../../images/mobile/ic_announcement.svg" alt>
+        <img src="../../../images/mobile/ic_avatar.svg" alt>
         <p>{{ dataStore.accountName }}</p>
       </div>
       <div>
@@ -113,7 +113,7 @@ export default class extends Vue {
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 #home-page {
   padding-bottom: 0.5rem;
   .home-banner-box {
@@ -192,7 +192,7 @@ export default class extends Vue {
       height: 100%;
     }
     .mint-tab-item-label {
-      font-size: 0.16rem;
+      font-size: 0.16rem !important;
       height: 100%;
       display: flex;
       align-items: center;
@@ -201,6 +201,12 @@ export default class extends Vue {
     }
     .mint-navbar .mint-tab-item {
       color: #8d8d8d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      span {
+        font-size: 0.16rem !important;
+      }
     }
     .mint-navbar .mint-tab-item.is-selected {
       margin-bottom: 0;

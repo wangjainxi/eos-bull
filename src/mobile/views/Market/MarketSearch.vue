@@ -1,8 +1,8 @@
 <template>
   <div id="market-search-page">
     <div class="market-search-input-box">
-      <img src="../../../images/mobile/ic_find.svg" @click="onSearch" alt>
-      <input v-model="searchInput" type="text" @keyup.13="onSearch">
+      <img src="../../../images/mobile/ic_find.svg" alt>
+      <input v-model="searchInput" type="text" :onSearch="onSearch">
       <router-link to="market">
         <img src="../../../images/mobile/closeBtn.svg" alt>
       </router-link>
@@ -11,8 +11,10 @@
       <div class="search-result-box">搜索结果</div>
       <router-link
         class="search-list-child-box"
-        v-for="item of markets" :key="item.marketId"
-        :to="{ name: 'market-view', params: { id: item.marketId,item:item } }">
+        v-for="item of markets"
+        :key="item.marketId"
+        :to="{ name: 'market-view', params: { id: item.marketId,item:item } }"
+      >
         <h4
           class="list-title"
         >{{item.pair.baseCurrency.symbol.name}}/{{item.pair.quoteCurrency.symbol.name}}</h4>
@@ -31,7 +33,9 @@
     </div>
     <div v-else class="list-no-box">
       <img src="../../../images/mobile/ic_nodata.png" alt>
-      <p>暂无数据</p>
+      <p>
+        <Language resource="business.nodata"/>
+      </p>
     </div>
   </div>
 </template>
@@ -48,8 +52,9 @@ export default class extends Vue {
   searchInput = '';
   markets: Market[] = [];
 
-  onSearch() {
-    this.markets = dataStore.getMarketSearchList(this.searchInput);
+  get onSearch() {
+    if (this.searchInput === '') return;
+    return (this.markets = dataStore.getMarketSearchList(this.searchInput));
   }
 }
 </script>

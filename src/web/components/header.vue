@@ -23,14 +23,14 @@
             <img src="@/images/web/ic_order.svg" alt>
             <span class="text-style exit">Orders</span>
           </span>
-          <select id="ch" :value="language.currentLocale" @change="changeLanguageType">
-            <option
-              v-for="(item,index) in language.locales"
-              :key="index"
-              :value="item.mark"
-            >{{item.label}}</option>
-          </select>
         </div>
+        <select id="ch" :value="language.currentLocale" @change="changeLanguageType">
+          <option
+            v-for="(item,index) in language.locales"
+            :key="index"
+            :value="item.mark"
+          >{{item.label}}</option>
+        </select>
         <!-- {{$t('m.transaction.homepage')}} -->
       </div>
     </div>
