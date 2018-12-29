@@ -13,7 +13,6 @@
         <Language resource="order.Order_Status"/>
       </p>
       <div class="btn-box mb11">
-
         <mt-button  :class="isAll? 'border-blue':''" @click="onClick(1)">  <Language resource="order.All"/></mt-button>
         <mt-button  :class="isProcess? 'border-blue':''" @click="onClick(2)">  <Language resource="order.In_progress"/></mt-button>
       </div>
@@ -96,7 +95,7 @@ export default class extends Vue {
   }
 
   onOk() {
-    //
+    this.$emit('onClose');
   }
 }
 </script>

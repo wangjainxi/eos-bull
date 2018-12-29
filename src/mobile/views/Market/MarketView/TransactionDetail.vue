@@ -1,7 +1,7 @@
 <template>
-  <div class="detail-container" @click="onTransaction" @touchmove.prevent>
+  <div class="detail-container" @click="onChange" @touchmove.prevent>
     <div class="detail-content" @click.stop>
-      <div class="title">DICE/EOS
+      <div class="title">{{marketViewStore.itemData.buyerFee.symbol.symbol.name}}/{{marketViewStore.itemData.sellerFee.symbol.symbol.name}}
         <Language resource="transaction.deal_Details"/>
       </div>
       <div class="tans-detail-top">
@@ -10,13 +10,13 @@
             <p>
               <Language resource="transaction.deal_price"/>
             </p>
-            <p>0.000150</p>
+            <p>{{marketViewStore.itemData.price}}</p>
           </div>
           <div class="detail-item">
             <p>
               <Language resource="transaction.deal_amount"/>
             </p>
-            <p>0.000150</p>
+            <p>{{marketViewStore.itemData.size}}</p>
           </div>
         </div>
         <div class="detail-box">
@@ -24,13 +24,13 @@
             <p>
               <Language resource="transaction.total"/>
             </p>
-            <p>0.000150</p>
+            <p>{{marketViewStore.itemData.size}}</p>
           </div>
           <div class="detail-item">
             <p>
               <Language resource="transaction.deal_Time"/>
             </p>
-            <p>0.000150</p>
+            <p>{{marketViewStore.itemData.time|formatTime}}</p>
           </div>
         </div>
       </div>
@@ -43,31 +43,31 @@
             <span>
               <Language resource="transaction.eos_Account_Name"/>：
             </span>
-            <span class="account account-text">WantLine</span>
+            <span class="account account-text">{{marketViewStore.itemData.buyer}}</span>
           </p>
           <p class="text-item">
             <span>
               <Language resource="transaction.settle_total"/>：
             </span>
-            <span class="account">2390.8097</span>
+            <span class="account">{{marketViewStore.itemData.size}}</span>
           </p>
           <p class="text-item">
             <span>
               <Language resource="transaction.fee"/>：
             </span>
-            <span class="account">2.8097</span>
+            <span class="account">{{marketViewStore.itemData.buyerFee.amount}}</span>
           </p>
           <p class="text-item">
             <span>
               <Language resource="transaction.entrusted_TrxID"/>：
             </span>
-            <span class="account">4ewfewf214...</span>
+            <span class="account">{{marketViewStore.itemData.tradeId}}</span>
           </p>
-          <p class="text-item">
+          <p class="text-item trxBox">
             <span>
               <Language resource="transaction.dealt_TrxID"/>：
             </span>
-            <span class="account">4ewfewf214...</span>
+            <span class="trxId">{{marketViewStore.itemData.trxId}}</span>
           </p>
         </div>
       </div>
@@ -80,31 +80,31 @@
             <span>
               <Language resource="transaction.eos_Account_Name"/>：
             </span>
-            <span class="account account-text">WantLine</span>
+            <span class="account account-text">{{marketViewStore.itemData.seller}}</span>
           </p>
           <p class="text-item">
             <span>
               <Language resource="transaction.settle_total"/>：
             </span>
-            <span class="account">2390.8097</span>
+            <span class="account">{{marketViewStore.itemData.seller}}</span>
           </p>
           <p class="text-item">
             <span>
               <Language resource="transaction.fee"/>：
             </span>
-            <span class="account">2.8097</span>
+            <span class="account">{{marketViewStore.itemData.sellerFee.amount}}</span>
           </p>
           <p class="text-item">
             <span>
               <Language resource="transaction.entrusted_TrxID"/>：
             </span>
-            <span class="account">4ewfewf214...</span>
+            <span class="account">{{marketViewStore.itemData.tradeId}}</span>
           </p>
-          <p class="text-item">
+          <p class="text-item trxBox">
             <span>
               <Language resource="transaction.dealt_TrxID"/>：
             </span>
-            <span class="account">4ewfewf214...</span>
+            <span class="trxId">{{marketViewStore.itemData.trxId}}</span>
           </p>
         </div>
       </div>
@@ -112,18 +112,33 @@
   </div>
 </template>
 <script lang="ts">
-export default {
-  name: 'transaction-detail',
-  props: {
-    onTransaction: {
-      type: String,
-      required: true,
-    },
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import marketViewStore from './marketViewStore';
+import { formatTimes } from '@/utils/formatTime';
+
+@Component({
+  filters: {
+    formatTime: formatTimes,
   },
-};
+})
+export default class extends Vue {
+  @Prop({ required: true }) onTransaction!: string;
+
+  marketViewStore = marketViewStore;
+
+  onChange() {
+    marketViewStore.changeStatus(false);
+  }
+}
 </script>
 <style lang="scss" scoped>
 @import '@/style/mixin.scss';
+.trxId {
+  width: 80px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .detail-container {
   position: fixed;
   top: 0rem;
@@ -131,7 +146,7 @@ export default {
   width: 100%;
   height: 100%;
   background: rgba(31, 31, 31, 0.67);
-  z-index: 99;
+  z-index: 9999;
   @include flexLayout(column, center, center);
   .detail-content {
     width: 2.95rem;
@@ -213,6 +228,9 @@ export default {
       color: rgba(0, 122, 255, 1) !important;
     }
   }
+}
+.trxBox {
+  @include flexLayout(row, flex-start, center);
 }
 </style>
 
