@@ -49,6 +49,7 @@ export default {
   .item-box {
     width: 100%;
     position: relative;
+    height: 0.25rem;
     .total {
       position: absolute;
       right: 0;

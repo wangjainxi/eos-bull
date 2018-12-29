@@ -78,13 +78,11 @@ export default class extends Vue {
     background-color: #fff;
     width: 100%;
   }
-
   #tab-box-container {
     font-size: 0.16rem !important;
     > div {
       width: 100%;
     }
-
     .mint-navbar {
       border-bottom: 0.01rem solid rgba(242, 245, 251, 1);
       border-top: 0.01rem solid rgba(242, 245, 251, 1);
