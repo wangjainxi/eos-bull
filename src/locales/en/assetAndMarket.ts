@@ -33,4 +33,12 @@ export default {
   Confirm: 'Confirm',
   buy: 'buy',
   sell: 'sell',
+  buy1: 'Buy',
+  sell1: 'Sell',
+  Introduction: 'Introduction',
+  Max_Supply: 'Max Supply',
+  Circulating_Supply: 'Circulating Supply',
+  Contract: 'Contract',
+  Website: 'Website',
+  search: 'search',
 };
