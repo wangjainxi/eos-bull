@@ -5,21 +5,29 @@
       <p>这是一个由这是一个由这是一个由这是一个由这是一个由这是一个由这是一个由</p>
     </div>
     <div class="intro-bom">
-      <p class="base-info">基本信息</p>
+      <p class="base-info">
+        <Language resource="asset.Introduction"/>
+      </p>
       <p class="info-title">
-        <span>流通总量</span>
+        <span>
+          <Language resource="asset.Circulating_Supply"/>
+        </span>
         <span>info-title</span>
       </p>
       <p class="info-title">
-        <span>发行总量</span>
+        <span>
+          <Language resource="asset.Max_Supply"/>
+        </span>
         <span>info-title</span>
       </p>
       <p class="info-title">
-        <span>合约名称</span>
+        <span>
+          <Language resource="asset.Contract"/>
+        </span>
         <span>info-title</span>
       </p>
       <p class="info-title">
-        <span>官<span class="hidden">约名</span>网</span>
+        <Language resource="asset.Website"/>
         <span>info-title</span>
       </p>
     </div>
@@ -47,7 +55,7 @@ export default class extends Vue {}
     }
     text-align: left;
   }
-  .hidden{
+  .hidden {
     color: transparent;
     font-size: 12px;
   }

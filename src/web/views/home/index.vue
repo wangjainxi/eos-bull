@@ -11,21 +11,25 @@
             <p class="nav">
               <Language resource="home.homepage"/>
             </p>
-            <router-link class="nav" to="/mex">
-              <Language resource="home.exchange"/>
-            </router-link>
             <p class="nav">
+              <Language resource="home.exchange"/>
+            </p>
+            <p class="nav" @click="onOpenWhitePaper">
               <Language resource="home.white_paper"/>
             </p>
             <select id="ch" :value="language.currentLocale" @change="changeLanguageType">
-              <option v-for="(item,index) in language.locales" :key="index" :value="item.mark">{{item.label}}</option>
+              <option
+                v-for="(item,index) in language.locales"
+                :key="index"
+                :value="item.mark"
+              >{{item.label}}</option>
             </select>
           </div>
         </div>
       </div>
       <div class="banner-box-page">
         <div class="banner-box">
-          <h4>EOSmex</h4>
+          <h4>DaDEX</h4>
           <p>
             <Language resource="home.banner_text_one"/>
           </p>
@@ -56,7 +60,7 @@
             <Language resource="home.advantages"/>
           </h3>
           <div class="advantage-inner-box">
-            <img src="./home-page-img/ic_advantage1@2x.png" width="340" height="340" />
+            <img src="./home-page-img/ic_advantage1@2x.png" width="340" height="340">
             <div>
               <h4>
                 <Language resource="home.high_efficiency"/>
@@ -87,10 +91,10 @@
                 <Language resource="home.true_decentralization"/>
               </p>
             </div>
-            <img src="./home-page-img/ic_advantage2@2x.png"  width="340" height="340" />
+            <img src="./home-page-img/ic_advantage2@2x.png" width="340" height="340">
           </div>
           <div class="advantage-inner-box">
-            <img src="./home-page-img/ic_advantage3@2x.png"  width="340" height="340" />
+            <img src="./home-page-img/ic_advantage3@2x.png" width="340" height="340">
             <div>
               <h4>
                 <Language resource="home.high_Quality"/>
@@ -218,7 +222,7 @@
               <Language resource="home.banner_text_one"/>
               <Language resource="home.banner_text_two"/>
             </p>
-            <p>Copyright &copy; 2018 EOSmex.io. All rights reserved</p>
+            <p>Copyright &copy; 2018 DaDEX.io. All rights reserved</p>
           </div>
           <div>
             <img src="./home-page-img/ic_weixin.svg" alt>
@@ -229,7 +233,7 @@
             <h4>
               <Language resource="home.contact_us"/>
             </h4>
-            <p>info@eosmex.io</p>
+            <p>info@DaDEX.io</p>
           </div>
         </div>
       </div>
@@ -259,6 +263,9 @@ export default class extends Vue {
     } else {
       this.bgClass = 'bg-img-box-s1';
     }
+  }
+  onOpenWhitePaper() {
+    window.open('white-paper.pdf');
   }
   changeLanguageType(data: any) {
     languageStore.changeLanguage(data.currentTarget.value);

@@ -1,7 +1,6 @@
 <template>
   <div>
     <vue-highcharts :options="options" ref="lineCharts"></vue-highcharts>
-    <button @click="load">load</button>
   </div>
 </template>
 <script lang="ts">

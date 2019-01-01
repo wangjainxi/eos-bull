@@ -9,7 +9,7 @@ export default {
   Order_History: 'Order History',
   Tips: 'Tips',
   tipeos:
-    'EOSmex is a decentralized exchange，which does not make subjective judgment on any project and is not responsible for the investment results. It is strongly recommended that you make investment decisions after knowing the project in details',
+    'DaDEX is a decentralized exchange，which does not make subjective judgment on any project and is not responsible for the investment results. It is strongly recommended that you make investment decisions after knowing the project in details',
   nodata: "There's no data yet.",
   Order_Price: 'Order Price',
   Order_VOL: 'Order VOL',

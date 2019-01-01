@@ -26,7 +26,7 @@ export default class BusinessTradeItem extends Vue {
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../../../../style/mixin.scss';
 
 .coin-items {

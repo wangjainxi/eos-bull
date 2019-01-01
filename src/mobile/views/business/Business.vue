@@ -10,7 +10,7 @@
           :class="['business-coin-star',{'business-coin-star-fav' : isFavorite.indexOf(routeId) !== -1}]"
           @click="getFav"
         ></i>
-        <i class="business-coin-img1"></i>
+        <i class="business-coin-img1" @click="getPrevPage"></i>
       </div>
     </div>
     <div class="business-show-data">
@@ -171,10 +171,7 @@
       </div>
     </div>
     <mt-actionsheet :actions="sheetActions" :cancelText="cancel" v-model="sheetVisible"></mt-actionsheet>
-    <ShowCoinList
-      v-model="popupVisible"
-      :dataCoinList="entrustData.markets"
-    ></ShowCoinList>
+    <ShowCoinList v-model="popupVisible" :dataCoinList="entrustData.markets"></ShowCoinList>
   </div>
 </template>
 
@@ -416,13 +413,22 @@ export default class extends Vue {
   showCoinData() {
     this.popupVisible = true;
   }
+  getPrevPage() {
+    this.$router.push({
+      name: 'market-view',
+      params: {
+        id: this.$route.params.id,
+      },
+    });
+  }
 }
 </script>
 <style lang="scss" scoped>
 @import '../../../style/mixin.scss';
 $marginwidth: 0.12rem;
 .business {
-  @include wh(100%, 100%);
+  width: 100%;
+  padding-bottom: 0.48rem;
   position: relative;
 }
 .business-coin-title,
@@ -770,5 +776,11 @@ $marginwidth: 0.12rem;
 .show-item {
   @include flex(flex, flex-start, flex-start);
   background: rgba(255, 255, 255, 1);
+  height: 100%;
+}
+.entrust-item:nth-last-child(1) {
+  .entrust-item-body {
+    border-bottom: none;
+  }
 }
 </style>

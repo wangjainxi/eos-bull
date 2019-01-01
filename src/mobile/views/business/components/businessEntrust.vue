@@ -149,14 +149,19 @@ export default class BusinessEntrust extends Vue {
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../../../../style/mixin.scss';
 .entrust-item {
-  padding: 0 0.2rem 0.05rem;
+  padding: 0 0.2rem 0rem;
   @include wh(100%, auto);
   display: flex;
   flex-direction: column;
   background-color: rgba(255, 255, 255, 1);
+}
+.entrust-item:nth-last-child(1) {
+  .entrust-item-body {
+    border-bottom: none;
+  }
 }
 .entrust-item-head {
   margin: 0.17rem 0;
@@ -199,7 +204,7 @@ export default class BusinessEntrust extends Vue {
   }
 }
 .head-right {
-  @include flex(flex, flex-end, space-between);
+  @include flex(flex, center, space-between);
   span {
     @include flex(flex, center, center);
     color: rgba(102, 102, 102, 1);
@@ -213,7 +218,7 @@ export default class BusinessEntrust extends Vue {
   }
   & > i {
     margin-left: 0.04rem;
-    @include wh(0.2rem, 0.2rem);
+    @include wh(0.12rem, 0.12rem);
   }
   i.getGohistoryImgB {
     @include bis('./../../../../images/mobile/ic_arrow_right_green.svg');

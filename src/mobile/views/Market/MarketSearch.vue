@@ -2,7 +2,7 @@
   <div id="market-search-page">
     <div class="market-search-input-box">
       <img src="../../../images/mobile/ic_find.svg">
-      <input v-model="searchInput" type="text" @keyup.13="onSearch">
+      <input v-model="searchInput" type="text" />
       <router-link to="market">
         <img src="../../../images/mobile/closeBtn.svg" alt>
       </router-link>
@@ -39,7 +39,9 @@
     </div>
     <div v-else class="list-no-box">
       <img src="../../../images/mobile/ic_nodata.png" alt>
-      <p>暂无数据</p>
+      <p>
+        <Language resource="business.nodata"/>
+      </p>
     </div>
   </div>
 </template>

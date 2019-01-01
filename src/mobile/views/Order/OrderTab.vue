@@ -1,6 +1,6 @@
 <template>
   <div id="order-tab-container" class="flex-row-start">
-    <FilterPopup  @onClose="showFilter" v-if="showPopup"/>
+    <FilterPopup @onClose="showFilter" v-if="showPopup"/>
     <div class="type-select-box">
       <mt-navbar v-model="selected">
         <mt-tab-item id="1">
@@ -85,8 +85,51 @@ export default class Orders extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/style/mixin.scss';
+.mint-tab-item-label {
+  font-size: 0.2rem;
+}
+.type-select-box {
+  background-color: #ddd;
+  width: 100%;
+  position: relative;
+  img {
+    margin-right: 0.18rem;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+.mint-navbar {
+  @include flexLayout(row, space-between, center);
+}
+.mint-navbar .mint-tab-item {
+  flex: 1;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  span {
+    font-size: 0.16rem !important;
+  }
+  .mint-tab-item-label {
+    font-size: 0.2rem;
+    height: 0.16rem;
+    font-size: 0.14rem;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(141, 141, 141, 1);
+    line-height: 0.16rem;
+    margin-top: 0.14rem;
+  }
+}
+.type-select-box {
+  background-color: #fff;
+  width: 100%;
+}
 
 #order-tab-container {
   font-size: 0.16rem !important;
@@ -124,15 +167,14 @@ export default class Orders extends Vue {
     }
   }
   .mint-navbar .mint-tab-item.is-selected::after {
-    content: '1';
-    background-color: red;
-    color: transparent;
-    display: inline-block;
-    width: 0.15rem;
+    position: absolute;
+    content: '';
     height: 0.03rem;
-    background: rgba(0, 122, 255, 1);
-    border-radius: 0.03rem;
-    margin-top: 0.14rem;
+    width: 0.24rem;
+    bottom: 0;
+    margin-left: -0.12rem;
+    background: #007aff;
+    border-radius: 0.02rem;
   }
 }
 </style>

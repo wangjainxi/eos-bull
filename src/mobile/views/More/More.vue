@@ -1,14 +1,19 @@
 <template>
   <div id="more-page">
     <div class="home-banner-box">
-      <img src="../../../images/mobile/logo_eosmex.svg" alt>
+      <img src="../../../images/mobile/logo_dadex.svg" alt>
       <p>
         <Language resource="home.banner_text_one"/>
         <Language resource="home.banner_text_two"/>
       </p>
     </div>
     <div class="action-box">
-      <div class="account-item" v-for="(item,index1) in accountData" @click="onClick(item.type)">
+      <div
+        class="account-item"
+        v-for="(item,index1) in accountData"
+        :key="index1"
+        @click="onClick(item.type)"
+      >
         <div class="left-part">
           <img :src="item.icon" alt>
           <span>{{language.getIntlText(item.text)}}</span>
@@ -17,9 +22,12 @@
         <img :src="item.rightIcon" alt>
       </div>
     </div>
-    <mt-popup v-model="popupVisible" position="bottom">
+    <mt-popup v-model="popupVisible" position="right">
       <h4 @click="onClick(2)">
-        <Language resource="myWallet.OK"/>
+        <span class="mint-button-icon">
+          <i class="mintui mintui-back"></i>
+        </span>
+        <Language resource="more.Language"/>
       </h4>
       <div
         v-for="(item,index) in language.locales"
@@ -82,16 +90,18 @@ export default class extends Vue {
     if (type === 2) {
       this.popupVisible = !this.popupVisible;
     } else if (type === 3) {
-      location.href = 'https://dadex.zendesk.com';
+      window.open('https://dadex.zendesk.com');
     } else if (type === 4) {
-      location.href = 'https://dadex.zendesk.com/hc/zh-cn/requests/new';
+      window.open('https://dadex.zendesk.com/hc/zh-cn/requests/new');
     } else if (type === 5) {
-      location.href =
-        'https://dadex.zendesk.com/hc/zh-cn/articles/360021126812-%E5%85%B3%E4%BA%8E%E6%88%91%E4%BB%AC';
+      window.open(
+        'https://dadex.zendesk.com/hc/zh-cn/articles/360021126812-%E5%85%B3%E4%BA%8E%E6%88%91%E4%BB%AC'
+      );
     }
   }
   onLanguageSwich(type: string) {
     languageStore.changeLanguage(type);
+    this.popupVisible = !this.popupVisible;
   }
   created() {
     //
@@ -111,6 +121,7 @@ export default class extends Vue {
     background-position: 0 0;
     padding-top: 0.5rem;
     p {
+      margin-top: 0.15rem;
       span {
         font-size: 0.16rem;
         color: #fff;
@@ -150,23 +161,31 @@ export default class extends Vue {
     background: rgba(242, 245, 251, 1);
   }
 }
-.mint-popup-bottom {
+.mint-popup-right {
   width: 100%;
+  height: 100%;
+  background-color: #eff0f2;
   h4 {
-    text-align: right;
-    font-size: 0.16rem;
-    padding: 10px;
-    color: #007aff;
-    bottom: #eff0f2;
+    // text-align: right;
+    font-size: 0.2rem;
+    padding: 0.15rem 0.1rem;
+    margin-bottom: 10px;
+    // color: #007aff;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    span:nth-child(1) {
+      margin-right: 1.29rem;
+    }
   }
-  div {
+  & > div {
     padding: 10px 0;
+    background-color: #fff;
     width: 100%;
-    border-bottom: 1px solid rgba(141, 141, 141, 0.6);
-    background: #d2d3d7;
+    border-bottom: 1px solid rgba(141, 141, 141, 0.13);
     font-size: 0.18rem;
   }
-  div:last-child {
+  & > div:last-child {
     border: none;
   }
 }
