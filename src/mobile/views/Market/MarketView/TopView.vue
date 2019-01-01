@@ -5,11 +5,11 @@
         {{ market.pair.baseCurrency.symbol.name }}/{{ market.pair.quoteCurrency.symbol.name }}
       </span>
       <div class="collect-box">
-        <img v-if="isCollect" @click="collect" src="@/images/mobile/ic_collection_s.svg" alt>
+        <img v-if="market.favourited" @click="collect" src="@/images/mobile/ic_collection_current_s.svg" />
         <img
           v-else
           @click="collect"
-          src="@/images/mobile/ic_collection_current_s.svg"
+          src="@/images/mobile/ic_collection_s.svg"
         />
       </div>
     </div>
@@ -53,6 +53,10 @@ import { Market } from '@/define';
 export default class MarketInfo extends Vue {
   @Prop()
   market?: Market;
+
+  collect() {
+    // TODO: 处理收藏逻辑
+  }
 }
 </script>
 <style lang="scss" scoped>

@@ -121,7 +121,7 @@ import { formatTimes } from '@/utils/formatTime';
     formatTime: formatTimes,
   },
 })
-export default class extends Vue {
+export default class TransactionDetail extends Vue {
   @Prop({ required: true }) onTransaction!: string;
 
   marketViewStore = marketViewStore;

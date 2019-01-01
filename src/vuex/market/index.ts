@@ -16,6 +16,7 @@ function getCacheMarketIds() {
 
 export const state: MarketState = {
   markets: [],
+  currentMarketId: 0,
   favoriteMarketIds: getCacheMarketIds(),
 };
 
@@ -25,6 +26,9 @@ export const market: Module<MarketState, RootState> = {
   getters: {
     markets(state) {
       return state.markets;
+    },
+    currentMarket(state) {
+      return state.markets.find(e => e.marketId === state.currentMarketId);
     },
     // 收藏列表
     favoriteMarkets(state, getters, rootState) {
@@ -79,6 +83,9 @@ export const market: Module<MarketState, RootState> = {
   mutations: {
     setMarkets(state, markets: Market[]) {
       state.markets = markets;
+    },
+    setCurrentMarketId(state, currentMarketId: number) {
+      state.currentMarketId = currentMarketId;
     },
     setFavoriteMarkets(state, markets: Market[]) {
       state.markets = markets;

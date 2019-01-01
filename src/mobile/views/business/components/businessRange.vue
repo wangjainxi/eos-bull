@@ -10,8 +10,6 @@
       :key="index"
     ></i>
     <mt-range v-model="rangeVal" :min="0" :max="100" :step="1" :bar-height="5">
-      <!-- <div slot="start">0</div>
-      <div slot="end">100</div>-->
     </mt-range>
     <br>
   </div>
@@ -36,12 +34,8 @@ export default class BusinessRange extends Vue {
     this.rangeVal = num * 25;
     return this.rangeVal;
   }
-  created() {
-    console.log(this.thisTabLang);
-  }
 
   get getRangeVal() {
-    console.log(this.thisTabLang);
     const thisColor = this.currrentTab === this.thisTabLang ? 'cricle-green' : 'cricle-red';
     const getCount = Math.floor(this.rangeVal / 25) + 1;
     if (getCount === 0) {

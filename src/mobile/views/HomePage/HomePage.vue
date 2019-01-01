@@ -122,7 +122,6 @@ export default class extends Vue {
   }
 }
 </script>
-
 <style lang="scss" scoped>
 #home-page {
   padding-bottom: 0.5rem;

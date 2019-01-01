@@ -19,6 +19,7 @@
           <OrderItem
             v-for="order of pendingOrders"
             :key="order.orderId"
+            @revoke="handleOrderRevoke"
             :order="order" />
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
@@ -38,6 +39,7 @@ import OrderItem from './order-item.vue';
 
 import FilterPopup from './FilterPopup.vue';
 import { Order, HistoryOrderParams } from '@/define';
+import { cancelOrder } from '@/utils/scatter';
 
 const orderModule = namespace('order');
 
@@ -63,6 +65,9 @@ export default class Orders extends Vue {
   @orderModule.Action('fetchHistoryOrders')
   fetchHistoryOrders!: Function;
 
+  @orderModule.Action('cancelOrder')
+  cancelOrder!: Function;
+
   historyParams: HistoryOrderParams = {
     page: 1,
     pageSize: 20,
@@ -81,6 +86,10 @@ export default class Orders extends Vue {
 
   showFilter() {
     this.showPopup = !this.showPopup;
+  }
+
+  handleOrderRevoke(orderId: number) {
+    cancelOrder(orderId);
   }
 }
 </script>

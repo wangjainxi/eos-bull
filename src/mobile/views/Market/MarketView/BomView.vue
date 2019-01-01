@@ -13,7 +13,7 @@
       <div >
         <mt-tab-container v-model="selected">
           <mt-tab-container-item id="1">
-            <OrderTab :OrderData="OrderData"/>
+            <OrderTab :OrderData="orderData"/>
           </mt-tab-container-item>
           <mt-tab-container-item id="2">
             <DeepCharts/>
@@ -46,14 +46,10 @@ import DeepCharts from '../../../../components/deepCharts/index.vue';
     DeepCharts,
   },
 })
-export default class extends Vue {
-  @Prop() OrderData!: any;
+export default class BomView extends Vue {
+  @Prop() orderData!: any;
   @Prop() recentDealData!: any;
   selected = '1';
-
-  mounted() {
-    console.log(this.OrderData);
-  }
 }
 </script>
 

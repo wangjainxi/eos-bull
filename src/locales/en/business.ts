@@ -29,4 +29,5 @@ export default {
   Buy1: 'Buy',
   Sell1: 'Sell',
   Favorites: 'Favorites',
+  EOS: 'EOS',
 };

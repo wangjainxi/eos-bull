@@ -38,6 +38,16 @@ export const getMrkets = async (accountName?: string) => {
 };
 
 /**
+ * 获取市场详情
+ */
+export const getMarket = async (id: number, accountName: string) => {
+  const res = await instance.get(`/v1/markets/${id}`, {
+    params: { accountName },
+  });
+  return resWrapper<Market>(res);
+};
+
+/**
  * 获取代币信息
  */
 export const getTokenInfo = async (contract: string, symbol: string) => {

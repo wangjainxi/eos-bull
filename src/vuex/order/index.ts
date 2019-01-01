@@ -3,6 +3,7 @@ import { OrderState } from './types';
 import { RootState } from '../types';
 import { getUserPendingOrders, getUserHistoryOrders } from '@/utils/apis';
 import { Order, HistoryOrderParams } from '@/define';
+import { cancelOrder, createOrder, OrderParams } from '@/utils/scatter';
 
 const namespaced = true;
 
@@ -24,6 +25,16 @@ export const order: Module<OrderState, RootState> = {
       const res = await getUserHistoryOrders(rootState.accountName, params);
       commit('setHistoryOrders', res.orders, cover);
       commit('setHistoryOrderCount', res.count);
+    },
+    async createOrder({ dispatch }, params: OrderParams) {
+      await createOrder(params);
+      dispatch('fetchPendingOrders');
+      dispatch('fetchHistoryOrders');
+    },
+    async cancelOrder({ dispatch }, orderId: number) {
+      await cancelOrder(orderId);
+      dispatch('fetchPendingOrders');
+      dispatch('fetchHistoryOrders');
     },
   },
   mutations: {
