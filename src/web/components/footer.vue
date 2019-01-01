@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="foot-bottom">
-        <div class="foot-dec-left">Copyright © 2018 EOSmex Inc. All rights reserved.</div>
+        <div class="foot-dec-left">Copyright © 2018 DaDEX Inc. All rights reserved.</div>
         <div class="foot-dec-right">
           <div>
             <Language resource="myWallet.H_Total"/>&nbsp; 265172.3326 EOS
@@ -55,7 +55,7 @@ export default class Footer extends Vue {
   showAddress() {
     const h = this.$createElement;
     MessageBox({
-      title: 'EOSmex',
+      title: 'DaDEX',
       message: h(ChooseNode, { key: this.boxKey++ }),
       showCancelButton: false,
       showConfirmButton: false,

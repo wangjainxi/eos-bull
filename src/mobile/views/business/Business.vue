@@ -349,7 +349,6 @@ export default class extends Vue {
       this.allLoaded = true; // 若数据已全部获取完毕
     }
     (this.$refs.loadmore as Vue & { onBottomLoaded: () => Function }).onBottomLoaded();
-    // this.$refs.loadmore.onBottomLoaded();
   }
 
   changeTab(val: any) {

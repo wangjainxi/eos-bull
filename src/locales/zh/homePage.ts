@@ -4,8 +4,8 @@ export default {
   white_paper: '白皮书',
   banner_text_one: '一个真实去中心化的',
   banner_text_two: '数字资产交易平台',
-  what_EOSmex: '什么是EOSmex?',
-  EOSmex_community: 'EOSmex完全内生于EOSIO，致力于完善EOS生态，服务EOS用户。',
+  what_EOSmex: '什么是DaDEX?',
+  EOSmex_community: 'DaDEX完全内生于EOSIO，致力于完善EOS生态，服务EOS用户。',
   built_with_smart:
     '基于EOS公链开发，采用完全去中心化，充分利用了区块链技术的优势，实现高并发、低手续费、资金安全、最高交易透明的优质交易体验，达到了底层安全透明与效率的完美平衡。',
   no_registration:
@@ -36,7 +36,7 @@ export default {
   security: '安全',
   withdrawal: '提币',
   roadmap: '路线图',
-  project_started: 'EOSmex',
+  project_started: 'DaDEX',
   project_started_two: '项目立项',
   core_product: '核心团队',
   core_product_two: '主体方案确认完成',
