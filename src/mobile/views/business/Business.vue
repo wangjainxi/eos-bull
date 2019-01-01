@@ -171,10 +171,7 @@
       </div>
     </div>
     <mt-actionsheet :actions="sheetActions" :cancelText="cancel" v-model="sheetVisible"></mt-actionsheet>
-    <ShowCoinList
-      v-model="popupVisible"
-      :dataCoinList="entrustData.markets"
-    ></ShowCoinList>
+    <ShowCoinList v-model="popupVisible" :dataCoinList="entrustData.markets"></ShowCoinList>
   </div>
 </template>
 
@@ -351,7 +348,7 @@ export default class extends Vue {
     ) {
       this.allLoaded = true; // 若数据已全部获取完毕
     }
-    this.$refs.loadmore.onBottomLoaded();
+    (this.$refs.loadmore as Vue & { onBottomLoaded: () => Function }).onBottomLoaded();
   }
 
   changeTab(val: any) {

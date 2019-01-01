@@ -37,7 +37,7 @@ export default {
   User_rejected_the_signature_request: 'Sorry, user rejected the signature request!',
   your_order_placed_succeeded: 'Congratulations, your order placed succeeded!',
   EOSmex_is_a_decentralized_exchange:
-    'EOSmex is a decentralized exchange，which does not make subjective judgment on any project and is not responsible for the investment results. It is strongly recommended that you make investment decisions after knowing the project in details.',
+    'DaDEX is a decentralized exchange，which does not make subjective judgment on any project and is not responsible for the investment results. It is strongly recommended that you make investment decisions after knowing the project in details.',
   Used: 'Used',
   Latest_Deal: 'Latest Deal',
   Time: 'Time',
