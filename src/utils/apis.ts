@@ -7,8 +7,6 @@ import {
   Order,
   AccountInfo,
   Announcement,
-  ORDER_SIDE,
-  ORDER_STATUS,
   HistoryOrderParams,
 } from '@/define';
 
@@ -107,4 +105,12 @@ export const getAnnouncementList = async (params?: { page?: number; pageSize?: n
     announcements: Announcement[];
     count: number;
   }>(res);
+};
+
+/**
+ * 收藏市场
+ */
+export const favouriteMarkets = async (ids: number[], favourited: boolean) => {
+  const params = ids.map(e => ({ marketId: e, favourited }));
+  await instance.post('/v1/user/favourite', params);
 };

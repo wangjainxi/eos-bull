@@ -20,25 +20,25 @@
           <div
             v-for="item of filters"
             :key="item.type"
-            :class="{ special: dataStore.freeMarketParams.sortby === item.type}"
-            @click="dataStore.updateFreeMarketListSort(item.type)"
+            :class="{ special: favoriteSortParams.sortby === item.type}"
+            @click="updateFavoriteMarketListSort(item.type)"
           >
             <Language :resource="item.key"/>
             <img
-              v-if="item.type !== dataStore.freeMarketParams.sortby"
+              v-if="item.type !== favoriteSortParams.sortby"
               src="../../../images/ic_sort_normal.png"
             >
             <template v-else>
               <img
-                v-if="dataStore.freeMarketParams.order === 'asc'"
+                v-if="favoriteSortParams.order === 'asc'"
                 src="../../../images/ic_sort_down.png"
               >
               <img v-else src="../../../images/ic_sort_up.png">
             </template>
           </div>
         </div>
-        <div v-if="dataStore.freeMarketList.length > 0" class="market-list-package-box">
-          <ListChild v-for="(item, index) in dataStore.freeMarketList" :item="item" :key="index"></ListChild>
+        <div v-if="favoriteMarkets.length > 0" class="market-list-package-box">
+          <ListChild v-for="(item, index) in favoriteMarkets" :item="item" :key="index" />
         </div>
         <div class="list-no-box" v-else>
           <img src="../../../images/mobile/ic_nodata.png" alt>
@@ -57,17 +57,17 @@
           <div
             v-for="item of filters"
             :key="item.type"
-            :class="{ special: dataStore.marketParams.sortby === item.type}"
-            @click="dataStore.updateMarketListSort(item.type)"
+            :class="{ special: sortParams.sortby === item.type}"
+            @click="updateMarketListSort(item.type)"
           >
             <Language :resource="item.key"/>
             <img
-              v-if="item.type !== dataStore.marketParams.sortby"
+              v-if="item.type !== sortParams.sortby"
               src="../../../images/ic_sort_normal.png"
             >
             <template v-else>
               <img
-                v-if="dataStore.marketParams.order === 'asc'"
+                v-if="sortParams.order === 'asc'"
                 src="../../../images/ic_sort_down.png"
               >
               <img v-else src="../../../images/ic_sort_up.png">
@@ -75,7 +75,7 @@
           </div>
         </div>
         <div class="market-list-package-box">
-          <ListChild v-for="(item, index) in dataStore.marketList" :item="item" :key="index"></ListChild>
+          <ListChild v-for="(item, index) in marketList" :item="item" :key="index"></ListChild>
         </div>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -84,19 +84,35 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import dataStore from '@/stores/data';
-import { Observer } from 'mobx-vue';
+import { namespace } from 'vuex-class';
 import ListChild from '../HomePage/components/ListChild.vue';
 import { computed } from 'mobx';
+import { Market } from '@/define';
 
-@Observer
+const marketModule = namespace('market');
+
 @Component({
   components: {
     ListChild,
   },
 })
 export default class MarketList extends Vue {
-  dataStore = dataStore;
+  @marketModule.Getter('markets')
+  markets!: Market[];
+
+  sortParams = {
+    sortby: '',
+    order: '',
+  };
+
+  favoriteSortParams = {
+    sortby: '',
+    order: '',
+  };
+
+  @marketModule.Getter('favoriteMarkets')
+  favoriteMarkets!: Market[];
+
   selectTab = 'eos';
   tabs = [
     {
@@ -114,6 +130,7 @@ export default class MarketList extends Vue {
   ];
   selectFreeFilter = 'pair';
   selectAllFilter = 'pair';
+
   filters = [
     {
       type: 'pair',
@@ -132,6 +149,57 @@ export default class MarketList extends Vue {
       key: 'asset.Change24H',
     },
   ];
+
+  get marketList() {
+    if (this.markets.length === 0) return this.markets;
+    const { order, sortby } = this.sortParams;
+    const arr = this.markets.slice();
+    if (!sortby) return arr;
+    return this.sortMarkets(arr, sortby, order);
+  }
+
+  sortMarkets(markets: Market[], sortby: string, order: string) {
+    markets.sort((e1, e2) => {
+      let v1;
+      let v2;
+      if (sortby === 'volume') {
+        v1 = e1.volumeBase;
+        v2 = e2.volumeBase;
+      } else if (sortby === 'price') {
+        v1 = parseFloat(e1.lastPrice);
+        v2 = parseFloat(e2.lastPrice);
+      } else if (sortby === 'change') {
+        v1 = parseFloat(e1.change);
+        v2 = parseFloat(e2.change);
+      } else {
+        // 其余情况按pair处理
+        v1 = `${e1.pair.baseCurrency.symbol.name}/${e1.pair.quoteCurrency.symbol.name}`;
+        v2 = `${e2.pair.baseCurrency.symbol.name}/${e2.pair.quoteCurrency.symbol.name}`;
+      }
+
+      const o = order === 'desc' ? v2 > v1 : v1 > v2;
+      return o ? -1 : 1;
+    });
+    return markets;
+  }
+
+  updateFavoriteMarketListSort(t: string) {
+    const { sortby, order } = this.favoriteSortParams;
+    if (t === sortby) {
+      Object.assign(this.favoriteSortParams, { order: order === 'asc' ? 'desc' : 'asc' });
+    } else {
+      Object.assign(this.favoriteSortParams, { sortby: t, order: 'asc' });
+    }
+  }
+
+  updateMarketListSort(t: string) {
+    const { sortby, order } = this.sortParams;
+    if (t === sortby) {
+      Object.assign(this.sortParams, { order: order === 'asc' ? 'desc' : 'asc' });
+    } else {
+      Object.assign(this.sortParams, { sortby: t, order: 'asc' });
+    }
+  }
 }
 </script>
 

@@ -32,6 +32,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
 import data from '@/stores/data';
 import dataStore from '@/stores/data';
 import TopView from './TopView.vue';
@@ -41,8 +42,10 @@ import VueTradingView from '@/components/vueTradingView/index.vue';
 import { observer } from 'mobx-vue';
 import { Market, Trade } from '@/define';
 import { computed } from 'mobx';
-import { getMarketOrderbook, getMarketTrades } from '@/utils/apis';
+import { getMarketOrderbook, getMarketTrades, favouriteMarkets } from '@/utils/apis';
 import marketViewStore from './marketViewStore';
+
+const marketModule = namespace('market');
 
 @observer
 @Component({
@@ -53,29 +56,30 @@ import marketViewStore from './marketViewStore';
     VueTradingView,
   },
 })
-export default class extends Vue {
+export default class MarketView extends Vue {
   marketViewStore = marketViewStore;
   dataStore = dataStore;
-  marketData = {};
   OrderData = {};
   recentDealData: Array<Trade> = [];
+
+  @marketModule.Getter('markets')
+  markets!: Market[];
+
+  @marketModule.Getter('favoriteMarkets')
+  favouriteMarkets!: Market[];
+
+  get market() {
+    const id = parseInt(this.$route.params.id, 10);
+    return this.markets.find(e => e.marketId === id);
+  }
+
   mounted() {
-    this.filterData();
     this.getOrderData();
     this.getRecentData();
   }
 
   async getRecentData() {
     this.recentDealData = await getMarketTrades(Number(this.$route.params.id));
-  }
-
-  filterData() {
-    dataStore.markets.forEach((ele: any) => {
-      if (this.$route.params.id === ele.marketId) {
-        this.marketData = ele;
-        console.log(this.marketData);
-      }
-    });
   }
 
   async getOrderData() {

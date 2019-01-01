@@ -1,5 +1,6 @@
 import onfire from 'onfire.js';
 import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
+import store from '@/vuex';
 import { PriceLevelUpdate, TickerUpdate, Trade, BalanceUpdate, Order } from '@/define';
 
 const socket = new HubConnectionBuilder()
@@ -12,6 +13,7 @@ socket.on('l2update', (data: PriceLevelUpdate) => {
 });
 
 socket.on('tickerUpdate', (data: TickerUpdate) => {
+  store.commit('market/updateMarket', data);
   onfire.fire('tickerUpdate', data);
 });
 

@@ -81,6 +81,13 @@ export default class extends Vue {
   onClick(type: number) {
     if (type === 2) {
       this.popupVisible = !this.popupVisible;
+    } else if (type === 3) {
+      location.href = 'https://dadex.zendesk.com';
+    } else if (type === 4) {
+      location.href = 'https://dadex.zendesk.com/hc/zh-cn/requests/new';
+    } else if (type === 5) {
+      location.href =
+        'https://dadex.zendesk.com/hc/zh-cn/articles/360021126812-%E5%85%B3%E4%BA%8E%E6%88%91%E4%BB%AC';
     }
   }
   onLanguageSwich(type: string) {

@@ -17,13 +17,13 @@
       <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
           <OrderItem
-            v-for="order of openOrderStore.orders"
+            v-for="order of pendingOrders"
             :key="order.orderId"
             :order="order" />
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
           <OrderItem
-            v-for="order of historyOrderStore.orders"
+            v-for="order of historyOrders"
             :key="order.orderId"
             :order="order" />
         </mt-tab-container-item>
@@ -33,15 +33,14 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { Observer } from 'mobx-vue';
+import { namespace, State } from 'vuex-class';
 import OrderItem from './order-item.vue';
 
-import dataStore from '@/stores/data';
-import openOrderStore from '@/stores/open-order';
-import historyOrderStore from '@/stores/history-order';
 import FilterPopup from './FilterPopup.vue';
+import { Order, HistoryOrderParams } from '@/define';
 
-@Observer
+const orderModule = namespace('order');
+
 @Component({
   components: {
     OrderItem,
@@ -49,62 +48,46 @@ import FilterPopup from './FilterPopup.vue';
   },
 })
 export default class Orders extends Vue {
-  // @Prop() showPopup!: boolean;
-  historyOrderStore = historyOrderStore;
-  openOrderStore = openOrderStore;
+  @State('accountName')
+  accountName!: string;
+
+  @orderModule.State('pendingOrders')
+  pendingOrders!: Order[];
+
+  @orderModule.State('historyOrders')
+  historyOrders!: Order[];
+
+  @orderModule.Action('fetchPendingOrders')
+  fetchPendingOrders!: Function;
+
+  @orderModule.Action('fetchHistoryOrders')
+  fetchHistoryOrders!: Function;
+
+  historyParams: HistoryOrderParams = {
+    page: 1,
+    pageSize: 20,
+  };
+
   showPopup = false;
   selected = '1';
+
+  async created() {
+    if (!this.accountName) {
+      await this.$store.dispatch('login');
+    }
+    this.fetchPendingOrders();
+    this.fetchHistoryOrders(this.historyParams);
+  }
 
   showFilter() {
     this.showPopup = !this.showPopup;
   }
-
-  created() {
-    openOrderStore.fetchOrders(dataStore.accountName);
-    historyOrderStore.setParams({ page: 1 });
-    historyOrderStore.fetchMobileOrders(dataStore.accountName);
-  }
 }
 </script>
+
 <style lang="scss">
 @import '@/style/mixin.scss';
-.mint-tab-item-label {
-  font-size: 0.2rem;
-}
-.type-select-box {
-  background-color: #ddd;
-  width: 100%;
-  position: relative;
-  img {
-    margin-right: 0.18rem;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-}
-.mint-navbar {
-  @include flexLayout(row, space-between, center);
-}
-.mint-navbar .mint-tab-item {
-  flex: 1;
-  height: 0.42rem;
-  padding: 0px;
-  .mint-tab-item-label {
-    font-size: 0.2rem;
-    height: 0.16rem;
-    font-size: 0.14rem;
-    font-family: PingFangSC-Semibold;
-    font-weight: 600;
-    color: rgba(141, 141, 141, 1);
-    line-height: 0.16rem;
-    margin-top: 0.14rem;
-  }
-}
-.type-select-box {
-  background-color: #fff;
-  width: 100%;
-}
+
 #order-tab-container {
   font-size: 0.16rem !important;
   > div {
@@ -151,6 +134,29 @@ export default class Orders extends Vue {
     border-radius: 0.03rem;
     margin-top: 0.14rem;
   }
+}
+</style>
+
+
+<style lang="scss" scoped>
+@import '@/style/mixin.scss';
+
+.type-select-box {
+  background-color: #ddd;
+  width: 100%;
+  position: relative;
+  img {
+    margin-right: 0.18rem;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.type-select-box {
+  background-color: #fff;
+  width: 100%;
 }
 </style>
 

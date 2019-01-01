@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@aspnet/signalr": "^1.1.0",
+    "animate.css": "^3.7.0",
     "axios": "^0.18.0",
     "dayjs": "^1.7.8",
     "element-ui": "^2.4.11",
@@ -31,7 +32,8 @@
     "vue-router": "^3.0.1",
     "vue-trading-view": "^1.0.1",
     "vue2-highcharts": "^1.2.5",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "vuex-class": "^0.3.1"
   },
   "devDependencies": {
     "@types/jest": "^23.1.4",

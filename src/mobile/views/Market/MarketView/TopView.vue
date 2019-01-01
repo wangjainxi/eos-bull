@@ -47,25 +47,12 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { observer } from 'mobx-vue';
 import { Market } from '@/define';
-import dataStore from '@/stores/data';
 
-@observer
 @Component
 export default class MarketInfo extends Vue {
   @Prop()
   market?: Market;
-
-  isCollect = false;
-
-  collect() {
-    this.isCollect = false;
-  }
-
-  created() {
-    dataStore.setCurrentMarketId(parseInt(this.$route.params.id, 10));
-  }
 }
 </script>
 <style lang="scss" scoped>

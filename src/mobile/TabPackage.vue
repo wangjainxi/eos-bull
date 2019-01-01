@@ -1,6 +1,13 @@
 <template>
   <div class="tab-package-box">
-    <router-view/>
+    <transition
+      mode="out-in"
+      :duration="500"
+      enter-active-class="animated fadeIn"
+      leave-active-class="animated fadeOut"
+    >
+      <router-view/>
+    </transition>
     <mobile-tabs/>
   </div>
 </template>
@@ -14,11 +21,7 @@ import MobileTabs from './components/mobileTabs.vue';
     MobileTabs,
   },
 })
-export default class TabPackage extends Vue {
-  created() {
-    console.log(MobileTabs);
-  }
-}
+export default class TabPackage extends Vue {}
 </script>
 
 <style lang="scss">

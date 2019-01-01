@@ -73,13 +73,6 @@ class DataStore {
     order: '', // asc, desc
   };
 
-  // 用户钱包页面token展示
-  @computed
-  get walletTokens() {
-    if (!this.accountInfo) return [];
-    return this.accountInfo.tokens;
-  }
-
   @computed
   get riseRank() {
     const { order } = this.marketParams;
@@ -167,18 +160,6 @@ class DataStore {
   get ramUsageRate() {
     const { used, max } = this.ramLimit;
     return Math.round((used / max) * 10000) / 100.0;
-  }
-
-  @computed
-  get totalValuation() {
-    if (!this.accountInfo) {
-      return {
-        name: 'EOS',
-        amount: '0.0000',
-      };
-    }
-    const { amount, symbol } = this.accountInfo.estValue;
-    return { amount, name: symbol.name };
   }
 
   constructor() {

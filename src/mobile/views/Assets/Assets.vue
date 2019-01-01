@@ -2,10 +2,10 @@
   <div class="package">
     <div class="about-banner-box">
       <img src="@/images/mobile/ic_correct.svg" alt>
-      <h3>{{ dataStore.accountName }}</h3>
+      <h3>{{ accountName }}</h3>
       <div>
-        <h4>{{ dataStore.totalValuation.amount }}</h4>
-        <span>{{ dataStore.totalValuation.name }}</span>
+        <h4>{{ totalValuation.amount }}</h4>
+        <span>{{ totalValuation.name }}</span>
       </div>
       <p>
         <Language resource="asset.totalValue"/>
@@ -16,21 +16,21 @@
         <h4>CPU</h4>
         <p>
           <Language resource="asset.Used"/>
-          &nbsp;{{ dataStore.cpuUsageRate }}%
+          &nbsp;{{ cpuInfo.usageRate }}%
         </p>
       </div>
       <div>
         <h4>NET</h4>
         <p>
           <Language resource="asset.Used"/>
-          &nbsp;{{ dataStore.netUsageRate }}%
+          &nbsp;{{ netInfo.usageRate }}%
         </p>
       </div>
       <div>
         <h4>RAM</h4>
         <p>
           <Language resource="asset.Used"/>
-          &nbsp;{{ dataStore.ramUsageRate }}%
+          &nbsp;{{ ramInfo.usageRate }}%
         </p>
       </div>
     </div>
@@ -51,20 +51,7 @@
       </p>
     </div>
     <div class="currener-info-box-package">
-      <!-- <div class="currener-info-box">
-        <div>
-          <h4>EOS</h4>
-        </div>
-        <div>
-          <h4>
-            <Language resource="asset.Used"/>：808.19
-          </h4>
-          <p>
-            <Language resource="asset.Frozen"/>：0.0000
-          </p>
-        </div>
-      </div>-->
-      <div class="currener-info-box" v-for="(item,index) in dataStore.walletTokens" :key="index">
+      <div class="currener-info-box" v-for="(item,index) in walletTokens" :key="index">
         <div>
           <h4>{{item.available.symbol.symbol.name}}</h4>
           <p>
@@ -123,13 +110,31 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import dataStore from '@/stores/data';
-import { Observer } from 'mobx-vue';
+import { State, namespace } from 'vuex-class';
+import { TokenBalance } from '@/define';
 
-@Observer
+const userModule = namespace('user');
+
 @Component
 export default class Assets extends Vue {
-  dataStore = dataStore;
+  @State('accountName')
+  accountName!: string;
+
+  @userModule.Getter('walletTokens')
+  walletTokens!: TokenBalance[];
+
+  @userModule.Getter('totalValuation')
+  totalValuation!: Object;
+
+  @userModule.Getter('cpuInfo')
+  cpuInfo!: Object;
+
+  @userModule.Getter('netInfo')
+  netInfo!: Object;
+
+  @userModule.Getter('ramInfo')
+  ramInfo!: Object;
+
   selectInput = 'asset.Value_0_01EOS';
   popupVisible = false;
   assetsSelectData = false;

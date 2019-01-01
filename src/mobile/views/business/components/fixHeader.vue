@@ -10,17 +10,10 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { Observer } from 'mobx-vue';
 
-@Observer
-@Component({
-  components: {},
-})
+@Component
 export default class FixHeader extends Vue {
-  // name: 'fix-header',
-  // props,
   @Prop() msg!: any;
-  // data
   prevRoute: any = '';
   thisTitle: string = '';
   created() {

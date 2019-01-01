@@ -181,7 +181,6 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import onfire from 'onfire.js';
-import { Observer } from 'mobx-vue';
 import ShowMessageImg from './../../../components/messageImage.vue';
 import BusinessTradeItem from './components/businessTrade.vue';
 import BusinessEntrust from './components/businessEntrust.vue';
@@ -234,7 +233,6 @@ interface PageParam {
   pageSize?: number;
 }
 
-@Observer
 @Component({
   components: {
     ShowMessageImg,
@@ -351,7 +349,7 @@ export default class extends Vue {
     ) {
       this.allLoaded = true; // 若数据已全部获取完毕
     }
-    this.$refs.loadmore.onBottomLoaded();
+    (this.$refs.loadmore as any).onBottomLoaded();
   }
 
   changeTab(val: any) {

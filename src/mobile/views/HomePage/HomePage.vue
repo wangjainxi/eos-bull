@@ -12,20 +12,22 @@
         <Language resource="asset.Notice"/>:
       </h4>
       <p id="noticeBox">
-        <nobr id="notice">EOS新交易对EOSmex上线PSIEOS新交易对EOSmex上线PSIEOS新交易对EOSmex上线PSI/EOS新交易对。</nobr>
+        <nobr id="notice" v-for="item of announcements" :key="item.announcementId">
+          {{ item.title }}
+        </nobr>
       </p>
     </div>
     <div class="home-user-info-box">
       <div>
         <img src="../../../images/mobile/ic_announcement.svg" alt>
-        <p>{{ dataStore.accountName }}</p>
+        <p>{{ accountName }}</p>
       </div>
       <div>
         <p>
           <Language resource="asset.totalValue"/>
         </p>
-        <h4>{{ dataStore.totalValuation.amount }}</h4>
-        <p>{{ dataStore.totalValuation.name }}</p>
+        <h4>{{ totalValuation.amount }}</h4>
+        <p>{{ totalValuation.name }}</p>
       </div>
     </div>
     <div class="home-tab-title-box">
@@ -41,7 +43,7 @@
     <!-- tab-container -->
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <div class="home-list-page-box" v-for="item in dataStore.riseRank" :key="item.marketId">
+        <div class="home-list-page-box" v-for="item in changeRankingList" :key="item.marketId">
           <ListChild :item="item"/>
         </div>
         <div class="home-link-to-market-box">
@@ -54,7 +56,7 @@
       <mt-tab-container-item id="2">
         <div
           class="home-list-page-box"
-          v-for="(item, index) in dataStore.exChangeRank"
+          v-for="(item, index) in volumeRankingList"
           :key="item.marketId"
         >
           <ListChild v-if="index<=10" :item="item" :key="index"></ListChild>
@@ -72,13 +74,17 @@
 </template>
 
 <script lang="ts">
-import ListChild from './components/ListChild.vue';
-import dataStore from '@/stores/data';
 import { Vue, Component } from 'vue-property-decorator';
-import HomeIntroduce from './HomeIntroduce.vue';
-import { Observer } from 'mobx-vue';
+import { namespace, State } from 'vuex-class';
+import { Market, Announcement } from '@/define';
 
-@Observer
+import ListChild from './components/ListChild.vue';
+import HomeIntroduce from './HomeIntroduce.vue';
+
+const userModule = namespace('user');
+const marketModule = namespace('market');
+const announcementModule = namespace('announcement');
+
 @Component({
   components: {
     ListChild,
@@ -86,13 +92,32 @@ import { Observer } from 'mobx-vue';
   },
 })
 export default class extends Vue {
-  dataStore = dataStore;
+  @State('accountName')
+  accountName!: string;
+
+  @userModule.Getter('totalValuation')
+  totalValuation!: Object;
+
+  @marketModule.Getter('changeRankingList')
+  changeRankingList!: Market[];
+
+  @marketModule.Getter('volumeRankingList')
+  volumeRankingList!: Market[];
+
+  @announcementModule.State('announcements')
+  announcements!: Announcement[];
+
+  @announcementModule.Action('fetchAnnouncements')
+  fetchAnnouncements!: Function;
+
   selected = '1';
   dealList: any[] = [];
   growList: any[] = [];
+
   created() {
-    //
+    this.fetchAnnouncements();
   }
+
   mounted() {
     const noticeBox = document.getElementById('noticeBox');
     const notice = document.getElementById('notice');

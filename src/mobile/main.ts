@@ -11,7 +11,10 @@ import {
   TabContainerItem,
   Loadmore,
 } from 'mint-ui';
+
+import 'animate.css';
 import 'mint-ui/lib/style.css';
+
 import Language from '@/components/Language';
 import App from './App.vue';
 import router from './router';
@@ -20,6 +23,7 @@ import '../registerServiceWorker';
 import '../stores/data';
 import VueHighcharts from 'vue2-highcharts';
 import { formatDate } from '@/utils/common';
+import store from '@/vuex';
 
 Vue.config.productionTip = false;
 Vue.component(Button.name, Button);
@@ -38,7 +42,10 @@ Vue.component('Language', Language);
 Vue.component('VueTradingView', VueTradingView);
 Vue.filter('formatDate', formatDate);
 
+store.dispatch('login');
+
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app');

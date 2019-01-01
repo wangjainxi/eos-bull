@@ -1,7 +1,7 @@
 <template>
   <div id="market-search-page">
     <div class="market-search-input-box">
-      <img src="../../../images/mobile/ic_find.svg" @click="onSearch" alt>
+      <img src="../../../images/mobile/ic_find.svg">
       <input v-model="searchInput" type="text" @keyup.13="onSearch">
       <router-link to="market">
         <img src="../../../images/mobile/closeBtn.svg" alt>
@@ -11,8 +11,10 @@
       <div class="search-result-box">搜索结果</div>
       <router-link
         class="search-list-child-box"
-        v-for="item of markets" :key="item.marketId"
-        :to="{ name: 'market-view', params: { id: item.marketId,item:item } }">
+        v-for="item of searchResult"
+        :key="item.marketId"
+        :to="{ name: 'market-view', params: { id: item.marketId,item:item } }"
+      >
         <h4
           class="list-title"
         >{{item.pair.baseCurrency.symbol.name}}/{{item.pair.quoteCurrency.symbol.name}}</h4>
@@ -25,8 +27,14 @@
           v-else-if="item.change.indexOf('-') !== -1"
         >-{{item.percentage}}%</p>
         <p class="list-precentage-middle" v-else>0.00%</p>
-        <img v-if="item.collectionState === 1" src="../../../images/mobile/ic_collection_s.svg" alt>
-        <img v-else src="../../../images/mobile/ic_collection_current_s.svg" alt>
+        <img
+          v-if="checkFavourite(item.marketId)"
+          @click.capture="handleFavouriteBtnClick(tem.marketId, false)"
+          src="../../../images/mobile/ic_collection_current_s.svg">
+        <img
+          v-else
+          @click.stop="handleFavouriteBtnClick(tem.marketId, true)"
+          src="../../../images/mobile/ic_collection_s.svg">
       </router-link>
     </div>
     <div v-else class="list-no-box">
@@ -38,18 +46,37 @@
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator';
-import dataStore from '@/stores/data';
-import { Observer } from 'mobx-vue';
+import { namespace } from 'vuex-class';
 import { Market } from '@/define';
 
-@Observer
+const marketModule = namespace('market');
+
 @Component
 export default class extends Vue {
   searchInput = '';
-  markets: Market[] = [];
 
-  onSearch() {
-    this.markets = dataStore.getMarketSearchList(this.searchInput);
+  @marketModule.Getter('markets')
+  markets!: Market[];
+
+  @marketModule.Getter('favoriteMarkets')
+  favoriteMarkets!: Market[];
+
+  @marketModule.Action('addFavoriteMarkets')
+  addFavoriteMarkets!: Function;
+
+  get searchResult() {
+    return this.markets.filter(e => {
+      const symbolName = e.pair.baseCurrency.symbol.name.toLowerCase();
+      return symbolName.includes(this.searchInput.toLocaleLowerCase());
+    });
+  }
+
+  handleFavouriteBtnClick(id: number, favourited: boolean) {
+    this.addFavoriteMarkets([id], favourited);
+  }
+
+  checkFavourite(id: number) {
+    return !!this.favoriteMarkets.find(e => e.marketId === id);
   }
 }
 </script>
