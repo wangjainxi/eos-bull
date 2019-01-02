@@ -17,11 +17,11 @@
     </div>
     <div class="list-content">
       <div>
-        <div class="sell-part">
+        <!-- <div class="sell-part">
           <ListItem v-bind:sellData="sellData" class="sell-box"/>
-        </div>
+        </div> -->
         <div class="buy-part">
-          <ListItem v-bind:sellData="sellData" class="buy-box"/>
+          <ListItem :sellData="sellData" class="buy-box"/>
         </div>
       </div>
     </div>
@@ -29,9 +29,15 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Watch } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
 import ListItem from './ListItem.vue';
 import DetailPoup from './ DetailPoup.vue';
+import { subscribeTradeUpdate, unsubscribeTradeUpdate } from '@/utils/socket';
+import { getMarketTrades } from '@/utils/apis';
+import { Trade } from '@/define';
+
+const marketModule = namespace('market');
 
 @Component({
   components: {
@@ -40,10 +46,22 @@ import DetailPoup from './ DetailPoup.vue';
   },
 })
 export default class extends Vue {
+  @marketModule.State('currentMarketId')
+  currentMarketId!: number;
+
   weight = 400;
-  sellData = [];
+  sellData: Trade[] = [];
   shows = 1;
   showPoup = false;
+
+  @Watch('currentMarketId')
+  async handleCcurrentMarketIdChange(newId: number, oldId: number) {
+    if (oldId > 0) {
+      unsubscribeTradeUpdate(oldId);
+    }
+    this.sellData = await getMarketTrades(newId);
+    subscribeTradeUpdate(newId);
+  }
 
   changeDetailPoup() {
     this.showPoup = !this.showPoup;

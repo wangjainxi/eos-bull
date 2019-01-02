@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="item-history-box" v-for="item in sellData">
-      <span class="left-text price-text">{{item.price}}</span>
-      <span class="center-text">{{item.size}}</span>
-      <span class="right-text">{{item.time}}</span>
+    <div class="item-history-box" v-for="(item, index) in sellData" :key="index">
+      <span class="left-text price-text">{{ item.price.amount }}</span>
+      <span class="center-text">{{item.size.amount }}</span>
+      <span class="right-text">{{item.time | formatDate('MM-DD HH:mm:ss') }}</span>
     </div>
   </div>
 </template>

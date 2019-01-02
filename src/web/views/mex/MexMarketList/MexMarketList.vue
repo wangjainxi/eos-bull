@@ -30,9 +30,9 @@
     </div>
     <div class="list-content">
       <!-- 买卖 -->
-      <div v-if="shows === 1 ">
+      <div v-if="shows === 3">
         <div class="sell-part">
-          <ListItem v-bind:sellData="sellData" class="sell-box"/>
+          <ListItem :sellData="sellData.ask" class="sell-box"/>
         </div>
         <div class="real-price-part">
           <div>
@@ -41,12 +41,12 @@
           </div>
         </div>
         <div class="buy-part">
-          <ListItem v-bind:sellData="sellData" class="buy-box"/>
+          <ListItem :sellData="sellData.bids" class="buy-box"/>
         </div>
       </div>
 
       <!-- 买 -->
-      <div v-if="shows === 2 ">
+      <div v-if="shows === 2">
         <div class="real-price-part">
           <div>
             <span>0.000360</span>
@@ -54,13 +54,13 @@
           </div>
         </div>
         <div class="buy-part">
-          <ListItem v-bind:sellData="sellData" class="buy-box"/>
+          <ListItem :sellData="sellData.asks" class="buy-box"/>
         </div>
       </div>
       <!-- 卖 -->
-      <div v-if="shows === 3 ">
+      <div v-if="shows === 1">
         <div class="sell-part">
-          <ListItem v-bind:sellData="sellData" class="sell-box"/>
+          <ListItem :sellData="sellData.bids" class="sell-box"/>
         </div>
         <div class="real-price-part">
           <div>
@@ -74,8 +74,13 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Watch } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
 import ListItem from './ListItem.vue';
+import { Market } from '@/define';
+import { getMarketOrderbook } from '@/utils/apis';
+
+const marketModule = namespace('market');
 
 @Component({
   components: {
@@ -83,7 +88,13 @@ import ListItem from './ListItem.vue';
   },
 })
 export default class extends Vue {
-  sellData = [];
+  @marketModule.State('currentMarketId')
+  currentMarketId!: number;
+
+  @marketModule.Getter('currentMarket')
+  currentMarket?: Market;
+
+  sellData: any = {};
   shows = 1;
   beforeMount() {
     console.log(this.sellData.length);
@@ -104,13 +115,21 @@ export default class extends Vue {
     };
     this.sellData = [];
   }
+
+  @Watch('currentMarketId')
+  async handleCcurrentMarketIdChange(newId: number, oldId: number) {
+    this.sellData = await getMarketOrderbook(newId);
+  }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+
 .market-list {
+  height: 100%;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  overflow-y: hidden;
 
   .list-header {
     border-top-left-radius: 8px;
