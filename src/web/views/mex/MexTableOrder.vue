@@ -17,7 +17,7 @@
     </div>
     <div class="table-box">
       <el-table
-        :data="Array.from(openOrderStore.orders)"
+        :data="pendingOrders"
         style="width: 100%"
         :empty-text="ThereSNoDataYet"
       >
@@ -133,8 +133,9 @@ import { Observer } from 'mobx-vue';
 import languageStore from '@/stores/language';
 import openOrderStore from '@/stores/open-order';
 import language from '@/stores/language';
-import { Market } from '@/define';
+import { Market, Order } from '@/define';
 
+const orderModule = namespace('order');
 const marketModule = namespace('market');
 
 @Observer
@@ -142,6 +143,12 @@ const marketModule = namespace('market');
 export default class MexOpenOrders extends Vue {
   @marketModule.Getter('currentMarket')
   currentMarket?: Market;
+
+  @orderModule.State('pendingOrders')
+  pendingOrders!: Order[];
+
+  @orderModule.Action('fetchPendingOrders')
+  fetchPendingOrders!: Function;
 
   openOrderStore = openOrderStore;
   checked = false;
@@ -151,11 +158,9 @@ export default class MexOpenOrders extends Vue {
   ThereSNoDataYet = language.getIntlText('exchange.There_s_no_data_yet');
   handleRevokeAllBtnClick() {
     this.loading = true;
-    openOrderStore.fetchOrders('user1').finally(() => {
-      setTimeout(() => {
-        this.loading = false;
-      }, 1000);
-    });
+    setTimeout(() => {
+      this.loading = false;
+    }, 1000);
   }
 
   // created() {
