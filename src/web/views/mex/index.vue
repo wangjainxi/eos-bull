@@ -6,7 +6,7 @@
     <div class="mex-keynote-page">
       <div class="mex-keynote-first">
         <div class="mex-market-page">
-          <MexMarketList/>
+          <MexMarketList />
         </div>
       </div>
       <div class="mex-keynote-second">
@@ -14,7 +14,7 @@
           <MexKLineChart/>
         </div>
         <div class="mex-plact-order-page">
-          <mex-place-order></mex-place-order>
+          <mex-place-order :currentMarket="currentMarket" />
         </div>
       </div>
       <div class="mex-keynote-third">

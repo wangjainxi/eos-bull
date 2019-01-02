@@ -13,6 +13,7 @@ export default {
 
 <style lang="scss">
 @import './../style/common.scss';
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -25,6 +26,7 @@ export default {
   display: block;
   background: #fff;
 }
+
 #nav {
   padding: 30px;
   a {
@@ -35,24 +37,28 @@ export default {
     }
   }
 }
+
 .flex-row-start {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
 }
+
 .flex-row-between {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
 }
+
 .flex-row-between-center {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
+
 .flex-column-start-start {
   display: flex;
   flex-direction: column;

@@ -30,6 +30,8 @@ const store = new Vuex.Store<RootState>({
       dispatch('market/fetchMarkets');
       dispatch('user/fetchAccountInfo');
       dispatch('user/startFetchEOSAccountInfoLoop');
+      dispatch('order/fetchPendingOrders');
+      dispatch('order/fetchHistoryOrders');
     },
   },
   mutations: {

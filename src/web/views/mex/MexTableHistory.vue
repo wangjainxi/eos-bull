@@ -90,7 +90,7 @@
           </template>
         </el-table-column>
         <!-- 下拉详情 -->
-        <el-table-column :prop="coin" width="155">
+        <el-table-column prop="coin" width="155">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Coin"/>
           </template>
@@ -101,7 +101,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column :prop="type" align="center">
+        <el-table-column prop="type" align="center">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Type"/>
           </template>
@@ -133,7 +133,10 @@
             <Language resource="exchange.Deal_Average"/>
           </template>
           <template slot-scope="props">
-            <span>{{ props.row.avgPrice.amount }} {{ props.row.avgPrice.symbol.name }}</span>
+            <p class="props-box">
+              {{props.row.avgPrice.amount}}
+              <span>{{props.row.avgPrice.symbol.name}}</span>
+            </p>
           </template>
         </el-table-column>
         <el-table-column prop="amount" align="right">
@@ -141,9 +144,9 @@
             <Language resource="exchange.Entrusted_Amount"/>
           </template>
           <template slot-scope="props">
-            <p class="amount-box">
-              {{props.row.amount}}
-              <span>{{props.row.coin}}</span>
+            <p class="props-box">
+              {{props.row.size.amount}}
+              <span>{{props.row.size.symbol.name}}</span>
             </p>
           </template>
         </el-table-column>
@@ -151,15 +154,21 @@
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Dealt_Num"/>
           </template>
+          <template slot-scope="props">
+            <p class="props-box">
+              {{props.row.filled.amount}}
+              <span>{{props.row.filled.symbol.name}}</span>
+            </p>
+          </template>
         </el-table-column>
         <el-table-column prop="entrusted" align="right">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Deal_Total"/>
           </template>
           <template slot-scope="props">
-            <p class="entrusted-box">
-              {{props.row.entrusted}}
-              <span>EOS</span>
+            <p class="props-box">
+              {{props.row.filledQuote.amount}}
+              <span>{{props.row.filledQuote.symbol.name}}</span>
             </p>
           </template>
         </el-table-column>

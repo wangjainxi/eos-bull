@@ -68,11 +68,11 @@
     </el-dialog>
 
     <el-dialog
-      :title="thisTip"
       :visible.sync="dialog2Visible"
       custom-class="scatter-dialog1"
       width="500px"
     >
+      <div slot="title">111</div>
       <div class="content">
         <img src="./../../images/web/ic_warning_big.svg" alt>
         <Language resource="home.unlocked_Scatter"/>
@@ -108,7 +108,6 @@ export default class extends Vue {
   dialogVisible = false;
   dialog2Visible = false;
   noTitle = `  `;
-  thisTip = language.getIntlText('home.Tips');
   options = [{ text: 'chinese', value: 'zh-CN' }, { text: 'english', value: 'en-US' }];
 
   language = language;

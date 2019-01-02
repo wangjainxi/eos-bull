@@ -1,6 +1,6 @@
 <template>
   <div class="trading-box">
-    <VueTradingView/>
+    <!-- <VueTradingView/> -->
   </div>
 </template>
 

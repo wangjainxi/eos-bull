@@ -34,7 +34,6 @@ export const order: Module<OrderState, RootState> = {
     async cancelOrder({ dispatch }, orderId: number) {
       await cancelOrder(orderId);
       dispatch('fetchPendingOrders');
-      dispatch('fetchHistoryOrders');
     },
   },
   mutations: {
