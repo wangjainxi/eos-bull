@@ -11,6 +11,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { formatTimes } from '@/utils/formatTime';
+import marketViewStore from '@/mobile/views/Market/MarketView/marketViewStore';
 
 @Component({
   filters: {
@@ -21,7 +22,7 @@ export default class DealItem extends Vue {
   @Prop({ required: true })
   data = [];
   onTapItem(item: any) {
-    this.$emit('tap');
+    marketViewStore.changeStatus(true, item);
   }
 }
 </script>
@@ -43,7 +44,7 @@ export default class DealItem extends Vue {
 .sell-part {
   .item-box {
     @include flexLayout(row-reverse, space-between, center);
-      .price {
+    .price {
       font-size: 12px;
       font-family: PingFangSC-Regular;
       font-weight: 400;

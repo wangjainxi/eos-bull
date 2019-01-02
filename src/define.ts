@@ -145,12 +145,13 @@ export interface Trade {
   seller: string; // 卖家账户名
   buyerOrderId: number; // 买家订单ID
   sellerOrderId: number; // 卖家订单ID
-  price: string; // 撮合价格
-  size: number; // 撮合数量
+  makerOrderSide: ORDER_SIDE; // Maker订单方向
+  price: CoinAsset; // 撮合价格
+  size: CoinAsset; // 撮合数量
   buyerFee: ExtendedAsset;
   sellerFee: ExtendedAsset;
   time: string; // 撮合时间
-  trxId: string; // 撮合交易哈希
+  trxIds: TradeTransactions; // 撮合交易哈希
 }
 
 /**
@@ -242,6 +243,13 @@ export interface Announcement {
 export interface TokenIcon {
   token: ExtendedSymbol;
   iconUrl: string;
+}
+
+export interface TradeTransactions {
+  buyerOrderTrxId: string;
+  sellerOrderTrxId: string;
+  buyerSettlementTrxId: string;
+  sellerSettlementTrxId: string;
 }
 
 interface ResOrderItem {
