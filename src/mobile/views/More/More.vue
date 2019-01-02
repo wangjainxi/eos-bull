@@ -113,6 +113,10 @@ export default class extends Vue {
 @import '@/style/mixin.scss';
 #more-page {
   .home-banner-box {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
     width: 100%;
     height: 1.7rem;
     background-image: url('../../../images/mobile/bg_banner.svg');
@@ -125,6 +129,7 @@ export default class extends Vue {
       span {
         font-size: 0.16rem;
         color: #fff;
+        font-weight: 300;
         margin-top: 0.12rem;
       }
     }
