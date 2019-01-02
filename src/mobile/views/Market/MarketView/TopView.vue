@@ -93,8 +93,8 @@ export default class MarketInfo extends Vue {
       @include flexLayout(row, flex-start, center);
     }
     @include flexLayout(row, space-between, center);
-    margin-bottom: 0.01rem;
-    margin-top: 0.01rem;
+    margin-bottom: 0.05rem;
+    margin-top: 0.05rem;
     .real-text {
       font-size: 0.32rem;
       font-family: PingFangSC-Semibold;
@@ -122,7 +122,7 @@ export default class MarketInfo extends Vue {
     .real-text {
       font-size: 0.14rem;
       font-family: PingFangSC-Medium;
-      font-weight: 500;
+      font-weight: bolder;
       color: rgba(0, 0, 0, 1);
     }
   }

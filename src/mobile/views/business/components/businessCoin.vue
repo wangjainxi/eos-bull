@@ -1,9 +1,5 @@
 <template>
-  <mt-popup
-    :value="value"
-    popup-transition="popup-fade"
-    @input="handleVisibleChange"
-  >
+  <mt-popup :value="value" popup-transition="popup-fade" @input="handleVisibleChange">
     <div class="coin-body">
       <div class="coin-tab">
         <div
@@ -13,14 +9,16 @@
           @click="handleTabClick(index)"
         >
           <i></i>
-          <Language :resource="key" />
+          <Language :resource="key"/>
         </div>
       </div>
       <div class="coin-body-list">
-        <div class="coin-body-item"
+        <div
+          class="coin-body-item"
           v-for="(item, index) in list"
           @click="handleMarketItemClick(item.marketId)"
-          :key="index">
+          :key="index"
+        >
           <div class="coin-name">
             {{ item.pair.baseCurrency.symbol.name }}/
             {{ item.pair.quoteCurrency.symbol.name }}
@@ -132,10 +130,23 @@ $tabHeight: 44px;
 }
 .active {
   span {
+    position: relative;
+    height: 0.57rem;
     @include font(500, 0.16rem, 0.34rem, 'PingFangSC-Light');
     color: rgba(0, 122, 255, 1);
-    border-bottom: 0.03rem solid rgba(0, 122, 255, 1);
-    @include borderRadius(0.02rem);
+    // border-bottom: 0.03rem solid rgba(0, 122, 255, 1);
+    // @include borderRadius(0.02rem);
+    &::before {
+      position: absolute;
+      bottom: 0;
+      content: '';
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0.24rem;
+      height: 0.03rem;
+      background-color: rgba(0, 122, 255, 1);
+      border-radius: 0.02rem;
+    }
   }
 }
 .active.coin-tab-item:nth-child(1) {

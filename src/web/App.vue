@@ -168,6 +168,13 @@ input[type='number'] {
     color: #e26565;
   }
 }
+.el-slider__stop {
+  height: 13px;
+  width: 13px;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  border: solid 2px #2d7be5;
+}
 .foot-choose-node {
   width: 800px !important;
   border: none !important;

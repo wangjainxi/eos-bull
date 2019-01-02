@@ -184,7 +184,7 @@ export default class extends Vue {
     }
   }
   & > div {
-    padding: 10px 0;
+    padding: 10px 0 10px 20px;
     background-color: #fff;
     width: 100%;
     border-bottom: 1px solid rgba(141, 141, 141, 0.13);

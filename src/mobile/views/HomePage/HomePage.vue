@@ -126,7 +126,7 @@ export default class extends Vue {
   padding-bottom: 0.5rem;
   .home-banner-box {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     width: 100%;
