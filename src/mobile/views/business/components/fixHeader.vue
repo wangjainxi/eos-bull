@@ -24,11 +24,18 @@ export default class FixHeader extends Vue {
   prevRoute: any = '';
   thisTitle: string = '';
   created() {
+    this.getTitle();
     if (this.msg.type === 'buy') {
-      this.thisTitle = `${this.msg.coinName}买入明细`;
+      this.thisTitle = `${this.thisTitle}买入明细`;
     } else {
-      this.thisTitle = `${this.msg.coinName}卖出明细`;
+      this.thisTitle = `${this.thisTitle}卖出明细`;
     }
+  }
+
+  getTitle() {
+    const transPair = localStorage.getItem('transPair');
+    if (!transPair) return (this.thisTitle = '');
+    this.thisTitle = transPair;
   }
   get getRouter() {
     this.prevRoute = `/${this.msg.name}/${this.msg.id}`;

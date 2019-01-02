@@ -1,7 +1,7 @@
 <template>
   <div class="package">
     <div class="about-banner-box">
-      <img src="@/images/mobile/ic_correct.svg" alt>
+      <img src="@/images/mobile/ic_avatar.svg" alt>
       <h3>{{ dataStore.accountName }}</h3>
       <div>
         <h4>{{ dataStore.totalValuation.amount }}</h4>
@@ -42,7 +42,7 @@
         <img src="@/images/mobile/ic_arrow_under.svg" alt>
       </div>
       <div>
-        <input type="text" placeholder="search">
+        <input type="text" :placeholder="search">
       </div>
     </div>
     <div class="assets-select-Box" id="assetsSelectBox" v-show="assetsSelectData">
@@ -125,6 +125,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 import dataStore from '@/stores/data';
 import { Observer } from 'mobx-vue';
+import languageStore from '@/stores/language';
 
 @Observer
 @Component
@@ -133,6 +134,7 @@ export default class Assets extends Vue {
   selectInput = 'asset.Value_0_01EOS';
   popupVisible = false;
   assetsSelectData = false;
+  search = languageStore.getIntlText('asset.search');
   selectInputs = [
     'asset.Total_Asset',
     'asset.Tradable_Assets',

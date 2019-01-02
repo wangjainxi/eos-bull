@@ -15,7 +15,7 @@
           style="background:rgba(7,199,78,1);color:#fff"
           type="default"
         >
-          <Language resource="asset.buy"/>
+          <Language resource="asset.buy1"/>
         </mt-button>
       </div>
       <div>
@@ -24,7 +24,7 @@
           style="background:rgba(255,0,0,1);color:#fff"
           type="default"
         >
-          <Language resource="asset.sell"/>
+          <Language resource="asset.sell1"/>
         </mt-button>
       </div>
     </div>

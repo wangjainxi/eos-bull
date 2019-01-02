@@ -135,7 +135,7 @@ export default class MarketList extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #market-page {
   width: 100%;
   min-height: 100%;
@@ -160,6 +160,9 @@ export default class MarketList extends Vue {
     }
     .mint-navbar .mint-tab-item {
       color: #8d8d8d;
+      span {
+        font-size: 0.16rem !important;
+      }
     }
     .mint-navbar .mint-tab-item.is-selected {
       margin-bottom: 0;
