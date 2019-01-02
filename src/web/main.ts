@@ -2,7 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import Language from '@/components/Language';
-import '@/stores/data';
+import store from '@/vuex';
 import '@/utils/socket';
 
 import {
@@ -62,5 +62,6 @@ Vue.filter('formatDate', formatDate);
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app');

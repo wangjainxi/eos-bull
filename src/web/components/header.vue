@@ -15,7 +15,7 @@
         <div class="signed" v-else>
           <span class="use-box" @click="goWallet">
             <img src="@/images/web/ic_eos.svg" alt>
-            <span class="text-style">{{ dataStore.accountName }}</span>
+            <span class="text-style">{{ accountName }}</span>
           </span>
           <span class="text-style switch">Switch</span>
           <span class="text-style exit">Exit</span>
@@ -78,15 +78,15 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import { State } from 'vuex-class';
 import { Observer } from 'mobx-vue';
 import language from '@/stores/language';
 
-import dataStore from '@/stores/data';
-
-@Observer
 @Component
 export default class extends Vue {
-  dataStore = dataStore;
+  @State('accountName')
+  accountName!: string;
+
   activeName = 'first';
   dialogVisible = false;
   dialog2Visible = false;

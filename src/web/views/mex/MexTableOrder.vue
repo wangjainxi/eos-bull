@@ -131,14 +131,18 @@ import { Vue, Component } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import { Observer } from 'mobx-vue';
 import languageStore from '@/stores/language';
-import dataStore from '@/stores/data';
 import openOrderStore from '@/stores/open-order';
 import language from '@/stores/language';
+import { Market } from '@/define';
+
+const marketModule = namespace('market');
 
 @Observer
 @Component
 export default class MexOpenOrders extends Vue {
-  dataStore = dataStore;
+  @marketModule.Getter('currentMarket')
+  currentMarket?: Market;
+
   openOrderStore = openOrderStore;
   checked = false;
   loading = false;
@@ -158,7 +162,7 @@ export default class MexOpenOrders extends Vue {
   //   this.noTitle = `${&nbsp}`;
   // }
   handleHideMarketCheck(val: boolean) {
-    const marketId = dataStore.currentMarket.marketId;
+    const marketId = this.currentMarket!.marketId;
     if (val) openOrderStore.hideOtherMarket(marketId);
     else openOrderStore.showOtherMarket();
   }

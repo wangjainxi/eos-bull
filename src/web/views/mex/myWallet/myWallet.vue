@@ -6,7 +6,7 @@
     <div class="eallet-body">
       <div class="my-info">
         <img src="@/images/web/ic_eos.svg" alt>
-        <div class="my-name">{{ dataStore.accountName }}</div>
+        <div class="my-name">{{ accountName }}</div>
       </div>
       <div class="wallet-assets">
         <div class="assets-left">
@@ -167,9 +167,9 @@
 <script lang="ts">
 import { MessageBox } from 'element-ui';
 import { Component, Vue } from 'vue-property-decorator';
+import { State } from 'vuex-class';
 import { Observer } from 'mobx-vue';
 import languageStore from '@/stores/language';
-import dataStore from '@/stores/data';
 import MyWalletModel from './myWalletModel.vue';
 
 @Observer
@@ -179,7 +179,9 @@ import MyWalletModel from './myWalletModel.vue';
   },
 })
 export default class MyWallet extends Vue {
-  dataStore = dataStore;
+  @State('accountName')
+  accountName!: string;
+
   inputVal: string = '';
   loading: boolean = false;
   thisBoxKey: number = 1;
