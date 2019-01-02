@@ -168,6 +168,13 @@ input[type='number'] {
     color: #e26565;
   }
 }
+.el-slider__stop {
+  height: 13px;
+  width: 13px;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  border: solid 2px #2d7be5;
+}
 .foot-choose-node {
   width: 800px !important;
   border: none !important;
@@ -289,6 +296,14 @@ input[type='number'] {
   }
   .yellow {
     color: rgba(246, 194, 68, 1) !important;
+  }
+}
+.el-select-dropdown__item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  img{
+    padding-right: 5px;
   }
 }
 </style>

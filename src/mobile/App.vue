@@ -59,4 +59,10 @@ export default {
   justify-content: flex-start;
   align-items: flex-start;
 }
+.is-selected {
+  span {
+    font-family: PingFangSC-Medium;
+    font-weight: bold !important;
+  }
+}
 </style>

@@ -4,7 +4,7 @@
       <div class="tleft-view flex-start">
         <div class="logo-view">
           <router-link to="/">
-            <img src="@/images/web/logo_eosmex.svg" />
+            <img src="@/images/web/logo_eosmex.svg">
           </router-link>
         </div>
       </div>
@@ -14,23 +14,35 @@
         </div>
         <div class="signed" v-else>
           <span class="use-box" @click="goWallet">
-            <img src="@/images/web/ic_eos.svg" />
+            <img src="@/images/web/ic_eos.svg">
             <span class="text-style">{{ accountName }}</span>
           </span>
           <span class="text-style switch">Switch</span>
           <span class="text-style exit">Exit</span>
           <router-link to="/orders" class="order-box flex-start">
-            <img src="@/images/web/ic_order.svg" />
+            <img src="@/images/web/ic_order.svg">
             <span class="text-style exit">Orders</span>
           </router-link>
         </div>
-        <select id="ch" :value="language.currentLocale" @change="changeLanguageType">
+        <img :src="showImg" alt>
+        <el-select v-model="selectValue" @change="changeLanguageType">
+          <el-option
+            v-for="(item,index) in language.locales"
+            :key="index"
+            :label="item.label"
+            :value="item.mark"
+          >
+            <img :src="item.mark === 'zh-CN'?require('./../../images/web/ic_flag_cn.svg'):require('./../../images/web/ic_flag_en.svg')" alt>
+            <span>{{item.label}}</span>
+          </el-option>
+        </el-select>
+        <!-- <select id="ch" :value="language.currentLocale" @change="changeLanguageType">
           <option
             v-for="(item,index) in language.locales"
             :key="index"
             :value="item.mark"
           >{{item.label}}</option>
-        </select>
+        </select>-->
         <!-- {{$t('m.transaction.homepage')}} -->
       </div>
     </div>
@@ -91,6 +103,8 @@ export default class extends Vue {
   login!: Function;
 
   activeName = 'first';
+  thisLangImg = '';
+  selectValue = language.currentLocale;
   dialogVisible = false;
   dialog2Visible = false;
   noTitle = `  `;
@@ -119,7 +133,16 @@ export default class extends Vue {
   }
 
   changeLanguageType(data: any) {
-    language.changeLanguage(data.currentTarget.value);
+    language.changeLanguage(this.selectValue);
+    this.selectValue = language.currentLocale;
+  }
+  get showImg() {
+    if (language.currentLocale === 'zh-CN') {
+      this.thisLangImg = require('./../../images/web/ic_flag_cn.svg');
+    } else if (language.currentLocale === 'en-US') {
+      this.thisLangImg = require('./../../images/web/ic_flag_en.svg');
+    }
+    return this.thisLangImg;
   }
 }
 </script>
@@ -398,6 +421,17 @@ export default class extends Vue {
         line-height: 20px;
         color: rgba(45, 123, 229, 1);
       }
+    }
+  }
+  .el-select {
+    input {
+      border: none;
+      width: 100px;
+      font-size: 14px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(146, 167, 197, 1);
+      background: rgba(20, 46, 77, 1);
     }
   }
 }

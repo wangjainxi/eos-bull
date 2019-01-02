@@ -82,4 +82,6 @@ export default {
   Revoked: 'Revoked',
   Details: 'Details',
   Detail: 'Detail',
+  Sort_by: 'Sort by',
+  Date: 'Date',
 };

@@ -82,4 +82,6 @@ export default {
   Revoked: '已撤销',
   Details: '详情',
   Detail: '明细',
+  Sort_by: '排序',
+  Date: '日期',
 };

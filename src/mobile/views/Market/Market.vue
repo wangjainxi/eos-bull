@@ -299,6 +299,9 @@ export default class MarketList extends Vue {
     > div {
       font-size: 0.13rem;
       color: #8d8d8d;
+      span{
+        margin-right: 0.05rem;
+      }
     }
     .special {
       color: #007aff;
