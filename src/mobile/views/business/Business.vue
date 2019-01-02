@@ -191,7 +191,6 @@ import { MessageBox, Toast, Loadmore } from 'mint-ui';
 import languageStore from '@/stores/language';
 import { Market, Order } from '@/define';
 import { orderHistory } from '@/utils/restful';
-import dataStore from '@/stores/data';
 import { OrderParams } from '@/utils/scatter';
 
 const orderModule = namespace('order');
@@ -245,7 +244,6 @@ export default class Business extends Vue {
   currrentTab = '卖出';
   thisBal = languageStore.getIntlText('business.Bal');
   tabs = [languageStore.getIntlText('business.Buy'), languageStore.getIntlText('business.Sell')];
-  entrustData = dataStore;
   imgUrl = require('./../../../images/mobile/ic_nodata.png');
   imgMsg = languageStore.getIntlText('business.nodata');
   tradeDataMountSum = 0;

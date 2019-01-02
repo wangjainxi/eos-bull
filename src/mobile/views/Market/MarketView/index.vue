@@ -1,12 +1,15 @@
 <template>
   <div class="market-view-box" v-if="currentMarket">
-    <!-- <TransactionDetail v-if="marketViewStore.showAlert" :onTransaction="onTransaction"/> -->
+    <!-- <TransactionDetail :onTransaction="onTransaction"/> -->
     <div class="market-container">
       <TopView :market="currentMarket"/>
       <div class="trading-box">
         <!-- <VueTradingView/> -->
       </div>
-      <BomView :orderData="pendingOrders" :recentDealData="[]" />
+      <BomView
+        :orderData="pendingOrders"
+        :recentDealData="recentDealData"
+        :tokenInfo="tokenInfo" />
     </div>
     <div class="btn-box">
       <div>
@@ -31,24 +34,18 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import { namespace, State } from 'vuex-class';
-import data from '@/stores/data';
+import { Vue, Component, Watch } from 'vue-property-decorator';
+import { namespace, State, Action } from 'vuex-class';
 import TopView from './TopView.vue';
 import BomView from './BomView.vue';
 import TransactionDetail from './TransactionDetail.vue';
 import VueTradingView from '@/components/vueTradingView/index.vue';
-import { observer } from 'mobx-vue';
-import { Market, Trade, Order } from '@/define';
-import { computed } from 'mobx';
-import { getMarketOrderbook, getMarketTrades, favouriteMarkets } from '@/utils/apis';
-import marketViewStore from './marketViewStore';
-import { market } from '@/vuex/market';
+import { Market, Trade, Order, TokenInfo } from '@/define';
+import { getMarketTrades, getTokenInfo } from '@/utils/apis';
 
 const orderModule = namespace('order');
 const marketModule = namespace('market');
 
-@observer
 @Component({
   components: {
     TopView,
@@ -76,15 +73,11 @@ export default class MarketView extends Vue {
   @orderModule.State('historyOrders')
   historyOrders!: Order[];
 
-  marketViewStore = marketViewStore;
-
-  recentDealData: Array<Trade> = [];
+  @Action('login')
+  login!: Function;
 
   @marketModule.Action('fetchMarkets')
   fetchMarkets!: Function;
-
-  @marketModule.Mutation('setCurrentMarketId')
-  setCurrentMarketId!: Function;
 
   @orderModule.Action('fetchPendingOrders')
   fetchPendingOrders!: Function;
@@ -92,22 +85,40 @@ export default class MarketView extends Vue {
   @orderModule.Action('fetchHistoryOrders')
   fetchHistoryOrders!: Function;
 
+  @marketModule.Mutation('setCurrentMarketId')
+  setCurrentMarketId!: Function;
+
+  recentDealData: Array<Trade> = [];
+
+  tokenInfo: TokenInfo | null = null;
+
   get marketId() {
     return parseInt(this.$route.params.id, 10);
   }
 
-  async created() {
-    this.setCurrentMarketId(this.marketId);
-    if (!this.currentMarket) {
-      this.fetchMarkets();
-    }
-    setTimeout(() => {
-      this.fetchPendingOrders();
-    }, 1000);
+  created() {
+    this.initData();
   }
 
-  async getRecentData() {
-    this.recentDealData = await getMarketTrades(Number(this.$route.params.id));
+  @Watch('$route')
+  handleRouteChange() {
+    this.initData();
+  }
+
+  async initData() {
+    this.setCurrentMarketId(this.marketId);
+    if (!this.currentMarket) {
+      await this.fetchMarkets();
+    }
+
+    if (!this.accountName) {
+      await this.login();
+    }
+    await this.fetchPendingOrders();
+    this.recentDealData = await getMarketTrades(this.marketId);
+    const contract = this.currentMarket!.pair.baseCurrency.contract;
+    const symbol = this.currentMarket!.pair.baseCurrency.symbol.name;
+    this.tokenInfo = await getTokenInfo(contract, symbol);
   }
 
   onTransaction(t: any) {

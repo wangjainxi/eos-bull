@@ -68,7 +68,6 @@ import { getOrderFills } from '@/utils/apis';
 import { Observer } from 'mobx-vue';
 import { Orderbook } from '@/define';
 import { formatTimes } from '@/utils/formatTime';
-import dataStore from '@/stores/data';
 import FixHeader from './components/fixHeader.vue';
 import SellDetailsItem from './components/sellDetailsItem.vue';
 

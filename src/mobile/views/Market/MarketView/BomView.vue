@@ -19,10 +19,10 @@
             <DeepCharts/>
           </mt-tab-container-item>
           <mt-tab-container-item id="3">
-            <DealTab :recentDealData="recentDealData"/>
+            <DealTab :recentDealData="recentDealData" />
           </mt-tab-container-item>
           <mt-tab-container-item id="4">
-            <Introduction/>
+            <Introduction :tokenInfo="tokenInfo" />
           </mt-tab-container-item>
         </mt-tab-container>
       </div>
@@ -37,6 +37,7 @@ import OrderTab from './component/OrderTab.vue';
 import DealTab from './component/DealTab.vue';
 import Introduction from './component/VueIntroduction.vue';
 import DeepCharts from '../../../../components/deepCharts/index.vue';
+import { TokenInfo } from '@/define';
 
 @Component({
   components: {
@@ -49,6 +50,8 @@ import DeepCharts from '../../../../components/deepCharts/index.vue';
 export default class BomView extends Vue {
   @Prop() orderData!: any;
   @Prop() recentDealData!: any;
+  @Prop() tokenInfo?: TokenInfo;
+
   selected = '1';
 }
 </script>
@@ -68,6 +71,7 @@ export default class BomView extends Vue {
 
 #bom-container {
   width: 100vw;
+  min-height: 200px;
   background-color: #fff;
   margin-top: 0.04rem;
   .type-select-box {
