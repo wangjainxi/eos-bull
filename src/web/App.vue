@@ -298,4 +298,12 @@ input[type='number'] {
     color: rgba(246, 194, 68, 1) !important;
   }
 }
+.el-select-dropdown__item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  img{
+    padding-right: 5px;
+  }
+}
 </style>
