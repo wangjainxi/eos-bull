@@ -16,7 +16,7 @@
     </div>
     <div class="table-box">
       <el-table
-        :data="Array.from(historyOrderStore.orders)"
+        :data="historyOrders"
         style="width: 100%"
         :empty-text="ThereSNoDataYet"
       >
@@ -188,7 +188,7 @@
         :page-sizes="[10, 20, 30, 40]"
         :page-size="10"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="historyOrderStore.totalCount"
+        :total="historyOrderCount"
       ></el-pagination>
     </div>
     <OrderPopup :dialogVisible="dialogVisible" :title="title" v-on:closePopup="PopupStatus"></OrderPopup>
@@ -200,7 +200,7 @@ import { Vue, Component } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import { Observer } from 'mobx-vue';
 import OrderPopup from './components/OrderPopup.vue';
-import { ORDER_STATUS, Market } from '@/define';
+import { ORDER_STATUS, Market, Order } from '@/define';
 import language from '@/stores/language';
 
 const orderModule = namespace('order');
@@ -212,6 +212,12 @@ const marketModule = namespace('market');
   },
 })
 export default class MexHistoryOrder extends Vue {
+  @orderModule.State('historyOrderCount')
+  historyOrderCount!: number;
+
+  @orderModule.State('historyOrders')
+  historyOrders!: Order[];
+
   @marketModule.Getter('currentMarket')
   currentMarket?: Market;
 

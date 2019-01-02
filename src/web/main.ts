@@ -30,7 +30,7 @@ import {
   Carousel,
   CarouselItem,
 } from 'element-ui';
-import { formatDate } from '@/utils/common';
+import { formatDate, byte2Kilobyte } from '@/utils/common';
 
 Vue.config.productionTip = false;
 Vue.use(Button);
@@ -59,6 +59,7 @@ Vue.use(Carousel);
 Vue.use(CarouselItem);
 Vue.component('Language', Language);
 Vue.filter('formatDate', formatDate);
+Vue.filter('byte2Kilobyte', byte2Kilobyte);
 
 new Vue({
   router,

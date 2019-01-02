@@ -3,26 +3,26 @@
     <div class="top-view">
       <div class="tleft-view flex-start">
         <div class="logo-view">
-          <a href="/">
-            <img src="@/images/web/logo_eosmex.svg" alt>
-          </a>
+          <router-link to="/">
+            <img src="@/images/web/logo_eosmex.svg" />
+          </router-link>
         </div>
       </div>
       <div class="tright-view">
-        <div class="un-sign-in" v-if="true" @click="showDilog">
+        <div class="un-sign-in" v-if="!accountName" @click="showDilog">
           <Language resource="home.sign_in"/>
         </div>
         <div class="signed" v-else>
           <span class="use-box" @click="goWallet">
-            <img src="@/images/web/ic_eos.svg" alt>
+            <img src="@/images/web/ic_eos.svg" />
             <span class="text-style">{{ accountName }}</span>
           </span>
           <span class="text-style switch">Switch</span>
           <span class="text-style exit">Exit</span>
-          <span class="order-box flex-start">
-            <img src="@/images/web/ic_order.svg" alt>
+          <router-link to="/orders" class="order-box flex-start">
+            <img src="@/images/web/ic_order.svg" />
             <span class="text-style exit">Orders</span>
-          </span>
+          </router-link>
         </div>
         <select id="ch" :value="language.currentLocale" @change="changeLanguageType">
           <option
@@ -42,7 +42,7 @@
     >
       <div class="content scatter">
         <img src="./../../images/ic_scatter_sign_in.png" alt>
-        <div class="div-sign" @click="showdilog2">
+        <div class="div-sign" @click="handleScatterSignInBtnClick">
           <Language resource="home.Sign_Sca"/>
         </div>
         <div class="sign-foot">
@@ -78,7 +78,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { State } from 'vuex-class';
+import { State, Action } from 'vuex-class';
 import { Observer } from 'mobx-vue';
 import language from '@/stores/language';
 
@@ -86,6 +86,9 @@ import language from '@/stores/language';
 export default class extends Vue {
   @State('accountName')
   accountName!: string;
+
+  @Action('login')
+  login!: Function;
 
   activeName = 'first';
   dialogVisible = false;
@@ -101,13 +104,20 @@ export default class extends Vue {
       name: 'myWallet',
     });
   }
+
   showDilog() {
     this.dialogVisible = true;
   }
-  showdilog2() {
-    this.dialogVisible = false;
-    this.dialog2Visible = true;
+
+  async handleScatterSignInBtnClick() {
+    try {
+      await this.login();
+      this.dialogVisible = false;
+    } catch (err) {
+      debugger;
+    }
   }
+
   changeLanguageType(data: any) {
     language.changeLanguage(data.currentTarget.value);
   }
