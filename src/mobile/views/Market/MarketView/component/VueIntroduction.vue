@@ -1,60 +1,88 @@
 <template>
-  <div class="intro-box">
+  <div class="intro-box" v-if="tokenInfo">
     <div class="intro-top">
-      <img src="@/images/mobile/logo_eosmex.svg" alt>
-      <p>这是一个由这是一个由这是一个由这是一个由这是一个由这是一个由这是一个由</p>
+      <div class="name-box">
+        <img class="icon" :src="tokenInfo.icon" />
+        <div class="name">{{ tokenInfo.symbol.name }}</div>
+      </div>
+      <p class="introduction">{{ tokenInfo.introduction }}</p>
     </div>
     <div class="intro-bom">
       <p class="base-info">
-        <Language resource="asset.Introduction"/>
+        <Language resource="asset.Introduction" />
       </p>
       <p class="info-title">
         <span>
-          <Language resource="asset.Circulating_Supply"/>
+          <Language resource="asset.Circulating_Supply" />
         </span>
-        <span>info-title</span>
+        <span>
+          {{ tokenInfo.circulatingSupply.amount }}
+          {{ tokenInfo.circulatingSupply.symbol.name }}
+        </span>
       </p>
       <p class="info-title">
         <span>
-          <Language resource="asset.Max_Supply"/>
+          <Language resource="asset.Max_Supply" />
         </span>
-        <span>info-title</span>
+        <span>
+          {{ tokenInfo.maxSupply.amount }}
+          {{ tokenInfo.maxSupply.symbol.name }}
+        </span>
       </p>
       <p class="info-title">
         <span>
-          <Language resource="asset.Contract"/>
+          <Language resource="asset.Contract" />
         </span>
-        <span>info-title</span>
+        <span>
+          {{ tokenInfo.contract }}
+        </span>
       </p>
       <p class="info-title">
-        <Language resource="asset.Website"/>
-        <span>info-title</span>
+        <Language resource="asset.Website" />
+        <a :href="tokenInfo.website">{{ tokenInfo.website }}</a>
       </p>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import { TokenInfo } from '@/define';
 
-@Component({})
-export default class extends Vue {}
+@Component
+export default class Introduction extends Vue {
+  @Prop()
+  tokenInfo?: TokenInfo;
+}
 </script>
 <style lang="scss" scoped>
 @import '@/style/mixin.scss';
+
+.name-box {
+  margin-bottom: 0.12rem;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  height: 0.26rem;
+  width: 0.26rem;
+  margin-right: 0.04rem;
+}
+
+.name {
+  font-size: 0.17rem;
+  font-weight: bold;
+}
+
+.introduction {
+  color: #8D8D8D;
+  font-size: 0.14rem;
+}
+
 .intro-box {
   width: 100%;
   padding: 0.13rem 0.2rem 0.31rem 0.2rem;
-  .intro-top {
-    @include flexLayout(column, flex-start, flex-start);
-    padding-bottom: 0.12rem;
-    border-bottom: 0.01rem solid rgba(242, 245, 251, 1);
-
-    img {
-      margin-bottom: 0.13rem;
-    }
-    text-align: left;
-  }
   .hidden {
     color: transparent;
     font-size: 12px;
