@@ -71,14 +71,16 @@ export default class TabPackage extends Vue {
     width: 20%;
     height: 100%;
     flex-direction: column;
-    justify-content: space-between;
-    padding-top: 0.1rem;
+    align-items: center;
+    justify-content: center;
+
     .icon {
       display: inline-block;
+      margin-bottom: 0.04rem;
     }
+
     .name {
       font-size: 0.1rem;
-      padding-bottom: 2px;
       color: #b3bfd0;
     }
 

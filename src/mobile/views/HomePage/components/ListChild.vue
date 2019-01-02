@@ -84,6 +84,7 @@ export default class extends Vue {
     color: #ffffff;
     border-radius: 0.03rem;
     line-height: 0.29rem;
+    text-align: center;
 
     &.fall {
       background: #ff0000;
