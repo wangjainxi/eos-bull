@@ -3,10 +3,10 @@
     <div class="inner-box">
       <el-tabs v-model="activeName" @tab-click="onTabSwitch">
         <el-tab-pane label="Favorite" name="first" class="tab-first">
-          <TableItem :thisTdata="thisTdata.freeMarketList"></TableItem>
+          <TableItem :thisTdata="favoriteMarkets" />
         </el-tab-pane>
         <el-tab-pane label="EOS" name="second" class="tab_second">
-          <TableItem :thisTdata="thisTdata.marketList"></TableItem>
+          <TableItem :thisTdata="markets" />
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -14,18 +14,24 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { Observer } from 'mobx-vue';
-import dataStore from '@/stores/data';
+import { namespace } from 'vuex-class';
 import TableItem from './tableItem.vue';
+import { Market } from '@/define';
 
-@Observer
+const marketModule = namespace('market');
+
 @Component({
   components: { TableItem },
 })
 export default class extends Vue {
+  @marketModule.State('markets')
+  markets!: Market[];
+
+  @marketModule.Getter('favoriteMarkets')
+  favoriteMarkets!: Market[];
+
   // data
   activeName: string = 'second';
-  thisTdata = dataStore;
   tableData: Array<any> = [
     {
       pairs: 'ZKS',

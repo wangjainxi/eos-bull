@@ -6,11 +6,11 @@
     <div class="eallet-body">
       <div class="my-info">
         <img src="@/images/web/ic_eos.svg" alt>
-        <div class="my-name">{{ dataStore.accountName }}</div>
+        <div class="my-name">{{ accountName }}</div>
       </div>
       <div class="wallet-assets">
         <div class="assets-left">
-          <span>5.8814 EOS</span>
+          <span>{{ totalValuation.amount }} {{ totalValuation.name }}</span>
           <Language resource="myWallet.Current_Value"/>
         </div>
         <span></span>
@@ -24,7 +24,7 @@
             <Language resource="myWallet.Redeeming"/>
           </div>
           <div class="item-content">
-            <span>0.0000</span>EOS
+            <span>{{ accountInfo ? accountInfo.eos.refunding.amount : '-' }}</span>EOS
           </div>
         </div>
         <div class="table-item">
@@ -32,21 +32,20 @@
             <Language resource="myWallet.Available"/>
           </div>
           <div class="item-content">
-            <span>100.8501</span>EOS
+            <span>{{ accountInfo ? accountInfo.eos.available.amount : '-' }}</span>EOS
           </div>
         </div>
         <div class="table-item">
           <div class="item-name">&nbsp;RAM</div>
           <div class="item-content">
             <Language resource="myWallet.Remain"/>
-            <el-tooltip
-              class="item"
-              effect="light"
-              content="Used 3.05KB / Total 5.34KB"
-              placement="bottom"
-            >
+            <el-tooltip class="item" effect="light" placement="bottom">
+              <div slot="content">
+                Used {{ ramInfo.used | byte2Kilobyte }}KB /
+                Total {{ ramInfo.max | byte2Kilobyte }}KB (0.1000 EOS)
+              </div>
               <div>
-                <span>2.29KB</span>
+                <span>{{ ramInfo.max - ramInfo.used | byte2Kilobyte }}KB</span>
                 <i></i>
               </div>
             </el-tooltip>
@@ -55,15 +54,14 @@
         <div class="table-item">
           <div class="item-name">CPU</div>
           <div class="item-content">
-            <el-tooltip
-              class="item"
-              effect="light"
-              content="Used 7.01ms / Total 0.04ms (0.1000 EOS)"
-              placement="bottom"
-            >
+            <el-tooltip class="item" effect="light" placement="bottom">
+              <div slot="content">
+                Used {{ cpuInfo.used / 1000 }}ms /
+                Total {{ cpuInfo.max / 1000 }}ms (0.1000 EOS)
+              </div>
               <div>
                 <Language resource="myWallet.Used"/>
-                <span>100%</span>
+                <span>{{ cpuInfo.usageRate }}%</span>
                 <i></i>
               </div>
             </el-tooltip>
@@ -72,15 +70,14 @@
         <div class="table-item">
           <div class="item-name">NET</div>
           <div class="item-content">
-            <el-tooltip
-              class="item"
-              effect="light"
-              content="Used 1.50KB / Total 77.04KB (0.1000 EOS)"
-              placement="bottom"
-            >
+            <el-tooltip class="item" effect="light" placement="bottom">
+              <div slot="content">
+                Used {{ netInfo.used | byte2Kilobyte }}KB /
+                Total {{ netInfo.max | byte2Kilobyte }}KB (0.1000 EOS)
+              </div>
               <div>
                 <Language resource="myWallet.Used"/>
-                <span>2%</span>
+                <span>{{ netInfo.usageRate }}%</span>
                 <i></i>
               </div>
             </el-tooltip>
@@ -108,14 +105,14 @@
           </div>
         </div>
         <div class="assets-table-body">
-          <el-table :data="tableData" style="width: 100%" empty-text="There's no data yet">
+          <el-table :data="walletTokens" style="width: 100%" empty-text="There's no data yet">
             <el-table-column prop="coin">
               <template slot="header" slot-scope="scope">
                 <Language resource="myWallet.Coin"/>
               </template>
               <template slot-scope="scope">
-                <img :src="scope.row.imgurl" alt>
-                <span>{{scope.row.coin}}</span>
+                <img :src="scope.row.imgurl" />
+                <span>{{ scope.row.available.symbol.name }}</span>
               </template>
             </el-table-column>
             <el-table-column prop="contract">
@@ -123,7 +120,7 @@
                 <Language resource="myWallet.Contract"/>
               </template>
               <template slot-scope="scope">
-                <span class="span2">{{scope.row.contract}}</span>
+                <span class="span2">{{ scope.row.available.symbol.contract }}</span>
               </template>
             </el-table-column>
             <el-table-column prop="available" width="100" align="right">
@@ -131,12 +128,21 @@
                 <Language resource="myWallet.Available"/>
               </template>
               <template slot-scope="scope">
-                <span class="span3">{{scope.row.available}}</span>
+                <span class="span3">
+                  {{ scope.row.available.amount }}
+                  {{ scope.row.available.symbol.symbol.name }}
+                </span>
               </template>
             </el-table-column>
             <el-table-column prop="frozen" width="280" align="center">
               <template slot="header" slot-scope="scope">
                 <Language resource="myWallet.Frozen"/>
+              </template>
+              <template slot-scope="scope">
+                <span>
+                  {{ scope.row.onOrder.amount }}
+                  {{ scope.row.onOrder.symbol.symbol.name }}
+                </span>
               </template>
             </el-table-column>
             <el-table-column prop="valuation" width="130" align="right">
@@ -144,7 +150,10 @@
                 <Language resource="myWallet.EOS_Valuation"/>
               </template>
               <template slot-scope="scope">
-                <span>{{scope.row.valuation}}EOS</span>
+                <span>
+                  {{ scope.row.estValue.amount }}
+                  {{ scope.row.estValue.symbol.name }}
+                </span>
               </template>
             </el-table-column>
             <el-table-column align="center">
@@ -164,13 +173,18 @@
     </div>
   </div>
 </template>
+
 <script lang="ts">
 import { MessageBox } from 'element-ui';
+import { namespace } from 'vuex-class';
 import { Component, Vue } from 'vue-property-decorator';
+import { State } from 'vuex-class';
 import { Observer } from 'mobx-vue';
 import languageStore from '@/stores/language';
-import dataStore from '@/stores/data';
 import MyWalletModel from './myWalletModel.vue';
+import { TokenBalance, AccountInfo } from '@/define';
+
+const userModule = namespace('user');
 
 @Observer
 @Component({
@@ -179,57 +193,31 @@ import MyWalletModel from './myWalletModel.vue';
   },
 })
 export default class MyWallet extends Vue {
-  dataStore = dataStore;
+  @State('accountName')
+  accountName!: string;
+
+  @userModule.State('accountInfo')
+  accountInfo?: AccountInfo;
+
+  @userModule.Getter('cpuInfo')
+  cpuInfo!: Object;
+
+  @userModule.Getter('netInfo')
+  netInfo!: Object;
+
+  @userModule.Getter('ramInfo')
+  ramInfo!: Object;
+
+  @userModule.Getter('totalValuation')
+  totalValuation!: Object;
+
+  @userModule.Getter('walletTokens')
+  walletTokens!: TokenBalance[];
+
   inputVal: string = '';
   loading: boolean = false;
   thisBoxKey: number = 1;
-  tableData: Array<any> = [
-    {
-      coin: 'DICE',
-      contract: 0.004293,
-      time: '2018-12-07 14:15:55',
-      available: 5.8501,
-      frozen: 0.0,
-      valuation: 5.8501,
-      imgurl: require('@/images/web/ic_eos.svg'),
-    },
-    {
-      coin: 'DICE',
-      contract: 0.013293,
-      time: '2018-12-07 14:15:55',
-      available: 5.1501,
-      frozen: 0.0,
-      valuation: 5.8501,
-      imgurl: require('@/images/web/ic_eos.svg'),
-    },
-    {
-      coin: 'DICE',
-      contract: 0.222223,
-      time: '2018-12-07 14:15:55',
-      available: 5.0501,
-      frozen: 0.0,
-      valuation: 5.8501,
-      imgurl: require('@/images/web/ic_eos.svg'),
-    },
-    {
-      coin: 'DICE',
-      contract: 0.014293,
-      time: '2018-12-07 14:15:55',
-      available: 6.8501,
-      frozen: 0.0,
-      valuation: 5.8501,
-      imgurl: require('@/images/web/ic_eos.svg'),
-    },
-    {
-      coin: 'DICE',
-      contract: 0.024293,
-      time: '2018-12-07 14:15:55',
-      available: 1.8501,
-      frozen: 0.0,
-      valuation: 5.8501,
-      imgurl: require('@/images/web/ic_eos.svg'),
-    },
-  ];
+
   options: Array<any> = [
     {
       value: 1,
@@ -259,25 +247,13 @@ export default class MyWallet extends Vue {
       customClass: 'my-wallet-model',
     });
   }
+
   handleEdit(obj: Object) {
     console.log(obj);
   }
-  // methods: {
-  //   showModel() {
-  //     MessageBox({
-  //       title: '',
-  //       message: <my-wallet-model />,
-  //       showCancelButton: false,
-  //       showConfirmButton: false,
-  //       customClass: 'my-wallet-model',
-  //     });
-  //   },
-  //   handleEdit(obj){
-  //     console.log(obj);
-  //   }
-  // },
 }
 </script>
+
 <style lang="scss" scoped>
 @import './../../../../style/mixin.scss';
 $height: 100%;

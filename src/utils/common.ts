@@ -10,3 +10,7 @@ export const format = (str: string, ...args: any[]) => {
 export const formatDate = (d: string | Dayjs | number, f: string) => {
   return dayjs(d).format(f || 'YYYY-MM-DD HH:mm:ss');
 };
+
+export const byte2Kilobyte = (val: number) => {
+  return (val / 1024).toFixed(2);
+};

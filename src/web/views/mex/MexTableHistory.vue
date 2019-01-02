@@ -16,7 +16,7 @@
     </div>
     <div class="table-box">
       <el-table
-        :data="Array.from(historyOrderStore.orders)"
+        :data="historyOrders"
         style="width: 100%"
         :empty-text="ThereSNoDataYet"
       >
@@ -188,7 +188,7 @@
         :page-sizes="[10, 20, 30, 40]"
         :page-size="10"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="historyOrderStore.totalCount"
+        :total="historyOrderCount"
       ></el-pagination>
     </div>
     <OrderPopup :dialogVisible="dialogVisible" :title="title" v-on:closePopup="PopupStatus"></OrderPopup>
@@ -197,21 +197,30 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
 import { Observer } from 'mobx-vue';
-import dataStore from '@/stores/data';
-import historyOrderStore from '@/stores/history-order';
 import OrderPopup from './components/OrderPopup.vue';
-import { ORDER_STATUS } from '@/define';
+import { ORDER_STATUS, Market, Order } from '@/define';
 import language from '@/stores/language';
 
-@Observer
+const orderModule = namespace('order');
+const marketModule = namespace('market');
+
 @Component({
   components: {
     OrderPopup,
   },
 })
 export default class MexHistoryOrder extends Vue {
-  historyOrderStore = historyOrderStore;
+  @orderModule.State('historyOrderCount')
+  historyOrderCount!: number;
+
+  @orderModule.State('historyOrders')
+  historyOrders!: Order[];
+
+  @marketModule.Getter('currentMarket')
+  currentMarket?: Market;
+
   hideOther = false;
   hideRevoked = false;
   dialogVisible = false;
@@ -237,10 +246,11 @@ export default class MexHistoryOrder extends Vue {
         ignoreCanceled: true,
       });
     }
-    historyOrderStore.fetchWebOrders(dataStore.accountName, params);
+    // historyOrderStore.fetchWebOrders(dataStore.accountName, params);
   }
 
   handleHideOtherCheck(val: boolean) {
+    if (!this.currentMarket) return;
     this.page = 1;
     const params = {
       page: this.page,
@@ -248,10 +258,10 @@ export default class MexHistoryOrder extends Vue {
     };
     if (val) {
       Object.assign(params, {
-        baseCurrency: dataStore.currentMarket.pair.baseCurrency.symbol.name,
+        baseCurrency: this.currentMarket.pair.baseCurrency.symbol.name,
       });
     }
-    historyOrderStore.fetchWebOrders(dataStore.accountName, params);
+    // historyOrderStore.fetchWebOrders(dataStore.accountName, params);
   }
 
   handleSizeChange(val: number) {
@@ -261,7 +271,7 @@ export default class MexHistoryOrder extends Vue {
       page: this.page,
       pageSize: this.pageSize,
     };
-    historyOrderStore.fetchWebOrders(dataStore.accountName, params);
+    // historyOrderStore.fetchWebOrders(dataStore.accountName, params);
   }
 
   handleCurrentChange(val: number) {
@@ -270,7 +280,7 @@ export default class MexHistoryOrder extends Vue {
       page: this.page,
       pageSize: this.pageSize,
     };
-    historyOrderStore.fetchWebOrders(dataStore.accountName, params);
+    // historyOrderStore.fetchWebOrders(dataStore.accountName, params);
   }
 
   greet(id: number) {

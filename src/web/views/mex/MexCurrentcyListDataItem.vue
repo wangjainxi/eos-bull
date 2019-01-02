@@ -5,7 +5,7 @@
         :class="['star',{starActive: item.favourited || localFavourite.indexOf(item.marketId) >= 0}]"
         @click="addStar(item.marketId,$event)"
       ></div>
-      <img :src="item.baseCurrencyIcon.iconUrl" class="market-logo">
+      <img :src="item.baseCurrencyIcon" class="market-logo">
       <div class="market-content">
         <div
           class="content-name"
@@ -59,7 +59,6 @@ export default class MexCurrentcyListDataItem extends Vue {
       this.localFavourite.push(id);
       localStorage.setItem('localFavourite', JSON.stringify(this.localFavourite));
     }
-    dataStore.freeMarketList;
   }
 
   get getShowColor() {

@@ -2,7 +2,7 @@
   <div id="mex-head-info-page">
     <div class="head-info-title">
       <div class="head-info-title-logo">
-        <img class="symbol-icon" :src="market && market.baseCurrencyIcon.iconUrl">
+        <img class="symbol-icon" :src="market && market.baseCurrencyIcon">
         <div @click="setInfoTitleState" class="click-range">
           <h4 v-if="market">
             <span>{{ market.pair.baseCurrency.symbol.name }}</span>

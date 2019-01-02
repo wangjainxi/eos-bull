@@ -45,7 +45,7 @@ export default new Router({
           component: Market,
         },
         {
-          path: '/order-details',
+          path: '/orders',
           name: 'orderDetails',
           component: OrderDetails,
         },
