@@ -1,8 +1,11 @@
 <template>
-  <div class="business" id="business">
+  <div class="business" id="business" v-if="currentMarket">
     <div class="business-coin-title">
       <div class="business-coin-name" @click="showCoinData">
-        <span>{{coinName}}</span>
+        <span>
+          {{ currentMarket.pair.baseCurrency.symbol.name }}/
+          {{ currentMarket.pair.quoteCurrency.symbol.name }}
+        </span>
         <i></i>
       </div>
       <div class="business-coin-image">
@@ -34,7 +37,7 @@
         </div>
         <div class="business-mount">
           <input type="text" v-model="inputVal">
-          <span>WIZBOX</span>
+          <span>{{currentMarket.pair.baseCurrency.symbol.name}}</span>
         </div>
         <div class="business-change-eos">{{`≈${changeEos}EOS`}}</div>
         <BusinessRange
@@ -118,17 +121,17 @@
         </div>
       </div>
       <div
-        :class="['business-entrust-body',{'show-item':entrustData.pendingOrders.length !== 0}]"
+        :class="['business-entrust-body',{'show-item': pendingOrders.length !== 0}]"
         v-if="entrustType === 0"
       >
         <ShowMessageImg
-          v-if="entrustData.pendingOrders.length === 0"
+          v-if="pendingOrders.length === 0"
           :imgUrl="imgUrl"
           :imgMsg="imgMsg"
         ></ShowMessageImg>
         <div class="loadmore-list" v-else>
           <BusinessEntrust
-            v-for="(item,index) in entrustData.pendingOrders"
+            v-for="(item,index) in pendingOrders"
             :item="item"
             :routeParam="routeParam"
             :entrustType="entrustType"
@@ -137,11 +140,11 @@
         </div>
       </div>
       <div
-        :class="['business-entrust-body',{'show-item':entrustData.historyOrders.orders.length !== 0}]"
+        :class="['business-entrust-body',{'show-item': historyOrders.orders.length !== 0}]"
         v-else
       >
         <ShowMessageImg
-          v-if="entrustData.historyOrders.orders.length === 0"
+          v-if="historyOrders.orders.length === 0"
           :imgUrl="imgUrl"
           :imgMsg="imgMsg"
         ></ShowMessageImg>
@@ -153,7 +156,7 @@
             ref="loadmore"
           >
             <BusinessEntrust
-              v-for="(item,index) in entrustData.historyOrders.orders"
+              v-for="(item,index) in historyOrders.orders"
               :item="item"
               :routeParam="routeParam"
               :entrustType="entrustType"
@@ -171,14 +174,14 @@
       </div>
     </div>
     <mt-actionsheet :actions="sheetActions" :cancelText="cancel" v-model="sheetVisible"></mt-actionsheet>
-    <ShowCoinList v-model="popupVisible" :dataCoinList="entrustData.markets"></ShowCoinList>
+    <ShowCoinList v-model="popupVisible" :dataCoinList="markets"></ShowCoinList>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Watch } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
 import onfire from 'onfire.js';
-import { Observer } from 'mobx-vue';
 import ShowMessageImg from './../../../components/messageImage.vue';
 import BusinessTradeItem from './components/businessTrade.vue';
 import BusinessEntrust from './components/businessEntrust.vue';
@@ -186,52 +189,14 @@ import BusinessRange from './components/businessRange.vue';
 import ShowCoinList from './components/businessCoin.vue';
 import { MessageBox, Toast, Loadmore } from 'mint-ui';
 import languageStore from '@/stores/language';
-import { Market } from '@/define';
-import { orderHistory } from '../../../utils/restful';
+import { Market, Order } from '@/define';
+import { orderHistory } from '@/utils/restful';
 import dataStore from '@/stores/data';
+import { OrderParams } from '@/utils/scatter';
 
-const tradeData = [
-  {
-    price: 0.00231,
-    mount: 12,
-  },
-  {
-    price: 0.00231,
-    mount: 122,
-  },
-  {
-    price: 0.10231,
-    mount: 1,
-  },
-  {
-    price: 0.00231,
-    mount: 34,
-  },
-  {
-    price: 0.00231,
-    mount: 132,
-  },
-  {
-    price: 0.10231,
-    mount: 1,
-  },
-  {
-    price: 0.00231,
-    mount: 34,
-  },
-  {
-    price: 0.00231,
-    mount: 132,
-  },
-];
+const orderModule = namespace('order');
+const marketModule = namespace('market');
 
-const entrustData = [{}];
-interface PageParam {
-  page?: number;
-  pageSize?: number;
-}
-
-@Observer
 @Component({
   components: {
     ShowMessageImg,
@@ -242,11 +207,31 @@ interface PageParam {
     Loadmore,
   },
 })
-export default class extends Vue {
+export default class Business extends Vue {
+  @marketModule.State('markets')
+  markets!: Market[];
+
+  @marketModule.Getter('currentMarket')
+  currentMarket?: Market;
+
+  @orderModule.State('pendingOrders')
+  pendingOrders!: Order[];
+
+  @orderModule.State('historyOrders')
+  historyOrders!: Order[];
+
+  @marketModule.Mutation('setCurrentMarketId')
+  setCurrentMarketId!: Function;
+
+  @orderModule.Action('createOrder')
+  createOrder!: (params: OrderParams) => Promise<any>;
+
+  tradeData = [];
+
   cricleMount = [0, 1, 2, 3, 4];
   rangeValue = 0;
   entrustType = 0;
-  pageparams: PageParam = { page: 1, pageSize: 10 };
+  pageparams = { page: 1, pageSize: 10 };
   cancel = languageStore.getIntlText('business.cancel');
   popupVisible = false; //币种弹
   sheetVisible = false; //价格弹
@@ -263,7 +248,6 @@ export default class extends Vue {
   entrustData = dataStore;
   imgUrl = require('./../../../images/mobile/ic_nodata.png');
   imgMsg = languageStore.getIntlText('business.nodata');
-  tradeData = tradeData;
   tradeDataMountSum = 0;
   useMount = 0;
   showSheetName = languageStore.getIntlText('business.Limit');
@@ -289,7 +273,8 @@ export default class extends Vue {
   }
 
   created() {
-    this.getSumMount();
+    const id = parseInt(this.$route.params.id, 10);
+    this.setCurrentMarketId(id);
 
     const arr = localStorage.getItem('isFavorite');
     if (!arr) return;
@@ -302,8 +287,6 @@ export default class extends Vue {
   }
 
   mounted() {
-    dataStore.updateMarkets();
-    // const eventObj = onfire.on('tickerUpdate', callback);
     this.routeParam = this.$route.params;
     this.routeId = Number(this.$route.params.id);
     this.currrentTab =
@@ -312,16 +295,12 @@ export default class extends Vue {
         : languageStore.getIntlText('business.Sell');
   }
 
-  async getOrderHistory() {
-    try {
-      const res = await orderHistory('admin', {
-        page: 1,
-        pageSize: 10,
-      });
-    } catch (err) {
-      console.log(err);
-    }
+  @Watch('$route')
+  handleRouteChange() {
+    const id = parseInt(this.$route.params.id, 10);
+    this.setCurrentMarketId(id);
   }
+
   getFav() {
     if (this.isFavorite.indexOf(this.routeId) !== -1) {
       this.isFavorite = this.isFavorite.filter((e: any) => e !== this.routeId);
@@ -330,7 +309,6 @@ export default class extends Vue {
       this.isFavorite.push(this.routeId);
       localStorage.setItem('localFavourite', JSON.stringify(this.isFavorite));
     }
-    dataStore.freeMarketList;
   }
 
   handleBottomChange(status: any) {
@@ -338,40 +316,36 @@ export default class extends Vue {
   }
   loadBottom() {
     // 加载更多数据
-    if (!this.pageparams.page) return;
-    if (!this.pageparams.pageSize) return;
-    this.pageparams.page += 1;
-    dataStore.updateHistoryOrders(this.pageparams);
-    console.log(dataStore.historyOrders);
-    if (
-      Math.ceil(dataStore.historyOrders.count / this.pageparams.pageSize) === this.pageparams.page
-    ) {
-      this.allLoaded = true; // 若数据已全部获取完毕
-    }
-    (this.$refs.loadmore as Vue & { onBottomLoaded: () => Function }).onBottomLoaded();
+    // if (!this.pageparams.page) return;
+    // if (!this.pageparams.pageSize) return;
+    // this.pageparams.page += 1;
+    // dataStore.updateHistoryOrders(this.pageparams);
+    // console.log(dataStore.historyOrders);
+    // if (
+    //   Math.ceil(dataStore.historyOrders.count / this.pageparams.pageSize) === this.pageparams.page
+    // ) {
+    //   this.allLoaded = true; // 若数据已全部获取完毕
+    // }
+    // (this.$refs.loadmore as any).onBottomLoaded();
   }
 
   changeTab(val: any) {
     this.currrentTab = val;
   }
   changeEntrustType(type: any) {
-    this.entrustType = type;
-    if (type === 0) {
-      dataStore.updatePendingOrders();
-      this.entrustData = dataStore;
-      console.log(dataStore);
-    } else {
-      dataStore.updateHistoryOrders(this.pageparams);
-      this.entrustData = dataStore;
-      console.log(dataStore);
-      // this.entrustData = dataStore.pendingOrders;
-    }
+    // this.entrustType = type;
+    // if (type === 0) {
+    //   dataStore.updatePendingOrders();
+    //   this.entrustData = dataStore;
+    //   console.log(dataStore);
+    // } else {
+    //   dataStore.updateHistoryOrders(this.pageparams);
+    //   this.entrustData = dataStore;
+    //   console.log(dataStore);
+    //   // this.entrustData = dataStore.pendingOrders;
+    // }
   }
-  getSumMount() {
-    this.tradeData.forEach(item => {
-      this.tradeDataMountSum += item.mount;
-    });
-  }
+
   changePriceAndMount(obj1: any, obj2: any) {
     this.businessPrice = obj1;
     this.inputVal = obj2;
@@ -401,6 +375,20 @@ export default class extends Vue {
     this.popupVisible = obj;
   }
   goBusiness() {
+    const market = this.currentMarket!;
+    const quantity = (parseFloat(market.lastPrice) * 100).toFixed(4);
+
+    this.createOrder({
+      market_id: market.marketId,
+      price: `${market.lastPrice} ${market.pair.quoteCurrency.symbol.name}`,
+      size: `100.0000 ${market.pair.baseCurrency.symbol.name}`,
+      coin_contract: market.pair.quoteCurrency.contract,
+      order_side: 'bid',
+      order_type: 'limit',
+      time_in_force: 'gtc',
+      post_only: 0,
+      quantity: `${quantity} ${market.pair.quoteCurrency.symbol.name}`,
+    });
     //交易
     Toast({
       message: '已提交，待区块确认',

@@ -15,10 +15,10 @@
     </div>
     <div class="order-content">
       <div class="buy-part">
-        <OrderItem :data="OrderData.asks"/>
+        <OrderItem :data="orderData.asks"/>
       </div>
       <div class="sell-part">
-        <OrderItem :data="OrderData.bids"/>
+        <OrderItem :data="orderData.bids"/>
       </div>
     </div>
   </div>
@@ -33,8 +33,8 @@ import OrderItem from './OrderItem.vue';
     OrderItem,
   },
 })
-export default class extends Vue {
-  @Prop() OrderData!: any;
+export default class OrderTab extends Vue {
+  @Prop() orderData!: any;
 }
 </script>
 

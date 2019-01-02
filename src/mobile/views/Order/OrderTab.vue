@@ -16,10 +16,17 @@
     <div class="order-container-box">
       <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
-          <OrderItem v-for="order of openOrderStore.orders" :key="order.orderId" :order="order"/>
+          <OrderItem
+            v-for="order of pendingOrders"
+            :key="order.orderId"
+            @revoke="handleOrderRevoke"
+            :order="order" />
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
-          <OrderItem v-for="order of historyOrderStore.orders" :key="order.orderId" :order="order"/>
+          <OrderItem
+            v-for="order of historyOrders"
+            :key="order.orderId"
+            :order="order" />
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
@@ -27,15 +34,15 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { Observer } from 'mobx-vue';
+import { namespace, State } from 'vuex-class';
 import OrderItem from './order-item.vue';
 
-import dataStore from '@/stores/data';
-import openOrderStore from '@/stores/open-order';
-import historyOrderStore from '@/stores/history-order';
 import FilterPopup from './FilterPopup.vue';
+import { Order, HistoryOrderParams } from '@/define';
+import { cancelOrder } from '@/utils/scatter';
 
-@Observer
+const orderModule = namespace('order');
+
 @Component({
   components: {
     OrderItem,
@@ -43,23 +50,50 @@ import FilterPopup from './FilterPopup.vue';
   },
 })
 export default class Orders extends Vue {
-  // @Prop() showPopup!: boolean;
-  historyOrderStore = historyOrderStore;
-  openOrderStore = openOrderStore;
+  @State('accountName')
+  accountName!: string;
+
+  @orderModule.State('pendingOrders')
+  pendingOrders!: Order[];
+
+  @orderModule.State('historyOrders')
+  historyOrders!: Order[];
+
+  @orderModule.Action('fetchPendingOrders')
+  fetchPendingOrders!: Function;
+
+  @orderModule.Action('fetchHistoryOrders')
+  fetchHistoryOrders!: Function;
+
+  @orderModule.Action('cancelOrder')
+  cancelOrder!: Function;
+
+  historyParams: HistoryOrderParams = {
+    page: 1,
+    pageSize: 20,
+  };
+
   showPopup = false;
   selected = '1';
+
+  async created() {
+    if (!this.accountName) {
+      await this.$store.dispatch('login');
+    }
+    this.fetchPendingOrders();
+    this.fetchHistoryOrders(this.historyParams);
+  }
 
   showFilter() {
     this.showPopup = !this.showPopup;
   }
 
-  created() {
-    openOrderStore.fetchOrders(dataStore.accountName);
-    historyOrderStore.setParams({ page: 1 });
-    historyOrderStore.fetchMobileOrders(dataStore.accountName);
+  handleOrderRevoke(orderId: number) {
+    cancelOrder(orderId);
   }
 }
 </script>
+
 <style lang="scss" scoped>
 @import '@/style/mixin.scss';
 .mint-tab-item-label {
@@ -105,6 +139,7 @@ export default class Orders extends Vue {
   background-color: #fff;
   width: 100%;
 }
+
 #order-tab-container {
   font-size: 0.16rem !important;
   > div {
@@ -150,6 +185,29 @@ export default class Orders extends Vue {
     background: #007aff;
     border-radius: 0.02rem;
   }
+}
+</style>
+
+
+<style lang="scss" scoped>
+@import '@/style/mixin.scss';
+
+.type-select-box {
+  background-color: #ddd;
+  width: 100%;
+  position: relative;
+  img {
+    margin-right: 0.18rem;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.type-select-box {
+  background-color: #fff;
+  width: 100%;
 }
 </style>
 

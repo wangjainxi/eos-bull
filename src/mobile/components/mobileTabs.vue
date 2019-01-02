@@ -2,6 +2,7 @@
   <div class="tab-type-box flex-row-start">
     <router-link
       v-for="item of navs"
+      replace
       :to="item.path"
       :key="item.path"
       :class="{ 'nav-item': true, 'current': $route.path === item.path }">
@@ -16,9 +17,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { Observer } from 'mobx-vue';
 
-@Observer
 @Component
 export default class TabPackage extends Vue {
   navs = [

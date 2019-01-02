@@ -119,14 +119,6 @@ export default class BusinessSellDetails extends Vue {
     this.thisOrderType = this.$route.params.type;
     this.orderFills();
   }
-  get setTradeItem() {
-    this.tradeItem = dataStore.historyOrders.orders.filter((e: any) => {
-      return e.orderId === this.orderId;
-    });
-    console.log(this.tradeItem);
-    return this.tradeItem;
-  }
-  // @computed{
 
   orderFills() {
     getOrderFills(this.orderId).then(res => {

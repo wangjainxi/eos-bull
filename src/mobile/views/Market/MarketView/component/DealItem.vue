@@ -19,8 +19,8 @@ import marketViewStore from '@/mobile/views/Market/MarketView/marketViewStore';
   },
 })
 export default class DealItem extends Vue {
-  @Prop({ required: true })
-  data = [];
+  @Prop({ required: true, default: [] })
+  data!: any[];
   onTapItem(item: any) {
     marketViewStore.changeStatus(true, item);
   }

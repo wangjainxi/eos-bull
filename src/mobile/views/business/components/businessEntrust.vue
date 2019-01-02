@@ -65,18 +65,10 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import { Observer } from 'mobx-vue';
 import languageStore from '@/stores/language';
 import { formatTimes } from '@/utils/formatTime';
-// import fixHeader from './components/fixHeader.vue';
 
 @Observer
-@Component({
-  components: {
-    // fixHeader,
-  },
-})
+@Component
 export default class BusinessEntrust extends Vue {
-  // name: 'business-entrust-item',
-  // props: ['item', 'entrustType'],
-
   @Prop() item!: any;
   @Prop() entrustType!: number;
   @Prop() routeParam!: any;
@@ -123,11 +115,6 @@ export default class BusinessEntrust extends Vue {
     return thisimg;
   }
   canselOrder() {
-    // MessageBox({
-    //   title: "提示",
-    //   message: "确定撤销订单?",
-    //   showCancelButton: true
-    // });
     if (this.entrustType === 0) {
       MessageBox.confirm('确定撤销订单?').then(
         (action: string) => {

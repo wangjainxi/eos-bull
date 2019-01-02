@@ -5,11 +5,11 @@
         {{ market.pair.baseCurrency.symbol.name }}/{{ market.pair.quoteCurrency.symbol.name }}
       </span>
       <div class="collect-box">
-        <img v-if="isCollect" @click="collect" src="@/images/mobile/ic_collection_s.svg" alt>
+        <img v-if="market.favourited" @click="collect" src="@/images/mobile/ic_collection_current_s.svg" />
         <img
           v-else
           @click="collect"
-          src="@/images/mobile/ic_collection_current_s.svg"
+          src="@/images/mobile/ic_collection_s.svg"
         />
       </div>
     </div>
@@ -47,24 +47,15 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { observer } from 'mobx-vue';
 import { Market } from '@/define';
-import dataStore from '@/stores/data';
 
-@observer
 @Component
 export default class MarketInfo extends Vue {
   @Prop()
   market?: Market;
 
-  isCollect = false;
-
   collect() {
-    this.isCollect = false;
-  }
-
-  created() {
-    dataStore.setCurrentMarketId(parseInt(this.$route.params.id, 10));
+    // TODO: 处理收藏逻辑
   }
 }
 </script>

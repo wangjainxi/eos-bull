@@ -9,7 +9,11 @@
           <span class="time">{{ order.time | formatDate('MM-DD') }}</span>
         </span>
         <span>
-          <Button class="btn" type="default" v-if="order.status === 1">
+          <Button
+            v-if="order.status === 1"
+            class="btn"
+            @click="handleRevokeBtnClick"
+            type="default">
             <Language resource="order.Revoke"/>
           </Button>
           <span v-if="order.status === 0">
@@ -79,6 +83,10 @@ import { Order } from '@/define';
 export default class OrderItem extends Vue {
   @Prop()
   order!: Order;
+
+  handleRevokeBtnClick() {
+    this.$emit('revoke', this.order.orderId);
+  }
 }
 </script>
 

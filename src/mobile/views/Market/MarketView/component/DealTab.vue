@@ -19,9 +19,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { getMarketTrades } from '@/utils/apis';
 import DealItem from './DealItem.vue';
-import { observer } from 'mobx-vue';
 
-@observer
 @Component({
   components: {
     DealItem,

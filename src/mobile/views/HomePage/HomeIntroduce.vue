@@ -99,15 +99,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { Observer } from 'mobx-vue';
 
-@Observer
 @Component
-export default class HomeIntroduce extends Vue {
-  created() {
-    //
-  }
-}
+export default class HomeIntroduce extends Vue {}
 </script>
 
 <style lang="scss">

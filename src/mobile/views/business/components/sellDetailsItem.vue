@@ -55,18 +55,17 @@
     </div>
   </div>
 </template>
+
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { Observer } from 'mobx-vue';
 import { formatTimes } from '@/utils/formatTime';
-import dataStore from '@/stores/data';
 
-@Observer
 @Component
 export default class SellDetailsItem extends Vue {
   @Prop() item!: any;
 }
 </script>
+
 <style lang="scss" scoped>
 @import './../../../../style/mixin.scss';
 
