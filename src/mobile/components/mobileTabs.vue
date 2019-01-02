@@ -19,7 +19,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 
 @Component
-export default class TabPackage extends Vue {
+export default class AppNavBar extends Vue {
   navs = [
     {
       key: 'foot.Homepage',

@@ -11,9 +11,9 @@
             <p class="nav">
               <Language resource="home.homepage"/>
             </p>
-            <p class="nav">
+            <router-link to="/mex" class="nav">
               <Language resource="home.exchange"/>
-            </p>
+            </router-link>
             <p class="nav" @click="onOpenWhitePaper">
               <Language resource="home.white_paper"/>
             </p>

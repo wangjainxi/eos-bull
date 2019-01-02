@@ -21,7 +21,7 @@ import MobileTabs from './components/mobileTabs.vue';
     MobileTabs,
   },
 })
-export default class TabPackage extends Vue {}
+export default class Layout extends Vue {}
 </script>
 
 <style lang="scss">

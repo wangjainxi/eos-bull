@@ -2,10 +2,10 @@
   <div class="currentcy-data">
     <div class="change-tab-box">
       <div
-        :class="['currentcy-tab',{active: currentTab.name === tab.name}]"
-        v-for="tab in tabs"
+        :class="['currentcy-tab',{active: currentTab === index}]"
+        v-for="(tab, index) in tabs"
         :key="tab.id"
-        @click="updateTab(tab)"
+        @click="currentTab = index"
       >
         <i class="tab-icon"></i>
         {{tab.name}}
@@ -17,7 +17,6 @@
           class="search"
           placeholder="Search"
           v-model="inputValue"
-          :inputSearch="inputSearch"
         >
         <!-- <i v-if="inputValue" class="search-close"></i> -->
       </div>
@@ -32,12 +31,12 @@
         </div>
         <div class="data-change">
           <Language resource="home.Change"/>
-          <span :class="['data-change-icon',sort]" @click="sortDataList"></span>
+          <span :class="['data-change-icon',sort]"></span>
         </div>
       </div>
-      <div class="data-list-body" v-if="currentTab.id === 1">
+      <div class="data-list-body" v-if="currentTab === 0">
         <MexCurrentcyListDataItem
-          v-for="(item, index) in dataStore.freeMarketList"
+          v-for="(item, index) in favoriteMarkets"
           :item="item"
           :key="index"
           @click="handleMarketItemClick"
@@ -45,7 +44,7 @@
       </div>
       <div class="data-list-body" v-else>
         <MexCurrentcyListDataItem
-          v-for="(item, index) in dataStore.marketList"
+          v-for="(item, index) in markets"
           :item="item"
           :key="index"
           @click="handleMarketItemClick"
@@ -56,12 +55,13 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { Observer } from 'mobx-vue';
+import { namespace } from 'vuex-class';
 import { getMrkets, getAccountInfo } from '@/utils/apis';
 import languageStore from '@/stores/language';
 import MexCurrentcyListDataItem from './MexCurrentcyListDataItem.vue';
-import dataStore from '@/stores/data';
 import { Market } from '@/define';
+
+const marketModule = namespace('market');
 
 interface ObjectData {
   id: number;
@@ -93,59 +93,23 @@ const dataList = [
     goTotop: false,
   },
 ];
-@Observer
+
 @Component({
   components: {
     MexCurrentcyListDataItem,
   },
 })
 export default class MexCurrentcyList extends Vue {
-  // data
-  dataStore = dataStore;
+  @marketModule.State('markets')
+  markets!: Market[];
+
+  @marketModule.Getter('favoriteMarkets')
+  favoriteMarkets!: Market[];
+
   sort: string = '';
   inputValue: string = '';
-  currentTab: ObjectData = tabs[1];
+  currentTab = 1;
   tabs: Array<any> = tabs;
-
-  created() {
-    this.updateDataList(this.currentTab.id);
-  }
-  get inputSearch() {
-    if (!this.inputValue) {
-      dataStore.updateMarkets();
-    } else {
-      return (dataStore.markets = dataStore.getMarketSearchList(this.inputValue));
-    }
-  }
-  // methods
-  updateTab(obj: ObjectData) {
-    this.currentTab = obj;
-    this.sort = '';
-    this.updateDataList(obj.id);
-  }
-  updateDataList(num: number) {
-    //获取列表
-    const res = dataStore;
-    this.sort = '';
-    dataStore.marketParams.sortby = '';
-    dataStore.marketParams.order = '';
-    if (num === 1) {
-      console.log(dataStore.markets);
-    } else {
-      dataStore.updateMarkets();
-    }
-  }
-  sortDataList() {
-    //列表排序
-
-    dataStore.marketParams.sortby = 'change';
-    if (this.currentTab.id === 1) {
-      dataStore.updateFreeMarketListSort('change');
-    } else {
-      dataStore.updateMarketListSort('change');
-    }
-    this.sort === 'sort-up' ? (this.sort = 'sort-down') : (this.sort = 'sort-up');
-  }
 
   handleMarketItemClick(market: Market) {
     this.$emit('change', market);

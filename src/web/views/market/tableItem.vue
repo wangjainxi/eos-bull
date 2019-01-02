@@ -71,10 +71,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { Observer } from 'mobx-vue';
-import dataStore from '@/stores/data';
 
-@Observer
 @Component
 export default class TableItem extends Vue {
   @Prop() thisTdata!: any;

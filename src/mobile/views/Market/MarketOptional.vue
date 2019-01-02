@@ -52,15 +52,14 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { Observer } from 'mobx-vue';
-import dataStores from '@/stores/data';
+import { namespace } from 'vuex-class';
 
-@Observer
+const marketModule = namespace('market');
+
 @Component
 export default class extends Vue {
-  dataStores = dataStores;
   setTop(id: number) {
-    dataStores.setTop(id);
+    // dataStores.setTop(id);
   }
 }
 </script>
