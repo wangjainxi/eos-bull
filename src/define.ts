@@ -224,7 +224,7 @@ export interface AccountInfo {
     onOrder: CoinAsset;
   };
   tokens: Array<TokenBalance>;
-  icons: Array<TokenIcon>;
+  tokenMetas: Array<TokenMeta>;
 }
 
 /**
@@ -238,11 +238,17 @@ export interface Announcement {
 }
 
 /**
- * 表示代币图标
+ * 表示代币相关信息
  */
-export interface TokenIcon {
+export interface TokenMeta {
   token: ExtendedSymbol;
   iconUrl: string;
+  listedMarkets: Array<MarketMeta>;
+}
+
+export interface MarketMeta {
+  marketId: number;
+  pair: TradingPair;
 }
 
 export interface TradeTransactions {
