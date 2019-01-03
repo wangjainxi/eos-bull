@@ -1,25 +1,31 @@
 <template>
-  <div class="order-item">
+  <div class="order-item" @click="handleClick">
     <div class="type-buy">
       <div class="top">
         <span class="left-info">
           <img v-if="order.side === 1" class="type" src="@/images/mobile/ic_buy_c.svg">
           <img v-else class="type" src="@/images/mobile/ic_sell_c.svg">
-          <span class="currency">{{ order.size.symbol.name }}/{{ order.price.symbol.name }}</span>
-          <span class="time">{{ order.time | formatDate('MM-DD') }}</span>
+          <!-- 货币对 -->
+          <span class="currency">
+            {{ order.size.symbol.name }}/{{ order.price.symbol.name }}
+          </span>
+          <!-- 订单日期 -->
+          <span class="time">
+            {{ order.time | formatDate('MM-DD') }}
+          </span>
         </span>
         <span>
           <Button
-            v-if="order.status === 1"
+            v-if="order.status === 1 || order.status === 2"
             class="btn"
-            @click="handleRevokeBtnClick"
+            @click.stop="handleRevokeBtnClick"
             type="default">
             <Language resource="order.Revoke"/>
           </Button>
-          <span v-if="order.status === 0">
+          <span v-if="order.status === 4">
             <Language resource="order.Revoked"/>
           </span>
-          <span v-if="order.status === 2" class="already-deal">
+          <span v-if="order.status === 3" class="already-deal">
             <span>
               <Language resource="order.Dealt"/>
             </span>
@@ -77,15 +83,30 @@
 
 <script lang="ts">
 import { Vue, Constructor, Prop, Component } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
 import { Order } from '@/define';
+
+const orderModule = namespace('order');
 
 @Component
 export default class OrderItem extends Vue {
   @Prop()
   order!: Order;
 
+  @orderModule.Action('cancelOrder')
+  cancelOrder!: Function;
+
+  handleClick() {
+    this.$router.push({
+      name: 'order',
+      params: {
+        id: String(this.order.orderId),
+      },
+    });
+  }
+
   handleRevokeBtnClick() {
-    this.$emit('revoke', this.order.orderId);
+    this.cancelOrder(this.order.orderId);
   }
 }
 </script>
