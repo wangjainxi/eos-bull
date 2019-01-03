@@ -190,8 +190,10 @@ export default class MexHead extends Vue {
         }
       }
       div:nth-child(n + 3) {
-        span {
-          color: #fff;
+        p {
+          span {
+            color: #fff;
+          }
         }
       }
     }

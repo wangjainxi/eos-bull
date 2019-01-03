@@ -76,6 +76,7 @@ export default {
     max-width: 100px;
     color: rgba(103, 123, 183, 1);
     text-align: right;
+    padding-right: 10px;
   }
   .right-text {
     width: 76px;

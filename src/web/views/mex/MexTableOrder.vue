@@ -5,10 +5,12 @@
         <Language resource="exchange.Open_Orders"/>
       </h4>
       <div>
-        <img src="../../../images/web/ic_refresh.svg" alt>
-        <p @click="handleRevokeAllBtnClick">
-          <Language resource="exchange.Revoke_All"/>
-        </p>
+        <div class="revoke-all-data" v-show="pendingOrders.lenght > 0">
+          <img src="../../../images/web/ic_refresh.svg" alt>
+          <p @click="handleRevokeAllBtnClick">
+            <Language resource="exchange.Revoke_All"/>
+          </p>
+        </div>
         <el-checkbox v-model="checked" @change="handleHideMarketCheck">
           <Language resource="exchange.Hide_Other_Pairs"/>
         </el-checkbox>
@@ -16,12 +18,7 @@
       </div>
     </div>
     <div class="table-box">
-      <el-table
-        :data="pendingOrders"
-        style="width: 100%"
-        max-height="250"
-        :empty-text="ThereSNoDataYet"
-      >
+      <el-table :data="pendingOrders" style="width: 100%" max-height="250">
         <el-table-column prop="coin" width="200">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Coin"/>
@@ -116,6 +113,9 @@
             </p>
           </template>
         </el-table-column>
+        <div slot="empty">
+          <Language resource="exchange.There_s_no_data_yet"/>
+        </div>
       </el-table>
     </div>
     <el-dialog :visible.sync="dialogVisible" width="30%">
@@ -143,7 +143,6 @@ import { Vue, Component } from 'vue-property-decorator';
 import { MessageBox, Message } from 'element-ui';
 import { namespace } from 'vuex-class';
 import { Observer } from 'mobx-vue';
-import languageStore from '@/stores/language';
 import openOrderStore from '@/stores/open-order';
 import language from '@/stores/language';
 import { Market, Order } from '@/define';
@@ -215,6 +214,10 @@ export default class MexOpenOrders extends Vue {
     > div {
       display: flex;
       color: #2d7be5;
+      .revoke-all-data{
+        display: flex;
+        align-items: center;
+      }
       span {
         color: #ddd;
       }
