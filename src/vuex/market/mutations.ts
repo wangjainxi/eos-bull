@@ -1,5 +1,5 @@
 import { MutationTree } from 'vuex';
-import { Market, TickerUpdate } from '@/define';
+import { Market, TickerUpdate, Orderbook, Trade } from '@/define';
 import { MarketState, STORAGE_FAVORITE } from './types';
 
 export const mutations: MutationTree<MarketState> = {
@@ -8,6 +8,12 @@ export const mutations: MutationTree<MarketState> = {
   },
   setCurrentMarketId(state, currentMarketId: number) {
     state.currentMarketId = currentMarketId;
+  },
+  setOrderbook(state, orderbook: Orderbook) {
+    state.orderbook = orderbook;
+  },
+  setTrades(state, trades: Trade[]) {
+    state.trades = trades;
   },
   setFavoriteMarkets(state, markets: Market[]) {
     state.markets = markets;

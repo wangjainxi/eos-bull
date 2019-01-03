@@ -21,7 +21,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 import { Market } from '@/define';
 
 @Component
-export default class extends Vue {
+export default class MarketItem extends Vue {
   @Prop({ required: true })
   market!: Market;
 

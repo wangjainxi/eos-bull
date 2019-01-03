@@ -146,7 +146,7 @@ export interface Trade {
   seller: string; // 卖家账户名
   buyerOrderId: number; // 买家订单ID
   sellerOrderId: number; // 卖家订单ID
-  makerOrderSide: ORDER_SIDE; // Maker订单方向
+  makerSide: ORDER_SIDE; // Maker订单方向
   price: CoinAsset; // 撮合价格
   size: CoinAsset; // 撮合数量
   buyerFee: ExtendedAsset;

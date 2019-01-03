@@ -8,7 +8,7 @@
       </div>
       <BomView
         :orderData="orderbook"
-        :recentDealData="recentDealData"
+        :recentDealData="trades"
         :tokenInfo="tokenInfo" />
     </div>
     <div class="btn-box">
@@ -58,6 +58,12 @@ export default class MarketView extends Vue {
   @State('accountName')
   accountName!: string;
 
+  @marketModule.State('orderbook')
+  orderbook!: Orderbook;
+
+  @marketModule.State('trades')
+  trades!: Trade[];
+
   @marketModule.Getter('markets')
   markets!: Market[];
 
@@ -79,17 +85,10 @@ export default class MarketView extends Vue {
   @orderModule.Action('fetchHistoryOrders')
   fetchHistoryOrders!: Function;
 
-  @marketModule.Mutation('setCurrentMarketId')
-  setCurrentMarketId!: Function;
-
-  recentDealData: Array<Trade> = [];
+  @marketModule.Action('updateMarket')
+  updateMarket!: Function;
 
   tokenInfo: TokenInfo | null = null;
-
-  orderbook: Orderbook = {
-    asks: [],
-    bids: [],
-  };
 
   get marketId() {
     return parseInt(this.$route.params.id, 10);
@@ -106,7 +105,7 @@ export default class MarketView extends Vue {
 
   async initData() {
     // 设置当前市场
-    this.setCurrentMarketId(this.marketId);
+    this.updateMarket(this.marketId);
 
     // 登录判断
     if (!this.accountName) {
@@ -117,17 +116,10 @@ export default class MarketView extends Vue {
     if (!this.currentMarket) {
       await this.fetchMarkets();
     }
-
-    // 加载市场最近成交
-    this.recentDealData = await getMarketTrades(this.marketId);
-
     // 加载token信息
     const contract = this.currentMarket!.pair.baseCurrency.contract;
     const symbol = this.currentMarket!.pair.baseCurrency.symbol.name;
     this.tokenInfo = await getTokenInfo(contract, symbol);
-
-    // 加载orderbook
-    this.orderbook = await getMarketOrderbook(this.marketId);
   }
 
   onTransaction(t: any) {

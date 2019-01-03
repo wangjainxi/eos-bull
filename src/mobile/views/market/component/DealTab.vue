@@ -25,7 +25,7 @@ import DealItem from './DealItem.vue';
     DealItem,
   },
 })
-export default class extends Vue {
+export default class DealTab extends Vue {
   @Prop() recentDealData!: any;
   dealData: any[] = [];
 }

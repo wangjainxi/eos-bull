@@ -54,7 +54,7 @@ import { Market } from '@/define';
 const marketModule = namespace('market');
 
 @Component
-export default class extends Vue {
+export default class MarketSearch extends Vue {
   searchInput = '';
 
   @marketModule.Getter('markets')

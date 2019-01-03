@@ -144,7 +144,6 @@ import { MessageBox, Message } from 'element-ui';
 import { namespace } from 'vuex-class';
 import { Observer } from 'mobx-vue';
 import languageStore from '@/stores/language';
-import openOrderStore from '@/stores/open-order';
 import language from '@/stores/language';
 import { Market, Order } from '@/define';
 
@@ -175,18 +174,14 @@ export default class MexOpenOrders extends Vue {
     }, 1000);
   }
 
-  // created() {
-  //   this.noTitle = `${&nbsp}`;
-  // }
   handleHideMarketCheck(val: boolean) {
-    // const marketId = this.currentMarket!.marketId;
-    // if (val) openOrderStore.hideOtherMarket(marketId);
-    // else openOrderStore.showOtherMarket();
+    //
   }
 
   handleDetailBtnClick() {
     // TODO：展示订单详情
   }
+
   async greet(id: number) {
     await MessageBox.confirm('Are you sure to revoke the order?', 'Tips', {
       confirmButtonText: 'Confirm',

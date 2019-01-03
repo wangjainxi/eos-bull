@@ -12,7 +12,7 @@ import OrderTab from './OrderTab.vue';
     OrderTab,
   },
 })
-export default class extends Vue {
+export default class Orders extends Vue {
   selected = '1';
   showPopup = false;
 }

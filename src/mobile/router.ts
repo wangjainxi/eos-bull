@@ -66,7 +66,7 @@ export default new Router({
         import(/* webpackChunkName: "businessHistory" */ './views/business/businessSellDetails.vue'),
     },
     {
-      path: '/maket/:id',
+      path: '/makets/:id',
       name: 'market',
       component: Market,
     },

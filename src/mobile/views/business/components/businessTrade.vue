@@ -3,9 +3,9 @@
     :class="['coin-items',{red:tradeType === 'sell'}]"
     @click="changePriceAndMount(item.price,item.mount)"
   >
-    <i :style="{ width: getItemWidth }"></i>
+    <i :style="{ width: getItemWidth }" />
     <div class="coin-price">{{item.price}}</div>
-    <div class="coin-mount">{{item.mount}}</div>
+    <div class="coin-mount">{{item.size}}</div>
   </div>
 </template>
 <script lang="ts">
@@ -20,7 +20,7 @@ export default class BusinessTradeItem extends Vue {
 
   itemWidth: any = 0;
   get getItemWidth() {
-    const width = ((this.item.mount / this.tradeDataMountSum) * 100).toFixed(2);
+    const width = ((this.item.size / this.tradeDataMountSum) * 100).toFixed(2);
     this.itemWidth = `${width}%`;
     return this.itemWidth;
   }

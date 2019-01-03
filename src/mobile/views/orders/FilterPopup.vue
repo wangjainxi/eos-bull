@@ -47,8 +47,8 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 
-@Component({})
-export default class extends Vue {
+@Component
+export default class FilterPopup extends Vue {
   isAll = false;
   isProcess = false;
   isComplete = false;

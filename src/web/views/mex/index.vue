@@ -75,18 +75,18 @@ export default class Mex extends Vue {
   @marketModule.Action('fetchMarkets')
   fetchMarkets!: Function;
 
-  @marketModule.Mutation('setCurrentMarketId')
-  setCurrentMarketId!: Function;
+  @marketModule.Action('updateMarket')
+  updateMarket!: Function;
 
   created() {
     this.fetchMarkets().then(() => {
       if (this.markets.length === 0) return;
-      this.setCurrentMarketId(this.markets[0].marketId);
+      this.updateMarket(this.markets[0].marketId);
     });
   }
 
   handleMarketChange(market: Market) {
-    this.setCurrentMarketId(market.marketId);
+    this.updateMarket(market.marketId);
   }
 }
 </script>
