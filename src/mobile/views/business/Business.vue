@@ -377,6 +377,7 @@ export default class Business extends Vue {
     const quantity = (parseFloat(market.lastPrice) * 100).toFixed(4);
 
     this.createOrder({
+      referrer: '',
       market_id: market.marketId,
       price: `${market.lastPrice} ${market.pair.quoteCurrency.symbol.name}`,
       size: `100.0000 ${market.pair.baseCurrency.symbol.name}`,
@@ -403,7 +404,7 @@ export default class Business extends Vue {
   }
   getPrevPage() {
     this.$router.push({
-      name: 'market-view',
+      name: 'market',
       params: {
         id: this.$route.params.id,
       },
@@ -416,7 +417,6 @@ export default class Business extends Vue {
 $marginwidth: 0.12rem;
 .business {
   width: 100%;
-  padding-bottom: 0.48rem;
   position: relative;
 }
 .business-coin-title,

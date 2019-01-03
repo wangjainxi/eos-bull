@@ -13,7 +13,7 @@
       <div >
         <mt-tab-container v-model="selected">
           <mt-tab-container-item id="1">
-            <OrderTab :OrderData="orderData"/>
+            <OrderTab :orderData="orderData" />
           </mt-tab-container-item>
           <mt-tab-container-item id="2">
             <DeepCharts/>

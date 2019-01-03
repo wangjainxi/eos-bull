@@ -7,7 +7,7 @@
         <!-- <VueTradingView/> -->
       </div>
       <BomView
-        :orderData="pendingOrders"
+        :orderData="orderbook"
         :recentDealData="recentDealData"
         :tokenInfo="tokenInfo" />
     </div>
@@ -36,12 +36,12 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator';
 import { namespace, State, Action } from 'vuex-class';
-import TopView from './TopView.vue';
+import TopView from './top-view.vue';
 import BomView from './bom-view.vue';
 import TransactionDetail from './TransactionDetail.vue';
 import VueTradingView from '@/components/vueTradingView/index.vue';
-import { Market, Trade, Order, TokenInfo } from '@/define';
-import { getMarketTrades, getTokenInfo } from '@/utils/apis';
+import { Market, Trade, Order, TokenInfo, Orderbook } from '@/define';
+import { getMarketTrades, getTokenInfo, getMarketOrderbook } from '@/utils/apis';
 
 const orderModule = namespace('order');
 const marketModule = namespace('market');
@@ -67,12 +67,6 @@ export default class MarketView extends Vue {
   @marketModule.Getter('favoriteMarkets')
   favouriteMarkets!: Market[];
 
-  @orderModule.State('pendingOrders')
-  pendingOrders!: Order[];
-
-  @orderModule.State('historyOrders')
-  historyOrders!: Order[];
-
   @Action('login')
   login!: Function;
 
@@ -92,6 +86,11 @@ export default class MarketView extends Vue {
 
   tokenInfo: TokenInfo | null = null;
 
+  orderbook: Orderbook = {
+    asks: [],
+    bids: [],
+  };
+
   get marketId() {
     return parseInt(this.$route.params.id, 10);
   }
@@ -106,19 +105,29 @@ export default class MarketView extends Vue {
   }
 
   async initData() {
+    // 设置当前市场
     this.setCurrentMarketId(this.marketId);
+
+    // 登录判断
+    if (!this.accountName) {
+      await this.login();
+    }
+
+    // 市场判断
     if (!this.currentMarket) {
       await this.fetchMarkets();
     }
 
-    if (!this.accountName) {
-      await this.login();
-    }
-    await this.fetchPendingOrders();
+    // 加载市场最近成交
     this.recentDealData = await getMarketTrades(this.marketId);
+
+    // 加载token信息
     const contract = this.currentMarket!.pair.baseCurrency.contract;
     const symbol = this.currentMarket!.pair.baseCurrency.symbol.name;
     this.tokenInfo = await getTokenInfo(contract, symbol);
+
+    // 加载orderbook
+    this.orderbook = await getMarketOrderbook(this.marketId);
   }
 
   onTransaction(t: any) {

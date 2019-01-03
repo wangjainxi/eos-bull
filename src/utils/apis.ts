@@ -4,7 +4,6 @@ import {
   TokenInfo,
   Orderbook,
   Trade,
-  Order,
   AccountInfo,
   Announcement,
   HistoryOrderParams,

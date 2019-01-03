@@ -167,7 +167,7 @@ export interface PriceLevel {
  * 代表一个完整的订单簿。其中bids代表买单，按照价格降序排列；asks代表卖单，按照价格升序排列。
  */
 export interface Orderbook {
-  marketId: number;
+  marketId?: number;
   asks: Array<PriceLevel>;
   bids: Array<PriceLevel>;
 }

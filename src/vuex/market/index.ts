@@ -1,11 +1,10 @@
 import { Module } from 'vuex';
-import { MarketState } from './types';
+import { MarketState, STORAGE_FAVORITE } from './types';
 import { RootState } from '../types';
-import { getMrkets, favouriteMarkets } from '@/utils/apis';
-import { Market, TickerUpdate } from '@/define';
+import { actions } from './actions';
+import { mutations } from './mutations';
 
 const namespaced = true;
-const STORAGE_FAVORITE = '__favorite_maket_ids__';
 
 function getCacheMarketIds() {
   return (localStorage.getItem(STORAGE_FAVORITE) || '')
@@ -18,6 +17,11 @@ export const state: MarketState = {
   markets: [],
   currentMarketId: 0,
   favoriteMarketIds: getCacheMarketIds(),
+  orderbook: {
+    asks: [],
+    bids: [],
+  },
+  trades: [],
 };
 
 export const market: Module<MarketState, RootState> = {
@@ -58,57 +62,6 @@ export const market: Module<MarketState, RootState> = {
         .filter((e, index) => index < 10);
     },
   },
-  actions: {
-    async fetchMarkets({ commit }) {
-      const markets = await getMrkets();
-      commit('setMarkets', markets);
-    },
-    async addFavoriteMarkets({ dispatch, commit, rootState }, ids: number[]) {
-      if (!rootState.accountName) {
-        ids.forEach(e => commit('addFavoriteMarketId', e));
-        return;
-      }
-      await favouriteMarkets(ids, true);
-      dispatch('fetchMarkets');
-    },
-    async removeFavoriteMarkets({ dispatch, commit, rootState }, ids: number[]) {
-      if (!rootState.accountName) {
-        ids.forEach(e => commit('removeFavoriteMarketId', e));
-        return;
-      }
-      await favouriteMarkets(ids, false);
-      dispatch('fetchMarkets');
-    },
-  },
-  mutations: {
-    setMarkets(state, markets: Market[]) {
-      state.markets = markets;
-    },
-    setCurrentMarketId(state, currentMarketId: number) {
-      state.currentMarketId = currentMarketId;
-    },
-    setFavoriteMarkets(state, markets: Market[]) {
-      state.markets = markets;
-    },
-    updateMarket(state, data: TickerUpdate) {
-      for (const m of state.markets) {
-        if (m.marketId !== data.marketId) continue;
-        Object.assign(m, data);
-        break;
-      }
-    },
-    addFavoriteMarketId(state, id: number) {
-      if (state.favoriteMarketIds.includes(id)) return;
-      state.favoriteMarketIds.push(id);
-      localStorage.setItem(STORAGE_FAVORITE, state.favoriteMarketIds.join(','));
-    },
-    removeFavoriteMarketId(state, id: number) {
-      if (!state.favoriteMarketIds.includes(id)) return;
-      for (let i = 0; i < state.favoriteMarketIds.length; i += 1) {
-        if (i !== id) continue;
-        state.favoriteMarketIds.splice(i, 1);
-        break;
-      }
-    },
-  },
+  actions,
+  mutations,
 };

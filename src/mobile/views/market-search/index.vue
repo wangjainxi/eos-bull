@@ -13,7 +13,7 @@
         class="search-list-child-box"
         v-for="item of searchResult"
         :key="item.marketId"
-        :to="{ name: 'market-view', params: { id: item.marketId,item:item } }"
+        :to="{ name: 'market', params: { id: item.marketId,item:item } }"
       >
         <h4
           class="list-title"

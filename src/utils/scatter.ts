@@ -102,6 +102,7 @@ const transaction = async (...args: any[]) => {
 export interface OrderParams {
   market_id: number;
   price: string;
+  referrer: string;
   size: string;
   order_side: 'bid' | 'ask';
   order_type: 'limit' | 'market';
@@ -129,7 +130,8 @@ export const createOrder = async (params: OrderParams) => {
         'order_side',
         'order_type',
         'time_in_force',
-        'post_only'
+        'post_only',
+        'referrer'
       ),
     },
   };

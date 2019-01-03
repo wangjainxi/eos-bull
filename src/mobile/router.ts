@@ -2,9 +2,9 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Layout from './layout.vue';
 import Market from './views/market/index.vue';
+import MarketSearch from './views/market-search/index.vue';
 import ReportActivity from './views/ReportActivity/index.vue';
 import ReportActivityPage from './views/ReportActivity/report.vue';
-import MarketSearch from './views/markets/MarketSearch.vue';
 import MarketOptional from './views/markets/MarketOptional.vue';
 
 Vue.use(Router);

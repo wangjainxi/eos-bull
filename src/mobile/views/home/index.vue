@@ -47,10 +47,10 @@
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
         <div class="home-list-page-box" v-for="item in changeRankingList" :key="item.marketId">
-          <ListChild :item="item"/>
+          <MarketItem :market="item" />
         </div>
         <div class="home-link-to-market-box">
-          <router-link to="market">
+          <router-link to="/markets">
             <Language resource="asset.View_More"/>
           </router-link>
           <img src="../../../images/mobile/ic_arrow_under.svg" alt>
@@ -59,10 +59,10 @@
       <mt-tab-container-item id="2">
         <div
           class="home-list-page-box"
-          v-for="(item, index) in volumeRankingList"
+          v-for="item in volumeRankingList"
           :key="item.marketId"
         >
-          <ListChild v-if="index<=10" :item="item" :key="index"></ListChild>
+          <MarketItem :market="item"/>
         </div>
         <div class="home-link-to-market-box">
           <router-link to="market">
@@ -81,8 +81,8 @@ import { Vue, Component } from 'vue-property-decorator';
 import { namespace, State } from 'vuex-class';
 import { Market, Announcement } from '@/define';
 
-import ListChild from './components/ListChild.vue';
-import HomeIntroduce from './HomeIntroduce.vue';
+import MarketItem from '../../components/market-item.vue';
+import HomeIntroduce from './home-introduce.vue';
 
 const userModule = namespace('user');
 const marketModule = namespace('market');
@@ -90,11 +90,11 @@ const announcementModule = namespace('announcement');
 
 @Component({
   components: {
-    ListChild,
+    MarketItem,
     HomeIntroduce,
   },
 })
-export default class extends Vue {
+export default class Home extends Vue {
   @State('accountName')
   accountName!: string;
 

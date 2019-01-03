@@ -1,32 +1,41 @@
 <template>
-  <router-link :to="{ name: 'market-view', params: { id: item.marketId, coinName:`${item.pair.baseCurrency.symbol.name}/${item.pair.quoteCurrency.symbol.name}` } }" class="wrapper">
+  <router-link :to="{ name: 'market', params: { id: market.marketId } }" class="wrapper">
     <div class="name-box">
       <h4 class="name">
-        {{item.pair.baseCurrency.symbol.name}}/{{item.pair.quoteCurrency.symbol.name}}
+        {{ baseCurrencyName }}/{{ quoteCurrencyName }}
       </h4>
       <p class="volumn">
         <Language resource="asset.VOL24H"/>
-        {{item.volumeBase}}
+        {{ market.volumeBase }}
       </p>
     </div>
     <div class="price-box">
-      <h4 class="price">{{item.lastPrice}}</h4>
-      <p :class="changeStyle">{{item.change}}</p>
+      <h4 class="price">{{ market.lastPrice }}</h4>
+      <p :class="changeStyle">{{ market.change }}</p>
     </div>
   </router-link>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Market } from '@/define';
 
 @Component
 export default class extends Vue {
-  @Prop()
-  item: any;
+  @Prop({ required: true })
+  market!: Market;
+
+  get baseCurrencyName() {
+    return this.market.pair.baseCurrency.symbol.name;
+  }
+
+  get quoteCurrencyName() {
+    return this.market.pair.quoteCurrency.symbol.name;
+  }
 
   get changeStyle() {
     const classes = ['change'];
-    const changeValue = parseFloat(this.item.change);
+    const changeValue = parseFloat(this.market.change);
     if (changeValue > 0) {
       classes.push('rise');
     } else if (changeValue < 0) {
