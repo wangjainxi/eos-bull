@@ -3,16 +3,16 @@
     <div class="foot">
       <div class="foot-top">
         <div class="foot-dec-left">
-          <a href>
+          <a :href="goUrl(1)">
             <Language resource="myWallet.FAQ"/>
           </a>
-          <a href>
+          <a :href="goUrl(2)">
             <Language resource="myWallet.Bulletin"/>
           </a>
-          <a href>
+          <a :href="goUrl(3)">
             <Language resource="myWallet.Rate_standard"/>
           </a>
-          <a href>
+          <a :href="goUrl(4)">
             <Language resource="myWallet.Submit_Request"/>
           </a>
         </div>
@@ -30,7 +30,7 @@
           <!-- <div class="wifi" @click="showAddress">
             <img src="@/images/web/ic_wifi.svg" alt>
             <span>HongKong</span>
-          </div> -->
+          </div>-->
         </div>
       </div>
     </div>
@@ -40,7 +40,10 @@
 import { MessageBox } from 'element-ui';
 import { Component, Vue } from 'vue-property-decorator';
 import ChooseNode from './chooseNode.vue';
+import language from '@/stores/language';
+import { Observer } from 'mobx-vue';
 
+@Observer
 @Component({
   components: {
     ChooseNode,
@@ -61,6 +64,31 @@ export default class Footer extends Vue {
       showConfirmButton: false,
       customClass: 'foot-choose-node',
     });
+  }
+  goUrl(num: number) {
+    let lanT;
+    if (num === 1) {
+      lanT =
+        language.currentLocale === 'zh-CN'
+          ? 'https://dadex.zendesk.com/hc/zh-cn/categories/360001321632'
+          : 'https://dadex.zendesk.com/hc/en-us/categories/360001321632';
+    } else if (num === 2) {
+      lanT =
+        language.currentLocale === 'zh-CN'
+          ? 'https://dadex.zendesk.com/hc/zh-cn/categories/360001324452'
+          : 'https://dadex.zendesk.com/hc/ en-us /categories/360001324452';
+    } else if (num === 3) {
+      lanT =
+        language.currentLocale === 'zh-CN'
+          ? 'https://dadex.zendesk.com/hc/zh-cn/categories/360001324512'
+          : 'https://dadex.zendesk.com/hc/ en-us /categories/360001324512';
+    } else if (num === 4) {
+      lanT =
+        language.currentLocale === 'zh-CN'
+          ? 'https://dadex.zendesk.com/hc/zh-cn/requests/new'
+          : 'https://dadex.zendesk.com/hc/en-us/requests/new';
+    }
+    return lanT;
   }
 }
 </script>

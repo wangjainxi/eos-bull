@@ -216,6 +216,7 @@ input[type='number'] {
       font-family: PingFangSC-Regular;
       font-weight: 400;
       color: rgba(110, 132, 163, 1);
+      width: 160px;
     }
   }
   .el-table th {

@@ -7,6 +7,10 @@
             <img src="@/images/web/logo_eosmex.svg">
           </router-link>
         </div>
+        <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tab-pane :label="tabName('home.Exchange')" name="first"></el-tab-pane>
+          <el-tab-pane :label="tabName('home.Markets')" name="second"></el-tab-pane>
+        </el-tabs>
       </div>
       <div class="tright-view">
         <div class="un-sign-in" v-if="!accountName" @click="showDilog">
@@ -24,7 +28,8 @@
             <span class="text-style exit">Orders</span>
           </router-link>
         </div>
-        <img :src="showImg" alt>
+        <img v-if="selectValue === 'zh-CN'" src="./../../images/web/ic_flag_cn.svg" alt>
+        <img v-else src="./../../images/web/ic_flag_en.svg" alt>
         <el-select v-model="selectValue" @change="changeLanguageType">
           <el-option
             v-for="(item,index) in language.locales"
@@ -32,7 +37,10 @@
             :label="item.label"
             :value="item.mark"
           >
-            <img :src="item.mark === 'zh-CN'?require('./../../images/web/ic_flag_cn.svg'):require('./../../images/web/ic_flag_en.svg')" alt>
+            <img
+              :src="item.mark === 'zh-CN'?require('./../../images/web/ic_flag_cn.svg'):require('./../../images/web/ic_flag_en.svg')"
+              alt
+            >
             <span>{{item.label}}</span>
           </el-option>
         </el-select>
@@ -61,17 +69,15 @@
           <p>
             <Language resource="home.Scatter_allows"/>
           </p>
-          <Language resource="home.How_use_Scatter"/>
+          <span class="how-ues-page" @click="openNewPage">
+            <Language resource="home.How_use_Scatter"/>
+          </span>
         </div>
       </div>
       <span slot="footer" class="dialog-footer"></span>
     </el-dialog>
 
-    <el-dialog
-      :visible.sync="dialog2Visible"
-      custom-class="scatter-dialog1"
-      width="500px"
-    >
+    <el-dialog :visible.sync="dialog2Visible" custom-class="scatter-dialog1" width="500px">
       <div slot="title">111</div>
       <div class="content">
         <img src="./../../images/web/ic_warning_big.svg" alt>
@@ -94,6 +100,7 @@ import { State, Action } from 'vuex-class';
 import { Observer } from 'mobx-vue';
 import language from '@/stores/language';
 
+@Observer
 @Component
 export default class extends Vue {
   @State('accountName')
@@ -103,7 +110,6 @@ export default class extends Vue {
   login!: Function;
 
   activeName = 'first';
-  thisLangImg = '';
   selectValue = language.currentLocale;
   dialogVisible = false;
   dialog2Visible = false;
@@ -118,8 +124,31 @@ export default class extends Vue {
     });
   }
 
+  tabName(obj: string) {
+    return language.getIntlText(obj);
+  }
+
+  openNewPage() {
+    window.open(
+      'https://dadex.zendesk.com/hc/zh-cn/articles/360021134692-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Scatter%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E7%89%88-'
+    );
+  }
+
   showDilog() {
     this.dialogVisible = true;
+  }
+
+  handleClick(tab: any, event: any) {
+    if (tab.name === 'first') {
+      this.$router.push({
+        path: '/mex',
+      });
+    } else if (tab.name === 'second') {
+      this.$router.push({
+        path: '/market',
+        name: 'market',
+      });
+    }
   }
 
   async handleScatterSignInBtnClick() {
@@ -134,14 +163,6 @@ export default class extends Vue {
   changeLanguageType(data: any) {
     language.changeLanguage(this.selectValue);
     this.selectValue = language.currentLocale;
-  }
-  get showImg() {
-    if (language.currentLocale === 'zh-CN') {
-      this.thisLangImg = require('./../../images/web/ic_flag_cn.svg');
-    } else if (language.currentLocale === 'en-US') {
-      this.thisLangImg = require('./../../images/web/ic_flag_en.svg');
-    }
-    return this.thisLangImg;
   }
 }
 </script>
@@ -189,6 +210,11 @@ export default class extends Vue {
       .signed {
         display: flex;
       }
+      .signed {
+        width: 205px;
+        align-items: center;
+        // justify-content: center;
+      }
       .un-sign-in {
         margin-right: 21px;
         cursor: pointer;
@@ -207,7 +233,8 @@ export default class extends Vue {
       .use-box {
         cursor: pointer;
         margin-right: 10px;
-
+        display: flex;
+        align-items: center;
         .text-style {
           margin-left: 5px;
         }
@@ -411,6 +438,9 @@ export default class extends Vue {
           color: rgba(146, 167, 197, 1);
         }
       }
+      .how-ues-page{
+        cursor: pointer;
+      }
       span {
         padding: 0;
         font-size: 14px;
@@ -431,6 +461,8 @@ export default class extends Vue {
       font-weight: 400;
       color: rgba(146, 167, 197, 1);
       background: rgba(20, 46, 77, 1);
+      padding-left: 5px;
+      padding-right: 10px;
     }
   }
 }

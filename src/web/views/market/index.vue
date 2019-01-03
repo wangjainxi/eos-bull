@@ -2,11 +2,11 @@
   <div id="web-market-page">
     <div class="inner-box">
       <el-tabs v-model="activeName" @tab-click="onTabSwitch">
-        <el-tab-pane label="Favorite" name="first" class="tab-first">
-          <TableItem :thisTdata="favoriteMarkets" />
+        <el-tab-pane :label="tabName('home.Favorites')" name="first" class="tab-first">
+          <TableItem :thisTdata="favoriteMarkets"/>
         </el-tab-pane>
-        <el-tab-pane label="EOS" name="second" class="tab_second">
-          <TableItem :thisTdata="markets" />
+        <el-tab-pane :label="tabName('home.EOS')" name="second" class="tab_second">
+          <TableItem :thisTdata="markets"/>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -17,9 +17,12 @@ import { Vue, Component } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import TableItem from './tableItem.vue';
 import { Market } from '@/define';
+import language from '@/stores/language';
+import { Observer } from 'mobx-vue';
 
 const marketModule = namespace('market');
 
+@Observer
 @Component({
   components: { TableItem },
 })
@@ -69,6 +72,9 @@ export default class extends Vue {
   ];
   onTabSwitch() {
     //
+  }
+  tabName(obj: string) {
+    return language.getIntlText(obj);
   }
 }
 </script>

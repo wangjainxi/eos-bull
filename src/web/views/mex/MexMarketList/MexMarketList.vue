@@ -2,19 +2,19 @@
   <div class="market-list">
     <div class="list-header">
       <transition>
-        <span :class="{active:shows ===3 }" @click="showView(3)">
+        <a :class="{active:shows ===3 }" @click="showView(3)" :title="showAltContent('exchange.Buy')">
           <img src="../../../../images/web/ic_top.svg" alt>
-        </span>
+        </a>
       </transition>
       <transition>
-        <span :class="{active:shows ===2 }" @click="showView(2)">
+        <a :class="{active:shows ===2 }" @click="showView(2)" :title="showAltContent('exchange.Sell')">
           <img src="../../../../images/web/ic_bottom.svg" alt>
-        </span>
+        </a>
       </transition>
       <transition>
-        <span :class="{active:shows ===1 }" @click="showView(1)">
+        <a :class="{active:shows ===1 }" @click="showView(1)" :title="showAltContent('exchange.deep')">
           <img src="../../../../images/web/ic_middle.svg" alt>
-        </span>
+        </a>
       </transition>
     </div>
     <div class="list-title">
@@ -79,9 +79,12 @@ import { namespace } from 'vuex-class';
 import ListItem from './ListItem.vue';
 import { Market } from '@/define';
 import { getMarketOrderbook } from '@/utils/apis';
+import language from '@/stores/language';
+import { Observer } from 'mobx-vue';
 
 const marketModule = namespace('market');
 
+@Observer
 @Component({
   components: {
     ListItem,
@@ -116,6 +119,10 @@ export default class extends Vue {
     this.sellData = [];
   }
 
+  showAltContent(obj: string) {
+    return language.getIntlText(obj);
+  }
+
   @Watch('currentMarketId')
   async handleCcurrentMarketIdChange(newId: number, oldId: number) {
     this.sellData = await getMarketOrderbook(newId);
@@ -124,7 +131,6 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
-
 .market-list {
   height: 100%;
   border-top-left-radius: 8px;
@@ -141,6 +147,10 @@ export default class extends Vue {
     align-items: center;
     justify-content: flex-start;
     color: #fff;
+    & > a {
+      padding: 0 7px;
+      cursor: pointer;
+    }
   }
 
   .list-title {

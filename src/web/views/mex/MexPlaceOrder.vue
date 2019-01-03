@@ -1,7 +1,7 @@
 <template>
   <div id="mex-place-order-page">
     <el-tabs v-model="activeName">
-      <el-tab-pane label="Limit Orde" name="first">
+      <el-tab-pane :label="tabName('exchange.Limit_Order')" name="first">
         <div class="place-order-info" v-if="currentMarket">
           <!-- 买入 -->
           <div class="buy">
@@ -33,6 +33,13 @@
             </div>
             <div class="slider-box">
               <el-slider v-model="sliderValueBuy" :step="25" show-stops></el-slider>
+              <div class="slider-num">
+                <span>0%</span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;25%</span>
+                <span>&nbsp;&nbsp;&nbsp;50%</span>
+                <span>&nbsp;&nbsp;75%</span>
+                <span>100%</span>
+              </div>
             </div>
             <!-- 交易额 -->
             <div class="place-order-info-input">
@@ -73,6 +80,13 @@
             </div>
             <div class="slider-box">
               <el-slider v-model="sliderValueSell" :step="25" show-stops></el-slider>
+              <div class="slider-num">
+                <span>0%</span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;25%</span>
+                <span>&nbsp;&nbsp;&nbsp;50%</span>
+                <span>&nbsp;&nbsp;75%</span>
+                <span>100%</span>
+              </div>
             </div>
             <div class="place-order-info-input">
               <p>
@@ -87,7 +101,7 @@
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="Market Order" name="second">
+      <el-tab-pane :label="tabName('exchange.Market_Order')" name="second">
         <div class="place-order-info">
           <div class="buy">
             <div class="place-order-info-title">
@@ -102,7 +116,7 @@
               <p>
                 <Language resource="exchange.Buy_In_Price"/>
               </p>
-              <input type="number" placeholder="0.009999">
+              <input type="number" :placeholder="tabName('exchange.Buy_at_the_best_market_price')">
               <p>EOS</p>
             </div>
             <div class="place-order-info-input">
@@ -114,6 +128,13 @@
             </div>
             <div class="slider-box">
               <el-slider v-model="sliderValueBuy" :step="25" show-stops></el-slider>
+              <div class="slider-num">
+                <span>0%</span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;25%</span>
+                <span>&nbsp;&nbsp;&nbsp;50%</span>
+                <span>&nbsp;&nbsp;75%</span>
+                <span>100%</span>
+              </div>
             </div>
             <div class="place-order-info-input">
               <p>
@@ -139,7 +160,7 @@
               <p>
                 <Language resource="exchange.Sell_Out_Price"/>
               </p>
-              <input type="number" placeholder="0.009999">
+              <input type="number" :placeholder="tabName('exchange.Sell_at_the_best_market_price')">
               <p>EOS</p>
             </div>
             <div class="place-order-info-input">
@@ -151,6 +172,13 @@
             </div>
             <div class="slider-box">
               <el-slider v-model="sliderValueSell" :step="25" show-stops></el-slider>
+              <div class="slider-num">
+                <span>0%</span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;25%</span>
+                <span>&nbsp;&nbsp;&nbsp;50%</span>
+                <span>&nbsp;&nbsp;75%</span>
+                <span>100%</span>
+              </div>
             </div>
             <div class="place-order-info-input">
               <p>
@@ -170,7 +198,7 @@
       placement="bottom"
       width="300"
       trigger="hover"
-      content="DaDEX is a decentralized exchange，which does not make subjective judgment on any project and is not responsible for the investment results. It is strongly recommended that you make investment decisions after knowing the project in details."
+      :content="tabName('exchange.EOSmex_is_a_decentralized_exchange')"
     >
       <div class="mex-place-order" slot="reference">
         <img src="@/images/mobile/ic_warning.svg" alt>
@@ -186,10 +214,13 @@ import { Message } from 'element-ui';
 import { namespace, State } from 'vuex-class';
 import { Market, TokenBalance, AccountInfo } from '@/define';
 import { OrderParams } from '@/utils/scatter';
+import language from '@/stores/language';
+import { Observer } from 'mobx-vue';
 
 const userModule = namespace('user');
 const orderModule = namespace('order');
 
+@Observer
 @Component
 export default class MexPlaceOrder extends Vue {
   @Prop()
@@ -233,6 +264,10 @@ export default class MexPlaceOrder extends Vue {
     }
 
     return null;
+  }
+
+  tabName(obj: string) {
+    return language.getIntlText(obj);
   }
 
   get quoteBalanceAmount() {
@@ -342,6 +377,7 @@ export default class MexPlaceOrder extends Vue {
   .place-order-info {
     display: flex;
     .buy {
+      font-size: 14px;
       h4 {
         color: #1cc466;
       }
@@ -353,6 +389,7 @@ export default class MexPlaceOrder extends Vue {
       }
     }
     .sell {
+      font-size: 14px;
       h4 {
         color: #e53757;
       }
@@ -392,14 +429,31 @@ export default class MexPlaceOrder extends Vue {
           padding-right: 20px;
           background: none;
           border: none;
-          font-size: 16px;
+          font-size: 15px;
+          background: rgba(30, 58, 93, 1);
           flex: 1 1;
         }
       }
       .slider-box {
         margin-top: 17px;
+        display: flex;
+        position: relative;
+        flex-direction: column;
         .el-slider {
           padding: 0 5px;
+        }
+        .slider-num {
+          position: absolute;
+          width: 100%;
+          bottom: -5px;
+          left: 0;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 12px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: rgba(123, 141, 185, 1);
         }
       }
     }
