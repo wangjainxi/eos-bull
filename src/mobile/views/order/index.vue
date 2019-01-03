@@ -1,6 +1,5 @@
 <template>
-  <div class="business-sell-details" :getParams="getParams" >
-    <FixHeader :msg="msg"></FixHeader>
+  <div class="business-sell-details">
     <div class="sell-body">
       <div class="line"></div>
       <div class="details-item">
@@ -58,7 +57,7 @@
           </div>
         </div>
       </div>
-      <SellDetailsItem v-for="(item,index) in items" :key="index" :item="item"></SellDetailsItem>
+      <TradeItem v-for="(item,index) in items" :key="index" :item="item" />
     </div>
   </div>
 </template>
@@ -68,14 +67,12 @@ import { getOrderFills } from '@/utils/apis';
 import { Observer } from 'mobx-vue';
 import { Orderbook } from '@/define';
 import { formatTimes } from '@/utils/formatTime';
-import FixHeader from './components/fixHeader.vue';
-import SellDetailsItem from './components/sellDetailsItem.vue';
+import TradeItem from './trade-item.vue';
 
 @Observer
 @Component({
   components: {
-    FixHeader,
-    SellDetailsItem,
+    TradeItem,
   },
 })
 export default class BusinessSellDetails extends Vue {
@@ -102,14 +99,16 @@ export default class BusinessSellDetails extends Vue {
     fees: { amount: 0 }, // 已撮合数量
     trxId: '', // 下单交易哈希
   };
-  get getParams() {
-    // 取到路由带过来的参数
-    const routerParams = this.$route.params;
-    // 将数据放在当前组件的数据内
-    this.msg = routerParams;
-    console.log(this.msg);
-    return this.msg;
+
+  created() {
+    this.initData();
   }
+
+  async initData() {
+    const id = parseInt(this.$route.params.id, 10);
+    await Promise.all([getOrderFills(id)]);
+  }
+
   mounted() {
     this.orderId = Number(this.$route.params.orderId);
     this.tradeItem = this.$route.params.tradeItem;
@@ -127,15 +126,6 @@ export default class BusinessSellDetails extends Vue {
 
     return this.items;
   }
-  // @Watch('this.$route')
-  // watchthisRoute() {
-  //   // 监测路由变化,只要变化了就调用获取路由参数方法将数据存储本组件即可
-  //   this.getParams();
-  // }
-  // watch: {
-  //   // 监测路由变化,只要变化了就调用获取路由参数方法将数据存储本组件即可
-  //   $route: 'getParams',
-  // },
 }
 </script>
 <style lang="scss" scoped>

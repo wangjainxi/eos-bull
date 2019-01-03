@@ -4,10 +4,10 @@ import {
   TokenInfo,
   Orderbook,
   Trade,
-  Order,
   AccountInfo,
   Announcement,
   HistoryOrderParams,
+  OrdersWithIcons,
 } from '@/define';
 
 interface ResponseData<T = any> {
@@ -71,12 +71,21 @@ export const getMarketTrades = async (marketId: number) => {
   return resWrapper<Trade[]>(res);
 };
 
+const formartOrders = (list: OrdersWithIcons) => {
+  return list.orders.map(e => {
+    const icon = list.icons.find(e2 => e2.marketId === e.marketId);
+    if (icon) e.iconUrl = icon.iconUrl;
+    return e;
+  });
+};
+
 /**
  * 获取用户未成交订单列表
  */
 export const getUserPendingOrders = async (accountName: string) => {
   const res = await instance.get(`/v1/orders/pending/${accountName}`);
-  return resWrapper<Order[]>(res);
+  const result = resWrapper<OrdersWithIcons>(res);
+  return formartOrders(result);
 };
 
 /**
@@ -84,10 +93,15 @@ export const getUserPendingOrders = async (accountName: string) => {
  */
 export const getUserHistoryOrders = async (accountName: string, params?: HistoryOrderParams) => {
   const res = await instance.get(`/v1/orders/history/${accountName}`, { params });
-  return resWrapper<{
-    orders: Order[];
+  const result = resWrapper<{
+    list: OrdersWithIcons;
     count: number;
   }>(res);
+
+  return {
+    count: result.count,
+    orders: formartOrders(result.list),
+  };
 };
 
 /**

@@ -292,6 +292,7 @@ export default class MexPlaceOrder extends Vue {
     const quoteName = this.currentMarket.pair.quoteCurrency.symbol.name;
     const contract = this.currentMarket.pair.quoteCurrency.contract;
     this.createOrder({
+      referrer: '',
       market_id: this.currentMarket.marketId,
       price: `${parseFloat(this.limitBuyParams.price).toFixed(6)} ${quoteName}`,
       size: `${parseFloat(this.limitBuyParams.size).toFixed(4)} ${baseName}`,
@@ -316,6 +317,7 @@ export default class MexPlaceOrder extends Vue {
     const quoteName = this.currentMarket.pair.quoteCurrency.symbol.name;
     const contract = this.currentMarket.pair.baseCurrency.contract;
     this.createOrder({
+      referrer: '',
       market_id: this.currentMarket.marketId,
       price: `${parseFloat(this.limitSellParams.price).toFixed(6)} ${quoteName}`,
       size: `${parseFloat(this.limitSellParams.size).toFixed(4)} ${baseName}`,

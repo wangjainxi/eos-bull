@@ -75,7 +75,7 @@
           </div>
         </div>
         <div class="market-list-package-box">
-          <ListChild v-for="(item, index) in marketList" :item="item" :key="index"></ListChild>
+          <MarketItem v-for="(item, index) in marketList" :market="item" :key="index" />
         </div>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -85,7 +85,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
-import ListChild from '../HomePage/components/ListChild.vue';
+import MarketItem from '../../components/market-item.vue';
 import { computed } from 'mobx';
 import { Market } from '@/define';
 
@@ -93,7 +93,7 @@ const marketModule = namespace('market');
 
 @Component({
   components: {
-    ListChild,
+    MarketItem,
   },
 })
 export default class MarketList extends Vue {

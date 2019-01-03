@@ -24,7 +24,7 @@
             @click="changeTab(tab)"
             v-for="(tab,index) in tabs"
             :key="tab"
-          >{{tab}}</div>
+          >{{ tab }}</div>
         </div>
         <div class="left-title" @click="showNowPrice">
           <span>{{showSheetName}}</span>
@@ -70,25 +70,26 @@
             <BusinessTradeItem
               :changePriceAndMount="changePriceAndMount"
               :tradeType="'sell'"
-              v-for="(item, index) in tradeData"
+              v-for="(item, index) in orderbook.bids"
               :item="item"
               :key="index"
               :tradeDataMountSum="tradeDataMountSum"
             ></BusinessTradeItem>
           </div>
         </div>
-        <div
-          :class="['right-middle',{'middle-active':currrentTab === '买入' || currrentTab === 'Buy'}]"
-        >
-          <span>0.0200</span>
+
+        <div v-if="lastTrade" :class="{'right-middle': true, 'middle-active': lastTrade.makerSide === 1}">
+          <span>{{ lastTrade.price.amount }}</span>
           <i></i>
         </div>
+        <div v-else class="right-middle"></div>
+
         <div class="right-bottom">
           <div class="coin-item-box">
             <BusinessTradeItem
               :tradeType="'buy'"
               :changePriceAndMount="changePriceAndMount"
-              v-for="(item, index) in tradeData"
+              v-for="(item, index) in orderbook.asks"
               :item="item"
               :key="index"
               :tradeDataMountSum="tradeDataMountSum"
@@ -126,13 +127,13 @@
       >
         <ShowMessageImg v-if="pendingOrders.length === 0" :imgUrl="imgUrl" :imgMsg="imgMsg"></ShowMessageImg>
         <div class="loadmore-list" v-else>
-          <BusinessEntrust
+          <OrderItem
             v-for="(item,index) in pendingOrders"
-            :item="item"
+            :order="item"
             :routeParam="routeParam"
             :entrustType="entrustType"
             :key="index"
-          ></BusinessEntrust>
+          />
         </div>
       </div>
       <div
@@ -147,13 +148,13 @@
             @bottom-status-change="handleBottomChange"
             ref="loadmore"
           >
-            <BusinessEntrust
+            <OrderItem
               v-for="(item,index) in historyOrders.orders"
-              :item="item"
+              :order="item"
               :routeParam="routeParam"
               :entrustType="entrustType"
               :key="index"
-            ></BusinessEntrust>
+            />
             <div slot="bottom" class="mint-loadmore-bottom">
               <span
                 v-show="bottomStatus !== 'loading'"
@@ -174,14 +175,14 @@
 import { Vue, Component, Watch } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import onfire from 'onfire.js';
-import ShowMessageImg from './../../../components/messageImage.vue';
+import ShowMessageImg from '@/components/messageImage.vue';
+import OrderItem from '@/mobile/components/order-item.vue';
 import BusinessTradeItem from './components/businessTrade.vue';
-import BusinessEntrust from './components/businessEntrust.vue';
 import BusinessRange from './components/businessRange.vue';
 import ShowCoinList from './components/businessCoin.vue';
 import { MessageBox, Toast, Loadmore } from 'mint-ui';
 import languageStore from '@/stores/language';
-import { Market, Order } from '@/define';
+import { Market, Order, Orderbook, Trade } from '@/define';
 import { orderHistory } from '@/utils/restful';
 import { OrderParams } from '@/utils/scatter';
 
@@ -192,15 +193,21 @@ const marketModule = namespace('market');
   components: {
     ShowMessageImg,
     BusinessTradeItem,
-    BusinessEntrust,
     BusinessRange,
     ShowCoinList,
     Loadmore,
+    OrderItem,
   },
 })
 export default class Business extends Vue {
   @marketModule.State('markets')
   markets!: Market[];
+
+  @marketModule.State('orderbook')
+  orderbook!: Orderbook;
+
+  @marketModule.Getter('lastTrade')
+  lastTrade?: Trade;
 
   @marketModule.Getter('currentMarket')
   currentMarket?: Market;
@@ -211,8 +218,8 @@ export default class Business extends Vue {
   @orderModule.State('historyOrders')
   historyOrders!: Order[];
 
-  @marketModule.Mutation('setCurrentMarketId')
-  setCurrentMarketId!: Function;
+  @marketModule.Action('updateMarket')
+  updateMarket!: Function;
 
   @orderModule.Action('createOrder')
   createOrder!: (params: OrderParams) => Promise<any>;
@@ -264,7 +271,7 @@ export default class Business extends Vue {
 
   created() {
     const id = parseInt(this.$route.params.id, 10);
-    this.setCurrentMarketId(id);
+    this.updateMarket(id);
 
     const arr = localStorage.getItem('isFavorite');
     if (!arr) return;
@@ -288,7 +295,7 @@ export default class Business extends Vue {
   @Watch('$route')
   handleRouteChange() {
     const id = parseInt(this.$route.params.id, 10);
-    this.setCurrentMarketId(id);
+    this.updateMarket(id);
   }
 
   getFav() {
@@ -369,6 +376,7 @@ export default class Business extends Vue {
     const quantity = (parseFloat(market.lastPrice) * 100).toFixed(4);
 
     this.createOrder({
+      referrer: '',
       market_id: market.marketId,
       price: `${market.lastPrice} ${market.pair.quoteCurrency.symbol.name}`,
       size: `100.0000 ${market.pair.baseCurrency.symbol.name}`,
@@ -395,7 +403,7 @@ export default class Business extends Vue {
   }
   getPrevPage() {
     this.$router.push({
-      name: 'market-view',
+      name: 'market',
       params: {
         id: this.$route.params.id,
       },
@@ -408,7 +416,6 @@ export default class Business extends Vue {
 $marginwidth: 0.12rem;
 .business {
   width: 100%;
-  padding-bottom: 0.48rem;
   position: relative;
 }
 .business-coin-title,
@@ -639,7 +646,7 @@ $marginwidth: 0.12rem;
       }
     }
     .header {
-      height: 0.375rem;
+      height: 1.5rem;
       & > div {
         color: rgba(141, 141, 141, 1);
         @include font(400, 0.14rem, 0.2rem, 'PingFangSC-Regular');

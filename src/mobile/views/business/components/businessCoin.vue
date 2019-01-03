@@ -54,8 +54,8 @@ export default class ShowCoinList extends Vue {
   @marketModule.Getter('currentMarket')
   currentMarket?: Market;
 
-  @marketModule.Mutation('setCurrentMarketId')
-  setCurrentMarketId!: Function;
+  @marketModule.Action('updateMarket')
+  updateMarket!: Function;
 
   currentTab = 1;
 

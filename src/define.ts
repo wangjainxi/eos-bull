@@ -134,6 +134,7 @@ export interface Order {
   avgPrice: CoinAsset; // 平均成交价格
   fees: CoinAsset; // 交易总费用
   trxId: string; // 下单交易哈希
+  iconUrl?: string; // 代币图标
 }
 
 /**
@@ -145,7 +146,7 @@ export interface Trade {
   seller: string; // 卖家账户名
   buyerOrderId: number; // 买家订单ID
   sellerOrderId: number; // 卖家订单ID
-  makerOrderSide: ORDER_SIDE; // Maker订单方向
+  makerSide: ORDER_SIDE; // Maker订单方向
   price: CoinAsset; // 撮合价格
   size: CoinAsset; // 撮合数量
   buyerFee: ExtendedAsset;
@@ -166,7 +167,7 @@ export interface PriceLevel {
  * 代表一个完整的订单簿。其中bids代表买单，按照价格降序排列；asks代表卖单，按照价格升序排列。
  */
 export interface Orderbook {
-  marketId: number;
+  marketId?: number;
   asks: Array<PriceLevel>;
   bids: Array<PriceLevel>;
 }
@@ -244,6 +245,16 @@ export interface TokenMeta {
   token: ExtendedSymbol;
   iconUrl: string;
   listedMarkets: Array<MarketMeta>;
+}
+
+export interface OrdersWithIcons {
+  orders: Array<Order>;
+  icons: Array<MarketIcon>;
+}
+
+export interface MarketIcon {
+  marketId: number;
+  iconUrl: string;
 }
 
 export interface MarketMeta {

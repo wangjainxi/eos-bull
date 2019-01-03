@@ -57,7 +57,7 @@ import { namespace } from 'vuex-class';
 const marketModule = namespace('market');
 
 @Component
-export default class extends Vue {
+export default class MarketOptional extends Vue {
   setTop(id: number) {
     // dataStores.setTop(id);
   }

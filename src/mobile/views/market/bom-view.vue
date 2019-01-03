@@ -13,10 +13,10 @@
       <div >
         <mt-tab-container v-model="selected">
           <mt-tab-container-item id="1">
-            <OrderTab :OrderData="orderData"/>
+            <OrderTab :orderData="orderData" />
           </mt-tab-container-item>
           <mt-tab-container-item id="2">
-            <DeepCharts/>
+            <!-- <DeepCharts/> -->
           </mt-tab-container-item>
           <mt-tab-container-item id="3">
             <DealTab :recentDealData="recentDealData" />
@@ -36,7 +36,6 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 import OrderTab from './component/OrderTab.vue';
 import DealTab from './component/DealTab.vue';
 import Introduction from './component/VueIntroduction.vue';
-import DeepCharts from '../../../../components/deepCharts/index.vue';
 import { TokenInfo } from '@/define';
 
 @Component({
@@ -44,7 +43,6 @@ import { TokenInfo } from '@/define';
     OrderTab,
     DealTab,
     Introduction,
-    DeepCharts,
   },
 })
 export default class BomView extends Vue {
@@ -57,7 +55,8 @@ export default class BomView extends Vue {
 </script>
 
 <style lang="scss" >
-@import '../../../../style/mixin.scss';
+@import '../../../style/mixin.scss';
+
 #nav {
   padding: 30px;
   a {

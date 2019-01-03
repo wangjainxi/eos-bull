@@ -7,8 +7,8 @@
         <!-- <VueTradingView/> -->
       </div>
       <BomView
-        :orderData="pendingOrders"
-        :recentDealData="recentDealData"
+        :orderData="orderbook"
+        :recentDealData="trades"
         :tokenInfo="tokenInfo" />
     </div>
     <div class="btn-box">
@@ -36,12 +36,12 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator';
 import { namespace, State, Action } from 'vuex-class';
-import TopView from './TopView.vue';
-import BomView from './BomView.vue';
+import TopView from './top-view.vue';
+import BomView from './bom-view.vue';
 import TransactionDetail from './TransactionDetail.vue';
 import VueTradingView from '@/components/vueTradingView/index.vue';
-import { Market, Trade, Order, TokenInfo } from '@/define';
-import { getMarketTrades, getTokenInfo } from '@/utils/apis';
+import { Market, Trade, Order, TokenInfo, Orderbook } from '@/define';
+import { getMarketTrades, getTokenInfo, getMarketOrderbook } from '@/utils/apis';
 
 const orderModule = namespace('order');
 const marketModule = namespace('market');
@@ -58,6 +58,12 @@ export default class MarketView extends Vue {
   @State('accountName')
   accountName!: string;
 
+  @marketModule.State('orderbook')
+  orderbook!: Orderbook;
+
+  @marketModule.State('trades')
+  trades!: Trade[];
+
   @marketModule.Getter('markets')
   markets!: Market[];
 
@@ -66,12 +72,6 @@ export default class MarketView extends Vue {
 
   @marketModule.Getter('favoriteMarkets')
   favouriteMarkets!: Market[];
-
-  @orderModule.State('pendingOrders')
-  pendingOrders!: Order[];
-
-  @orderModule.State('historyOrders')
-  historyOrders!: Order[];
 
   @Action('login')
   login!: Function;
@@ -85,10 +85,8 @@ export default class MarketView extends Vue {
   @orderModule.Action('fetchHistoryOrders')
   fetchHistoryOrders!: Function;
 
-  @marketModule.Mutation('setCurrentMarketId')
-  setCurrentMarketId!: Function;
-
-  recentDealData: Array<Trade> = [];
+  @marketModule.Action('updateMarket')
+  updateMarket!: Function;
 
   tokenInfo: TokenInfo | null = null;
 
@@ -106,16 +104,19 @@ export default class MarketView extends Vue {
   }
 
   async initData() {
-    this.setCurrentMarketId(this.marketId);
-    if (!this.currentMarket) {
-      await this.fetchMarkets();
-    }
+    // 设置当前市场
+    this.updateMarket(this.marketId);
 
+    // 登录判断
     if (!this.accountName) {
       await this.login();
     }
-    await this.fetchPendingOrders();
-    this.recentDealData = await getMarketTrades(this.marketId);
+
+    // 市场判断
+    if (!this.currentMarket) {
+      await this.fetchMarkets();
+    }
+    // 加载token信息
     const contract = this.currentMarket!.pair.baseCurrency.contract;
     const symbol = this.currentMarket!.pair.baseCurrency.symbol.name;
     this.tokenInfo = await getTokenInfo(contract, symbol);
@@ -138,7 +139,8 @@ export default class MarketView extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../../style/mixin.scss';
+@import '../../../style/mixin.scss';
+
 .green-color {
   color: rgba(7, 199, 78, 1);
 }

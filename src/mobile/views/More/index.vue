@@ -45,7 +45,7 @@ import { Observer } from 'mobx-vue';
 
 @Observer
 @Component
-export default class extends Vue {
+export default class More extends Vue {
   popupVisible = false;
   language = languageStore;
   accountData = [

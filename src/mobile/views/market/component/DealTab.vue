@@ -25,22 +25,9 @@ import DealItem from './DealItem.vue';
     DealItem,
   },
 })
-export default class extends Vue {
+export default class DealTab extends Vue {
   @Prop() recentDealData!: any;
   dealData: any[] = [];
-
-  mounted() {
-    this.getDealData();
-  }
-  async getDealData() {
-    try {
-      const res = await getMarketTrades(Number(this.$route.params.id));
-      this.dealData = res;
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
-  }
 }
 </script>
 

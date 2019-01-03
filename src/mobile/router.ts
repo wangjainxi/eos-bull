@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import TabPackage from '@/mobile/TabPackage.vue';
-import MarketView from './views/Market/MarketView/index.vue';
+import Layout from './layout.vue';
+import Market from './views/market/index.vue';
+import MarketSearch from './views/market-search/index.vue';
 import ReportActivity from './views/ReportActivity/index.vue';
 import ReportActivityPage from './views/ReportActivity/report.vue';
-import MarketSearch from './views/Market/MarketSearch.vue';
-import MarketOptional from './views/Market/MarketOptional.vue';
+import MarketOptional from './views/markets/MarketOptional.vue';
 
 Vue.use(Router);
 
@@ -13,34 +13,33 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: TabPackage,
+      component: Layout,
       children: [
         {
           path: '/',
-          name: 'homepage',
-          component: () =>
-            import(/* webpackChunkName: "homepage" */ './views/HomePage/HomePage.vue'),
+          name: 'home',
+          component: () => import(/* webpackChunkName: "homepage" */ './views/home/index.vue'),
         },
         {
-          path: '/market',
-          // name:'market',
-          component: () => import(/* webpackChunkName: "market" */ './views/Market/Market.vue'),
+          path: '/markets',
+          name: 'markets',
+          component: () => import(/* webpackChunkName: "market" */ './views/markets/index.vue'),
           children: [],
         },
         {
           path: '/orders',
           name: 'orders',
-          component: () => import(/* webpackChunkName: "orders" */ './views/Order/index.vue'),
+          component: () => import(/* webpackChunkName: "orders" */ './views/orders/index.vue'),
         },
         {
           path: '/more',
           name: 'more',
-          component: () => import(/* webpackChunkName: "more" */ './views/More/More.vue'),
+          component: () => import(/* webpackChunkName: "more" */ './views/more/index.vue'),
         },
         {
           path: '/assets',
           name: 'assets',
-          component: () => import(/* webpackChunkName: "assets" */ './views/Assets/Assets.vue'),
+          component: () => import(/* webpackChunkName: "assets" */ './views/assets/index.vue'),
         },
       ],
     },
@@ -52,24 +51,22 @@ export default new Router({
     {
       path: '/business/:id',
       name: 'business',
-      component: () => import(/* webpackChunkName: "business" */ './views/business/Business.vue'),
+      component: () => import(/* webpackChunkName: "business" */ './views/business/index.vue'),
     },
     {
       path: '/market-optional',
       name: 'market-optional',
       component: MarketOptional,
     },
-
     {
-      path: '/businessHistory',
-      name: 'businessHistory',
-      component: () =>
-        import(/* webpackChunkName: "businessHistory" */ './views/business/businessSellDetails.vue'),
+      path: '/orders/:id',
+      name: 'order',
+      component: () => import(/* webpackChunkName: "businessHistory" */ './views/order/index.vue'),
     },
     {
-      path: '/market-view/:id',
-      name: 'market-view',
-      component: MarketView,
+      path: '/makets/:id',
+      name: 'market',
+      component: Market,
     },
     {
       path: '/report-activity',

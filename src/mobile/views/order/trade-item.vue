@@ -67,7 +67,7 @@ export default class SellDetailsItem extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import './../../../../style/mixin.scss';
+@import './../../../style/mixin.scss';
 
 .details-item {
   padding: 0.16rem 0.2rem;
