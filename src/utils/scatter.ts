@@ -113,6 +113,7 @@ export interface OrderParams {
 }
 
 export const createOrder = async (params: OrderParams) => {
+  debug('createOrder:', JSON.stringify(params));
   const { name, authority } = await getIdentity();
   const authorization = [{ actor: name, permission: authority }];
 

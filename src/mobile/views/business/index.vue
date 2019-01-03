@@ -386,7 +386,7 @@ export default class Business extends Vue {
     const price = parseFloat(this.businessPrice);
     const priceAsset = `${price.toFixed(6)} ${quoteName}`;
     const sizeAsset = `${size.toFixed(4)} ${baseName}`;
-    const quantityAsset = (price * size).toFixed(4);
+    const quantityAsset = `${(price * size).toFixed(4)} ${quoteName}`;
 
     this.createOrder({
       market_id: market.marketId,
