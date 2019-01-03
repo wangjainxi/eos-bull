@@ -113,7 +113,7 @@ export interface OrderParams {
 }
 
 export const createOrder = async (params: OrderParams) => {
-  debug('createOrder:', JSON.stringify(params));
+  debug('createOrder: %s', JSON.stringify(params));
   const { name, authority } = await getIdentity();
   const authorization = [{ actor: name, permission: authority }];
 
@@ -153,6 +153,7 @@ export const createOrder = async (params: OrderParams) => {
 };
 
 export const cancelOrder = async (orderId: number) => {
+  debug('cancelOrder: %i', orderId);
   await transaction('cxlorder', mexContract, {
     order_id: orderId,
   });
