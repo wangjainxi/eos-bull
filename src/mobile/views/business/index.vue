@@ -20,9 +20,9 @@
       <div class="business-show-data-left">
         <div class="business-tab">
           <div
-            :class="['business-tab-buy', {active : currrentTab === tab}, {tab2: index === 1}]"
-            @click="changeTab(tab)"
+            :class="['business-tab-buy', {active: currrentTab === index}, {tab2: index === 1}]"
             v-for="(tab,index) in tabs"
+            @click="changeTab(index)"
             :key="tab"
           >{{ tab }}</div>
         </div>
@@ -50,11 +50,13 @@
           <div class="use-mount-left">{{`${thisBal}EOS：${getUseMount}`}}</div>
           <div class="use-mount-right">{{`${rangeValue}%`}}</div>
         </div>
-        <div
-          id="goBusiness"
-          :class="currrentTab === '买入' || currrentTab === 'Buy' ? 'businessBuy' : 'businessSell'"
-          @click="goBusiness"
-        >{{currrentTab}}</div>
+
+        <div v-if="currrentTab === 0" class="goBusiness businessBuy" @click="goBusiness">
+          <Language resource="business.Buy"/>
+        </div>
+        <div v-else class="goBusiness businessSell" @click="goBusiness">
+          <Language resource="business.Sell"/>
+        </div>
       </div>
       <div class="business-show-data-right">
         <div class="right-top">
@@ -78,7 +80,10 @@
           </div>
         </div>
 
-        <div v-if="lastTrade" :class="{'right-middle': true, 'middle-active': lastTrade.makerSide === 1}">
+        <div
+          v-if="lastTrade"
+          :class="{'right-middle': true, 'middle-active': lastTrade.makerSide === 1}"
+        >
           <span>{{ lastTrade.price.amount }}</span>
           <i></i>
         </div>
@@ -183,7 +188,6 @@ import ShowCoinList from './components/businessCoin.vue';
 import { MessageBox, Toast, Loadmore } from 'mint-ui';
 import languageStore from '@/stores/language';
 import { Market, Order, Orderbook, Trade } from '@/define';
-import { orderHistory } from '@/utils/restful';
 import { OrderParams } from '@/utils/scatter';
 
 const orderModule = namespace('order');
@@ -233,14 +237,14 @@ export default class Business extends Vue {
   cancel = languageStore.getIntlText('business.cancel');
   popupVisible = false; //币种弹
   sheetVisible = false; //价格弹
-  businessPrice = 3422.02; //交易价
-  inputVal = 0; //交易
+  businessPrice = '0'; //交易价
+  inputVal = '0'; //交易
   routeParam: any = '';
   coinName: any = '';
   isFavorite: any = [];
   routeId: number = -1;
   changeEos = 0.00001;
-  currrentTab = '卖出';
+  currrentTab = 0;
   thisBal = languageStore.getIntlText('business.Bal');
   tabs = [languageStore.getIntlText('business.Buy'), languageStore.getIntlText('business.Sell')];
   imgUrl = require('./../../../images/mobile/ic_nodata.png');
@@ -272,24 +276,22 @@ export default class Business extends Vue {
   created() {
     const id = parseInt(this.$route.params.id, 10);
     this.updateMarket(id);
+  }
 
-    const arr = localStorage.getItem('isFavorite');
-    if (!arr) return;
-    this.isFavorite = JSON.parse(arr);
-    const transPair = localStorage.getItem('transPair');
-    if (!transPair) return;
-    this.coinName = transPair || this.$route.params.coinName;
-    this.$route.params.coinName = this.coinName;
-    console.log(this.coinName);
+  initData() {
+    if (this.currentMarket) {
+      this.businessPrice = this.currentMarket.lastPrice;
+    }
+  }
+
+  @Watch('currentMarket')
+  handleCurrentMarketUpdate() {
+    this.initData();
   }
 
   mounted() {
     this.routeParam = this.$route.params;
     this.routeId = Number(this.$route.params.id);
-    this.currrentTab =
-      this.$route.params.type === 'buy'
-        ? languageStore.getIntlText('business.Buy')
-        : languageStore.getIntlText('business.Sell');
   }
 
   @Watch('$route')
@@ -373,26 +375,44 @@ export default class Business extends Vue {
   }
   goBusiness() {
     const market = this.currentMarket!;
-    const quantity = (parseFloat(market.lastPrice) * 100).toFixed(4);
+    const orderSide = this.currrentTab === 0 ? 'bid' : 'ask';
+    const baseName = market.pair.baseCurrency.symbol.name;
+    const baseContract = market.pair.baseCurrency.contract;
+    const quoteName = market.pair.quoteCurrency.symbol.name;
+    const quoteContract = market.pair.quoteCurrency.contract;
+    const contract = orderSide === 'bid' ? quoteContract : baseContract;
+
+    const size = parseFloat(this.inputVal);
+    const price = parseFloat(this.businessPrice);
+    const priceAsset = `${price.toFixed(6)} ${quoteName}`;
+    const sizeAsset = `${size.toFixed(4)} ${baseName}`;
+    const quantityAsset = (price * size).toFixed(4);
 
     this.createOrder({
-      referrer: '',
       market_id: market.marketId,
-      price: `${market.lastPrice} ${market.pair.quoteCurrency.symbol.name}`,
-      size: `100.0000 ${market.pair.baseCurrency.symbol.name}`,
-      coin_contract: market.pair.quoteCurrency.contract,
-      order_side: 'bid',
+      price: priceAsset,
+      size: sizeAsset,
+      coin_contract: contract,
+      order_side: orderSide,
       order_type: 'limit',
       time_in_force: 'gtc',
       post_only: 0,
-      quantity: `${quantity} ${market.pair.quoteCurrency.symbol.name}`,
-    });
-    //交易
-    Toast({
-      message: '已提交，待区块确认',
-      iconClass: 'ic_correct',
-      duration: 2000,
-    });
+      quantity: orderSide === 'bid' ? quantityAsset : sizeAsset,
+    })
+      .then(() => {
+        Toast({
+          message: '已提交，待区块确认',
+          iconClass: 'ic_correct',
+          duration: 2000,
+        });
+      })
+      .catch((err: Error) => {
+        Toast({
+          message: err.message,
+          iconClass: 'ic_correct',
+          duration: 2000,
+        });
+      });
 
     // Toast({
     //   message: 'EOS余额不足',
@@ -579,7 +599,7 @@ $marginwidth: 0.12rem;
       color: rgba(141, 141, 141, 1);
     }
   }
-  #goBusiness {
+  .goBusiness {
     height: 0.34rem;
     width: 100%;
     @include flex(flex, center, center);
