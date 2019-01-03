@@ -177,7 +177,7 @@
       <div class="cooperation-page-box">
         <div class="cooperation-box">
           <h4>
-            <Language resource="home.cooperative_partner"/>
+            <Language resource="home.cooperative_partner1"/>
           </h4>
           <div>
             <img src="./home-page-img/logo_p01.svg" alt>
@@ -388,6 +388,8 @@ export default class extends Vue {
       left: 62px;
       font-size: 44px;
       color: #fff;
+      font-family: PingFangSC-Light;
+      font-weight: 300;
     }
   }
   .introduce-box-page {

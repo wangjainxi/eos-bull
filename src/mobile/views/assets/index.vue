@@ -1,7 +1,7 @@
 <template>
   <div class="package">
     <div class="about-banner-box">
-      <img src="@/images/mobile/ic_avatar.svg" />
+      <img src="@/images/mobile/ic_avatar.svg">
       <h3>{{ accountName }}</h3>
       <div>
         <h4>{{ totalValuation.amount }}</h4>
@@ -77,7 +77,7 @@
         <Language resource="asset.Resources_Usage"/>
       </h4>
       <div>
-        <h4>
+        <h4 :class="!showRedColor?'usage-show-red':''">
           CPU：
           <span>
             <Language resource="asset.Used"/>5048.2%
@@ -87,14 +87,21 @@
           <Language resource="asset.Used"/>0.00us/
           <Language resource="asset.Total"/>45.00us(0.1000 EOS)
         </p>
-        <Language resource="asset.Used"/>
-        <h4>NET： 1.9%</h4>
+        <h4>
+          NET：
+          <span>
+            <Language resource="asset.Used"/>1.9%
+          </span>
+        </h4>
         <p>
           <Language resource="asset.Used"/>0.00B/
           <Language resource="asset.Total"/>77.15KB(0.1000 EOS)
         </p>
-        <h4>RAM：
-          <Language resource="asset.Used"/>57.0%
+        <h4 :class="!showRedColor?'usage-show-red':''">
+          RAM：
+          <span>
+            <Language resource="asset.Used"/>57.0%
+          </span>
         </h4>
         <p>
           <Language resource="asset.Used"/>2.92KB/
@@ -139,6 +146,7 @@ export default class Assets extends Vue {
   selectInput = 'asset.Value_0_01EOS';
   popupVisible = false;
   assetsSelectData = false;
+  showRedColor = false;
   search = languageStore.getIntlText('asset.search');
   selectInputs = [
     'asset.Total_Asset',
@@ -168,6 +176,10 @@ export default class Assets extends Vue {
 </script>
 <style lang="scss" scoped>
 .about-banner-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   height: 2rem;
   width: 100%;
   padding-top: 0.4rem;
@@ -209,7 +221,8 @@ export default class Assets extends Vue {
   p {
     font-size: 0.11rem;
     color: #fff;
-    margin-top: 0.05rem;
+    font-weight: 300;
+    margin-top: 0.08rem;
   }
 }
 .about-CPU-info-box {
@@ -312,12 +325,18 @@ export default class Assets extends Vue {
 }
 .mint-popup {
   padding: 0.2rem;
-  width: 70%;
+  width: 80%;
   border-radius: 0.08rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
   > h4 {
+    width: 100%;
     font-size: 0.16rem;
     color: #007aff;
     margin-bottom: 14px;
+    display: flex;align-items: center;justify-content: center;
   }
   > div {
     text-align: left;
@@ -327,17 +346,26 @@ export default class Assets extends Vue {
       color: #000;
       font-weight: bold;
       span {
-        color: #ff0000;
         font-weight: bold;
         font-size: 0.15rem;
+        margin-right: 0.05rem;
+      }
+    }
+    .usage-show-red {
+      span {
+        color: #ff0000;
       }
     }
     > p {
       font-size: 0.13rem;
-      margin-bottom: 14px;
+      margin-bottom: 0.18rem;
+      font-family: PingFangSC-Medium;
+      font-weight: 500;
+      color: rgba(141, 141, 141, 1);
     }
   }
   .mint-button {
+    margin: 0 auto;
     color: #fff;
     height: 0.3rem;
     width: 1.54rem;

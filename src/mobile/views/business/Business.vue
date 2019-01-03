@@ -121,14 +121,10 @@
         </div>
       </div>
       <div
-        :class="['business-entrust-body',{'show-item': pendingOrders.length !== 0}]"
+        :class="['business-entrust-body',{'show-item': pendingOrders.length !== 0,'show-no-item': pendingOrders.length == 0}]"
         v-if="entrustType === 0"
       >
-        <ShowMessageImg
-          v-if="pendingOrders.length === 0"
-          :imgUrl="imgUrl"
-          :imgMsg="imgMsg"
-        ></ShowMessageImg>
+        <ShowMessageImg v-if="pendingOrders.length === 0" :imgUrl="imgUrl" :imgMsg="imgMsg"></ShowMessageImg>
         <div class="loadmore-list" v-else>
           <BusinessEntrust
             v-for="(item,index) in pendingOrders"
@@ -140,14 +136,10 @@
         </div>
       </div>
       <div
-        :class="['business-entrust-body',{'show-item': historyOrders.orders.length !== 0}]"
+        :class="['business-entrust-body',{'show-item': historyOrders.orders.length !== 0,'show-no-item': historyOrders.orders.length == 0}]"
         v-else
       >
-        <ShowMessageImg
-          v-if="historyOrders.orders.length === 0"
-          :imgUrl="imgUrl"
-          :imgMsg="imgMsg"
-        ></ShowMessageImg>
+        <ShowMessageImg v-if="historyOrders.orders.length === 0" :imgUrl="imgUrl" :imgMsg="imgMsg"></ShowMessageImg>
         <div class="loadmore-list" v-else>
           <Loadmore
             :bottom-method="loadBottom"
@@ -479,7 +471,7 @@ $marginwidth: 0.12rem;
     .business-tab-buy {
       @include flex(flex, center, center);
       // @include wh(50%, 0.34rem);
-      @include font(300, 0.16rem, 0.22rem, 'PingFangSC-Regular');
+      @include font(400, 0.13rem, 0.18rem, 'PingFangSC-Regular');
       color: rgba(141, 141, 141, 1);
       @include wh(50%, 0.34rem);
       // line-height: 0.34rem;
@@ -650,7 +642,7 @@ $marginwidth: 0.12rem;
       height: 0.375rem;
       & > div {
         color: rgba(141, 141, 141, 1);
-        @include font(400, 0.15rem, 0.21rem, 'PingFangSC-Regular');
+        @include font(400, 0.14rem, 0.2rem, 'PingFangSC-Regular');
       }
     }
   }
@@ -753,7 +745,6 @@ $marginwidth: 0.12rem;
 }
 .business-entrust-body {
   width: 100%;
-  margin-bottom: 0.5rem;
   background: rgba(247, 247, 247, 1);
   @include flex(flex, center, center);
   max-height: inherit;
@@ -765,6 +756,10 @@ $marginwidth: 0.12rem;
   @include flex(flex, flex-start, flex-start);
   background: rgba(255, 255, 255, 1);
   height: 100%;
+  // margin-bottom: 0.5rem;
+}
+.show-no-item {
+  height: 1.7rem;
 }
 .entrust-item:nth-last-child(1) {
   .entrust-item-body {

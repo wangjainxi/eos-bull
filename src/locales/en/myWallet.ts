@@ -17,6 +17,7 @@ export default {
   Used: 'Used',
   Tradable_Assets: 'Tradable Assets',
   Total_Asset: 'Total Asset',
+  Total: 'Total',
   Value_EOS: 'Value ≥ 0.01EOS',
   Following: 'Following',
   Coin: 'Coin ',
@@ -40,4 +41,5 @@ export default {
   High_Latency: 'High Latency',
   Timed_Out: 'Timed Out',
   EOS_Main: 'EOS Main',
+  Search: 'Search',
 };

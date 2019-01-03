@@ -8,16 +8,11 @@
         @click="currentTab = index"
       >
         <i class="tab-icon"></i>
-        {{tab.name}}
+        {{showTitle(tab.name)}}
       </div>
       <div class="search-input">
         <i class="search-icon"></i>
-        <input
-          type="search"
-          class="search"
-          placeholder="Search"
-          v-model="inputValue"
-        >
+        <input type="search" class="search" :placeholder="showTitle('home.Search')" v-model="inputValue">
         <!-- <i v-if="inputValue" class="search-close"></i> -->
       </div>
     </div>
@@ -60,6 +55,7 @@ import { getMrkets, getAccountInfo } from '@/utils/apis';
 import languageStore from '@/stores/language';
 import MexCurrentcyListDataItem from './MexCurrentcyListDataItem.vue';
 import { Market } from '@/define';
+import { Observer } from 'mobx-vue';
 
 const marketModule = namespace('market');
 
@@ -70,30 +66,15 @@ interface ObjectData {
 const tabs = [
   {
     id: 1,
-    name: languageStore.getIntlText('home.Favorites'),
+    name: 'home.Favorites',
   },
   {
     id: 2,
-    name: 'EOS',
-  },
-];
-const dataList = [
-  {
-    name: 'DICE / EOS',
-    dec: 'betdicetoken',
-    price: 0.002541,
-    change: '5.44%',
-    goTotop: true,
-  },
-  {
-    name: 'MAX / EOS',
-    dec: 'eosmax1token',
-    price: 0.002141,
-    change: '2.44%',
-    goTotop: false,
+    name: 'home.EOS',
   },
 ];
 
+@Observer
 @Component({
   components: {
     MexCurrentcyListDataItem,
@@ -113,6 +94,9 @@ export default class MexCurrentcyList extends Vue {
 
   handleMarketItemClick(market: Market) {
     this.$emit('change', market);
+  }
+  showTitle(obj: string) {
+    return languageStore.getIntlText(obj);
   }
 }
 </script>

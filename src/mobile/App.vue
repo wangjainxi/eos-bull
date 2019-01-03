@@ -40,4 +40,24 @@ export default {
   justify-content: space-between;
   align-items: flex-start;
 }
+
+.flex-row-between-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-column-start-start {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.is-selected {
+  span {
+    font-family: PingFangSC-Medium;
+    font-weight: bold !important;
+  }
+}
 </style>

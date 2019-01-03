@@ -11,22 +11,26 @@
             <el-option label="区域二" value="beijing"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="Coin">
+        <el-form-item>
+          <Language resource="exchange.Coin"/>
           <el-input v-model="formInline.user" placeholder="审批人"></el-input>
         </el-form-item>
-        <el-form-item label="Type">
+        <el-form-item>
+          <Language resource="exchange.Type"/>
           <el-select v-model="formInline.region" placeholder="活动区域">
             <el-option label="区域一" value="shanghai"></el-option>
             <el-option label="区域二" value="beijing"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="Status">
+        <el-form-item>
+          <Language resource="exchange.Status"/>
           <el-select v-model="formInline.region" placeholder="活动区域">
             <el-option label="区域一" value="shanghai"></el-option>
             <el-option label="区域二" value="beijing"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="Status">
+        <el-form-item>
+          <Language resource="exchange.Date"/>
           <el-date-picker
             v-model="dateValue"
             type="datetimerange"
@@ -169,6 +173,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import languageStore from '@/stores/language';
 import { State } from 'vuex-class';
 import { getUserHistoryOrders } from '@/utils/apis';
 import { HistoryOrderParams, Order } from '@/define';
@@ -223,6 +228,9 @@ export default class extends Vue {
   }
   ondateValue() {
     console.log(this.dateValue);
+  }
+  getShowLabel(obj: string) {
+    return languageStore.getIntlText(obj);
   }
 }
 </script>
@@ -338,6 +346,9 @@ export default class extends Vue {
     .el-form-item:nth-child(5) {
       .el-form-item__content {
         width: 250px;
+        display: flex;
+        align-items: flex-start;
+
         input {
           background: #142e4d;
           border-color: #142e4d;
@@ -381,7 +392,17 @@ export default class extends Vue {
       margin-right: 25px;
     }
     .el-form-item__content {
-      width: 120px;
+      & > span {
+        padding-right: 10px;
+        width: inherit;
+        font-size: 14px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(146, 167, 197, 1);
+      }
+      & > div {
+        width: 120px;
+      }
     }
   }
 }

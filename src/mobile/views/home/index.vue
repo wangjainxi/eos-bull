@@ -15,22 +15,21 @@
         <nobr
           class="notice"
           v-for="item of announcements"
-          :key="item.announcementId">
-          {{ item.title }}
-        </nobr>
+          :key="item.announcementId"
+        >{{ item.title }}</nobr>
       </p>
     </div>
     <div class="home-user-info-box">
       <div>
-        <img src="../../../images/mobile/ic_avatar.svg" />
+        <img src="../../../images/mobile/ic_avatar.svg">
         <p>{{ accountName }}</p>
       </div>
       <div>
-        <p>
+        <p class="eos-value">
           <Language resource="asset.totalValue"/>
         </p>
         <h4>{{ totalValuation.amount }}</h4>
-        <p>{{ totalValuation.name }}</p>
+        <p class="EOS-name">{{ totalValuation.name }}</p>
       </div>
     </div>
     <div class="home-tab-title-box">
@@ -126,6 +125,10 @@ export default class Home extends Vue {
 #home-page {
   padding-bottom: 0.5rem;
   .home-banner-box {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
     width: 100%;
     height: 1.7rem;
     background-image: url('../../../images/mobile/bg_banner.svg');
@@ -136,6 +139,7 @@ export default class Home extends Vue {
     p {
       font-size: 0.16rem;
       color: #fff;
+      font-weight: 300;
       margin-top: 0.12rem;
     }
   }
@@ -172,6 +176,18 @@ export default class Home extends Vue {
     height: 0.7rem;
     align-items: center;
     padding: 0 0.2rem;
+    .eos-value {
+      font-size: 0.1rem;
+      font-family: PingFangSC-Medium;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 1);
+    }
+    .EOS-name {
+      font-size: 0.11rem;
+      font-family: PingFangSC-Medium;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 1);
+    }
     > div {
       display: flex;
       align-items: center;
@@ -215,6 +231,7 @@ export default class Home extends Vue {
       justify-content: center;
       span {
         font-size: 0.16rem !important;
+        font-weight: 500;
       }
     }
     .mint-navbar .mint-tab-item.is-selected {
@@ -224,6 +241,7 @@ export default class Home extends Vue {
       position: relative;
       .mint-tab-item-label {
         font-weight: bold;
+        font-family: PingFangSC-Medium;
       }
     }
     .mint-navbar .mint-tab-item.is-selected::after {

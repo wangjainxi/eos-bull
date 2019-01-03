@@ -41,8 +41,10 @@
             <Language resource="myWallet.Remain"/>
             <el-tooltip class="item" effect="light" placement="bottom">
               <div slot="content">
-                Used {{ ramInfo.used | byte2Kilobyte }}KB /
-                Total {{ ramInfo.max | byte2Kilobyte }}KB (0.1000 EOS)
+                <Language resource="myWallet.Used"/>
+                {{ ramInfo.used | byte2Kilobyte }}KB /
+                <Language resource="myWallet.Total"/>
+                {{ ramInfo.max | byte2Kilobyte }}KB (0.1000 EOS)
               </div>
               <div>
                 <span>{{ ramInfo.max - ramInfo.used | byte2Kilobyte }}KB</span>
@@ -56,8 +58,10 @@
           <div class="item-content">
             <el-tooltip class="item" effect="light" placement="bottom">
               <div slot="content">
-                Used {{ cpuInfo.used / 1000 }}ms /
-                Total {{ cpuInfo.max / 1000 }}ms (0.1000 EOS)
+                <Language resource="myWallet.Used"/>
+                {{ cpuInfo.used / 1000 }}ms /
+                <Language resource="myWallet.Total"/>
+                {{ cpuInfo.max / 1000 }}ms (0.1000 EOS)
               </div>
               <div>
                 <Language resource="myWallet.Used"/>
@@ -72,8 +76,10 @@
           <div class="item-content">
             <el-tooltip class="item" effect="light" placement="bottom">
               <div slot="content">
-                Used {{ netInfo.used | byte2Kilobyte }}KB /
-                Total {{ netInfo.max | byte2Kilobyte }}KB (0.1000 EOS)
+                <Language resource="myWallet.Used"/>
+                {{ netInfo.used | byte2Kilobyte }}KB /
+                <Language resource="myWallet.Total"/>
+                {{ netInfo.max | byte2Kilobyte }}KB (0.1000 EOS)
               </div>
               <div>
                 <Language resource="myWallet.Used"/>
@@ -93,25 +99,25 @@
               <el-option
                 v-for="item in options"
                 :key="item.value"
-                :label="item.label"
+                :label="tabName(item.label)"
                 :value="item.value"
               ></el-option>
             </el-select>
           </div>
           <div class="assets-th-right">
-            <el-input placeholder="Search" v-model="inputVal" clearable>
+            <el-input :placeholder="tabName('myWallet.Search')" v-model="inputVal" clearable>
               <i slot="prefix" class="el-input__icon el-icon-search"></i>
             </el-input>
           </div>
         </div>
         <div class="assets-table-body">
-          <el-table :data="walletTokens" style="width: 100%" empty-text="There's no data yet">
+          <el-table :data="walletTokens" style="width: 100%" :empty-text="tabName('exchange.There_s_no_data_yet')">
             <el-table-column prop="coin">
               <template slot="header" slot-scope="scope">
                 <Language resource="myWallet.Coin"/>
               </template>
               <template slot-scope="scope">
-                <img :src="scope.row.imgurl" />
+                <img :src="scope.row.imgurl">
                 <span>{{ scope.row.available.symbol.name }}</span>
               </template>
             </el-table-column>
@@ -182,6 +188,7 @@ import { State } from 'vuex-class';
 import { Observer } from 'mobx-vue';
 import languageStore from '@/stores/language';
 import MyWalletModel from './myWalletModel.vue';
+import language from '@/stores/language';
 import { TokenBalance, AccountInfo } from '@/define';
 
 const userModule = namespace('user');
@@ -221,19 +228,19 @@ export default class MyWallet extends Vue {
   options: Array<any> = [
     {
       value: 1,
-      label: languageStore.getIntlText('myWallet.Tradable_Assets'),
+      label: 'myWallet.Tradable_Assets',
     },
     {
       value: 2,
-      label: languageStore.getIntlText('myWallet.Total_Asset'),
+      label: 'myWallet.Total_Asset',
     },
     {
       value: 3,
-      label: languageStore.getIntlText('myWallet.Value_EOS'),
+      label: 'myWallet.Value_EOS',
     },
     {
       value: 4,
-      label: languageStore.getIntlText('myWallet.Following'),
+      label: 'myWallet.Following',
     },
   ];
   value: number = 1;
@@ -246,6 +253,10 @@ export default class MyWallet extends Vue {
       showConfirmButton: false,
       customClass: 'my-wallet-model',
     });
+  }
+
+  tabName(obj: string) {
+    return language.getIntlText(obj);
   }
 
   handleEdit(obj: Object) {

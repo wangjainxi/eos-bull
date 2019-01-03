@@ -9,17 +9,13 @@
           <Language resource="exchange.Hide_Revoked_Order"/>
         </el-checkbox>
         <el-checkbox v-model="hideOther">
-          <Language resource="exchange.Hide_Revoked_Order"/>
+          <Language resource="exchange.Hide_Other_Pair"/>
         </el-checkbox>
         <img src="../../../images/web/ic_refresh.svg" alt>
       </div>
     </div>
     <div class="table-box">
-      <el-table
-        :data="historyOrders"
-        style="width: 100%"
-        :empty-text="ThereSNoDataYet"
-      >
+      <el-table :data="historyOrders" style="width: 100%">
         <el-table-column type="expand">
           <template slot-scope="props">
             <div class="expand-box">
@@ -187,9 +183,12 @@
             </p>
           </template>
         </el-table-column>
+        <div slot="empty">
+          <Language resource="exchange.There_s_no_data_yet"/>
+        </div>
       </el-table>
     </div>
-    <div class="pagination-box">
+    <div class="pagination-box" v-show="historyOrders.lenght > 0">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
