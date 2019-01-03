@@ -29,7 +29,7 @@ export default class AppNavBar extends Vue {
     },
     {
       key: 'foot.Markets',
-      path: '/market',
+      path: '/markets',
       icon: require('@/images/mobile/ic_nav_quotes_normal.svg'),
       selectIcon: require('@/images/mobile/ic_nav_quotes_press.svg'),
     },

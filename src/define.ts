@@ -134,6 +134,7 @@ export interface Order {
   avgPrice: CoinAsset; // 平均成交价格
   fees: CoinAsset; // 交易总费用
   trxId: string; // 下单交易哈希
+  iconUrl?: string; // 代币图标
 }
 
 /**

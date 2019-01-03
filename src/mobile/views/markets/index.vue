@@ -85,7 +85,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
-import ListChild from '../HomePage/components/ListChild.vue';
+import ListChild from '../home/components/ListChild.vue';
 import { computed } from 'mobx';
 import { Market } from '@/define';
 

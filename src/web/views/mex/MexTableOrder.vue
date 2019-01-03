@@ -144,7 +144,6 @@ import { MessageBox, Message } from 'element-ui';
 import { namespace } from 'vuex-class';
 import { Observer } from 'mobx-vue';
 import languageStore from '@/stores/language';
-import openOrderStore from '@/stores/open-order';
 import language from '@/stores/language';
 import { Market, Order } from '@/define';
 
@@ -163,7 +162,6 @@ export default class MexOpenOrders extends Vue {
   @orderModule.Action('fetchPendingOrders')
   fetchPendingOrders!: Function;
 
-  openOrderStore = openOrderStore;
   checked = false;
   loading = false;
   dialogVisible = false;
@@ -180,9 +178,9 @@ export default class MexOpenOrders extends Vue {
   //   this.noTitle = `${&nbsp}`;
   // }
   handleHideMarketCheck(val: boolean) {
-    const marketId = this.currentMarket!.marketId;
-    if (val) openOrderStore.hideOtherMarket(marketId);
-    else openOrderStore.showOtherMarket();
+    // const marketId = this.currentMarket!.marketId;
+    // if (val) openOrderStore.hideOtherMarket(marketId);
+    // else openOrderStore.showOtherMarket();
   }
 
   handleDetailBtnClick() {

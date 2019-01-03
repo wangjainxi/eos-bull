@@ -1,7 +1,7 @@
 <template>
   <div class="detail-container" @click="onChange" @touchmove.prevent>
     <div class="detail-content" @click.stop>
-      <div class="title">{{marketViewStore.itemData.buyerFee.symbol.symbol.name}}/{{marketViewStore.itemData.sellerFee.symbol.symbol.name}}
+      <div class="title">xxxx
         <Language resource="transaction.deal_Details"/>
       </div>
       <div class="tans-detail-top">
@@ -10,13 +10,13 @@
             <p>
               <Language resource="transaction.deal_price"/>
             </p>
-            <p>{{marketViewStore.itemData.price}}</p>
+            <p>xxx</p>
           </div>
           <div class="detail-item">
             <p>
               <Language resource="transaction.deal_amount"/>
             </p>
-            <p>{{marketViewStore.itemData.size}}</p>
+            <p>xxx</p>
           </div>
         </div>
         <div class="detail-box">
@@ -24,13 +24,13 @@
             <p>
               <Language resource="transaction.total"/>
             </p>
-            <p>{{marketViewStore.itemData.size}}</p>
+            <p>xxx</p>
           </div>
           <div class="detail-item">
             <p>
               <Language resource="transaction.deal_Time"/>
             </p>
-            <p>{{marketViewStore.itemData.time|formatTime}}</p>
+            <p>xxx</p>
           </div>
         </div>
       </div>
@@ -113,7 +113,6 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import marketViewStore from './marketViewStore';
 import { formatTimes } from '@/utils/formatTime';
 
 @Component({
@@ -127,7 +126,7 @@ export default class TransactionDetail extends Vue {
   marketViewStore = marketViewStore;
 
   onChange() {
-    marketViewStore.changeStatus(false);
+    //
   }
 }
 </script>

@@ -37,7 +37,7 @@
 import { Vue, Component, Watch } from 'vue-property-decorator';
 import { namespace, State, Action } from 'vuex-class';
 import TopView from './TopView.vue';
-import BomView from './BomView.vue';
+import BomView from './bom-view.vue';
 import TransactionDetail from './TransactionDetail.vue';
 import VueTradingView from '@/components/vueTradingView/index.vue';
 import { Market, Trade, Order, TokenInfo } from '@/define';
@@ -138,7 +138,8 @@ export default class MarketView extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../../style/mixin.scss';
+@import '../../../style/mixin.scss';
+
 .green-color {
   color: rgba(7, 199, 78, 1);
 }

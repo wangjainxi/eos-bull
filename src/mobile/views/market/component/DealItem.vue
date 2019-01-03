@@ -1,7 +1,7 @@
 <template>
   <div class="item-out-box">
     <div class="item-box" v-for="(item,index) in data" :key="index" @click="onTapItem(item)">
-      <span class="time-mark time">{{item.time|formatTime}}</span>
+      <span class="time-mark time">{{item.time | formatTime}}</span>
       <span class="price-mark price">{{item.price.amount}}</span>
       <span class="size-mark size">{{item.size.amount}}</span>
     </div>
@@ -10,19 +10,13 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { formatTimes } from '@/utils/formatTime';
-import marketViewStore from '@/mobile/views/Market/MarketView/marketViewStore';
 
-@Component({
-  filters: {
-    formatTime: formatTimes,
-  },
-})
+@Component
 export default class DealItem extends Vue {
   @Prop({ required: true, default: [] })
   data!: any[];
   onTapItem(item: any) {
-    marketViewStore.changeStatus(true, item);
+    //
   }
 }
 </script>
