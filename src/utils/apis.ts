@@ -8,6 +8,7 @@ import {
   AccountInfo,
   Announcement,
   HistoryOrderParams,
+  OrdersWithIcons,
 } from '@/define';
 
 interface ResponseData<T = any> {
@@ -76,7 +77,7 @@ export const getMarketTrades = async (marketId: number) => {
  */
 export const getUserPendingOrders = async (accountName: string) => {
   const res = await instance.get(`/v1/orders/pending/${accountName}`);
-  return resWrapper<Order[]>(res);
+  return resWrapper<OrdersWithIcons>(res);
 };
 
 /**
@@ -85,7 +86,7 @@ export const getUserPendingOrders = async (accountName: string) => {
 export const getUserHistoryOrders = async (accountName: string, params?: HistoryOrderParams) => {
   const res = await instance.get(`/v1/orders/history/${accountName}`, { params });
   return resWrapper<{
-    orders: Order[];
+    list: OrdersWithIcons;
     count: number;
   }>(res);
 };

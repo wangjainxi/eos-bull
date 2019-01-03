@@ -246,6 +246,16 @@ export interface TokenMeta {
   listedMarkets: Array<MarketMeta>;
 }
 
+export interface OrdersWithIcons {
+  orders: Array<Order>;
+  icons: Array<MarketIcon>;
+}
+
+export interface MarketIcon {
+  marketId: number;
+  iconUrl: string;
+}
+
 export interface MarketMeta {
   marketId: number;
   pair: TradingPair;
