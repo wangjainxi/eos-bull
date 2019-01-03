@@ -102,7 +102,7 @@ const transaction = async (...args: any[]) => {
 export interface OrderParams {
   market_id: number;
   price: string;
-  referrer: string;
+  referrer?: string;
   size: string;
   order_side: 'bid' | 'ask';
   order_type: 'limit' | 'market';
@@ -122,6 +122,7 @@ export const createOrder = async (params: OrderParams) => {
     authorization,
     data: {
       user: name,
+      referrer: '',
       ...pick(
         params,
         'market_id',
@@ -130,8 +131,7 @@ export const createOrder = async (params: OrderParams) => {
         'order_side',
         'order_type',
         'time_in_force',
-        'post_only',
-        'referrer'
+        'post_only'
       ),
     },
   };
