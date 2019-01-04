@@ -156,7 +156,7 @@ export default class MexOpenOrders extends Vue {
   @marketModule.Getter('currentMarket')
   currentMarket?: Market;
 
-  @orderModule.State('pendingOrders')
+  @orderModule.Getter('pendingOrders')
   pendingOrders!: Order[];
 
   @orderModule.Action('fetchPendingOrders')

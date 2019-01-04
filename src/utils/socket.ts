@@ -26,6 +26,7 @@ socket.on('balanceUpdate', (data: BalanceUpdate) => {
 });
 
 socket.on('orderUpdate', (data: Order) => {
+  store.dispatch('order/fetchPendingOrders');
   onfire.fire('orderUpdate', data);
 });
 
