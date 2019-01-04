@@ -16,6 +16,13 @@ export const state: OrderState = {
 export const order: Module<OrderState, RootState> = {
   namespaced,
   state,
+  getters: {
+    pendingOrders(state) {
+      return state.pendingOrders.slice().sort((e1, e2) => {
+        return e2.orderId - e1.orderId;
+      });
+    },
+  },
   actions: {
     async fetchPendingOrders({ commit, rootState }) {
       const res = await getUserPendingOrders(rootState.accountName);

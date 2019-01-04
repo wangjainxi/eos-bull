@@ -216,7 +216,7 @@ export default class Business extends Vue {
   @marketModule.Getter('currentMarket')
   currentMarket?: Market;
 
-  @orderModule.State('pendingOrders')
+  @orderModule.Getter('pendingOrders')
   pendingOrders!: Order[];
 
   @orderModule.State('historyOrders')
