@@ -13,7 +13,6 @@ import OrderTab from './OrderTab.vue';
   },
 })
 export default class extends Vue {
-  selected = '1';
   showPopup = false;
 }
 </script>
