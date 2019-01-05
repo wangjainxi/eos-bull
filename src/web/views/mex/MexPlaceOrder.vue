@@ -121,7 +121,7 @@
             </div>
             <div class="place-order-info-input">
               <p>
-                <Language resource="exchange.Buy_In_Amount"/>
+                <Language resource="exchange.Exchange_Total"/>
               </p>
               <input type="number" placeholder="0.009999">
               <p>EOS</p>
@@ -135,13 +135,6 @@
                 <span>&nbsp;&nbsp;75%</span>
                 <span>100%</span>
               </div>
-            </div>
-            <div class="place-order-info-input">
-              <p>
-                <Language resource="exchange.Exchange_Total"/>
-              </p>
-              <input type="number" placeholder="0.009999">
-              <p>EOS</p>
             </div>
             <el-button type="primary">
               <Language resource="exchange.Buy_In"/>
@@ -179,13 +172,6 @@
                 <span>&nbsp;&nbsp;75%</span>
                 <span>100%</span>
               </div>
-            </div>
-            <div class="place-order-info-input">
-              <p>
-                <Language resource="exchange.Exchange_Total"/>
-              </p>
-              <input type="number" placeholder="0.009999">
-              <p>EOS</p>
             </div>
             <el-button type="primary">
               <Language resource="exchange.Sell_out"/>

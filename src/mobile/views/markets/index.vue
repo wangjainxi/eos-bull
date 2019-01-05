@@ -29,16 +29,13 @@
               src="../../../images/ic_sort_normal.png"
             >
             <template v-else>
-              <img
-                v-if="favoriteSortParams.order === 'asc'"
-                src="../../../images/ic_sort_down.png"
-              >
+              <img v-if="favoriteSortParams.order === 'asc'" src="../../../images/ic_sort_down.png">
               <img v-else src="../../../images/ic_sort_up.png">
             </template>
           </div>
         </div>
         <div v-if="favoriteMarkets.length > 0" class="market-list-package-box">
-          <ListChild v-for="(item, index) in favoriteMarkets" :item="item" :key="index" />
+          <ListChild v-for="(item, index) in favoriteMarkets" :item="item" :key="index"/>
         </div>
         <div class="list-no-box" v-else>
           <img src="../../../images/mobile/ic_nodata.png" alt>
@@ -61,21 +58,15 @@
             @click="updateMarketListSort(item.type)"
           >
             <Language :resource="item.key"/>
-            <img
-              v-if="item.type !== sortParams.sortby"
-              src="../../../images/ic_sort_normal.png"
-            >
+            <img v-if="item.type !== sortParams.sortby" src="../../../images/ic_sort_normal.png">
             <template v-else>
-              <img
-                v-if="sortParams.order === 'asc'"
-                src="../../../images/ic_sort_down.png"
-              >
+              <img v-if="sortParams.order === 'asc'" src="../../../images/ic_sort_down.png">
               <img v-else src="../../../images/ic_sort_up.png">
             </template>
           </div>
         </div>
         <div class="market-list-package-box">
-          <MarketItem v-for="(item, index) in marketList" :market="item" :key="index" />
+          <MarketItem v-for="(item, index) in marketList" :market="item" :key="index"/>
         </div>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -299,7 +290,7 @@ export default class MarketList extends Vue {
     > div {
       font-size: 0.13rem;
       color: #8d8d8d;
-      span{
+      span {
         margin-right: 0.05rem;
       }
     }
@@ -318,6 +309,9 @@ export default class MarketList extends Vue {
     }
   }
   .list-no-box {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     padding-top: 100px;
     img {
       width: 0.78rem;

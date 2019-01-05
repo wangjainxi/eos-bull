@@ -190,7 +190,7 @@
         </div>
       </el-table>
     </div>
-    <div class="pagination-box" v-show="historyOrders.lenght > 0">
+    <div class="pagination-box" v-show="showFlags">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -238,6 +238,7 @@ export default class MexHistoryOrder extends Vue {
   OrdeChecked = false;
   PairChecked = false;
   currentPage4 = 1;
+  showFlag = false;
   page = 1;
   pageSize = 10;
   title = 'DPY/EOS ';
@@ -304,6 +305,13 @@ export default class MexHistoryOrder extends Vue {
 
   tabName(obj: string) {
     return language.getIntlText(obj);
+  }
+
+  get showFlags() {
+    const a = this.historyOrders;
+    a.length > 0 ? (this.showFlag = true) : (this.showFlag = false);
+    // console.log(this.pendingOrders);
+    return this.showFlag;
   }
 }
 </script>

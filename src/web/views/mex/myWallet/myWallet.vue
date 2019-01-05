@@ -252,7 +252,7 @@ export default class MyWallet extends Vue {
     const h = this.$createElement;
     MessageBox({
       title: '',
-      message: h(MyWalletModel),
+      message: h(MyWalletModel, { key: this.thisBoxKey++ }),
       showCancelButton: false,
       showConfirmButton: false,
       customClass: 'my-wallet-model',

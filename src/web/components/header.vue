@@ -8,8 +8,8 @@
           </router-link>
         </div>
         <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane :label="tabName('home.Exchange')" name="first"></el-tab-pane>
-          <el-tab-pane :label="tabName('home.Markets')" name="second"></el-tab-pane>
+          <el-tab-pane :label="tabName('home.Exchange')" name="mex"></el-tab-pane>
+          <el-tab-pane :label="tabName('home.Markets')" name="market"></el-tab-pane>
         </el-tabs>
       </div>
       <div class="tright-view">
@@ -95,7 +95,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import { State, Action } from 'vuex-class';
 import { Observer } from 'mobx-vue';
 import language from '@/stores/language';
@@ -109,7 +109,7 @@ export default class extends Vue {
   @Action('login')
   login!: Function;
 
-  activeName = 'first';
+  activeName: any = '';
   selectValue = language.currentLocale;
   dialogVisible = false;
   dialog2Visible = false;
@@ -134,22 +134,30 @@ export default class extends Vue {
     );
   }
 
+  created() {
+    this.activeName = this.$route.name;
+  }
+
   showDilog() {
     this.dialogVisible = true;
   }
 
   handleClick(tab: any, event: any) {
-    if (tab.name === 'first') {
+    if (this.activeName === 'mex') {
       this.$router.push({
         path: '/mex',
       });
-    } else if (tab.name === 'second') {
-      this.activeName = 'second';
+    } else if (this.activeName === 'market') {
       this.$router.push({
         path: '/market',
-        name: 'market',
       });
     }
+  }
+
+  goRouter() {
+    this.$router.push({
+      path: '/mex',
+    });
   }
 
   async handleScatterSignInBtnClick() {
