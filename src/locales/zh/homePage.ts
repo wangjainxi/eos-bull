@@ -73,4 +73,7 @@ export default {
   Exchange: '币币交易',
   Markets: '行情列表',
   Click_details: '点击查看明细',
+  Switch: '切换',
+  Exit: '退出',
+  Orders: '订单',
 };

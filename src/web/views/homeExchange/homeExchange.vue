@@ -24,14 +24,18 @@
           <p class="notice_text">Introduction of Newdex Platform Ecological…</p>
           <p class="notice_date">12-21</p>
         </div>
-        <p class="notice_link">More</p>
+        <p class="notice_link" @click="goMoreNotice">
+          <Language resource="asset.More"/>
+        </p>
       </div>
     </div>
     <div class="market-package">
       <div class="market-box">
         <Market></Market>
         <div class="market-link-box">
-          <p>View More</p>
+          <p>
+            <Language resource="asset.View_More"/>
+          </p>
         </div>
       </div>
     </div>
@@ -142,7 +146,10 @@ import { Component, Vue } from 'vue-property-decorator';
 import Top from '@/web/components/header.vue';
 import Foot from '@/web/components/footer.vue';
 import Market from '@/web/views/market/index.vue';
+import language from '@/stores/language';
+import { Observer } from 'mobx-vue';
 
+@Observer
 @Component({
   components: {
     Top,
@@ -150,7 +157,15 @@ import Market from '@/web/views/market/index.vue';
     Market,
   },
 })
-export default class HomeExchange extends Vue {}
+export default class HomeExchange extends Vue {
+  goMoreNotice() {
+    if (language.currentLocale === 'en-US') {
+      window.open('https://dadex.zendesk.com/hc/en-us/categories/360001324452');
+    } else if (language.currentLocale === 'zh-CN') {
+      window.open('https://dadex.zendesk.com/hc/zh-cn/categories/360001324452');
+    }
+  }
+}
 </script>
 <style lang="scss">
 .market-package {
@@ -206,6 +221,7 @@ export default class HomeExchange extends Vue {}
 .notice_link {
   color: #2d7be5;
   font-size: 12px;
+  cursor: pointer;
 }
 .el-carousel {
   background: #0a1727;

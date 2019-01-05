@@ -85,5 +85,5 @@ export default {
   Detail: 'Detail',
   Sort_by: 'Sort by',
   Date: 'Date',
-  deep: 'deep',
+  deep: 'Deep',
 };

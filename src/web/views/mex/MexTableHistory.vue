@@ -22,7 +22,7 @@
               <el-table
                 :data="props.row.dealData"
                 style="width: 100%"
-                empty-text="There's no data yet"
+                :empty-text="tabName('exchange.There_s_no_data_yet')"
               >
                 <el-table-column prop="dealTime" align="center">
                   <template slot="header" slot-scope="scope">
@@ -78,7 +78,9 @@
                     <Language resource="exchange.Action"/>
                   </template>
                   <template slot-scope="props">
-                    <p class="action-box" @click="PopupStatus(props.row.id)">Details</p>
+                    <p class="action-box" @click="PopupStatus(props.row.id)">
+                      <Language resource="exchange.Details"/>
+                    </p>
                   </template>
                 </el-table-column>
               </el-table>
@@ -214,6 +216,7 @@ import language from '@/stores/language';
 const orderModule = namespace('order');
 const marketModule = namespace('market');
 
+@Observer
 @Component({
   components: {
     OrderPopup,
@@ -297,6 +300,10 @@ export default class MexHistoryOrder extends Vue {
 
   handleClose(done: Function) {
     done();
+  }
+
+  tabName(obj: string) {
+    return language.getIntlText(obj);
   }
 }
 </script>

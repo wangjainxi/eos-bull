@@ -28,6 +28,7 @@ export default {
   Top_Gainers: '涨幅榜',
   VOL_Top24H: '24H成交榜',
   View_More: '查看更多',
+  More: '更多',
   no_data: '暂无数据',
   Confirm: '确认',
   buy: '买入',

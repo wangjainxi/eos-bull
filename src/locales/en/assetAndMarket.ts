@@ -29,6 +29,7 @@ export default {
   Top_Gainers: 'Top Gainers',
   VOL_Top24H: '24H VOL Top',
   View_More: 'View More',
+  More: 'More',
   no_data: 'No data',
   Confirm: 'Confirm',
   buy: 'buy',

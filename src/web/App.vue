@@ -197,6 +197,18 @@ input[type='number'] {
     }
   }
 }
+.el-input {
+  background: rgba(20, 46, 77, 1);
+  input {
+    border: 1px solid rgba(36, 65, 102, 1);
+    background: rgba(20, 46, 77, 1);
+    border-radius: 20px;
+    font-size: 14px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(110, 132, 163, 1);
+  }
+}
 #myWallet {
   .assets-th-right {
     .el-input {
@@ -217,6 +229,11 @@ input[type='number'] {
       font-weight: 400;
       color: rgba(110, 132, 163, 1);
       width: 160px;
+    }
+  }
+  .assets-th-right {
+    input {
+      width: 210px;
     }
   }
   .el-table th {
@@ -303,7 +320,7 @@ input[type='number'] {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  img{
+  img {
     padding-right: 5px;
   }
 }

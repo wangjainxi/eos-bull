@@ -10,7 +10,7 @@ export default {
   Current_Value: '当前总估值',
   Receipt: '收款',
   Redeeming: '正在赎回',
-  Available: '可用',
+  Available: '可用余额',
   Remain: '剩余',
   Used: '已用',
   Tradable_Assets: '可交易资产',

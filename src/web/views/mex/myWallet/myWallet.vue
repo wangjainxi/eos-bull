@@ -37,7 +37,7 @@
         </div>
         <div class="table-item">
           <div class="item-name">&nbsp;RAM</div>
-          <div class="item-content">
+          <div class="item-content ram-item">
             <Language resource="myWallet.Remain"/>
             <el-tooltip class="item" effect="light" placement="bottom">
               <div slot="content">
@@ -111,14 +111,18 @@
           </div>
         </div>
         <div class="assets-table-body">
-          <el-table :data="walletTokens" style="width: 100%" :empty-text="tabName('exchange.There_s_no_data_yet')">
+          <el-table
+            :data="walletTokens"
+            style="width: 100%"
+            :empty-text="tabName('exchange.There_s_no_data_yet')"
+          >
             <el-table-column prop="coin">
               <template slot="header" slot-scope="scope">
                 <Language resource="myWallet.Coin"/>
               </template>
               <template slot-scope="scope">
                 <img :src="scope.row.imgurl">
-                <span>{{ scope.row.available.symbol.name }}</span>
+                <span>{{ scope.row.available.symbol.symbol.name }}</span>
               </template>
             </el-table-column>
             <el-table-column prop="contract">
@@ -129,7 +133,7 @@
                 <span class="span2">{{ scope.row.available.symbol.contract }}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="available" width="100" align="right">
+            <el-table-column prop="available" width="150" align="right">
               <template slot="header" slot-scope="scope">
                 <Language resource="myWallet.Available"/>
               </template>
@@ -362,6 +366,11 @@ $height: 100%;
         i {
           @include wh(12px, 7px);
           margin: 0 5px;
+        }
+      }
+      .ram-item {
+        & > span {
+          color: rgba(103, 123, 183, 1);
         }
       }
     }

@@ -14,6 +14,7 @@ export default {
   Revoked: 'Revoked',
   Dealt: 'Dealt',
   Pair: 'Pair',
+  Pair1: 'Pairs',
   Order_Status: 'Order Status',
   All: 'All',
   In_progress: 'In progress',
@@ -27,4 +28,5 @@ export default {
   Entrusted: 'Entrusted',
   buy: 'Buy',
   sell: 'Sell',
+  Trade: 'Trade',
 };

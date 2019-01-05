@@ -202,7 +202,9 @@
     >
       <div class="mex-place-order" slot="reference">
         <img src="@/images/mobile/ic_warning.svg" alt>
-        <p>Tips</p>
+        <p>
+          <Language resource="business.Tips"/>
+        </p>
       </div>
     </el-popover>
   </div>

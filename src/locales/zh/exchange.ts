@@ -78,7 +78,7 @@ export default {
   revoked_succeeded: '您的委托撤销成功！',
   Order_History: '历史委托',
   Hide_Revoked_Order: '隐藏已撤销订单',
-  Hide_Other_Pair: '隐藏其他交易对',
+  Hide_Other_Pair: '隐藏其它交易对',
   All_dealt: '全部成交',
   Revoked: '已撤销',
   Details: '详情',

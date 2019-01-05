@@ -21,11 +21,11 @@
             <img src="@/images/web/ic_eos.svg">
             <span class="text-style">{{ accountName }}</span>
           </span>
-          <span class="text-style switch">Switch</span>
-          <span class="text-style exit">Exit</span>
+          <span class="text-style switch">{{language.getIntlText('home.Switch')}}</span>
+          <span class="text-style exit">{{language.getIntlText('home.Exit')}}</span>
           <router-link to="/orders" class="order-box flex-start">
             <img src="@/images/web/ic_order.svg">
-            <span class="text-style exit">Orders</span>
+            <span class="text-style exit">{{language.getIntlText('home.Orders')}}</span>
           </router-link>
         </div>
         <img v-if="selectValue === 'zh-CN'" src="./../../images/web/ic_flag_cn.svg" alt>
@@ -144,6 +144,7 @@ export default class extends Vue {
         path: '/mex',
       });
     } else if (tab.name === 'second') {
+      this.activeName = 'second';
       this.$router.push({
         path: '/market',
         name: 'market',
@@ -211,7 +212,6 @@ export default class extends Vue {
         display: flex;
       }
       .signed {
-        width: 205px;
         align-items: center;
         // justify-content: center;
       }
@@ -257,8 +257,6 @@ export default class extends Vue {
       }
 
       .order-box {
-        margin-right: 22px;
-
         .text-style {
           margin-left: 5px;
         }
@@ -414,6 +412,7 @@ export default class extends Vue {
       height: 90px;
     }
     .div-sign {
+      cursor: pointer;
       span {
         display: flex;
         border-radius: 4px;
@@ -438,7 +437,7 @@ export default class extends Vue {
           color: rgba(146, 167, 197, 1);
         }
       }
-      .how-ues-page{
+      .how-ues-page {
         cursor: pointer;
       }
       span {

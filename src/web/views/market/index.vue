@@ -9,6 +9,11 @@
           <TableItem :thisTdata="markets"/>
         </el-tab-pane>
       </el-tabs>
+      <div class="search-th-right">
+        <el-input :placeholder="tabName('myWallet.Search')" v-model="inputVal" clearable>
+          <i slot="prefix" class="el-input__icon el-icon-search"></i>
+        </el-input>
+      </div>
     </div>
   </div>
 </template>
@@ -29,6 +34,7 @@ const marketModule = namespace('market');
 export default class extends Vue {
   @marketModule.State('markets')
   markets!: Market[];
+  inputVal = '';
 
   @marketModule.Getter('favoriteMarkets')
   favoriteMarkets!: Market[];
@@ -87,6 +93,15 @@ export default class extends Vue {
     border-radius: 8px;
     background: #142e4d;
     overflow: hidden;
+    position: relative;
+  }
+  .search-th-right{
+    position: absolute;
+    width: 210px;
+    display: inline-block;
+    top: 9px;
+    right: 10px;
+
   }
   .el-tabs__header {
     margin: 0;
