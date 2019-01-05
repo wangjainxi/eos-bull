@@ -20,13 +20,11 @@
             v-for="order of pendingOrders"
             :key="order.orderId"
             @revoke="handleOrderRevoke"
-            :order="order" />
+            :order="order"
+          />
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
-          <OrderItem
-            v-for="order of historyOrders"
-            :key="order.orderId"
-            :order="order" />
+          <OrderItem v-for="order of historyOrders" :key="order.orderId" :order="order"/>
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
@@ -181,7 +179,6 @@ export default class Orders extends Vue {
     height: 0.03rem;
     width: 0.24rem;
     bottom: 0;
-    margin-left: -0.12rem;
     background: #007aff;
     border-radius: 0.02rem;
   }

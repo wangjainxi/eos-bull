@@ -3,6 +3,7 @@ export default {
   Value: 'value',
   Resources_Usage: 'Resources Usage',
   Used: 'Used',
+  Used1: 'Used',
   Total: 'Total',
   Total_Asset: 'Total Asset',
   Tradable_Assets: 'Tradable Assets',

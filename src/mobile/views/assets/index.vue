@@ -15,21 +15,21 @@
       <div>
         <h4>CPU</h4>
         <p>
-          <Language resource="asset.Used"/>
+          <Language resource="asset.Used1"/>
           &nbsp;{{ cpuInfo.usageRate }}%
         </p>
       </div>
       <div>
         <h4>NET</h4>
         <p>
-          <Language resource="asset.Used"/>
+          <Language resource="asset.Used1"/>
           &nbsp;{{ netInfo.usageRate }}%
         </p>
       </div>
       <div>
         <h4>RAM</h4>
         <p>
-          <Language resource="asset.Used"/>
+          <Language resource="asset.Used1"/>
           &nbsp;{{ ramInfo.usageRate }}%
         </p>
       </div>
@@ -80,31 +80,31 @@
         <h4 :class="!showRedColor?'usage-show-red':''">
           CPU：
           <span>
-            <Language resource="asset.Used"/>5048.2%
+            <Language resource="asset.Used1"/>5048.2%
           </span>
         </h4>
         <p>
-          <Language resource="asset.Used"/>0.00us/
+          <Language resource="asset.Used1"/>0.00us/
           <Language resource="asset.Total"/>45.00us(0.1000 EOS)
         </p>
         <h4>
           NET：
           <span>
-            <Language resource="asset.Used"/>1.9%
+            <Language resource="asset.Used1"/>1.9%
           </span>
         </h4>
         <p>
-          <Language resource="asset.Used"/>0.00B/
+          <Language resource="asset.Used1"/>0.00B/
           <Language resource="asset.Total"/>77.15KB(0.1000 EOS)
         </p>
         <h4 :class="!showRedColor?'usage-show-red':''">
           RAM：
           <span>
-            <Language resource="asset.Used"/>57.0%
+            <Language resource="asset.Used1"/>57.0%
           </span>
         </h4>
         <p>
-          <Language resource="asset.Used"/>2.92KB/
+          <Language resource="asset.Used1"/>2.92KB/
           <Language resource="asset.Total"/>5.34KB
         </p>
       </div>
