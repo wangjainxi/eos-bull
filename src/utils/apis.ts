@@ -8,6 +8,7 @@ import {
   Announcement,
   HistoryOrderParams,
   OrdersWithIcons,
+  Order,
 } from '@/define';
 
 interface ResponseData<T = any> {
@@ -86,6 +87,14 @@ export const getUserPendingOrders = async (accountName: string) => {
   const res = await instance.get(`/v1/orders/pending/${accountName}`);
   const result = resWrapper<OrdersWithIcons>(res);
   return formartOrders(result);
+};
+
+/**
+ * 获取单个订单信息
+ */
+export const getOrderDetail = async (orderId: number) => {
+  const res = await instance.get(`/v1/orders/detail/${orderId}`);
+  return resWrapper<Order>(res);
 };
 
 /**
