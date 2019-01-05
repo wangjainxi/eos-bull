@@ -34,7 +34,7 @@ export default new Router({
         {
           path: '/more',
           name: 'more',
-          component: () => import(/* webpackChunkName: "more" */ './views/More/index.vue'),
+          component: () => import(/* webpackChunkName: "more" */ './views/more/index.vue'),
         },
         {
           path: '/assets',
