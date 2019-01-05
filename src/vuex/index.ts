@@ -8,6 +8,7 @@ import { user } from './user';
 import { order } from './order';
 import { market } from './market';
 import { announcement } from './announcement';
+import { subscribeOrderUpdate } from '@/utils/socket';
 
 Vue.use(Vuex);
 
@@ -24,7 +25,7 @@ const store = new Vuex.Store<RootState>({
     announcement,
   },
   actions: {
-    async login({ dispatch, commit }) {
+    async login({ dispatch, commit, state }) {
       const res = await getIdentity();
       commit('setAccountName', res.name);
       dispatch('market/fetchMarkets');
@@ -32,6 +33,7 @@ const store = new Vuex.Store<RootState>({
       dispatch('user/startFetchEOSAccountInfoLoop');
       dispatch('order/fetchPendingOrders');
       dispatch('order/fetchHistoryOrders');
+      subscribeOrderUpdate(state.accountName);
     },
   },
   mutations: {

@@ -53,7 +53,7 @@ export default class Orders extends Vue {
   @State('accountName')
   accountName!: string;
 
-  @orderModule.State('pendingOrders')
+  @orderModule.Getter('pendingOrders')
   pendingOrders!: Order[];
 
   @orderModule.State('historyOrders')

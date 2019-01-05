@@ -27,7 +27,7 @@
           >{{ tab }}</div>
         </div>
         <div class="left-title" @click="showNowPrice">
-          <span>{{showSheetName}}</span>
+          <Language :resource="orderType === 'limit' ? 'business.Limit' : 'business.Market'" />
           <i></i>
         </div>
         <div class="business-price">
@@ -171,8 +171,8 @@
         </div>
       </div>
     </div>
-    <mt-actionsheet :actions="sheetActions" :cancelText="cancel" v-model="sheetVisible"></mt-actionsheet>
-    <ShowCoinList v-model="popupVisible" :dataCoinList="markets"></ShowCoinList>
+    <mt-actionsheet :actions="sheetActions" :cancelText="cancel" v-model="sheetVisible" />
+    <ShowCoinList v-model="popupVisible" :dataCoinList="markets" />
   </div>
 </template>
 
@@ -216,7 +216,7 @@ export default class Business extends Vue {
   @marketModule.Getter('currentMarket')
   currentMarket?: Market;
 
-  @orderModule.State('pendingOrders')
+  @orderModule.Getter('pendingOrders')
   pendingOrders!: Order[];
 
   @orderModule.State('historyOrders')
@@ -228,8 +228,6 @@ export default class Business extends Vue {
   @orderModule.Action('createOrder')
   createOrder!: (params: OrderParams) => Promise<any>;
 
-  tradeData = [];
-
   cricleMount = [0, 1, 2, 3, 4];
   rangeValue = 0;
   entrustType = 0;
@@ -237,6 +235,7 @@ export default class Business extends Vue {
   cancel = languageStore.getIntlText('business.cancel');
   popupVisible = false; //币种弹
   sheetVisible = false; //价格弹
+  orderType: 'limit' | 'market' = 'limit';
   businessPrice = '0'; //交易价
   inputVal = '0'; //交易
   routeParam: any = '';
@@ -357,12 +356,12 @@ export default class Business extends Vue {
     });
   }
   changeNowPrice1() {
-    this.showSheetName = languageStore.getIntlText('business.Limit');
     this.sheetVisible = false;
+    this.orderType = 'limit';
   }
   changeNowPrice2() {
-    this.showSheetName = languageStore.getIntlText('business.Market');
     this.sheetVisible = false;
+    this.orderType = 'market';
   }
   showNowPrice() {
     this.sheetVisible = true;
@@ -375,6 +374,8 @@ export default class Business extends Vue {
   }
   goBusiness() {
     const market = this.currentMarket!;
+    const orderType = this.orderType;
+    const timeInforce = orderType === 'market' ? 'ioc' : 'gtc';
     const orderSide = this.currrentTab === 0 ? 'bid' : 'ask';
     const baseName = market.pair.baseCurrency.symbol.name;
     const baseContract = market.pair.baseCurrency.contract;
@@ -394,8 +395,8 @@ export default class Business extends Vue {
       size: sizeAsset,
       coin_contract: contract,
       order_side: orderSide,
-      order_type: 'limit',
-      time_in_force: 'gtc',
+      order_type: orderType,
+      time_in_force: timeInforce,
       post_only: 0,
       quantity: orderSide === 'bid' ? quantityAsset : sizeAsset,
     })
