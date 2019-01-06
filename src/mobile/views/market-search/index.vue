@@ -2,13 +2,15 @@
   <div id="market-search-page">
     <div class="market-search-input-box">
       <img src="../../../images/mobile/ic_find.svg">
-      <input v-model="searchInput" type="text" />
-      <router-link to="market">
+      <input v-model="searchInput" type="text">
+      <router-link to="/markets">
         <img src="../../../images/mobile/closeBtn.svg" alt>
       </router-link>
     </div>
     <div v-if="markets.length > 0">
-      <div class="search-result-box">搜索结果</div>
+      <div class="search-result-box">
+        <Language resource="business.sR"/>
+      </div>
       <router-link
         class="search-list-child-box"
         v-for="item of searchResult"
@@ -30,11 +32,13 @@
         <img
           v-if="checkFavourite(item.marketId)"
           @click.capture="handleFavouriteBtnClick(tem.marketId, false)"
-          src="../../../images/mobile/ic_collection_current_s.svg">
+          src="../../../images/mobile/ic_collection_current_s.svg"
+        >
         <img
           v-else
           @click.stop="handleFavouriteBtnClick(tem.marketId, true)"
-          src="../../../images/mobile/ic_collection_s.svg">
+          src="../../../images/mobile/ic_collection_s.svg"
+        >
       </router-link>
     </div>
     <div v-else class="list-no-box">
@@ -115,6 +119,9 @@ export default class MarketSearch extends Vue {
   }
   .list-no-box {
     padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     img {
       width: 0.78rem;
       height: 0.78rem;

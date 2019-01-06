@@ -5,7 +5,7 @@
         <Language resource="exchange.Open_Orders"/>
       </h4>
       <div>
-        <div class="revoke-all-data" v-show="pendingOrders.lenght > 0">
+        <div class="revoke-all-data" v-show="showFlags">
           <img src="../../../images/web/ic_refresh.svg" alt>
           <p @click="handleRevokeAllBtnClick">
             <Language resource="exchange.Revoke_All"/>
@@ -165,6 +165,7 @@ export default class MexOpenOrders extends Vue {
   checked = false;
   loading = false;
   dialogVisible = false;
+  showFlag = false;
 
   ThereSNoDataYet = language.getIntlText('exchange.There_s_no_data_yet');
   handleRevokeAllBtnClick() {
@@ -172,6 +173,12 @@ export default class MexOpenOrders extends Vue {
     setTimeout(() => {
       this.loading = false;
     }, 1000);
+  }
+  get showFlags() {
+    const a = this.pendingOrders;
+    a.length > 0 ? (this.showFlag = true) : (this.showFlag = false);
+    // console.log(this.pendingOrders);
+    return this.showFlag;
   }
 
   handleHideMarketCheck(val: boolean) {
@@ -209,7 +216,7 @@ export default class MexOpenOrders extends Vue {
     > div {
       display: flex;
       color: #2d7be5;
-      .revoke-all-data{
+      .revoke-all-data {
         display: flex;
         align-items: center;
       }

@@ -3,16 +3,16 @@
     <div class="foot">
       <div class="foot-top">
         <div class="foot-dec-left">
-          <a :href="goUrl(1)">
+          <a target="_blank" :href="goUrl(1)">
             <Language resource="myWallet.FAQ"/>
           </a>
-          <a :href="goUrl(2)">
+          <a target="_blank" :href="goUrl(2)">
             <Language resource="myWallet.Bulletin"/>
           </a>
-          <a :href="goUrl(3)">
+          <a target="_blank" :href="goUrl(3)">
             <Language resource="myWallet.Rate_standard"/>
           </a>
-          <a :href="goUrl(4)">
+          <a target="_blank" :href="goUrl(4)">
             <Language resource="myWallet.Submit_Request"/>
           </a>
         </div>

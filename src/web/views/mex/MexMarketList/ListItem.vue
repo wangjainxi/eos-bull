@@ -1,23 +1,27 @@
 <template>
   <div>
     <div class="item-box" v-for="(item, index) in sellData" :key="index">
-      <span class="total-bg-mark" :style='{width:item.width}'></span>
+      <span class="total-bg-mark" :style="{width:item.width}"></span>
       <span class="left-text price-text">{{item.price}}</span>
       <span class="center-text">{{item.size}}</span>
       <!-- <span class="right-text">{{item.total}}</span> -->
     </div>
   </div>
 </template>
-<script>
-export default {
-  name: 'list-item',
-  props: {
-    sellData: {
-      type: Array,
-      required: true,
-    },
-  },
-};
+<script lang="ts">
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import language from '@/stores/language';
+import { Observer } from 'mobx-vue';
+
+@Observer
+@Component({})
+export default class ListItem extends Vue {
+  // name: 'list-item',
+  @Prop() sellData!: {
+    type: Array<any>;
+    required: true;
+  };
+}
 </script>
 <style lang="scss">
 @import '@/style/mixin.scss';
@@ -52,8 +56,12 @@ export default {
   height: 20px;
   line-height: 20px;
   position: relative;
+  cursor: pointer;
   margin-bottom: 0.6px;
   @include flexLayout(row, space-between, center);
+  &:hover{
+    font-weight: 600;
+  }
   .total-mark {
     position: absolute;
     right: 0px;

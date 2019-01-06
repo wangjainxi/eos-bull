@@ -30,4 +30,5 @@ export default {
   Sell1: 'Sell',
   Favorites: 'Favorites',
   EOS: 'EOS',
+  sR: 'Search Result:',
 };

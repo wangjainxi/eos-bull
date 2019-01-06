@@ -2,17 +2,29 @@
   <div class="market-list">
     <div class="list-header">
       <transition>
-        <a :class="{active:shows ===3 }" @click="showView(3)" :title="showAltContent('exchange.Buy')">
+        <a
+          :class="{active:shows ===3 }"
+          @click="showView(3)"
+          :title="showAltContent('exchange.Buy')"
+        >
           <img src="../../../../images/web/ic_top.svg" alt>
         </a>
       </transition>
       <transition>
-        <a :class="{active:shows ===2 }" @click="showView(2)" :title="showAltContent('exchange.Sell')">
+        <a
+          :class="{active:shows ===2 }"
+          @click="showView(2)"
+          :title="showAltContent('exchange.Sell')"
+        >
           <img src="../../../../images/web/ic_bottom.svg" alt>
         </a>
       </transition>
       <transition>
-        <a :class="{active:shows ===1 }" @click="showView(1)" :title="showAltContent('exchange.deep')">
+        <a
+          :class="{active:shows ===1 }"
+          @click="showView(1)"
+          :title="showAltContent('exchange.deep')"
+        >
           <img src="../../../../images/web/ic_middle.svg" alt>
         </a>
       </transition>
@@ -148,8 +160,10 @@ export default class extends Vue {
     justify-content: flex-start;
     color: #fff;
     & > a {
-      padding: 0 7px;
+      padding: 0px;
       cursor: pointer;
+      display: flex;
+      margin: 0 6px;
     }
   }
 
@@ -180,7 +194,9 @@ export default class extends Vue {
   }
 
   .active {
-    border: 1px solid #fff;
+    border: 1px solid #2D7BE5;
+    background-color: #12263F;
+    border-radius: 2px;
   }
 }
 </style>
