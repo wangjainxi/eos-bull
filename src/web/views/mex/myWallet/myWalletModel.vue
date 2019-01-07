@@ -4,13 +4,13 @@
       <div class="model-inf">
         <Language resource="myWallet.account_information"/>
       </div>
-      <div class="model-name">{{ accountName }}</div>
+      <div class="model-name">111</div>
       <img class="model-img" src="@/images/web/ic_eos.svg" alt>
       <div class="model-action">
         <div class="action-l">
           <Language resource="myWallet.Copy_account"/>
         </div>
-        <div class="action-l" @click="goAction">
+        <div class="action-l">
           <Language resource="myWallet.Download_code"/>
         </div>
       </div>
@@ -34,13 +34,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { State } from 'vuex-class';
 
 @Component
-export default class MyWalletModel extends Vue {
-  @State('accountName')
-  accountName!: string;
-}
+export default class MyWalletModel extends Vue {}
 </script>
 
 <style lang="scss" scoped>

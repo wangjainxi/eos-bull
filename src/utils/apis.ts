@@ -127,7 +127,18 @@ export const getOrderFills = async (orderId: number) => {
  */
 export const getAccountInfo = async (accountName: string) => {
   const res = await instance.get(`/v1/account/${accountName}`);
-  return resWrapper<AccountInfo>(res);
+  const result = resWrapper<AccountInfo>(res);
+  result.tokens.forEach(e => {
+    const meta = result.tokenMetas.find(e2 => {
+      return e2.token.symbol.name === e.available.symbol.symbol.name;
+    });
+    if (!meta) return;
+    Object.assign(e, {
+      iconUrl: meta.iconUrl,
+      marketId: meta.listedMarkets[0].marketId,
+    });
+  });
+  return result;
 };
 
 /**

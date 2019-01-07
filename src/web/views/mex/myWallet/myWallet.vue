@@ -121,7 +121,7 @@
                 <Language resource="myWallet.Coin"/>
               </template>
               <template slot-scope="scope">
-                <img :src="scope.row.imgurl">
+                <img :src="scope.row.iconUrl">
                 <span>{{ scope.row.available.symbol.symbol.name }}</span>
               </template>
             </el-table-column>
@@ -140,7 +140,6 @@
               <template slot-scope="scope">
                 <span class="span3">
                   {{ scope.row.available.amount }}
-                  {{ scope.row.available.symbol.symbol.name }}
                 </span>
               </template>
             </el-table-column>
@@ -151,7 +150,6 @@
               <template slot-scope="scope">
                 <span>
                   {{ scope.row.onOrder.amount }}
-                  {{ scope.row.onOrder.symbol.symbol.name }}
                 </span>
               </template>
             </el-table-column>
@@ -263,8 +261,8 @@ export default class MyWallet extends Vue {
     return language.getIntlText(obj);
   }
 
-  handleEdit(obj: Object) {
-    console.log(obj);
+  handleEdit(obj: any) {
+    this.$router.push({ name: 'market', params: { id: obj.marketId } });
   }
 }
 </script>
