@@ -31,4 +31,6 @@ export default {
   Favorites: 'Favorites',
   EOS: 'EOS',
   sR: 'Search Result:',
+  buyPlace: 'Buy at the best market price',
+  sellPlace: 'Sell at the best market price',
 };

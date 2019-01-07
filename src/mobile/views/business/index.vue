@@ -27,17 +27,34 @@
           >{{ tab }}</div>
         </div>
         <div class="left-title" @click="showNowPrice">
-          <Language :resource="orderType === 'limit' ? 'business.Limit' : 'business.Market'" />
+          <Language :resource="orderType === 'limit' ? 'business.Limit' : 'business.Market'"/>
           <i></i>
         </div>
-        <div class="business-price">
-          <div class="business-price-down" @click="businessPrice--">-</div>
+        <div class="business-price" v-if="orderType === 'limit'">
+          <div class="business-price-down" @click="changePrice(0)">-</div>
           <div class="business-price-show">{{businessPrice}}</div>
-          <div class="business-price-up" @click="businessPrice++">+</div>
+          <div class="business-price-up" @click="changePrice(1)">+</div>
+        </div>
+        <div
+          class="business-price business-price-market"
+          v-if="orderType === 'market' && currrentTab === 0"
+        >
+          <Language resource="business.buyPlace"/>
+        </div>
+        <div
+          class="business-price business-price-market"
+          v-if="orderType === 'market' && currrentTab === 1"
+        >
+          <Language resource="business.sellPlace"/>
         </div>
         <div class="business-mount">
-          <input type="text" v-model="inputVal">
-          <span>{{currentMarket.pair.baseCurrency.symbol.name}}</span>
+          <input
+            type="text"
+            :value="inputVal"
+            @change="handleChangeIpt($event)"
+            placeholder="0.0000"
+          >
+          <span>{{currrentTab === 0 && orderType === 'market' ? currentMarket.pair.quoteCurrency.symbol.name:currentMarket.pair.baseCurrency.symbol.name}}</span>
         </div>
         <div class="business-change-eos">{{`≈${changeEos}EOS`}}</div>
         <BusinessRange
@@ -47,7 +64,7 @@
           :cricleMount="cricleMount"
         ></BusinessRange>
         <div class="use-mount">
-          <div class="use-mount-left">{{`${thisBal}EOS：${getUseMount}`}}</div>
+          <div class="use-mount-left">{{`${thisBal}${showTradeCoinName}: ${useMount}`}}</div>
           <div class="use-mount-right">{{`${rangeValue}%`}}</div>
         </div>
 
@@ -72,7 +89,7 @@
             <BusinessTradeItem
               :changePriceAndMount="changePriceAndMount"
               :tradeType="'sell'"
-              v-for="(item, index) in orderbook.bids"
+              v-for="(item, index) in orderbook.asks"
               :item="item"
               :key="index"
               :tradeDataMountSum="tradeDataMountSum"
@@ -94,7 +111,7 @@
             <BusinessTradeItem
               :tradeType="'buy'"
               :changePriceAndMount="changePriceAndMount"
-              v-for="(item, index) in orderbook.asks"
+              v-for="(item, index) in orderbook.bids"
               :item="item"
               :key="index"
               :tradeDataMountSum="tradeDataMountSum"
@@ -171,8 +188,8 @@
         </div>
       </div>
     </div>
-    <mt-actionsheet :actions="sheetActions" :cancelText="cancel" v-model="sheetVisible" />
-    <ShowCoinList v-model="popupVisible" :dataCoinList="markets" />
+    <mt-actionsheet :actions="sheetActions" :cancelText="cancel" v-model="sheetVisible"/>
+    <ShowCoinList v-model="popupVisible" :dataCoinList="markets"/>
   </div>
 </template>
 
@@ -187,11 +204,12 @@ import BusinessRange from './components/businessRange.vue';
 import ShowCoinList from './components/businessCoin.vue';
 import { MessageBox, Toast, Loadmore } from 'mint-ui';
 import languageStore from '@/stores/language';
-import { Market, Order, Orderbook, Trade } from '@/define';
+import { Market, Order, Orderbook, Trade, AccountInfo, TokenBalance } from '@/define';
 import { OrderParams } from '@/utils/scatter';
 
 const orderModule = namespace('order');
 const marketModule = namespace('market');
+const userModule = namespace('user');
 
 @Component({
   components: {
@@ -206,6 +224,9 @@ const marketModule = namespace('market');
 export default class Business extends Vue {
   @marketModule.State('markets')
   markets!: Market[];
+
+  @userModule.State('accountInfo')
+  accountInfo!: AccountInfo;
 
   @marketModule.State('orderbook')
   orderbook!: Orderbook;
@@ -225,6 +246,9 @@ export default class Business extends Vue {
   @marketModule.Action('updateMarket')
   updateMarket!: Function;
 
+  @userModule.Getter('walletTokens')
+  walletTokens!: TokenBalance[];
+
   @orderModule.Action('createOrder')
   createOrder!: (params: OrderParams) => Promise<any>;
 
@@ -235,14 +259,14 @@ export default class Business extends Vue {
   cancel = languageStore.getIntlText('business.cancel');
   popupVisible = false; //币种弹
   sheetVisible = false; //价格弹
-  orderType: 'limit' | 'market' = 'limit';
+  orderType: 'limit' | 'market' = 'limit'; //限价还是市价
   businessPrice = '0'; //交易价
-  inputVal = '0'; //交易
+  inputVal = ''; //交易
   routeParam: any = '';
   coinName: any = '';
   isFavorite: any = [];
   routeId: number = -1;
-  changeEos = 0.00001;
+  changeEos: any = '0.0000';
   currrentTab = 0;
   thisBal = languageStore.getIntlText('business.Bal');
   tabs = [languageStore.getIntlText('business.Buy'), languageStore.getIntlText('business.Sell')];
@@ -250,7 +274,11 @@ export default class Business extends Vue {
   imgMsg = languageStore.getIntlText('business.nodata');
   tradeDataMountSum = 0;
   useMount = 0;
+  showTradeCoinName = '';
   showSheetName = languageStore.getIntlText('business.Limit');
+  sellPlace = languageStore.getIntlText('business.sellPlace');
+  priceString = 0; //小数点后的位数
+  baseNum = 0; //价格计算的基数
 
   // 刷新
   bottomStatus = '';
@@ -267,19 +295,23 @@ export default class Business extends Vue {
     },
   ];
 
-  get getUseMount() {
-    this.useMount -= this.rangeValue / 100;
-    return this.useMount.toFixed(5);
-  }
-
   created() {
     const id = parseInt(this.$route.params.id, 10);
     this.updateMarket(id);
+    this.initData();
+    if (this.$route.query.type === 'buy') {
+      this.currrentTab = 0;
+    } else if (this.$route.query.type === 'sell') {
+      this.currrentTab = 1;
+    }
   }
 
   initData() {
     if (this.currentMarket) {
       this.businessPrice = this.currentMarket.lastPrice;
+      this.priceString = this.currentMarket.lastPrice.split('.')[1].length;
+      this.baseNum = 1 / Math.pow(10, this.priceString);
+      this.showTradeCoinName = this.currentMarket.pair.quoteCurrency.symbol.name;
     }
   }
 
@@ -291,6 +323,8 @@ export default class Business extends Vue {
   mounted() {
     this.routeParam = this.$route.params;
     this.routeId = Number(this.$route.params.id);
+    this.useMount = parseFloat(this.accountInfo.eos.available.amount);
+    console.log(this.lastTrade);
   }
 
   @Watch('$route')
@@ -329,6 +363,24 @@ export default class Business extends Vue {
 
   changeTab(val: any) {
     this.currrentTab = val;
+    if (val === 0) {
+      if (!this.currentMarket) return;
+      this.showTradeCoinName = this.currentMarket.pair.quoteCurrency.symbol.name;
+      this.useMount = parseFloat(this.accountInfo.eos.available.amount);
+    } else {
+      if (!this.currentMarket || this.walletTokens.length === 0) return;
+      this.showTradeCoinName = this.currentMarket.pair.baseCurrency.symbol.name;
+      const baseName = this.currentMarket.pair.baseCurrency.symbol.name;
+      const t = this.walletTokens.find(e => {
+        return e.available.symbol.symbol.name === baseName;
+      });
+      if (t) {
+        // return `${t.available.amount} ${baseName}`;
+        this.useMount = parseFloat(t.available.amount);
+      } else {
+        this.useMount = 0.0;
+      }
+    }
   }
   changeEntrustType(type: any) {
     // this.entrustType = type;
@@ -346,6 +398,8 @@ export default class Business extends Vue {
 
   changePriceAndMount(obj1: any, obj2: any) {
     this.businessPrice = obj1;
+    this.priceString = obj1.split('.')[1].length;
+    this.baseNum = 1 / Math.pow(10, this.priceString);
     this.inputVal = obj2;
   }
   showMsg() {
@@ -366,9 +420,50 @@ export default class Business extends Vue {
   showNowPrice() {
     this.sheetVisible = true;
   }
-  getRangeValue(obj: any) {
+  getRangeValue(obj: number) {
+    const accountValue = parseFloat(this.accountInfo.eos.available.amount);
+    const businessPrice = parseFloat(this.businessPrice);
+    const maxCount = Math.floor((accountValue / businessPrice) * 10000) / 10000;
     this.rangeValue = obj;
+    if (obj === 0) {
+      this.changeEos = '0.0000';
+      this.inputVal = '';
+    } else {
+      this.inputVal = `${(maxCount * obj) / 100}`;
+      if (obj === 100) {
+        this.changeEos = this.useMount;
+      } else {
+        this.changeEos = (this.useMount * obj) / 100;
+      }
+    }
   }
+
+  changePrice(num: number) {
+    console.log(this.baseNum);
+    if (num === 0) {
+      this.businessPrice = `${Number(this.businessPrice) - this.baseNum}`;
+    } else if (num === 1) {
+      this.businessPrice = `${Number(this.businessPrice) + this.baseNum}`;
+    }
+  }
+
+  handleChangeIpt(e: any) {
+    const accountValue = parseFloat(this.accountInfo.eos.available.amount);
+    const businessPrice = parseFloat(this.businessPrice);
+    const maxCount = Math.floor((accountValue / businessPrice) * 10000) / 10000;
+    this.inputVal = `${Math.floor(Number(e.target.value) * 10000) / 10000}`;
+    if (!this.inputVal) return;
+    this.changeEos = Math.floor(businessPrice * parseFloat(this.inputVal) * 10000) / 10000;
+    console.log(this.inputVal);
+    console.log(this.changeEos);
+    if (this.changeEos >= this.useMount) {
+      this.rangeValue = 100;
+    } else {
+      const rvalue = Number((this.changeEos / accountValue) * 100).toFixed(4);
+      this.rangeValue = parseFloat(rvalue);
+    }
+  }
+
   changePopupVisible(obj: any) {
     this.popupVisible = obj;
   }
@@ -438,6 +533,7 @@ $marginwidth: 0.12rem;
 .business {
   width: 100%;
   position: relative;
+  margin-bottom: 0.5rem;
 }
 .business-coin-title,
 .business-show-data {
@@ -565,6 +661,13 @@ $marginwidth: 0.12rem;
       border-left: 1px solid rgba(216, 216, 215, 1);
     }
   }
+  .business-price-market {
+    display: flex;
+    justify-content: center;
+    > span {
+      color: #8d8d8d;
+    }
+  }
   .business-mount {
     padding: 0 0.08rem;
     margin: 0.26rem 0 0;
@@ -573,7 +676,7 @@ $marginwidth: 0.12rem;
       @include font(400, 0.15rem, 0.21rem, 'PingFangSC-Light');
     }
     input {
-      width: 55%;
+      width: 100%;
       border: none;
       color: rgba(0, 0, 0, 1);
     }
