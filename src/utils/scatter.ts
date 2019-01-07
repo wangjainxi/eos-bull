@@ -1,6 +1,5 @@
 import pick from 'lodash/pick';
 import createDebug from 'debug';
-import { CoinAsset } from '@/define';
 
 import EOS from 'eosjs';
 import ScatterJS from 'scatterjs-core';
@@ -54,7 +53,7 @@ const checkStatter = () => {
   return Promise.resolve();
 };
 
-const callScatterApi = async <T = any>(apiName: string, ...args: Array<any>) => {
+export const callScatterApi = async <T = any>(apiName: string, ...args: Array<any>) => {
   await lazyInitScatter();
   await checkStatter();
   return (await scatter[apiName](...args)) as T;
@@ -157,4 +156,9 @@ export const cancelOrder = async (orderId: number) => {
   await transaction('cxlorder', mexContract, {
     order_id: orderId,
   });
+};
+
+export const signature = async (publicKey: string, data: string) => {
+  debug('signature: %s, %s', publicKey, data);
+  return await scatter.getArbitrarySignature(publicKey, data);
 };

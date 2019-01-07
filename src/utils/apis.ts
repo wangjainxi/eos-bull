@@ -1,4 +1,5 @@
 import Axios, { AxiosResponse } from 'axios';
+import { STORAGE_JWT } from '@/vuex/types';
 import {
   Market,
   TokenInfo,
@@ -8,6 +9,7 @@ import {
   Announcement,
   HistoryOrderParams,
   OrdersWithIcons,
+  Order,
 } from '@/define';
 
 interface ResponseData<T = any> {
@@ -89,6 +91,14 @@ export const getUserPendingOrders = async (accountName: string) => {
 };
 
 /**
+ * 获取单个订单信息
+ */
+export const getOrderDetail = async (orderId: number) => {
+  const res = await instance.get(`/v1/orders/detail/${orderId}`);
+  return resWrapper<Order>(res);
+};
+
+/**
  * 获取用户订单历史
  */
 export const getUserHistoryOrders = async (accountName: string, params?: HistoryOrderParams) => {
@@ -117,7 +127,18 @@ export const getOrderFills = async (orderId: number) => {
  */
 export const getAccountInfo = async (accountName: string) => {
   const res = await instance.get(`/v1/account/${accountName}`);
-  return resWrapper<AccountInfo>(res);
+  const result = resWrapper<AccountInfo>(res);
+  result.tokens.forEach(e => {
+    const meta = result.tokenMetas.find(e2 => {
+      return e2.token.symbol.name === e.available.symbol.symbol.name;
+    });
+    if (!meta) return;
+    Object.assign(e, {
+      iconUrl: meta.iconUrl,
+      marketId: meta.listedMarkets[0].marketId,
+    });
+  });
+  return result;
 };
 
 /**
@@ -136,5 +157,22 @@ export const getAnnouncementList = async (params?: { page?: number; pageSize?: n
  */
 export const favouriteMarkets = async (ids: number[], favourited: boolean) => {
   const params = ids.map(e => ({ marketId: e, favourited }));
-  await instance.post('/v1/user/favourite', params);
+  await instance.post('/v1/user/favourite', params, {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem(STORAGE_JWT)}`,
+    },
+  });
+};
+
+/**
+ * 登录
+ */
+export const login = async (accountName: string, signature: string) => {
+  const res = await instance.post('/v1/user/login', {
+    accountName,
+    signature,
+  });
+  return resWrapper<{
+    token: string;
+  }>(res);
 };
