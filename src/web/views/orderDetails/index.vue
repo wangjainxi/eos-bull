@@ -4,29 +4,33 @@
       <p>Order Details</p>
     </div>
     <div class="list-query-condition-box">
-      <el-form :model="formInline" :inline="true">
+      <!-- <el-form :model="formInline" :inline="true">
         <el-form-item label="Sort by">
           <el-select v-model="formInline.region" placeholder="活动区域">
             <el-option label="区域一" value="shanghai"></el-option>
             <el-option label="区域二" value="beijing"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="Coin">
+        <el-form-item>
+          <Language resource="exchange.Coin"/>
           <el-input v-model="formInline.user" placeholder="审批人"></el-input>
         </el-form-item>
-        <el-form-item label="Type">
+        <el-form-item>
+          <Language resource="exchange.Type"/>
           <el-select v-model="formInline.region" placeholder="活动区域">
             <el-option label="区域一" value="shanghai"></el-option>
             <el-option label="区域二" value="beijing"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="Status">
+        <el-form-item>
+          <Language resource="exchange.Status"/>
           <el-select v-model="formInline.region" placeholder="活动区域">
             <el-option label="区域一" value="shanghai"></el-option>
             <el-option label="区域二" value="beijing"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="Status">
+        <el-form-item>
+          <Language resource="exchange.Date"/>
           <el-date-picker
             v-model="dateValue"
             type="datetimerange"
@@ -41,88 +45,22 @@
             <Language resource="exchange.Search"/>
           </el-button>
         </el-form-item>
-      </el-form>
+      </el-form>-->
     </div>
     <div class="table-box">
-      <el-table :data="tableData" style="width: 100%" empty-text="There's no data yet">
-        <el-table-column type="expand">
-          <template slot-scope="props">
-            <div class="expand-box">
-              <el-table
-                :data="props.row.dealData"
-                style="width: 100%"
-                empty-text="There's no data yet"
-              >
-                <el-table-column prop="dealTime" align="center">
-                  <template slot="header" slot-scope="scope">
-                    <Language resource="exchange.Deal_Time"/>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="price" align="right">
-                  <template slot="header" slot-scope="scope">
-                    <Language resource="exchange.Deal_Price"/>
-                  </template>
-                  <template slot-scope="props">
-                    <p class="price-box">
-                      {{props.row.price}}
-                      <span>EOS</span>
-                    </p>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="amount" label="Amount" align="right">
-                  <template slot="header" slot-scope="scope">
-                    <Language resource="exchange.Deal_num"/>
-                  </template>
-                  <template slot-scope="props">
-                    <p class="amount-box">
-                      {{props.row.amount}}
-                      <span>{{props.row.coin}}</span>
-                    </p>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="total" align="right">
-                  <template slot="header" slot-scope="scope">
-                    <Language resource="exchange.Deal_Total"/>
-                  </template>
-                  <template slot-scope="props">
-                    <p class="price-box">
-                      {{props.row.total}}
-                      <span>EOS</span>
-                    </p>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="fee" align="right">
-                  <template slot="header" slot-scope="scope">
-                    <Language resource="exchange.Fee"/>
-                  </template>
-                  <template slot-scope="props">
-                    <p class="amount-box">
-                      {{props.row.amount}}
-                      <span>{{props.row.coin}}</span>
-                    </p>
-                  </template>
-                </el-table-column>
-                <el-table-column align="right">
-                  <template slot="header" slot-scope="scope">
-                    <Language resource="exchange.Action"/>
-                  </template>
-                  <template slot-scope="props">
-                    <p class="action-box" @click="greet(props.row.id)">Details</p>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </div>
-            <!-- 下拉详情 -->
-          </template>
-        </el-table-column>
+      <el-table
+        :data="orders"
+        style="width: 100%"
+        :empty-text="tabName('exchange.There_s_no_data_yet')"
+      >
         <el-table-column prop="coin" width="155">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Pairs"/>
           </template>
           <template slot-scope="props">
             <div class="coin-box">
-              <img src="../../../images/web/logo_box.svg" alt>
-              <p>{{props.row.coin}} / EOS</p>
+              <img src="../../../images/web/logo_box.svg">
+              <p>{{props.row.size.symbol.name}} / {{ props.row.price.symbol.name }}</p>
             </div>
           </template>
         </el-table-column>
@@ -134,19 +72,22 @@
             <p :class="props.row.type === 'Buy'?'buy-box':'sell-box'">{{props.row.type}}</p>
           </template>
         </el-table-column>
-        <el-table-column prop="time" align="center" width="200">
+        <el-table-column align="center">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Entrusted_Time"/>
           </template>
+          <template slot-scope="props">
+            <p>{{ props.row.time | formatDate }}</p>
+          </template>
         </el-table-column>
-        <el-table-column prop="price" align="right" width="120">
+        <el-table-column prop="price" align="right">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Entrusted_Price"/>
           </template>
           <template slot-scope="props">
             <p class="props-box">
-              {{props.row.price}}
-              <span>EOS</span>
+              {{props.row.price.amount}}
+              <span>{{props.row.price.symbol.name}}</span>
             </p>
           </template>
         </el-table-column>
@@ -154,15 +95,21 @@
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Deal_Average"/>
           </template>
+          <template slot-scope="props">
+            <p class="props-box">
+              {{props.row.avgPrice.amount}}
+              <span>{{props.row.avgPrice.symbol.name}}</span>
+            </p>
+          </template>
         </el-table-column>
         <el-table-column prop="amount" align="right">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Entrusted_Amount"/>
           </template>
           <template slot-scope="props">
-            <p class="amount-box">
-              {{props.row.amount}}
-              <span>{{props.row.coin}}</span>
+            <p class="props-box">
+              {{props.row.size.amount}}
+              <span>{{props.row.size.symbol.name}}</span>
             </p>
           </template>
         </el-table-column>
@@ -170,10 +117,22 @@
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Dealt_Num"/>
           </template>
+          <template slot-scope="props">
+            <p class="props-box">
+              {{props.row.filled.amount}}
+              <span>{{props.row.filled.symbol.name}}</span>
+            </p>
+          </template>
         </el-table-column>
         <el-table-column prop="dealt" align="right">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Entrusted_Total"/>
+          </template>
+          <template slot-scope="props">
+            <p class="props-box">
+              {{props.row.fees.amount}}
+              <span>{{props.row.fees.symbol.name}}</span>
+            </p>
           </template>
         </el-table-column>
         <el-table-column prop="entrusted" label="Entrusted" align="right">
@@ -181,9 +140,9 @@
             <Language resource="exchange.Deal_Total"/>
           </template>
           <template slot-scope="props">
-            <p class="entrusted-box">
-              {{props.row.entrusted}}
-              <span>EOS</span>
+            <p class="props-box">
+              {{props.row.filledQuote.amount}}
+              <span>{{props.row.filledQuote.symbol.name}}</span>
             </p>
           </template>
         </el-table-column>
@@ -206,7 +165,7 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
+        :current-page="params.page"
         :page-sizes="[10, 20, 30, 40]"
         :page-size="10"
         layout="total, sizes, prev, pager, next, jumper"
@@ -218,86 +177,48 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import languageStore from '@/stores/language';
+import { State } from 'vuex-class';
+import { getUserHistoryOrders } from '@/utils/apis';
+import { Observer } from 'mobx-vue';
+import { HistoryOrderParams, Order } from '@/define';
 
+@Observer
 @Component
 export default class extends Vue {
-  OrdeChecked = false;
-  PairChecked = false;
-  total = 200;
-  currentPage4 = 1;
+  @State('accountName')
+  accountName!: string;
+
+  // 订单加载中
+  loading = false;
+
   dateValue = '';
-  formInline = {
-    user: '',
-    region: '',
+
+  total = 0;
+
+  orders: Order[] = [];
+
+  params: HistoryOrderParams = {
+    page: 1,
+    pageSize: 10,
   };
-  tableData = [
-    {
-      coin: 'ZKS',
-      type: 'Buy',
-      time: '2018-12-07 14:15:55',
-      price: 0.00008,
-      average: 0,
-      amount: 21,
-      dealt: 0,
-      entrusted: 0.003,
-      status: 'Not deal',
-      odd: 'eosdkeigjndlie',
-      id: 1,
-      dealData: [
-        {
-          coin: 'ZKS',
-          dealTime: '2018-12-07 14:15:55',
-          price: 0.00008,
-          amount: 21,
-          total: 3333,
-          fee: 2,
-          id: 101,
-        },
-        {
-          coin: 'ZKS',
-          dealTime: '2018-12-07 14:15:55',
-          price: 0.00008,
-          amount: 21,
-          total: 3333,
-          fee: 2,
-          id: 102,
-        },
-      ],
-    },
-    {
-      coin: 'ZKS',
-      type: 'Sell',
-      time: '2018-12-07 14:15:55',
-      price: 0.00008,
-      average: 0,
-      amount: 21,
-      dealt: 0,
-      entrusted: 0.003,
-      status: 'Not deal',
-      odd: 'eosdkeigjndlie',
-      id: 2,
-      dealData: [
-        {
-          coin: 'ZKS',
-          dealTime: '2018-12-07 14:15:55',
-          price: 0.00008,
-          amount: 21,
-          total: 3333,
-          fee: 2,
-          id: 201,
-        },
-        {
-          coin: 'ZKS',
-          dealTime: '2018-12-07 14:15:55',
-          price: 0.00008,
-          amount: 21,
-          total: 3333,
-          fee: 2,
-          id: 202,
-        },
-      ],
-    },
-  ];
+
+  created() {
+    this.initData();
+  }
+
+  async initData() {
+    this.loading = true;
+    this.fetchOrders().finally(() => {
+      this.loading = false;
+    });
+  }
+
+  async fetchOrders() {
+    const res = await getUserHistoryOrders(this.accountName, this.params);
+    this.orders = res.orders;
+    this.total = res.count;
+  }
 
   handleSizeChange(val: any) {
     console.log(val);
@@ -313,6 +234,13 @@ export default class extends Vue {
   }
   ondateValue() {
     console.log(this.dateValue);
+  }
+  getShowLabel(obj: string) {
+    return languageStore.getIntlText(obj);
+  }
+
+  tabName(obj: string) {
+    return languageStore.getIntlText(obj);
   }
 }
 </script>
@@ -428,6 +356,9 @@ export default class extends Vue {
     .el-form-item:nth-child(5) {
       .el-form-item__content {
         width: 250px;
+        display: flex;
+        align-items: flex-start;
+
         input {
           background: #142e4d;
           border-color: #142e4d;
@@ -471,7 +402,17 @@ export default class extends Vue {
       margin-right: 25px;
     }
     .el-form-item__content {
-      width: 120px;
+      & > span {
+        padding-right: 10px;
+        width: inherit;
+        font-size: 14px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(146, 167, 197, 1);
+      }
+      & > div {
+        width: 120px;
+      }
     }
   }
 }

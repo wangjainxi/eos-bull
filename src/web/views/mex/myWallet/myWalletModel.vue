@@ -4,7 +4,7 @@
       <div class="model-inf">
         <Language resource="myWallet.account_information"/>
       </div>
-      <div class="model-name">Adminadm1111</div>
+      <div class="model-name">{{ accountName }}</div>
       <img class="model-img" src="@/images/web/ic_eos.svg" alt>
       <div class="model-action">
         <div class="action-l">
@@ -34,12 +34,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { State } from 'vuex-class';
 
 @Component
 export default class MyWalletModel extends Vue {
-  goAction() {
-    console.log(121);
-  }
+  @State('accountName')
+  accountName!: string;
 }
 </script>
 

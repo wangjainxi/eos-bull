@@ -10,8 +10,6 @@
       :key="index"
     ></i>
     <mt-range v-model="rangeVal" :min="0" :max="100" :step="1" :bar-height="5">
-      <!-- <div slot="start">0</div>
-      <div slot="end">100</div>-->
     </mt-range>
     <br>
   </div>
@@ -20,37 +18,24 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { Observer } from 'mobx-vue';
 import languageStore from '@/stores/language';
-// import fixHeader from './components/fixHeader.vue';
 
 @Observer
-@Component({
-  components: {
-    // fixHeader,
-  },
-})
+@Component
 export default class BusinessRange extends Vue {
-  // name: 'business-range',
-
   @Prop() rangeValue!: number;
   @Prop() cricleMount!: any;
   @Prop() getRangeValue!: any;
   @Prop() currrentTab!: any;
-  // data
+
   classArr: string[] = ['cricle', 'cricle', 'cricle', 'cricle', 'cricle'];
   rangeVal: number = this.rangeValue;
   thisTabLang = languageStore.getIntlText('business.Buy');
-  // props: ['rangeValue', 'cricleMount', 'getRangeValue', 'currrentTab'],
-  // methods
   changeRangeValue(num: number) {
     this.rangeVal = num * 25;
     return this.rangeVal;
   }
-  created() {
-    console.log(this.thisTabLang);
-  }
-  // computed
+
   get getRangeVal() {
-    console.log(this.thisTabLang);
     const thisColor = this.currrentTab === this.thisTabLang ? 'cricle-green' : 'cricle-red';
     const getCount = Math.floor(this.rangeVal / 25) + 1;
     if (getCount === 0) {
@@ -61,19 +46,6 @@ export default class BusinessRange extends Vue {
         this.classArr[i] = `cricle ${thisColor}`;
       }
     }
-    // if (this.rangeVal === 0) {
-    //   this.classArr = ['cricle', 'cricle', 'cricle', 'cricle', 'cricle'];
-    // } else if (this.rangeVal > 0 && this.rangeVal <= 25) {
-    //   this.classArr[0] = `${this.classArr[0]} ${thisColor}`;
-    // } else if (this.rangeVal > 25 && this.rangeVal <= 50) {
-    //   this.classArr[0] = `${this.classArr[0]} ${thisColor}`;
-    // } else if (this.rangeVal > 50 && this.rangeVal <= 75) {
-    //   this.classArr[0] = `${this.classArr[0]} ${thisColor}`;
-    // } else if (this.rangeVal > 75 && this.rangeVal < 100) {
-    //   this.classArr[0] = `${this.classArr[0]} ${thisColor}`;
-    // } else if (this.rangeVal === 100) {
-    //   this.classArr[0] = `${this.classArr[0]} ${thisColor}`;
-    // }
     return this.$emit('getRangeValue', this.rangeVal);
   }
 }

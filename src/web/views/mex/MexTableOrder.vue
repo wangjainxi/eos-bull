@@ -5,10 +5,12 @@
         <Language resource="exchange.Open_Orders"/>
       </h4>
       <div>
-        <img src="../../../images/web/ic_refresh.svg" alt>
-        <p @click="handleRevokeAllBtnClick">
-          <Language resource="exchange.Revoke_All"/>
-        </p>
+        <div class="revoke-all-data" v-show="showFlags">
+          <img src="../../../images/web/ic_refresh.svg" alt>
+          <p @click="handleRevokeAllBtnClick">
+            <Language resource="exchange.Revoke_All"/>
+          </p>
+        </div>
         <el-checkbox v-model="checked" @change="handleHideMarketCheck">
           <Language resource="exchange.Hide_Other_Pairs"/>
         </el-checkbox>
@@ -16,19 +18,15 @@
       </div>
     </div>
     <div class="table-box">
-      <el-table
-        :data="Array.from(openOrderStore.orders)"
-        style="width: 100%"
-        :empty-text="ThereSNoDataYet"
-      >
+      <el-table :data="pendingOrders" style="width: 100%" max-height="250">
         <el-table-column prop="coin" width="200">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Coin"/>
           </template>
           <template slot-scope="props">
             <div class="coin-box">
-              <h4>{{props.row.coin}} / EOS</h4>
-              <p>{{props.row.odd}}</p>
+              <h4>{{props.row.size.symbol.name}} / {{ props.row.price.symbol.name }}</h4>
+              <p>缺少字段</p>
             </div>
           </template>
         </el-table-column>
@@ -37,7 +35,7 @@
             <Language resource="exchange.Type"/>
           </template>
           <template slot-scope="props">
-            <p :class="props.row.type === 'Buy'?'buy-box':'sell-box'">{{props.row.type}}</p>
+            <p :class="props.row.type === 'Buy'?'buy-box':'sell-box'">{{props.row.side}}</p>
           </template>
         </el-table-column>
         <el-table-column prop="time" align="center" width="200">
@@ -51,8 +49,8 @@
           </template>
           <template slot-scope="props">
             <p class="props-box">
-              {{props.row.price.amount}}
-              <span>EOS</span>
+              {{props.row.avgPrice.amount}}
+              <span>{{props.row.avgPrice.symbol.name}}</span>
             </p>
           </template>
         </el-table-column>
@@ -60,15 +58,21 @@
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Deal_Average"/>
           </template>
+          <template slot-scope="props">
+            <p class="props-box">
+              {{props.row.size.amount}}
+              <span>{{props.row.size.symbol.name}}</span>
+            </p>
+          </template>
         </el-table-column>
         <el-table-column prop="amount" align="right">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Entrusted_Amount"/>
           </template>
           <template slot-scope="props">
-            <p class="amount-box">
-              {{props.row.amount}}
-              <span>{{props.row.coin}}</span>
+            <p class="props-box">
+              {{props.row.filled.amount}}
+              <span>{{props.row.filled.symbol.name}}</span>
             </p>
           </template>
         </el-table-column>
@@ -76,19 +80,25 @@
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Dealt_Num"/>
           </template>
+          <template slot-scope="props">
+            <p class="props-box">
+              {{props.row.fees.amount}}
+              <span>{{props.row.fees.symbol.name}}</span>
+            </p>
+          </template>
         </el-table-column>
         <el-table-column prop="entrusted" align="right">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Entrusted_Total"/>
           </template>
           <template slot-scope="props">
-            <p class="entrusted-box">
-              {{props.row.entrusted}}
-              <span>EOS</span>
+            <p class="props-box">
+              {{props.row.fees.amount}}
+              <span>{{props.row.fees.symbol.name}}</span>
             </p>
           </template>
         </el-table-column>
-        <el-table-column prop="status" :label="Status" align="center">
+        <el-table-column prop="status" label="Status" align="center">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Status"/>
           </template>
@@ -98,18 +108,20 @@
             <Language resource="exchange.Action"/>
           </template>
           <template slot-scope="props">
-            <p class="action-box" @click="greet(props.row.id)">
+            <p class="action-box" @click="greet(props.row.orderId)">
               <Language resource="exchange.Revoke"/>
             </p>
           </template>
         </el-table-column>
+        <div slot="empty">
+          <Language resource="exchange.There_s_no_data_yet"/>
+        </div>
       </el-table>
     </div>
-    <el-dialog
-      :title="thisTip"
-      :visible.sync="dialogVisible"
-      width="30%"
-    >
+    <el-dialog :visible.sync="dialogVisible" width="30%">
+      <template slot="title">
+        <div>111</div>
+      </template>
       <div class="content">
         <img src="./../../../images/web/ic_warning_big.svg" alt>
         <Language resource="home.revoke_order"/>
@@ -128,45 +140,63 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import { MessageBox, Message } from 'element-ui';
+import { namespace } from 'vuex-class';
 import { Observer } from 'mobx-vue';
 import languageStore from '@/stores/language';
-import dataStore from '@/stores/data';
-import openOrderStore from '@/stores/open-order';
 import language from '@/stores/language';
+import { Market, Order } from '@/define';
+
+const orderModule = namespace('order');
+const marketModule = namespace('market');
 
 @Observer
 @Component
 export default class MexOpenOrders extends Vue {
-  dataStore = dataStore;
-  openOrderStore = openOrderStore;
+  @marketModule.Getter('currentMarket')
+  currentMarket?: Market;
+
+  @orderModule.Getter('pendingOrders')
+  pendingOrders!: Order[];
+
+  @orderModule.Action('fetchPendingOrders')
+  fetchPendingOrders!: Function;
+
   checked = false;
   loading = false;
   dialogVisible = false;
+  showFlag = false;
 
   ThereSNoDataYet = language.getIntlText('exchange.There_s_no_data_yet');
   handleRevokeAllBtnClick() {
     this.loading = true;
-    openOrderStore.fetchOrders('user1').finally(() => {
-      setTimeout(() => {
-        this.loading = false;
-      }, 1000);
-    });
+    setTimeout(() => {
+      this.loading = false;
+    }, 1000);
+  }
+  get showFlags() {
+    const a = this.pendingOrders;
+    a.length > 0 ? (this.showFlag = true) : (this.showFlag = false);
+    // console.log(this.pendingOrders);
+    return this.showFlag;
   }
 
-  // created() {
-  //   this.noTitle = `${&nbsp}`;
-  // }
   handleHideMarketCheck(val: boolean) {
-    const marketId = dataStore.currentMarket.marketId;
-    if (val) openOrderStore.hideOtherMarket(marketId);
-    else openOrderStore.showOtherMarket();
+    //
   }
 
   handleDetailBtnClick() {
     // TODO：展示订单详情
   }
-  greet(id: number) {
-    this.dialogVisible = true;
+
+  async greet(id: number) {
+    await MessageBox.confirm('Are you sure to revoke the order?', 'Tips', {
+      confirmButtonText: 'Confirm',
+      cancelButtonText: 'Concel',
+      type: 'warning',
+    });
+    await this.$store.dispatch('order/cancelOrder', id);
+    Message.success('Revoke susccess.');
   }
 }
 </script>
@@ -186,6 +216,10 @@ export default class MexOpenOrders extends Vue {
     > div {
       display: flex;
       color: #2d7be5;
+      .revoke-all-data {
+        display: flex;
+        align-items: center;
+      }
       span {
         color: #ddd;
       }

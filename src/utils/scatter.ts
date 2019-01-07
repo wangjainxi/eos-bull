@@ -1,4 +1,5 @@
 import pick from 'lodash/pick';
+import createDebug from 'debug';
 import { CoinAsset } from '@/define';
 
 import EOS from 'eosjs';
@@ -6,6 +7,8 @@ import ScatterJS from 'scatterjs-core';
 import ScatterEOS from 'scatterjs-plugin-eosjs';
 
 ScatterJS.plugins(new ScatterEOS());
+
+const debug = createDebug('eosmex:utils:scatter');
 
 const network = {
   blockchain: process.env.VUE_APP_NETWORK_BLOCKCHAIN,
@@ -83,6 +86,7 @@ export const getAccount = async (accountName: string) => {
 };
 
 const transaction = async (...args: any[]) => {
+  debug('transaction: ', ...args);
   let actions;
   if (Array.isArray(args[0])) {
     actions = args[0];
@@ -94,28 +98,32 @@ const transaction = async (...args: any[]) => {
   const params = { context_free_actions: [], actions };
   return await callEosApi('transaction', params);
 };
-interface OrderParams {
+
+export interface OrderParams {
   market_id: number;
-  price: CoinAsset;
-  size: CoinAsset;
+  price: string;
+  referrer?: string;
+  size: string;
   order_side: 'bid' | 'ask';
   order_type: 'limit' | 'market';
   time_in_force: 'gtc' | 'fok' | 'ioc';
-  post_only: boolean;
+  post_only: 0 | 1;
   coin_contract: string;
   quantity: string;
 }
 
 export const createOrder = async (params: OrderParams) => {
+  debug('createOrder: %s', JSON.stringify(params));
   const { name, authority } = await getIdentity();
   const authorization = [{ actor: name, permission: authority }];
 
   const newOrderAction = {
     account: mexContract,
-    name: 'neworder',
+    name: 'addorder',
     authorization,
     data: {
       user: name,
+      referrer: '',
       ...pick(
         params,
         'market_id',
@@ -145,6 +153,7 @@ export const createOrder = async (params: OrderParams) => {
 };
 
 export const cancelOrder = async (orderId: number) => {
+  debug('cancelOrder: %i', orderId);
   await transaction('cxlorder', mexContract, {
     order_id: orderId,
   });

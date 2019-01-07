@@ -78,8 +78,12 @@ export default {
   revoked_succeeded: 'revoked succeeded!',
   Order_History: 'Order History',
   Hide_Revoked_Order: 'Hide Revoked Order',
+  Hide_Other_Pair: 'Hide Other Pair',
   All_dealt: 'All dealt',
   Revoked: 'Revoked',
   Details: 'Details',
   Detail: 'Detail',
+  Sort_by: 'Sort by',
+  Date: 'Date',
+  deep: 'Deep',
 };

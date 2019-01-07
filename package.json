@@ -5,14 +5,18 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build-dev": "vue-cli-service build --mode development",
+    "build-staging": "vue-cli-service build --mode staging",
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
     "@aspnet/signalr": "^1.1.0",
+    "animate.css": "^3.7.0",
     "axios": "^0.18.0",
     "dayjs": "^1.7.8",
+    "debug": "^4.1.1",
     "element-ui": "^2.4.11",
     "eosjs": "^16.0.9",
     "highcharts": "^7.0.1",
@@ -31,9 +35,11 @@
     "vue-router": "^3.0.1",
     "vue-trading-view": "^1.0.1",
     "vue2-highcharts": "^1.2.5",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "vuex-class": "^0.3.1"
   },
   "devDependencies": {
+    "@types/debug": "^0.0.31",
     "@types/jest": "^23.1.4",
     "@vue/cli-plugin-babel": "^3.2.0",
     "@vue/cli-plugin-e2e-cypress": "^3.2.0",

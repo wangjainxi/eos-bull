@@ -2,6 +2,7 @@
   <div class="tab-type-box flex-row-start">
     <router-link
       v-for="item of navs"
+      replace
       :to="item.path"
       :key="item.path"
       :class="{ 'nav-item': true, 'current': $route.path === item.path }">
@@ -16,11 +17,9 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { Observer } from 'mobx-vue';
 
-@Observer
 @Component
-export default class TabPackage extends Vue {
+export default class AppNavBar extends Vue {
   navs = [
     {
       key: 'foot.Homepage',
@@ -30,7 +29,7 @@ export default class TabPackage extends Vue {
     },
     {
       key: 'foot.Markets',
-      path: '/market',
+      path: '/markets',
       icon: require('@/images/mobile/ic_nav_quotes_normal.svg'),
       selectIcon: require('@/images/mobile/ic_nav_quotes_press.svg'),
     },
@@ -72,14 +71,16 @@ export default class TabPackage extends Vue {
     width: 20%;
     height: 100%;
     flex-direction: column;
-    justify-content: space-between;
-    padding-top: 0.1rem;
+    align-items: center;
+    justify-content: center;
+
     .icon {
       display: inline-block;
+      margin-bottom: 0.04rem;
     }
+
     .name {
       font-size: 0.1rem;
-      padding-bottom: 2px;
       color: #b3bfd0;
     }
 

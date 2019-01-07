@@ -1,22 +1,31 @@
 <template>
   <div>
-    <div class="item-history-box" v-for="item in sellData">
-      <span class="left-text price-text">{{item.price}}</span>
-      <span class="center-text">{{item.size}}</span>
-      <span class="right-text">{{item.time}}</span>
+    <div class="item-history-box" v-for="(item, index) in sellData" :key="index" :title="tabName('home.Click_details')">
+      <span class="left-text price-text">{{ item.price.amount }}</span>
+      <span class="center-text">{{item.size.amount }}</span>
+      <span class="right-text">{{item.time | formatDate('MM-DD HH:mm:ss') }}</span>
     </div>
   </div>
 </template>
 <script lang="ts">
-export default {
-  name: 'list-item',
-  props: {
-    sellData: {
-      type: Array,
-      required: true,
-    },
-  },
-};
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import language from '@/stores/language';
+import { Observer } from 'mobx-vue';
+
+interface ThisObj {
+  type: Array<any>;
+  required: true;
+}
+
+@Observer
+@Component
+export default class ListItem extends Vue {
+  // name: 'list-item',
+  @Prop() sellData!: ThisObj;
+  tabName(obj: string) {
+    return language.getIntlText(obj);
+  }
+}
 </script>
 <style lang="scss">
 .sell-box {
@@ -30,6 +39,7 @@ export default {
   }
 }
 .item-history-box {
+  cursor: pointer;
   font-size: 12px;
   font-family: PingFangSC-Regular;
   height: 20px;
@@ -38,6 +48,9 @@ export default {
   margin-bottom: 0.6px;
   padding-left: 20px;
   padding-right: 10px;
+  &:hover {
+    font-weight: 600;
+  }
   span {
     height: 20px;
     display: inline-block;

@@ -15,6 +15,7 @@ export default {
   Used: '已用',
   Tradable_Assets: '可交易资产',
   Total_Asset: '全部资产',
+  Total: '全部',
   Value_EOS: '非小额资产',
   Following: '我的关注',
   Coin: '币种 ',
@@ -38,4 +39,5 @@ export default {
   High_Latency: '高延时',
   Timed_Out: '超时',
   EOS_Main: 'EOS主网',
+  Search: '搜索',
 };

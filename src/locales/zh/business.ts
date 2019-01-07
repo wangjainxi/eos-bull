@@ -29,4 +29,6 @@ export default {
   Buy1: '买',
   Sell1: '卖',
   Favorites: '自选',
+  EOS: 'EOS',
+  sR: '搜索结果',
 };

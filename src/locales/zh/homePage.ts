@@ -51,6 +51,7 @@ export default {
   working_on_cross_chain:
     '在跨链技术成熟稳定后，打通与其他币种的跨链交易服务，以此取代传统的中心化交易所。',
   cooperative_partner: '合作伙伴',
+  cooperative_partner1: '合作伙伴',
   contact_us: '联系我们',
   Favorites: '自选',
   Market: '市场',
@@ -67,4 +68,12 @@ export default {
   Scatter_allows: 'Scatter支持免密码的便捷交易，了解',
   How_use_Scatter: '《如何使用Scatter》',
   sign_in: '登录',
+  EOS: 'EOS',
+  Search: '搜索',
+  Exchange: '币币交易',
+  Markets: '行情列表',
+  Click_details: '点击查看明细',
+  Switch: '切换',
+  Exit: '退出',
+  Orders: '订单',
 };

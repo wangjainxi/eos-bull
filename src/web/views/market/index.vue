@@ -2,30 +2,45 @@
   <div id="web-market-page">
     <div class="inner-box">
       <el-tabs v-model="activeName" @tab-click="onTabSwitch">
-        <el-tab-pane label="Favorite" name="first" class="tab-first">
-          <TableItem :thisTdata="thisTdata.freeMarketList"></TableItem>
+        <el-tab-pane :label="tabName('home.Favorites')" name="first" class="tab-first">
+          <TableItem :thisTdata="favoriteMarkets"/>
         </el-tab-pane>
-        <el-tab-pane label="EOS" name="second" class="tab_second">
-          <TableItem :thisTdata="thisTdata.marketList"></TableItem>
+        <el-tab-pane :label="tabName('home.EOS')" name="second" class="tab_second">
+          <TableItem :thisTdata="markets"/>
         </el-tab-pane>
       </el-tabs>
+      <div class="search-th-right">
+        <el-input :placeholder="tabName('myWallet.Search')" v-model="inputVal" clearable>
+          <i slot="prefix" class="el-input__icon el-icon-search"></i>
+        </el-input>
+      </div>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { Observer } from 'mobx-vue';
-import dataStore from '@/stores/data';
+import { namespace } from 'vuex-class';
 import TableItem from './tableItem.vue';
+import { Market } from '@/define';
+import language from '@/stores/language';
+import { Observer } from 'mobx-vue';
+
+const marketModule = namespace('market');
 
 @Observer
 @Component({
   components: { TableItem },
 })
 export default class extends Vue {
+  @marketModule.State('markets')
+  markets!: Market[];
+  inputVal = '';
+
+  @marketModule.Getter('favoriteMarkets')
+  favoriteMarkets!: Market[];
+
   // data
   activeName: string = 'second';
-  thisTdata = dataStore;
   tableData: Array<any> = [
     {
       pairs: 'ZKS',
@@ -64,6 +79,9 @@ export default class extends Vue {
   onTabSwitch() {
     //
   }
+  tabName(obj: string) {
+    return language.getIntlText(obj);
+  }
 }
 </script>
 <style lang="scss">
@@ -75,6 +93,15 @@ export default class extends Vue {
     border-radius: 8px;
     background: #142e4d;
     overflow: hidden;
+    position: relative;
+  }
+  .search-th-right{
+    position: absolute;
+    width: 210px;
+    display: inline-block;
+    top: 9px;
+    right: 10px;
+
   }
   .el-tabs__header {
     margin: 0;

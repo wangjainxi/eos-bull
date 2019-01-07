@@ -4,12 +4,10 @@ import {
   TokenInfo,
   Orderbook,
   Trade,
-  Order,
   AccountInfo,
   Announcement,
-  ORDER_SIDE,
-  ORDER_STATUS,
   HistoryOrderParams,
+  OrdersWithIcons,
 } from '@/define';
 
 interface ResponseData<T = any> {
@@ -40,6 +38,16 @@ export const getMrkets = async (accountName?: string) => {
 };
 
 /**
+ * 获取市场详情
+ */
+export const getMarket = async (id: number, accountName: string) => {
+  const res = await instance.get(`/v1/markets/${id}`, {
+    params: { accountName },
+  });
+  return resWrapper<Market>(res);
+};
+
+/**
  * 获取代币信息
  */
 export const getTokenInfo = async (contract: string, symbol: string) => {
@@ -63,12 +71,21 @@ export const getMarketTrades = async (marketId: number) => {
   return resWrapper<Trade[]>(res);
 };
 
+const formartOrders = (list: OrdersWithIcons) => {
+  return list.orders.map(e => {
+    const icon = list.icons.find(e2 => e2.marketId === e.marketId);
+    if (icon) e.iconUrl = icon.iconUrl;
+    return e;
+  });
+};
+
 /**
  * 获取用户未成交订单列表
  */
 export const getUserPendingOrders = async (accountName: string) => {
   const res = await instance.get(`/v1/orders/pending/${accountName}`);
-  return resWrapper<Order[]>(res);
+  const result = resWrapper<OrdersWithIcons>(res);
+  return formartOrders(result);
 };
 
 /**
@@ -76,10 +93,15 @@ export const getUserPendingOrders = async (accountName: string) => {
  */
 export const getUserHistoryOrders = async (accountName: string, params?: HistoryOrderParams) => {
   const res = await instance.get(`/v1/orders/history/${accountName}`, { params });
-  return resWrapper<{
-    orders: Order[];
+  const result = resWrapper<{
+    list: OrdersWithIcons;
     count: number;
   }>(res);
+
+  return {
+    count: result.count,
+    orders: formartOrders(result.list),
+  };
 };
 
 /**
@@ -107,4 +129,12 @@ export const getAnnouncementList = async (params?: { page?: number; pageSize?: n
     announcements: Announcement[];
     count: number;
   }>(res);
+};
+
+/**
+ * 收藏市场
+ */
+export const favouriteMarkets = async (ids: number[], favourited: boolean) => {
+  const params = ids.map(e => ({ marketId: e, favourited }));
+  await instance.post('/v1/user/favourite', params);
 };

@@ -18,12 +18,12 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home,
+      component: HomeExchange,
     },
     {
-      path: '/home-exchange',
-      name: 'homeExchange',
-      component: HomeExchange,
+      path: '/portal', //门户
+      name: 'portal',
+      component: Home,
     },
     {
       path: '/white-paper',
@@ -45,7 +45,7 @@ export default new Router({
           component: Market,
         },
         {
-          path: '/order-details',
+          path: '/orders',
           name: 'orderDetails',
           component: OrderDetails,
         },

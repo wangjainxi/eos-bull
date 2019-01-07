@@ -9,24 +9,20 @@
           <Language resource="exchange.Hide_Revoked_Order"/>
         </el-checkbox>
         <el-checkbox v-model="hideOther">
-          <Language resource="exchange.Hide_Revoked_Order"/>
+          <Language resource="exchange.Hide_Other_Pair"/>
         </el-checkbox>
         <img src="../../../images/web/ic_refresh.svg" alt>
       </div>
     </div>
     <div class="table-box">
-      <el-table
-        :data="Array.from(historyOrderStore.orders)"
-        style="width: 100%"
-        :empty-text="ThereSNoDataYet"
-      >
+      <el-table :data="historyOrders" style="width: 100%">
         <el-table-column type="expand">
           <template slot-scope="props">
             <div class="expand-box">
               <el-table
                 :data="props.row.dealData"
                 style="width: 100%"
-                empty-text="There's no data yet"
+                :empty-text="tabName('exchange.There_s_no_data_yet')"
               >
                 <el-table-column prop="dealTime" align="center">
                   <template slot="header" slot-scope="scope">
@@ -82,7 +78,9 @@
                     <Language resource="exchange.Action"/>
                   </template>
                   <template slot-scope="props">
-                    <p class="action-box" @click="PopupStatus(props.row.id)">Details</p>
+                    <p class="action-box" @click="PopupStatus(props.row.id)">
+                      <Language resource="exchange.Details"/>
+                    </p>
                   </template>
                 </el-table-column>
               </el-table>
@@ -90,7 +88,7 @@
           </template>
         </el-table-column>
         <!-- 下拉详情 -->
-        <el-table-column :prop="coin" width="155">
+        <el-table-column prop="coin" width="155">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Coin"/>
           </template>
@@ -101,7 +99,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column :prop="type" align="center">
+        <el-table-column prop="type" align="center">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Type"/>
           </template>
@@ -133,7 +131,10 @@
             <Language resource="exchange.Deal_Average"/>
           </template>
           <template slot-scope="props">
-            <span>{{ props.row.avgPrice.amount }} {{ props.row.avgPrice.symbol.name }}</span>
+            <p class="props-box">
+              {{props.row.avgPrice.amount}}
+              <span>{{props.row.avgPrice.symbol.name}}</span>
+            </p>
           </template>
         </el-table-column>
         <el-table-column prop="amount" align="right">
@@ -141,9 +142,9 @@
             <Language resource="exchange.Entrusted_Amount"/>
           </template>
           <template slot-scope="props">
-            <p class="amount-box">
-              {{props.row.amount}}
-              <span>{{props.row.coin}}</span>
+            <p class="props-box">
+              {{props.row.size.amount}}
+              <span>{{props.row.size.symbol.name}}</span>
             </p>
           </template>
         </el-table-column>
@@ -151,15 +152,21 @@
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Dealt_Num"/>
           </template>
+          <template slot-scope="props">
+            <p class="props-box">
+              {{props.row.filled.amount}}
+              <span>{{props.row.filled.symbol.name}}</span>
+            </p>
+          </template>
         </el-table-column>
         <el-table-column prop="entrusted" align="right">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Deal_Total"/>
           </template>
           <template slot-scope="props">
-            <p class="entrusted-box">
-              {{props.row.entrusted}}
-              <span>EOS</span>
+            <p class="props-box">
+              {{props.row.filledQuote.amount}}
+              <span>{{props.row.filledQuote.symbol.name}}</span>
             </p>
           </template>
         </el-table-column>
@@ -178,9 +185,12 @@
             </p>
           </template>
         </el-table-column>
+        <div slot="empty">
+          <Language resource="exchange.There_s_no_data_yet"/>
+        </div>
       </el-table>
     </div>
-    <div class="pagination-box">
+    <div class="pagination-box" v-show="showFlags">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -188,7 +198,7 @@
         :page-sizes="[10, 20, 30, 40]"
         :page-size="10"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="historyOrderStore.totalCount"
+        :total="historyOrderCount"
       ></el-pagination>
     </div>
     <OrderPopup :dialogVisible="dialogVisible" :title="title" v-on:closePopup="PopupStatus"></OrderPopup>
@@ -197,12 +207,14 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
 import { Observer } from 'mobx-vue';
-import dataStore from '@/stores/data';
-import historyOrderStore from '@/stores/history-order';
 import OrderPopup from './components/OrderPopup.vue';
-import { ORDER_STATUS } from '@/define';
+import { ORDER_STATUS, Market, Order } from '@/define';
 import language from '@/stores/language';
+
+const orderModule = namespace('order');
+const marketModule = namespace('market');
 
 @Observer
 @Component({
@@ -211,13 +223,22 @@ import language from '@/stores/language';
   },
 })
 export default class MexHistoryOrder extends Vue {
-  historyOrderStore = historyOrderStore;
+  @orderModule.State('historyOrderCount')
+  historyOrderCount!: number;
+
+  @orderModule.State('historyOrders')
+  historyOrders!: Order[];
+
+  @marketModule.Getter('currentMarket')
+  currentMarket?: Market;
+
   hideOther = false;
   hideRevoked = false;
   dialogVisible = false;
   OrdeChecked = false;
   PairChecked = false;
   currentPage4 = 1;
+  showFlag = false;
   page = 1;
   pageSize = 10;
   title = 'DPY/EOS ';
@@ -237,10 +258,11 @@ export default class MexHistoryOrder extends Vue {
         ignoreCanceled: true,
       });
     }
-    historyOrderStore.fetchWebOrders(dataStore.accountName, params);
+    // historyOrderStore.fetchWebOrders(dataStore.accountName, params);
   }
 
   handleHideOtherCheck(val: boolean) {
+    if (!this.currentMarket) return;
     this.page = 1;
     const params = {
       page: this.page,
@@ -248,10 +270,10 @@ export default class MexHistoryOrder extends Vue {
     };
     if (val) {
       Object.assign(params, {
-        baseCurrency: dataStore.currentMarket.pair.baseCurrency.symbol.name,
+        baseCurrency: this.currentMarket.pair.baseCurrency.symbol.name,
       });
     }
-    historyOrderStore.fetchWebOrders(dataStore.accountName, params);
+    // historyOrderStore.fetchWebOrders(dataStore.accountName, params);
   }
 
   handleSizeChange(val: number) {
@@ -261,7 +283,7 @@ export default class MexHistoryOrder extends Vue {
       page: this.page,
       pageSize: this.pageSize,
     };
-    historyOrderStore.fetchWebOrders(dataStore.accountName, params);
+    // historyOrderStore.fetchWebOrders(dataStore.accountName, params);
   }
 
   handleCurrentChange(val: number) {
@@ -270,7 +292,7 @@ export default class MexHistoryOrder extends Vue {
       page: this.page,
       pageSize: this.pageSize,
     };
-    historyOrderStore.fetchWebOrders(dataStore.accountName, params);
+    // historyOrderStore.fetchWebOrders(dataStore.accountName, params);
   }
 
   greet(id: number) {
@@ -279,6 +301,17 @@ export default class MexHistoryOrder extends Vue {
 
   handleClose(done: Function) {
     done();
+  }
+
+  tabName(obj: string) {
+    return language.getIntlText(obj);
+  }
+
+  get showFlags() {
+    const a = this.historyOrders;
+    a.length > 0 ? (this.showFlag = true) : (this.showFlag = false);
+    // console.log(this.pendingOrders);
+    return this.showFlag;
   }
 }
 </script>

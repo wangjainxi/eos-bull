@@ -14,6 +14,7 @@ export default {
   Revoked: '已撤销',
   Dealt: '已成交',
   Pair: '交易对',
+  Pair1: '交易对',
   Order_Status: '订单状态',
   All: '全部',
   In_progress: '进行中',
@@ -27,4 +28,5 @@ export default {
   Entrusted: '委托',
   buy: '买入',
   sell: '卖出',
+  Trade: '交易',
 };

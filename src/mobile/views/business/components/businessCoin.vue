@@ -1,23 +1,24 @@
 <template>
-  <mt-popup
-    :value="value"
-    popup-transition="popup-fade"
-    @input="handleVisibleChange"
-  >
+  <mt-popup :value="value" popup-transition="popup-fade" @input="handleVisibleChange">
     <div class="coin-body">
       <div class="coin-tab">
         <div
-          :class="['coin-tab-item',{active:currentTab === item}]"
-          v-for="(item, index) in tabs"
+          :class="['coin-tab-item',{active:currentTab === index}]"
+          v-for="(key, index) in tabs"
           :key="index"
-          @click="getDataList(item,index)"
+          @click="handleTabClick(index)"
         >
           <i></i>
-          <span>{{item}}</span>
+          <Language :resource="key"/>
         </div>
       </div>
       <div class="coin-body-list">
-        <div class="coin-body-item" v-for="(item, index) in dataList" :key="index">
+        <div
+          class="coin-body-item"
+          v-for="(item, index) in list"
+          @click="handleMarketItemClick(item.marketId)"
+          :key="index"
+        >
           <div class="coin-name">
             {{ item.pair.baseCurrency.symbol.name }}/
             {{ item.pair.quoteCurrency.symbol.name }}
@@ -32,29 +33,55 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import { Observer } from 'mobx-vue';
+import { namespace } from 'vuex-class';
 import languageStore from '@/stores/language';
+import { Market } from '@/define';
+
+const marketModule = namespace('market');
 
 @Observer
 @Component
 export default class ShowCoinList extends Vue {
   @Prop()
   value!: boolean;
-  @Prop() dataCoinList!: any;
-  @Prop() changePopupVisible!: boolean;
-  currentTab: string = 'EOS';
-  tabs: Array<any> = [languageStore.getIntlText('business.Favorites'), 'EOS'];
-  dataList: any = this.dataCoinList;
-  getDataList(item: any, index: number) {
-    this.currentTab = item;
-    if (index === 0) {
-      this.dataList = [];
-    } else {
-      this.dataList = this.dataCoinList;
-    }
+
+  @marketModule.State('markets')
+  markets!: Market[];
+
+  @marketModule.Getter('favoriteMarkets')
+  favoriteMarkets!: Market[];
+
+  @marketModule.Getter('currentMarket')
+  currentMarket?: Market;
+
+  @marketModule.Action('updateMarket')
+  updateMarket!: Function;
+
+  currentTab = 1;
+
+  get list() {
+    if (this.currentTab === 1) return this.markets;
+    return this.favoriteMarkets;
+  }
+
+  tabs = ['business.Favorites', 'business.EOS'];
+
+  handleTabClick(index: number) {
+    this.currentTab = index;
   }
 
   handleVisibleChange(val: boolean) {
     this.$emit('input', val);
+  }
+
+  handleMarketItemClick(marketId: number) {
+    this.$router.push({
+      name: 'business',
+      params: {
+        id: String(marketId),
+      },
+    });
+    this.$emit('input', false);
   }
 }
 </script>
@@ -103,10 +130,23 @@ $tabHeight: 44px;
 }
 .active {
   span {
+    position: relative;
+    height: 0.57rem;
     @include font(500, 0.16rem, 0.34rem, 'PingFangSC-Light');
     color: rgba(0, 122, 255, 1);
-    border-bottom: 0.03rem solid rgba(0, 122, 255, 1);
-    @include borderRadius(0.02rem);
+    // border-bottom: 0.03rem solid rgba(0, 122, 255, 1);
+    // @include borderRadius(0.02rem);
+    &::before {
+      position: absolute;
+      bottom: 0;
+      content: '';
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0.24rem;
+      height: 0.03rem;
+      background-color: rgba(0, 122, 255, 1);
+      border-radius: 0.02rem;
+    }
   }
 }
 .active.coin-tab-item:nth-child(1) {

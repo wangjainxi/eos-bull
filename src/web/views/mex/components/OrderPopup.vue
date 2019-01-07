@@ -1,6 +1,9 @@
 <template>
   <div>
-    <el-dialog :title="title" :visible.sync="dialogVisible" width="900" @close="close" center>
+    <el-dialog :visible.sync="dialogVisible" width="900" @close="close" center>
+      <span slot="title">
+        <Language resource="exchange.Deal_Details" />
+      </span>
       <div class="popup-inner-package">
         <div class="popup-top-info-package">
           <div class="popup-top-info-box">
@@ -122,13 +125,9 @@ import language from '@/stores/language';
 @Component
 export default class OrderPopup extends Vue {
   @Prop(Boolean) dialogVisible!: false;
-  @Prop(String) title!: string;
 
   close() {
     this.$emit('closePopup');
-  }
-  created() {
-    this.title = this.title + language.getIntlText('exchange.Deal_Details');
   }
 }
 </script>

@@ -3,34 +3,54 @@
     <div class="top-view">
       <div class="tleft-view flex-start">
         <div class="logo-view">
-          <a href="/">
-            <img src="@/images/web/logo_eosmex.svg" alt>
-          </a>
+          <router-link to="/">
+            <img src="@/images/web/logo_eosmex.svg">
+          </router-link>
         </div>
+        <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tab-pane :label="tabName('home.Exchange')" name="mex"></el-tab-pane>
+          <el-tab-pane :label="tabName('home.Markets')" name="market"></el-tab-pane>
+        </el-tabs>
       </div>
       <div class="tright-view">
-        <div class="un-sign-in" v-if="true" @click="showDilog">
+        <div class="un-sign-in" v-if="!accountName" @click="showDilog">
           <Language resource="home.sign_in"/>
         </div>
         <div class="signed" v-else>
           <span class="use-box" @click="goWallet">
-            <img src="@/images/web/ic_eos.svg" alt>
-            <span class="text-style">{{ dataStore.accountName }}</span>
+            <img src="@/images/web/ic_eos.svg">
+            <span class="text-style">{{ accountName }}</span>
           </span>
-          <span class="text-style switch">Switch</span>
-          <span class="text-style exit">Exit</span>
-          <span class="order-box flex-start">
-            <img src="@/images/web/ic_order.svg" alt>
-            <span class="text-style exit">Orders</span>
-          </span>
+          <span class="text-style switch">{{language.getIntlText('home.Switch')}}</span>
+          <span class="text-style exit">{{language.getIntlText('home.Exit')}}</span>
+          <router-link to="/orders" class="order-box flex-start">
+            <img src="@/images/web/ic_order.svg">
+            <span class="text-style exit">{{language.getIntlText('home.Orders')}}</span>
+          </router-link>
         </div>
-        <select id="ch" :value="language.currentLocale" @change="changeLanguageType">
+        <img v-if="selectValue === 'zh-CN'" src="./../../images/web/ic_flag_cn.svg" alt>
+        <img v-else src="./../../images/web/ic_flag_en.svg" alt>
+        <el-select v-model="selectValue" @change="changeLanguageType">
+          <el-option
+            v-for="(item,index) in language.locales"
+            :key="index"
+            :label="item.label"
+            :value="item.mark"
+          >
+            <img
+              :src="item.mark === 'zh-CN'?require('./../../images/web/ic_flag_cn.svg'):require('./../../images/web/ic_flag_en.svg')"
+              alt
+            >
+            <span>{{item.label}}</span>
+          </el-option>
+        </el-select>
+        <!-- <select id="ch" :value="language.currentLocale" @change="changeLanguageType">
           <option
             v-for="(item,index) in language.locales"
             :key="index"
             :value="item.mark"
           >{{item.label}}</option>
-        </select>
+        </select>-->
         <!-- {{$t('m.transaction.homepage')}} -->
       </div>
     </div>
@@ -42,25 +62,23 @@
     >
       <div class="content scatter">
         <img src="./../../images/ic_scatter_sign_in.png" alt>
-        <div class="div-sign" @click="showdilog2">
+        <div class="div-sign" @click="handleScatterSignInBtnClick">
           <Language resource="home.Sign_Sca"/>
         </div>
         <div class="sign-foot">
           <p>
             <Language resource="home.Scatter_allows"/>
           </p>
-          <Language resource="home.How_use_Scatter"/>
+          <span class="how-ues-page" @click="openNewPage">
+            <Language resource="home.How_use_Scatter"/>
+          </span>
         </div>
       </div>
       <span slot="footer" class="dialog-footer"></span>
     </el-dialog>
 
-    <el-dialog
-      :title="thisTip"
-      :visible.sync="dialog2Visible"
-      custom-class="scatter-dialog1"
-      width="500px"
-    >
+    <el-dialog :visible.sync="dialog2Visible" custom-class="scatter-dialog1" width="500px">
+      <div slot="title">111</div>
       <div class="content">
         <img src="./../../images/web/ic_warning_big.svg" alt>
         <Language resource="home.unlocked_Scatter"/>
@@ -77,21 +95,25 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import { State, Action } from 'vuex-class';
 import { Observer } from 'mobx-vue';
 import language from '@/stores/language';
-
-import dataStore from '@/stores/data';
 
 @Observer
 @Component
 export default class extends Vue {
-  dataStore = dataStore;
-  activeName = 'first';
+  @State('accountName')
+  accountName!: string;
+
+  @Action('login')
+  login!: Function;
+
+  activeName: any = '';
+  selectValue = language.currentLocale;
   dialogVisible = false;
   dialog2Visible = false;
   noTitle = `  `;
-  thisTip = language.getIntlText('home.Tips');
   options = [{ text: 'chinese', value: 'zh-CN' }, { text: 'english', value: 'en-US' }];
 
   language = language;
@@ -101,15 +123,56 @@ export default class extends Vue {
       name: 'myWallet',
     });
   }
+
+  tabName(obj: string) {
+    return language.getIntlText(obj);
+  }
+
+  openNewPage() {
+    window.open(
+      'https://dadex.zendesk.com/hc/zh-cn/articles/360021134692-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Scatter%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E7%89%88-'
+    );
+  }
+
+  created() {
+    this.activeName = this.$route.name;
+  }
+
   showDilog() {
     this.dialogVisible = true;
   }
-  showdilog2() {
-    this.dialogVisible = false;
-    this.dialog2Visible = true;
+
+  handleClick(tab: any, event: any) {
+    if (this.activeName === 'mex') {
+      this.$router.push({
+        path: '/mex',
+      });
+    } else if (this.activeName === 'market') {
+      this.$router.push({
+        path: '/market',
+      });
+    }
   }
+
+  goRouter() {
+    this.$router.push({
+      path: '/mex',
+    });
+  }
+
+  async handleScatterSignInBtnClick() {
+    try {
+      await this.login();
+      this.dialogVisible = false;
+    } catch (err) {
+      console.log(err);
+      debugger;
+    }
+  }
+
   changeLanguageType(data: any) {
-    language.changeLanguage(data.currentTarget.value);
+    language.changeLanguage(this.selectValue);
+    this.selectValue = language.currentLocale;
   }
 }
 </script>
@@ -151,11 +214,15 @@ export default class extends Vue {
 
     .tright-view {
       display: flex;
-      flex-direction: row;
+      justify-content: flex-end;
       align-items: center;
       .un-sign-in,
       .signed {
         display: flex;
+      }
+      .signed {
+        align-items: center;
+        // justify-content: center;
       }
       .un-sign-in {
         margin-right: 21px;
@@ -175,7 +242,8 @@ export default class extends Vue {
       .use-box {
         cursor: pointer;
         margin-right: 10px;
-
+        display: flex;
+        align-items: center;
         .text-style {
           margin-left: 5px;
         }
@@ -198,8 +266,6 @@ export default class extends Vue {
       }
 
       .order-box {
-        margin-right: 22px;
-
         .text-style {
           margin-left: 5px;
         }
@@ -355,6 +421,7 @@ export default class extends Vue {
       height: 90px;
     }
     .div-sign {
+      cursor: pointer;
       span {
         display: flex;
         border-radius: 4px;
@@ -379,6 +446,9 @@ export default class extends Vue {
           color: rgba(146, 167, 197, 1);
         }
       }
+      .how-ues-page {
+        cursor: pointer;
+      }
       span {
         padding: 0;
         font-size: 14px;
@@ -388,6 +458,19 @@ export default class extends Vue {
         line-height: 20px;
         color: rgba(45, 123, 229, 1);
       }
+    }
+  }
+  .el-select {
+    input {
+      border: none;
+      width: 100px;
+      font-size: 14px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(146, 167, 197, 1);
+      background: rgba(20, 46, 77, 1);
+      padding-left: 5px;
+      padding-right: 10px;
     }
   }
 }
