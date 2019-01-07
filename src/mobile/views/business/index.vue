@@ -323,8 +323,8 @@ export default class Business extends Vue {
   mounted() {
     this.routeParam = this.$route.params;
     this.routeId = Number(this.$route.params.id);
+    if (!this.accountInfo) return;
     this.useMount = parseFloat(this.accountInfo.eos.available.amount);
-    console.log(this.lastTrade);
   }
 
   @Watch('$route')
@@ -364,7 +364,7 @@ export default class Business extends Vue {
   changeTab(val: any) {
     this.currrentTab = val;
     if (val === 0) {
-      if (!this.currentMarket) return;
+      if (!this.currentMarket || !this.accountInfo) return;
       this.showTradeCoinName = this.currentMarket.pair.quoteCurrency.symbol.name;
       this.useMount = parseFloat(this.accountInfo.eos.available.amount);
     } else {
@@ -421,6 +421,7 @@ export default class Business extends Vue {
     this.sheetVisible = true;
   }
   getRangeValue(obj: number) {
+    if (!this.accountInfo) return;
     const accountValue = parseFloat(this.accountInfo.eos.available.amount);
     const businessPrice = parseFloat(this.businessPrice);
     const maxCount = Math.floor((accountValue / businessPrice) * 10000) / 10000;
@@ -448,14 +449,15 @@ export default class Business extends Vue {
   }
 
   handleChangeIpt(e: any) {
+    if (!this.accountInfo) return;
     const accountValue = parseFloat(this.accountInfo.eos.available.amount);
     const businessPrice = parseFloat(this.businessPrice);
     const maxCount = Math.floor((accountValue / businessPrice) * 10000) / 10000;
     this.inputVal = `${Math.floor(Number(e.target.value) * 10000) / 10000}`;
     if (!this.inputVal) return;
     this.changeEos = Math.floor(businessPrice * parseFloat(this.inputVal) * 10000) / 10000;
-    console.log(this.inputVal);
-    console.log(this.changeEos);
+    // console.log(this.inputVal);
+    // console.log(this.changeEos);
     if (this.changeEos >= this.useMount) {
       this.rangeValue = 100;
     } else {
