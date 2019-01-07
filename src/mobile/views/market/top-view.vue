@@ -47,15 +47,29 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
 import { Market } from '@/define';
+
+const marketModule = namespace('market');
 
 @Component
 export default class MarketInfo extends Vue {
   @Prop()
   market?: Market;
 
+  @marketModule.Action('addFavoriteMarket')
+  addFavoriteMarket!: Function;
+
+  @marketModule.Action('removeFavoriteMarket')
+  removeFavoriteMarket!: Function;
+
   collect() {
-    // TODO: 处理收藏逻辑
+    if (!this.market) return;
+    if (this.market.favourited) {
+      this.removeFavoriteMarket(this.market.marketId);
+    } else {
+      this.addFavoriteMarket(this.market.marketId);
+    }
   }
 }
 </script>
