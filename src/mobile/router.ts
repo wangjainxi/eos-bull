@@ -41,17 +41,17 @@ export default new Router({
           name: 'assets',
           component: () => import(/* webpackChunkName: "assets" */ './views/assets/index.vue'),
         },
+        {
+          path: '/business/:id',
+          name: 'business',
+          component: () => import(/* webpackChunkName: "business" */ './views/business/index.vue'),
+        },
       ],
     },
     {
       path: '/market-search',
       name: 'market-search',
       component: MarketSearch,
-    },
-    {
-      path: '/business/:id',
-      name: 'business',
-      component: () => import(/* webpackChunkName: "business" */ './views/business/index.vue'),
     },
     {
       path: '/market-optional',
