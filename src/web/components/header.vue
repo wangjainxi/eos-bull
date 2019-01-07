@@ -172,6 +172,7 @@ export default class extends Vue {
       await this.login();
       this.dialogVisible = false;
     } catch (err) {
+      console.log(err);
       debugger;
     }
   }
@@ -229,7 +230,7 @@ export default class extends Vue {
 
     .tright-view {
       display: flex;
-      flex-direction: row;
+      justify-content: flex-end;
       align-items: center;
       .un-sign-in,
       .signed {
