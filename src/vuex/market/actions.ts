@@ -5,8 +5,8 @@ import { RootState } from '../types';
 import { unsubscribeTradeUpdate, subscribeTradeUpdate } from '@/utils/socket';
 
 export const actions: ActionTree<MarketState, RootState> = {
-  async fetchMarkets({ commit }) {
-    const markets = await getMrkets();
+  async fetchMarkets({ commit, rootState }) {
+    const markets = await getMrkets(rootState.accountName);
     commit('setMarkets', markets);
   },
   async addFavoriteMarkets({ dispatch, commit, rootState }, ids: number[]) {
@@ -14,16 +14,28 @@ export const actions: ActionTree<MarketState, RootState> = {
       ids.forEach(e => commit('addFavoriteMarketId', e));
       return;
     }
+    if (!rootState.jwtToken) {
+      await dispatch('fetchJwtToken');
+    }
     await favouriteMarkets(ids, true);
     dispatch('fetchMarkets');
+  },
+  async addFavoriteMarket({ dispatch }, id: number) {
+    await dispatch('addFavoriteMarkets', [id]);
   },
   async removeFavoriteMarkets({ dispatch, commit, rootState }, ids: number[]) {
     if (!rootState.accountName) {
       ids.forEach(e => commit('removeFavoriteMarketId', e));
       return;
     }
+    if (!rootState.jwtToken) {
+      await dispatch('fetchJwtToken');
+    }
     await favouriteMarkets(ids, false);
     dispatch('fetchMarkets');
+  },
+  async removeFavoriteMarket({ dispatch }, id: number) {
+    await dispatch('removeFavoriteMarkets', [id]);
   },
   async updateMarket({ state, dispatch, commit }, marketId: number) {
     if (state.currentMarketId === marketId) return;

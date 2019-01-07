@@ -1,4 +1,5 @@
 import Axios, { AxiosResponse } from 'axios';
+import { STORAGE_JWT } from '@/vuex/types';
 import {
   Market,
   TokenInfo,
@@ -145,5 +146,22 @@ export const getAnnouncementList = async (params?: { page?: number; pageSize?: n
  */
 export const favouriteMarkets = async (ids: number[], favourited: boolean) => {
   const params = ids.map(e => ({ marketId: e, favourited }));
-  await instance.post('/v1/user/favourite', params);
+  await instance.post('/v1/user/favourite', params, {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem(STORAGE_JWT)}`,
+    },
+  });
+};
+
+/**
+ * 登录
+ */
+export const login = async (accountName: string, signature: string) => {
+  const res = await instance.post('/v1/user/login', {
+    accountName,
+    signature,
+  });
+  return resWrapper<{
+    token: string;
+  }>(res);
 };
