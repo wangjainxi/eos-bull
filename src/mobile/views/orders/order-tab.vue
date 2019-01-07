@@ -35,7 +35,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 import { namespace, State } from 'vuex-class';
 import OrderItem from '../../components/order-item.vue';
 
-import FilterPopup from './FilterPopup.vue';
+import FilterPopup from './filter-popup.vue';
 import { Order, HistoryOrderParams } from '@/define';
 import { cancelOrder } from '@/utils/scatter';
 

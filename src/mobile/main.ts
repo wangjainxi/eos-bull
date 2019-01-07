@@ -16,11 +16,10 @@ import 'animate.css';
 import 'mint-ui/lib/style.css';
 
 import Language from '@/components/Language';
-import App from './App.vue';
+import App from './app.vue';
 import router from './router';
 import VueTradingView from 'vue-trading-view';
 import '../registerServiceWorker';
-import '../stores/data';
 import VueHighcharts from 'vue2-highcharts';
 import { formatDate } from '@/utils/common';
 import store from '@/vuex';

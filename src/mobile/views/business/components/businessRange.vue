@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="['business-range',currrentTab === 0 ? 'business-range-buy' : 'business-range-sell']"
+    :class="['business-range',orderSide === 'bid' ? 'business-range-buy' : 'business-range-sell']"
     :getRangeVal="getRangeVal"
   >
     <i
@@ -24,7 +24,7 @@ export default class BusinessRange extends Vue {
   @Prop() rangeValue!: number;
   @Prop() cricleMount!: any;
   @Prop() getRangeValue!: any;
-  @Prop() currrentTab!: any;
+  @Prop() orderSide!: any;
 
   classArr: string[] = ['cricle', 'cricle', 'cricle', 'cricle', 'cricle'];
   rangeVal: number = this.rangeValue;
@@ -34,22 +34,13 @@ export default class BusinessRange extends Vue {
     return this.rangeVal;
   }
 
-  // get changerv() {
-  //   this.rangeVal = this.rangeValue;
-  //   console.log(this.rangeVal);
-  //   return this.rangeVal;
-  // }
   @Watch('rangeValue')
   handleRangeValueChange() {
     this.rangeVal = this.rangeValue;
-    console.log(this.rangeVal);
   }
 
   get getRangeVal() {
-    // this.rangeVal = this.rangeValue;
-
-    console.log(this.rangeVal);
-    const thisColor = this.currrentTab === 0 ? 'cricle-green' : 'cricle-red';
+    const thisColor = this.orderSide === 'bid' ? 'cricle-green' : 'cricle-red';
     const getCount = Math.floor(this.rangeVal / 25) + 1;
     if (getCount === 0) {
       this.classArr = ['cricle', 'cricle', 'cricle', 'cricle', 'cricle'];

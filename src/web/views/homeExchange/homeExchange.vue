@@ -31,11 +31,11 @@
     </div>
     <div class="market-package">
       <div class="market-box">
-        <Market></Market>
+        <Market />
         <div class="market-link-box">
-          <p>
+          <router-link to="/market">
             <Language resource="asset.View_More"/>
-          </p>
+          </router-link>
         </div>
       </div>
     </div>

@@ -6,13 +6,8 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-// import fixHeader from './components/fixHeader.vue';
 
-@Component({
-  components: {
-    // fixHeader,
-  },
-})
+@Component
 export default class ShowMessageImg extends Vue {
   // name: 'show-message-img',
 
