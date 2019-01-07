@@ -8,8 +8,8 @@
           </router-link>
         </div>
         <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane :label="tabName('home.Exchange')" name="first"></el-tab-pane>
-          <el-tab-pane :label="tabName('home.Markets')" name="second"></el-tab-pane>
+          <el-tab-pane :label="tabName('home.Exchange')" name="mex"></el-tab-pane>
+          <el-tab-pane :label="tabName('home.Markets')" name="market"></el-tab-pane>
         </el-tabs>
       </div>
       <div class="tright-view">
@@ -21,11 +21,15 @@
             <img src="@/images/web/ic_eos.svg">
             <span class="text-style">{{ accountName }}</span>
           </span>
-          <span class="text-style switch" @click="handleSwitchBtnClick">Switch</span>
-          <span class="text-style exit" @click="handleExitBtnClick">Exit</span>
+          <span class="text-style switch" @click="handleSwitchBtnClick">
+            <Language resource="home.Switch" />
+          </span>
+          <span class="text-style exit" @click="handleExitBtnClick">
+            <Language resource="home.Exit" />
+          </span>
           <router-link to="/orders" class="order-box flex-start">
             <img src="@/images/web/ic_order.svg">
-            <span class="text-style exit">Orders</span>
+            <span class="text-style exit">{{language.getIntlText('home.Orders')}}</span>
           </router-link>
         </div>
         <img v-if="selectValue === 'zh-CN'" src="./../../images/web/ic_flag_cn.svg" alt>
@@ -95,7 +99,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import { State, Action } from 'vuex-class';
 import { Observer } from 'mobx-vue';
 import language from '@/stores/language';
@@ -112,7 +116,7 @@ export default class extends Vue {
   @Action('login')
   login!: Function;
 
-  activeName = 'first';
+  activeName: any = '';
   selectValue = language.currentLocale;
   dialogVisible = false;
   dialog2Visible = false;
@@ -137,21 +141,30 @@ export default class extends Vue {
     );
   }
 
+  created() {
+    this.activeName = this.$route.name;
+  }
+
   showDilog() {
     this.dialogVisible = true;
   }
 
   handleClick(tab: any, event: any) {
-    if (tab.name === 'first') {
+    if (this.activeName === 'mex') {
       this.$router.push({
         path: '/mex',
       });
-    } else if (tab.name === 'second') {
+    } else if (this.activeName === 'market') {
       this.$router.push({
         path: '/market',
-        name: 'market',
       });
     }
+  }
+
+  goRouter() {
+    this.$router.push({
+      path: '/mex',
+    });
   }
 
   async handleScatterSignInBtnClick() {
@@ -223,7 +236,6 @@ export default class extends Vue {
         display: flex;
       }
       .signed {
-        width: 205px;
         align-items: center;
         // justify-content: center;
       }
@@ -269,8 +281,6 @@ export default class extends Vue {
       }
 
       .order-box {
-        margin-right: 22px;
-
         .text-style {
           margin-left: 5px;
         }
@@ -426,6 +436,7 @@ export default class extends Vue {
       height: 90px;
     }
     .div-sign {
+      cursor: pointer;
       span {
         display: flex;
         border-radius: 4px;
@@ -450,7 +461,7 @@ export default class extends Vue {
           color: rgba(146, 167, 197, 1);
         }
       }
-      .how-ues-page{
+      .how-ues-page {
         cursor: pointer;
       }
       span {

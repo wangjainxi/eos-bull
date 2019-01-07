@@ -22,7 +22,7 @@
               <el-table
                 :data="props.row.dealData"
                 style="width: 100%"
-                empty-text="There's no data yet"
+                :empty-text="tabName('exchange.There_s_no_data_yet')"
               >
                 <el-table-column prop="dealTime" align="center">
                   <template slot="header" slot-scope="scope">
@@ -78,7 +78,9 @@
                     <Language resource="exchange.Action"/>
                   </template>
                   <template slot-scope="props">
-                    <p class="action-box" @click="PopupStatus(props.row.id)">Details</p>
+                    <p class="action-box" @click="PopupStatus(props.row.id)">
+                      <Language resource="exchange.Details"/>
+                    </p>
                   </template>
                 </el-table-column>
               </el-table>
@@ -188,7 +190,7 @@
         </div>
       </el-table>
     </div>
-    <div class="pagination-box" v-show="historyOrders.lenght > 0">
+    <div class="pagination-box" v-show="showFlags">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -214,6 +216,7 @@ import language from '@/stores/language';
 const orderModule = namespace('order');
 const marketModule = namespace('market');
 
+@Observer
 @Component({
   components: {
     OrderPopup,
@@ -235,6 +238,7 @@ export default class MexHistoryOrder extends Vue {
   OrdeChecked = false;
   PairChecked = false;
   currentPage4 = 1;
+  showFlag = false;
   page = 1;
   pageSize = 10;
   title = 'DPY/EOS ';
@@ -297,6 +301,17 @@ export default class MexHistoryOrder extends Vue {
 
   handleClose(done: Function) {
     done();
+  }
+
+  tabName(obj: string) {
+    return language.getIntlText(obj);
+  }
+
+  get showFlags() {
+    const a = this.historyOrders;
+    a.length > 0 ? (this.showFlag = true) : (this.showFlag = false);
+    // console.log(this.pendingOrders);
+    return this.showFlag;
   }
 }
 </script>

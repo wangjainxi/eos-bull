@@ -10,7 +10,7 @@ export default {
     'Built with smart contracts and plugins on EOSIO blockchain, the truly decentralized DaDEX has successfully achieved the balance between high concurrency and low transaction fees, security and transparency, efficiency and convenience.',
   no_registration:
     'No registration or KYC required. One-click digital asset trading service. DaDEX is an institutional-grade exchange that is fair, simple and easy to use.',
-  advantages: 'Core Advantages',
+  advantages: 'Advantages',
   high_efficiency: 'High efficiency on-chain matching engine',
   EOS_community: 'Of, for and by EOS community',
   security_auditing: 'Security auditing and check',
@@ -75,4 +75,7 @@ export default {
   Exchange: 'Exchange',
   Markets: 'Markets',
   Click_details: 'Click to view details',
+  Switch: 'Switch',
+  Exit: 'Exit',
+  Orders: 'Orders',
 };

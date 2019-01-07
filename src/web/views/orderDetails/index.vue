@@ -45,17 +45,21 @@
             <Language resource="exchange.Search"/>
           </el-button>
         </el-form-item>
-      </el-form> -->
+      </el-form>-->
     </div>
     <div class="table-box">
-      <el-table :data="orders" style="width: 100%" empty-text="There's no data yet">
+      <el-table
+        :data="orders"
+        style="width: 100%"
+        :empty-text="tabName('exchange.There_s_no_data_yet')"
+      >
         <el-table-column prop="coin" width="155">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Pairs"/>
           </template>
           <template slot-scope="props">
             <div class="coin-box">
-              <img src="../../../images/web/logo_box.svg" />
+              <img src="../../../images/web/logo_box.svg">
               <p>{{props.row.size.symbol.name}} / {{ props.row.price.symbol.name }}</p>
             </div>
           </template>
@@ -176,8 +180,10 @@ import { Vue, Component } from 'vue-property-decorator';
 import languageStore from '@/stores/language';
 import { State } from 'vuex-class';
 import { getUserHistoryOrders } from '@/utils/apis';
+import { Observer } from 'mobx-vue';
 import { HistoryOrderParams, Order } from '@/define';
 
+@Observer
 @Component
 export default class extends Vue {
   @State('accountName')
@@ -230,6 +236,10 @@ export default class extends Vue {
     console.log(this.dateValue);
   }
   getShowLabel(obj: string) {
+    return languageStore.getIntlText(obj);
+  }
+
+  tabName(obj: string) {
     return languageStore.getIntlText(obj);
   }
 }

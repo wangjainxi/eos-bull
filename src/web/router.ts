@@ -21,9 +21,9 @@ export default new Router({
       component: HomeExchange,
     },
     {
-      path: '/home-exchange',
-      name: 'homeExchange',
-      component: HomeExchange,
+      path: '/portal', //门户
+      name: 'portal',
+      component: Home,
     },
     {
       path: '/white-paper',

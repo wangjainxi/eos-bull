@@ -17,15 +17,15 @@
         <mt-button  :class="isProcess? 'border-blue':''" @click="onClick(2)">  <Language resource="order.In_progress"/></mt-button>
       </div>
       <div class="btn-box">
-        <mt-button  :class="isComplete? 'border-blue':''" @click="onClick(3)">  <Language resource="order.Completed"/></mt-button>
-        <mt-button  :class="isRevoke? 'border-blue':''" @click="onClick(4)">  <Language resource="order.Revoked"/></mt-button>
+        <mt-button :class="isComplete? 'border-blue':''" @click="onClick(3)">  <Language resource="order.Completed"/></mt-button>
+        <mt-button :class="isRevoke? 'border-blue':''" @click="onClick(4)">  <Language resource="order.Revoked"/></mt-button>
       </div>
       <p class="ptilte">
         <Language resource="order.Trade_Type"/>
       </p>
       <div class="btn-box">
-        <mt-button  :class="isBuy? 'border-blue':''" @click="onClick(5)">  <Language resource="order.buy"/></mt-button>
-        <mt-button  :class="isSell? 'border-blue':''" @click="onClick(6)">  <Language resource="order.sell"/></mt-button>
+        <mt-button :class="isBuy? 'border-green':''" @click="onClick(5)">  <Language resource="order.buy"/></mt-button>
+        <mt-button :class="isSell? 'border-red':''" @click="onClick(6)">  <Language resource="order.sell"/></mt-button>
       </div>
       <p class="defaut-select">
         <input type="checkbox" @change="onChecked" checked="isChecked">
@@ -75,8 +75,10 @@ export default class FilterPopup extends Vue {
     }
     if (type === 5) {
       this.isBuy = !this.isBuy;
+      this.isSell = false;
     }
     if (type === 6) {
+      this.isBuy = false;
       this.isSell = !this.isSell;
     }
   }
@@ -207,6 +209,16 @@ export default class FilterPopup extends Vue {
 .border-blue {
   border: 1px solid rgba(0, 122, 255, 1);
   color: rgba(0, 122, 255, 1) !important;
+}
+.border-red{
+  border: 1px solid rgba(255,0,0,1);
+  color: rgba(255,0,0,1) !important;
+}
+
+
+.border-green{
+  border: 1px solid rgba(0,204,55,1);;
+  color: rgba(0,204,55,1) !important;
 }
 
 div {

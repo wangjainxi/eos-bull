@@ -76,11 +76,15 @@ export default class MexCurrentcyListDataItem extends Vue {
 $borderWidth: 12px;
 .data-list-item {
   height: 41px;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 0 7px;
+  padding: 0 7px;
   border-bottom: 1px solid rgba(36, 65, 102, 1);
+  &:hover{
+    background-color: rgba(36, 65, 102, 0.4);
+  }
   & > div {
     text-align: left;
     font-size: 12px;

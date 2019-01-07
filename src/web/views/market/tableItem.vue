@@ -1,7 +1,11 @@
 <template>
   <div class="market-list-box">
-    <el-table :data="thisTdata" style="width: 100%" :empty-text="tabName('exchange.There_s_no_data_yet')">
-      <el-table-column prop="coin" :label="tabName('order.Pair')" align="center" width="200">
+    <el-table
+      :data="thisTdata"
+      style="width: 100%"
+      :empty-text="tabName('exchange.There_s_no_data_yet')"
+    >
+      <el-table-column prop="coin" :label="tabName('order.Pair1')" align="center" width="200">
         <template slot-scope="props">
           <div class="props-box">
             <img
@@ -54,7 +58,13 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="volumeBase" :label="tabName('exchange.Volume24H')" sortable width="200" align="right">
+      <el-table-column
+        prop="volumeBase"
+        :label="tabName('exchange.Volume24H')"
+        sortable
+        width="200"
+        align="right"
+      >
         <template slot-scope="props">
           <div class="volume-box">
             <p>{{props.row.volumeBase}}</p>
@@ -63,7 +73,9 @@
       </el-table-column>
       <el-table-column :label="tabName('exchange.Action')" align="center">
         <template slot-scope="props">
-          <div class="action-box">Trade</div>
+          <div class="action-box">
+            <Language resource="order.Trade"/>
+          </div>
         </template>
       </el-table-column>
     </el-table>
