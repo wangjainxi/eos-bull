@@ -8,17 +8,17 @@
     >
       <router-view/>
     </transition>
-    <mobile-tabs/>
+    <Tabbar />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import MobileTabs from './components/mobileTabs.vue';
+import Tabbar from './components/tabbar.vue';
 
 @Component({
   components: {
-    MobileTabs,
+    Tabbar,
   },
 })
 export default class Layout extends Vue {}

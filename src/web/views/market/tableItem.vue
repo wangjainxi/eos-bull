@@ -16,7 +16,7 @@
             >
             <img v-else src="../../../images/web/ic_fav_normal1.svg" class="collection-icon" alt>
             <div class="pairs-icon">
-              <img src="../../../images/web/ic_eos.svg" class="pairsIcon" alt>
+              <img :src="props.row.baseCurrencyIcon" class="pairsIcon" />
             </div>
             <h4>
               <span>{{`${props.row.pair.baseCurrency.symbol.name} / ${props.row.pair.quoteCurrency.symbol.name}`}}</span>
