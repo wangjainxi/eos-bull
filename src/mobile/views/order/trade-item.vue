@@ -5,7 +5,7 @@
         <span>TrxID</span>
         <span
           class="show-address"
-        >619e7f0434344d03432434g34535534522619e7f0434344d03432434g34535534522…</span>
+        >{{ trxId }}</span>
       </div>
       <div class="item-header-right">
         <span></span>
@@ -15,21 +15,21 @@
       <div class="item-body-top">
         <div class="entrust-box1">
           <div class="box-title">
-            <Language resource="transaction.deal_price"/>(EOS)
+            <Language resource="transaction.deal_price"/>({{ priceSymbolName }})
           </div>
-          <div class="box-data">0.000150</div>
+          <div class="box-data">{{ trade.price.amount }}</div>
         </div>
         <div class="entrust-box2">
           <div class="box-title">
-            <Language resource="transaction.deal_amount"/>(POKER)
+            <Language resource="transaction.deal_amount"/>({{ sizeSymbolName }})
           </div>
-          <div class="box-data">64274.6666</div>
+          <div class="box-data">{{ trade.size.amount }}</div>
         </div>
         <div class="entrust-box3">
           <div class="box-title">
-            <Language resource="business.total"/>(POKER)
+            <Language resource="business.total"/>({{ priceSymbolName }})
           </div>
-          <div class="box-data">36.4575</div>
+          <div class="box-data">{{ dealVOL }}</div>
         </div>
       </div>
       <div class="item-body-bottom">
@@ -37,19 +37,19 @@
           <div class="box-title">
             <Language resource="business.Deal_Account"/>
           </div>
-          <div class="box-data blue-color">WantLine</div>
+          <div class="box-data blue-color">{{ dealAccount }}</div>
         </div>
         <div class="entrust-box2">
           <div class="box-title">
             <Language resource="transaction.deal_Time"/>
           </div>
-          <div class="box-data">12/07 15:29</div>
+          <div class="box-data">{{ trade.time | formatDate('MM/DD HH:mm') }}</div>
         </div>
         <div class="entrust-box3">
           <div class="box-title">
-            <Language resource="business.Fee"/>(EOS)
+            <Language resource="business.Fee"/>({{ fee.symbol.symbol.name }})
           </div>
-          <div class="box-data">0.0085</div>
+          <div class="box-data">{{ fee.amount }}</div>
         </div>
       </div>
     </div>
@@ -58,11 +58,56 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
+import { State } from 'vuex-class';
 import { formatTimes } from '@/utils/formatTime';
+import { Trade } from '@/define';
 
 @Component
 export default class SellDetailsItem extends Vue {
-  @Prop() item!: any;
+  @State('accountName')
+  accountName!: string;
+
+  @Prop()
+  trade!: Trade;
+
+  get isSeller() {
+    return this.accountName === this.trade.seller;
+  }
+
+  get trxId() {
+    if (this.isSeller) {
+      return this.trade.trxIds.sellerSettlementTrxId;
+    }
+    return this.trade.trxIds.buyerSettlementTrxId;
+  }
+
+  get priceSymbolName() {
+    return this.trade.price.symbol.name;
+  }
+
+  get sizeSymbolName() {
+    return this.trade.size.symbol.name;
+  }
+
+  get fee() {
+    if (this.isSeller) {
+      return this.trade.sellerFee;
+    }
+    return this.trade.buyerFee;
+  }
+
+  get dealAccount() {
+    if (this.isSeller) {
+      return this.trade.seller;
+    }
+    return this.trade.buyer;
+  }
+
+  get dealVOL() {
+    const size = parseFloat(this.trade.size.amount);
+    const price = parseFloat(this.trade.price.amount);
+    return (size * price).toFixed(4);
+  }
 }
 </script>
 
