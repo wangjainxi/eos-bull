@@ -8,7 +8,7 @@
             <span>{{ order.time | formatDate('YYYY/MM/DD HH:mm:ss') }}</span>
             <Language resource="business.Order"/>
           </div>
-          <div :class="['item-header-right',{green: order.side === 'buy'}]">
+          <div :class="['item-header-right',{green: order.side === 1}]">
             <Language resource="business.Dealt"/>
           </div>
         </div>
