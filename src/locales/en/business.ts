@@ -33,4 +33,11 @@ export default {
   sR: 'Search Result:',
   buyPlace: 'Buy at the best market price',
   sellPlace: 'Sell at the best market price',
+  noBalance: 'Sorry, your balance is not enough!',
+  tradeSucc: 'Congratulations, order placed succeeded!',
+  mountize: 'The Amount must be greater than 0!',
+  User_rejected: 'User rejected the signature request!',
+  CPU_usage: 'Failed, this transaction exceeded  the current CPU usage limit!',
+  The_Amount: 'The Amount can not be less than {}',
+  price_must: 'The Price must be greater than 0!',
 };

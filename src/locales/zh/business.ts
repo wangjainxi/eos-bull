@@ -33,4 +33,11 @@ export default {
   sR: '搜索结果',
   buyPlace: '以市场最优价格买入',
   sellPlace: '以市场最优价格卖出',
+  noBalance: '抱歉，您的余额不足！',
+  tradeSucc: '恭喜，委托成功！',
+  mountize: '数量必须大于0！',
+  User_rejected: '用户拒绝了签名请求！',
+  CPU_usage: '操作失败，您的CPU资源不足！',
+  The_Amount: '数量不能小于{}',
+  price_must: '价格必须大于0！',
 };
