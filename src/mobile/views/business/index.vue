@@ -103,7 +103,7 @@
 
         <div
           v-if="lastTrade"
-          :class="{'right-middle': true, 'middle-active': lastTrade.makerSide === 1}"
+          :class="{'right-middle': true, 'middle-active': lastTrade.makerSide !== 1}"
         >
           <span>{{ lastTrade.price.amount }}</span>
           <i></i>
@@ -200,7 +200,6 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
-import onfire from 'onfire.js';
 import ShowMessageImg from '@/components/messageImage.vue';
 import OrderItem from '@/mobile/components/order-item.vue';
 import BusinessTradeItem from './components/businessTrade.vue';
