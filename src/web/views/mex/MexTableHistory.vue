@@ -245,7 +245,6 @@ export default class MexHistoryOrder extends Vue {
   ThereSNoDataYet = language.getIntlText('exchange.There_s_no_data_yet');
   PopupStatus() {
     this.dialogVisible = !this.dialogVisible;
-    console.log(this.dialogVisible);
   }
   handleHideRevokedCheck(val: boolean) {
     this.page = 1;
