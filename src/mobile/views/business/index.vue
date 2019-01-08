@@ -51,8 +51,8 @@
         <div class="business-mount">
           <input
             type="text"
-            :value="inputVal"
-            @change="handleChangeIpt($event)"
+            v-model="inputVal"
+            @blur="handleChangeIpt($event)"
             placeholder="0.0000"
           >
           <span>{{ orderType === 'market' && orderSide === 'bid' ? quoteCurrencyName : baseCurrencyName }}</span>
@@ -60,7 +60,7 @@
         <div v-show="orderType === 'limit'" class="business-change-eos">{{`≈${estimatePrice}EOS`}}</div>
         <BusinessRange
           :orderSide="orderSide"
-          @getRangeValue="getRangeValue"
+          :getRangeValue="getRangeValue"
           :rangeValue="rangeValue"
           :cricleMount="cricleMount"
         />
@@ -96,7 +96,7 @@
               v-for="(item, index) in orderbook.asks"
               :item="item"
               :key="index"
-              :tradeDataMountSum="tradeDataMountSum"
+              :tradeDataMountSum="getTradeDataMountSum(orderbook.asks)"
             ></BusinessTradeItem>
           </div>
         </div>
@@ -118,7 +118,7 @@
               v-for="(item, index) in orderbook.bids"
               :item="item"
               :key="index"
-              :tradeDataMountSum="tradeDataMountSum"
+              :tradeDataMountSum="getTradeDataMountSum(orderbook.bids)"
             ></BusinessTradeItem>
           </div>
         </div>
@@ -163,10 +163,10 @@
         </div>
       </div>
       <div
-        :class="['business-entrust-body',{'show-item': historyOrders.orders.length !== 0,'show-no-item': historyOrders.orders.length == 0}]"
+        :class="['business-entrust-body',{'show-item': historyOrders.length !== 0,'show-no-item': historyOrders.length == 0}]"
         v-else
       >
-        <ShowMessageImg v-if="historyOrders.orders.length === 0" :imgUrl="imgUrl" :imgMsg="imgMsg"></ShowMessageImg>
+        <ShowMessageImg v-if="historyOrders.length === 0" :imgUrl="imgUrl" :imgMsg="imgMsg"></ShowMessageImg>
         <div class="loadmore-list" v-else>
           <Loadmore
             :bottom-method="loadBottom"
@@ -175,7 +175,7 @@
             ref="loadmore"
           >
             <OrderItem
-              v-for="(item,index) in historyOrders.orders"
+              v-for="(item,index) in historyOrders"
               :order="item"
               :routeParam="routeParam"
               :entrustType="entrustType"
@@ -292,7 +292,7 @@ export default class Business extends Vue {
 
   imgUrl = require('./../../../images/mobile/ic_nodata.png');
   imgMsg = languageStore.getIntlText('business.nodata');
-  tradeDataMountSum = 0;
+  // tradeDataMountSum = 0;
   priceString = 0; //小数点后的位数
   baseNum = 0; //价格计算的基数
 
@@ -349,6 +349,14 @@ export default class Business extends Vue {
     const total = price * size;
     if (!Number.isFinite(total)) return '0.0000';
     return total.toFixed(4);
+  }
+
+  getTradeDataMountSum(obj: any) {
+    let tradeDataMountSum = 0;
+    obj.forEach((element: any) => {
+      tradeDataMountSum += Number(element.size);
+    });
+    return tradeDataMountSum;
   }
 
   created() {
@@ -414,10 +422,12 @@ export default class Business extends Vue {
 
   changeOrderSide(side: string) {
     this.orderSide = side;
+    this.inputVal = '';
+    this.rangeValue = 0;
   }
 
   changeEntrustType(type: any) {
-    // this.entrustType = type;
+    this.entrustType = type;
     // if (type === 0) {
     //   dataStore.updatePendingOrders();
     //   this.entrustData = dataStore;
@@ -431,10 +441,16 @@ export default class Business extends Vue {
   }
 
   changePriceAndMount(obj1: any, obj2: any) {
-    this.businessPrice = obj1;
     this.priceString = obj1.split('.')[1].length;
     this.baseNum = 1 / Math.pow(10, this.priceString);
-    this.inputVal = obj2;
+    if (this.orderType === 'market') return;
+    this.businessPrice = obj1;
+    if (this.orderType === 'limit' && this.orderSide === 'bid') {
+      this.limitBuy(obj2);
+    } else if (this.orderType === 'limit' && this.orderSide === 'ask') {
+      this.limitSell(obj2);
+    }
+    // this.inputVal = obj2;
   }
   showMsg() {
     MessageBox({
@@ -446,54 +462,265 @@ export default class Business extends Vue {
   changeNowPrice1() {
     this.sheetVisible = false;
     this.orderType = 'limit';
+    this.changeEos = '0.0000';
+    this.inputVal = '';
+    this.rangeValue = 0;
   }
   changeNowPrice2() {
     this.sheetVisible = false;
     this.orderType = 'market';
+    this.changeEos = '0.0000';
+    this.inputVal = '';
+    this.rangeValue = 0;
   }
   showNowPrice() {
     this.sheetVisible = true;
   }
   getRangeValue(obj: number) {
+    if (this.orderType === 'limit' && this.orderSide === 'bid') {
+      this.rangeChangeLimitBuy(obj);
+    } else if (this.orderType === 'limit' && this.orderSide === 'ask') {
+      this.rangeChangeLimitSell(obj);
+    } else if (this.orderType === 'market' && this.orderSide === 'bid') {
+      this.rangeChangeMarketBuy(obj);
+    } else if (this.orderType === 'market' && this.orderSide === 'ask') {
+      this.rangeChangeMarketSell(obj);
+    }
+  }
+
+  rangeChangeLimitBuy(obj: number) {
+    //限价买入
     if (!this.accountInfo) return;
     const accountValue = parseFloat(this.balance.amount || '0');
     const businessPrice = parseFloat(this.businessPrice);
     const maxCount = Math.floor((accountValue / businessPrice) * 10000) / 10000;
+    if (this.rangeValue === obj) return;
     this.rangeValue = obj;
     if (obj === 0) {
       this.changeEos = '0.0000';
       this.inputVal = '';
-    } else if (
-      (this.orderSide === 'bid' && this.orderType === 'market') ||
-      this.orderType === 'ask'
-    ) {
-      this.inputVal = ((accountValue * obj) / 100).toFixed(4);
+    } else if (obj === 100) {
+      this.inputVal = maxCount.toString();
     } else {
-      this.inputVal = ((maxCount * obj) / 100).toFixed(4);
+      const thisNumber = Math.floor(maxCount * obj * 100) / 10000;
+      if (!(thisNumber % 10)) {
+        this.inputVal = thisNumber.toFixed(4);
+      } else {
+        this.inputVal = (Math.floor(maxCount * obj * 100) / 10000).toString();
+      }
+    }
+  }
+
+  rangeChangeMarketBuy(obj: number) {
+    //市价买入
+    if (!this.accountInfo) return;
+    const accountValue = parseFloat(this.balance.amount || '0'); //可用总额
+    const businessPrice = parseFloat(this.businessPrice); //单价
+    // const maxCount = Math.floor((accountValue / businessPrice) * 10000) / 10000;
+    if (this.rangeValue === obj) return;
+    this.rangeValue = obj;
+    if (obj === 0) {
+      this.changeEos = '0.0000';
+      this.inputVal = '';
+    } else if (obj === 100) {
+      this.inputVal = accountValue.toString();
+    } else {
+      const thisNumber = Math.floor(accountValue * obj * 100) / 10000;
+      if (!(thisNumber % 10)) {
+        this.inputVal = thisNumber.toFixed(4);
+      } else {
+        this.inputVal = (Math.floor(accountValue * obj * 100) / 10000).toString();
+      }
+    }
+  }
+
+  rangeChangeLimitSell(obj: number) {
+    //限价卖出
+    if (!this.accountInfo) return;
+    const accountValue = parseFloat(this.balance.amount || '0');
+    const businessPrice = parseFloat(this.businessPrice);
+    // const maxCount = Math.floor(accountValue * 10000) / 10000;
+    if (this.rangeValue === obj) return;
+    this.rangeValue = obj;
+    if (obj === 0) {
+      this.changeEos = '0.0000';
+      this.inputVal = '';
+    } else if (obj === 100) {
+      this.inputVal = accountValue.toString();
+    } else {
+      const thisNumber = Math.floor(accountValue * obj * 100) / 10000;
+      if (!(thisNumber % 10)) {
+        this.inputVal = thisNumber.toFixed(4);
+      } else {
+        this.inputVal = (Math.floor(accountValue * obj * 100) / 10000).toString();
+      }
+    }
+  }
+
+  rangeChangeMarketSell(obj: number) {
+    //市价卖出
+    if (!this.accountInfo) return;
+    const accountValue = parseFloat(this.balance.amount || '0');
+    const businessPrice = parseFloat(this.businessPrice);
+    // const maxCount = Math.floor((accountValue / businessPrice) * 10000) / 10000;
+    if (this.rangeValue === obj) return;
+    this.rangeValue = obj;
+    if (obj === 0) {
+      this.changeEos = '0.0000';
+      this.inputVal = '';
+    } else if (obj === 100) {
+      this.inputVal = accountValue.toString();
+    } else {
+      const thisNumber = Math.floor(accountValue * obj * 100) / 10000;
+      if (!(thisNumber % 10)) {
+        this.inputVal = thisNumber.toFixed(4);
+      } else {
+        this.inputVal = (Math.floor(accountValue * obj * 100) / 10000).toString();
+      }
     }
   }
 
   changePrice(num: number) {
     const oldPrice = parseFloat(this.businessPrice);
     if (num === 0) {
-      this.businessPrice = (oldPrice - this.baseNum).toFixed(6);
+      oldPrice === 0
+        ? (this.businessPrice = oldPrice.toString())
+        : (this.businessPrice = (oldPrice - this.baseNum).toFixed(6));
     } else if (num === 1) {
       this.businessPrice = (oldPrice + this.baseNum).toFixed(6);
     }
   }
 
   handleChangeIpt(e: any) {
+    if (this.orderType === 'limit' && this.orderSide === 'bid') {
+      this.limitBuy(e.target.value);
+    } else if (this.orderType === 'limit' && this.orderSide === 'ask') {
+      this.limitSell(e.target.value);
+    } else if (this.orderType === 'market' && this.orderSide === 'bid') {
+      this.marketBuy(e.target.value);
+    } else if (this.orderType === 'market' && this.orderSide === 'ask') {
+      this.marketSell(e.target.value);
+    }
+  }
+
+  limitBuy(obj: any) {
+    //现价买入
     if (!this.accountInfo) return;
-    const accountValue = parseFloat(this.accountInfo.eos.available.amount);
+    if (!obj) {
+      this.changeEos = '0.0000';
+      this.inputVal = '';
+      this.rangeValue = 0;
+      return;
+    }
+    const num = parseFloat(obj);
+    const accountValue = parseFloat(this.balance.amount || '0'); //账户总额
+    const businessPrice = parseFloat(this.businessPrice); //单价
+    const maxCount = Math.floor((accountValue / businessPrice) * 10000) / 10000; //最大买入量
+    this.changeEos = Math.floor(businessPrice * num * 10000) / 10000;
+    if (num >= maxCount) {
+      this.rangeValue = 100;
+      // this.inputVal = maxCount.toString();
+    } else {
+      this.rangeValue = Number(((num / maxCount) * 100).toFixed(2));
+    }
+    this.inputVal = (Math.floor(num * 10000) / 10000).toString();
+  }
+
+  marketBuy(obj: any) {
+    //市价买入
+    if (!this.accountInfo) return;
+    if (!obj) {
+      this.changeEos = '0.0000';
+      this.inputVal = '';
+      this.rangeValue = 0;
+      return;
+    }
+    const num = parseFloat(obj);
+    const accountValue = parseFloat(this.balance.amount || '0');
     const businessPrice = parseFloat(this.businessPrice);
-    const maxCount = Math.floor((accountValue / businessPrice) * 10000) / 10000;
-    this.inputVal = `${Math.floor(Number(e.target.value) * 10000) / 10000}`;
-    if (!this.inputVal) return;
-    this.changeEos = Math.floor(businessPrice * parseFloat(this.inputVal) * 10000) / 10000;
+    // const maxCount = Math.floor((accountValue / businessPrice) * 10000) / 10000;
+    // this.changeEos = Math.floor(businessPrice * num * 10000) / 10000;
+    if (num >= accountValue) {
+      this.rangeValue = 100;
+    } else {
+      this.rangeValue = Number(((num / accountValue) * 100).toFixed(2));
+    }
+    this.inputVal = (Math.floor(num * 10000) / 10000).toString();
+  }
+
+  limitSell(obj: any) {
+    //现价卖出
+    if (!this.accountInfo) return;
+    if (!obj) {
+      this.changeEos = '0.0000';
+      this.inputVal = '';
+      this.rangeValue = 0;
+      return;
+    }
+    const num = parseFloat(obj);
+    const accountValue = parseFloat(this.balance.amount || '0'); //账户总额即最大卖出量
+    const businessPrice = parseFloat(this.businessPrice); //单价
+    // const maxCount = Math.floor(accountValue * 10000) / 10000;
+    this.changeEos = Math.floor(businessPrice * num * 10000) / 10000;
+    if (num >= accountValue) {
+      this.rangeValue = 100;
+      this.inputVal = accountValue.toString();
+    } else {
+      this.rangeValue = Number(((num / accountValue) * 100).toFixed(2));
+      this.inputVal = (Math.floor(num * 10000) / 10000).toString();
+    }
+  }
+
+  marketSell(obj: any) {
+    //市价卖出
+    if (!this.accountInfo) return;
+    if (!obj) {
+      this.changeEos = '0.0000';
+      this.inputVal = '';
+      this.rangeValue = 0;
+      return;
+    }
+    const num = parseFloat(obj);
+    const accountValue = parseFloat(this.balance.amount || '0');
+    const businessPrice = parseFloat(this.businessPrice);
+    // const maxCount = Math.floor((accountValue / businessPrice) * 10000) / 10000;
+    // this.changeEos = Math.floor(businessPrice * num * 10000) / 10000;
+    if (num >= accountValue) {
+      this.rangeValue = 100;
+    } else {
+      this.rangeValue = Number(((num / accountValue) * 100).toFixed(2));
+    }
+    this.inputVal = (Math.floor(num * 10000) / 10000).toString();
   }
 
   changePopupVisible(obj: any) {
     this.popupVisible = obj;
+  }
+  getJudgement(price: number, size: number, changeEos: any, amount: any) {
+    let flag: boolean = false;
+    debugger;
+    if (price === 0 || isNaN(price)) {
+      Toast({
+        message: languageStore.getIntlText('business.price_must'),
+        duration: 2000,
+      });
+      return (flag = true);
+    }
+    if (size === 0 || isNaN(size)) {
+      Toast({
+        message: languageStore.getIntlText('business.mountize'),
+        duration: 2000,
+      });
+      return (flag = true);
+    }
+    if (this.orderType !== 'market' && Number(changeEos) > Number(amount)) {
+      Toast({
+        message: languageStore.getIntlText('business.noBalance'),
+        duration: 2000,
+      });
+      return (flag = true);
+    }
+    return flag;
   }
   goBusiness() {
     const market = this.currentMarket!;
@@ -508,6 +735,7 @@ export default class Business extends Vue {
 
     const size = parseFloat(this.inputVal);
     const price = parseFloat(this.businessPrice);
+    if (this.getJudgement(price, size, this.changeEos, this.balance.amount)) return;
     let sizeAsset = `${size.toFixed(4)} ${baseName}`;
     let priceAsset = `${price.toFixed(6)} ${quoteName}`;
     let quantityAsset = '';
@@ -539,7 +767,7 @@ export default class Business extends Vue {
     })
       .then(() => {
         Toast({
-          message: '已提交，待区块确认',
+          message: languageStore.getIntlText('business.tradeSucc'),
           iconClass: 'ic_correct',
           duration: 2000,
         });
@@ -695,6 +923,14 @@ $marginwidth: 0.12rem;
     .business-price-show {
       @include font(400, 0.15rem, 0.21rem, 'PingFangSC-Light');
       color: rgba(0, 0, 0, 1);
+      width: 65%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      > input {
+        width: inherit;
+        color: rgba(0, 0, 0, 1);
+      }
     }
     .business-price-down {
       border-right: 1px solid rgba(216, 216, 215, 1);
@@ -738,7 +974,7 @@ $marginwidth: 0.12rem;
     @include flex(flex, center, space-between);
     .use-mount-left,
     .use-mount-right {
-      @include font(400, 0.12rem, 0.17rem, 'PingFangSC-Regular');
+      @include font(400, 0.11rem, 0.17rem, 'PingFangSC-Regular');
       color: rgba(0, 0, 0, 1);
     }
     .use-mount-right {
@@ -812,9 +1048,10 @@ $marginwidth: 0.12rem;
       }
     }
     .header {
-      height: 1.5rem;
+      // height: 1.5rem;
       & > div {
         color: rgba(141, 141, 141, 1);
+        height: 0.5rem;
         @include font(400, 0.14rem, 0.2rem, 'PingFangSC-Regular');
       }
     }

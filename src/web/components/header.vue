@@ -22,10 +22,10 @@
             <span class="text-style">{{ accountName }}</span>
           </span>
           <span class="text-style switch" @click="handleSwitchBtnClick">
-            <Language resource="home.Switch" />
+            <Language resource="home.Switch"/>
           </span>
           <span class="text-style exit" @click="handleExitBtnClick">
-            <Language resource="home.Exit" />
+            <Language resource="home.Exit"/>
           </span>
           <router-link to="/orders" class="order-box flex-start">
             <img src="@/images/web/ic_order.svg">
@@ -198,6 +198,7 @@ export default class extends Vue {
   background: #142e4d;
   height: 50px;
   width: 100%;
+
   select {
     color: #fff;
     padding-left: 10px;
@@ -264,10 +265,13 @@ export default class extends Vue {
           margin-left: 5px;
         }
       }
-
+      .switch {
+        cursor: pointer;
+      }
       .exit {
         margin-right: 20px;
         margin-left: 10px;
+        cursor: pointer;
       }
 
       .language-box {
@@ -280,8 +284,8 @@ export default class extends Vue {
           border: none;
         }
       }
-
       .order-box {
+        text-decoration: none;
         .text-style {
           margin-left: 5px;
         }

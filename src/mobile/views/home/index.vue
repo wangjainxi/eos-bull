@@ -1,11 +1,25 @@
 <template>
   <div id="home-page">
-    <div class="home-banner-box">
-      <img src="../../../images/mobile/logo_dadex.svg" alt>
-      <p>
-        <Language resource="asset.the_Worlds_1st_Decentralized_EOS_Exchange"/>
-      </p>
+    <div class="home-banner-box-page">
+      <mt-swipe :auto="4000">
+        <mt-swipe-item>
+          <div class="home-banner-box">
+            <img src="../../../images/mobile/logo_dadex.svg" alt>
+            <p>
+              <Language resource="asset.the_Worlds_1st_Decentralized_EOS_Exchange"/>
+            </p>
+          </div>
+        </mt-swipe-item>
+        <mt-swipe-item>
+          <div class="home-banner-boxTwo">
+            <router-link to="/guide">
+              <img src="../../../images/mobile/banner_guide.png" alt>
+            </router-link>
+          </div>
+        </mt-swipe-item>
+      </mt-swipe>
     </div>
+
     <div class="home-notice-box">
       <img src="../../../images/mobile/ic_announcement.svg" alt>
       <h4>
@@ -46,7 +60,7 @@
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
         <div class="home-list-page-box" v-for="item in changeRankingList" :key="item.marketId">
-          <MarketItem :market="item" />
+          <MarketItem :market="item"/>
         </div>
         <div class="home-link-to-market-box">
           <router-link to="/markets">
@@ -56,11 +70,7 @@
         </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-        <div
-          class="home-list-page-box"
-          v-for="item in volumeRankingList"
-          :key="item.marketId"
-        >
+        <div class="home-list-page-box" v-for="item in volumeRankingList" :key="item.marketId">
           <MarketItem :market="item"/>
         </div>
         <div class="home-link-to-market-box">
@@ -124,6 +134,10 @@ export default class Home extends Vue {
 <style lang="scss" scoped>
 #home-page {
   padding-bottom: 0.5rem;
+  .home-banner-box-page {
+    width: 100%;
+    height: 1.7rem;
+  }
   .home-banner-box {
     display: flex;
     justify-content: flex-start;
@@ -143,6 +157,12 @@ export default class Home extends Vue {
       margin-top: 0.12rem;
     }
   }
+  .home-banner-boxTwo {
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
   .home-notice-box {
     width: 100%;
     display: flex;
@@ -156,7 +176,6 @@ export default class Home extends Vue {
       font-size: 0.12rem;
       font-weight: bold;
       margin: 0 0.08rem;
-      width: 0.4rem;
     }
     p {
       overflow: hidden;
@@ -177,15 +196,15 @@ export default class Home extends Vue {
     align-items: center;
     padding: 0 0.2rem;
     .eos-value {
-      font-size: 0.1rem;
+      font-size: 0.11rem;
       font-family: PingFangSC-Medium;
-      font-weight: 500;
+      font-weight: bold;
       color: rgba(0, 0, 0, 1);
     }
     .EOS-name {
       font-size: 0.11rem;
       font-family: PingFangSC-Medium;
-      font-weight: 500;
+      font-weight: bold;
       color: rgba(0, 0, 0, 1);
     }
     > div {
@@ -206,6 +225,7 @@ export default class Home extends Vue {
         color: #007aff;
         font-size: 0.18rem;
         margin: 0 0.03rem;
+        font-weight: bold;
       }
     }
   }
@@ -231,7 +251,6 @@ export default class Home extends Vue {
       justify-content: center;
       span {
         font-size: 0.16rem !important;
-        font-weight: 500;
       }
     }
     .mint-navbar .mint-tab-item.is-selected {

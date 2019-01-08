@@ -239,7 +239,7 @@ export default class MarketList extends Vue {
       width: 0.24rem;
       left: 50%;
       bottom: 0;
-      margin-left: -0.12rem;
+      margin-left: -0.02rem;
       background: #007aff;
       border-radius: 0.02rem;
     }
@@ -296,6 +296,7 @@ export default class MarketList extends Vue {
     }
     .special {
       color: #007aff;
+      font-weight: bold;
     }
   }
   .mint-tab-container-item > div:last-child {

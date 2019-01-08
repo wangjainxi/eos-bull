@@ -1,9 +1,9 @@
 <template>
   <div
     :class="['coin-items',{red:tradeType === 'sell'}]"
-    @click="changePriceAndMount(item.price,item.mount)"
+    @click="changePriceAndMount(item.price,item.size)"
   >
-    <i :style="{ width: getItemWidth }" />
+    <i :style="{ width: getItemWidth }"/>
     <div class="coin-price">{{item.price}}</div>
     <div class="coin-mount">{{item.size}}</div>
   </div>
@@ -43,6 +43,7 @@ export default class BusinessTradeItem extends Vue {
   }
   .coin-mount {
     text-align: right;
+    color: rgba(141, 141, 141, 1);
   }
   i {
     height: 50%;

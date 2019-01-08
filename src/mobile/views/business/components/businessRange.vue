@@ -23,7 +23,7 @@ import languageStore from '@/stores/language';
 export default class BusinessRange extends Vue {
   @Prop() rangeValue!: number;
   @Prop() cricleMount!: any;
-  @Prop() getRangeValue!: any;
+  @Prop() getRangeValue!: Function;
   @Prop() orderSide!: any;
 
   classArr: string[] = ['cricle', 'cricle', 'cricle', 'cricle', 'cricle'];
@@ -31,12 +31,17 @@ export default class BusinessRange extends Vue {
   thisTabLang = languageStore.getIntlText('business.Buy');
   changeRangeValue(num: number) {
     this.rangeVal = num * 25;
-    return this.rangeVal;
   }
 
   @Watch('rangeValue')
   handleRangeValueChange() {
     this.rangeVal = this.rangeValue;
+  }
+
+  @Watch('rangeVal')
+  handleRangeValChange() {
+    this.getRangeValue(this.rangeVal);
+    // this.$emit('getRangeValue', this.rangeVal);
   }
 
   get getRangeVal() {
@@ -50,7 +55,7 @@ export default class BusinessRange extends Vue {
         this.classArr[i] = `cricle ${thisColor}`;
       }
     }
-    return this.$emit('getRangeValue', this.rangeVal);
+    return this.classArr;
   }
 }
 </script>

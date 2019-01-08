@@ -112,6 +112,7 @@ export default class HomeIntroduce extends Vue {}
     padding-bottom: 0.3rem;
     text-align: center;
     > h3 {
+      font-weight: bold;
       span {
         color: #fff;
         font-size: 0.18rem;
@@ -124,6 +125,7 @@ export default class HomeIntroduce extends Vue {}
       height: 2.04rem;
     }
     h4 {
+      font-weight: bold;
       span {
         color: #01d6f9;
         font-size: 0.18rem;
@@ -144,8 +146,7 @@ export default class HomeIntroduce extends Vue {}
       text-align: center;
       margin-bottom: 0.18rem;
       font-size: 0.16rem;
-      font-family: PingFangSC-Medium;
-      font-weight: 500;
+      font-weight: bold;
       color: rgba(0, 0, 0, 1);
       span {
         font-size: 0.16rem;

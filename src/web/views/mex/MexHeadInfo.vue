@@ -168,8 +168,10 @@ export default class MexHead extends Vue {
         background-image: url('../../../images/web/ic_order.svg');
         background-repeat: no-repeat;
         background-size: 10px 12px;
-        background-position: 0 2px;
+        background-position: 0 4px;
         font-size: 12px;
+        text-align: left;
+        line-height: 20px;
       }
     }
     .head-info-title-info {
