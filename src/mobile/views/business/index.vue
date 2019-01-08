@@ -7,7 +7,7 @@
       </div>
       <div class="business-coin-image">
         <i
-          :class="['business-coin-star',{'business-coin-star-fav' : isFavorite.indexOf(routeId) !== -1}]"
+          :class="['business-coin-star',{'business-coin-star-fav' : currentMarket.favourited}]"
           @click="getFav"
         ></i>
         <i class="business-coin-img1" @click="getPrevPage"></i>
@@ -256,6 +256,12 @@ export default class Business extends Vue {
   @orderModule.Action('createOrder')
   createOrder!: (params: OrderParams) => Promise<any>;
 
+  @marketModule.Action('addFavoriteMarket')
+  addFavoriteMarket!: Function;
+
+  @marketModule.Action('removeFavoriteMarket')
+  removeFavoriteMarket!: Function;
+
   orderSide = 'bid';
   orderType = 'limit'; //限价还是市价
 
@@ -381,12 +387,11 @@ export default class Business extends Vue {
   }
 
   getFav() {
-    if (this.isFavorite.indexOf(this.routeId) !== -1) {
-      this.isFavorite = this.isFavorite.filter((e: any) => e !== this.routeId);
-      localStorage.setItem('localFavourite', JSON.stringify(this.isFavorite));
+    if (!this.currentMarket) return;
+    if (this.currentMarket.favourited) {
+      this.removeFavoriteMarket(this.currentMarket.marketId);
     } else {
-      this.isFavorite.push(this.routeId);
-      localStorage.setItem('localFavourite', JSON.stringify(this.isFavorite));
+      this.addFavoriteMarket(this.currentMarket.marketId);
     }
   }
 

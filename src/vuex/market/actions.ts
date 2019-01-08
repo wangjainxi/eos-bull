@@ -15,7 +15,7 @@ export const actions: ActionTree<MarketState, RootState> = {
       return;
     }
     if (!rootState.jwtToken) {
-      await dispatch('fetchJwtToken');
+      await dispatch('fetchJwtToken', null, { root: true });
     }
     await favouriteMarkets(ids, true);
     dispatch('fetchMarkets');
@@ -29,7 +29,7 @@ export const actions: ActionTree<MarketState, RootState> = {
       return;
     }
     if (!rootState.jwtToken) {
-      await dispatch('fetchJwtToken');
+      await dispatch('fetchJwtToken', null, { root: true });
     }
     await favouriteMarkets(ids, false);
     dispatch('fetchMarkets');
