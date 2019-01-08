@@ -172,7 +172,7 @@ export default class Home extends Vue {
     align-items: center;
     padding: 0 0.2rem;
     .eos-value {
-      font-size: 0.12rem;
+      font-size: 0.11rem;
       font-family: PingFangSC-Medium;
       font-weight: bold;
       color: rgba(0, 0, 0, 1);
