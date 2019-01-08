@@ -136,6 +136,9 @@ export default class Orders extends Vue {
 .type-select-box {
   background-color: #fff;
   width: 100%;
+  .is-selected {
+    color: #007aff;
+  }
 }
 
 #order-tab-container {

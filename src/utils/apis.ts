@@ -1,4 +1,5 @@
 import Axios, { AxiosResponse } from 'axios';
+import { STORAGE_JWT } from '@/vuex/types';
 import {
   Market,
   TokenInfo,
@@ -8,6 +9,7 @@ import {
   Announcement,
   HistoryOrderParams,
   OrdersWithIcons,
+  Order,
 } from '@/define';
 
 interface ResponseData<T = any> {
@@ -89,6 +91,14 @@ export const getUserPendingOrders = async (accountName: string) => {
 };
 
 /**
+ * 获取单个订单信息
+ */
+export const getOrderDetail = async (orderId: number) => {
+  const res = await instance.get(`/v1/orders/detail/${orderId}`);
+  return resWrapper<Order>(res);
+};
+
+/**
  * 获取用户订单历史
  */
 export const getUserHistoryOrders = async (accountName: string, params?: HistoryOrderParams) => {
@@ -136,5 +146,22 @@ export const getAnnouncementList = async (params?: { page?: number; pageSize?: n
  */
 export const favouriteMarkets = async (ids: number[], favourited: boolean) => {
   const params = ids.map(e => ({ marketId: e, favourited }));
-  await instance.post('/v1/user/favourite', params);
+  await instance.post('/v1/user/favourite', params, {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem(STORAGE_JWT)}`,
+    },
+  });
+};
+
+/**
+ * 登录
+ */
+export const login = async (accountName: string, signature: string) => {
+  const res = await instance.post('/v1/user/login', {
+    accountName,
+    signature,
+  });
+  return resWrapper<{
+    token: string;
+  }>(res);
 };

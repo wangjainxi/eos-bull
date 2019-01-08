@@ -1,14 +1,14 @@
 <template>
-  <div class="business-sell-details">
+  <div class="business-sell-details" v-if="order">
     <div class="sell-body">
       <div class="line"></div>
       <div class="details-item">
         <div class="details-item-header">
           <div class="item-header-left">
-            <span>{{dataTime}}</span>
+            <span>{{ order.time | formatDate('YYYY/MM/DD HH:mm:ss') }}</span>
             <Language resource="business.Order"/>
           </div>
-          <div :class="['item-header-right',{green:thisOrderType === 'buy'}]">
+          <div :class="['item-header-right',{green: order.side === 1}]">
             <Language resource="business.Dealt"/>
           </div>
         </div>
@@ -16,56 +16,56 @@
           <div class="item-body-top">
             <div class="entrust-box1">
               <div class="box-title">
-                <Language resource="business.Order_Price"/>(EOS)
+                <Language resource="business.Order_Price"/>({{ priceSymbolName }})
               </div>
-              <div class="box-data">{{tradeItem.price.amount}}</div>
+              <div class="box-data">{{order.price.amount}}</div>
             </div>
             <div class="entrust-box2">
               <div class="box-title">
-                <Language resource="business.Order_VOL"/>(POKER)
+                <Language resource="business.Order_VOL"/>({{ sizeSymbolName }})
               </div>
-              <div class="box-data">{{tradeItem.size.amount}}</div>
+              <div class="box-data">{{order.size.amount}}</div>
             </div>
             <div class="entrust-box3">
               <div class="box-title">
-                <Language resource="business.VOL"/>(POKER)
+                <Language resource="business.VOL"/>({{ sizeSymbolName }})
               </div>
               <div
                 class="box-data"
-              >{{tradeItem.filled.amount === 0 ? '—' : tradeItem.filled.amount}}</div>
+              >{{ order.filled.amount === 0 ? '—' : order.filled.amount }}</div>
             </div>
           </div>
           <div class="item-body-bottom">
             <div class="entrust-box1">
               <div class="box-title">
-                <Language resource="business.AVG_Price"/>(EOS)
+                <Language resource="business.AVG_Price"/>({{ priceSymbolName }})
               </div>
-              <div class="box-data">{{tradeItem.avgPrice.amount}}</div>
+              <div class="box-data">{{ order.avgPrice.amount }}</div>
             </div>
             <div class="entrust-box2">
               <div class="box-title">
-                <Language resource="business.Total"/>(EOS)
+                <Language resource="business.Total"/>({{ priceSymbolName }})
               </div>
-              <div class="box-data">{{tradeItem.filledQuote.amount}}</div>
+              <div class="box-data">{{ order.filledQuote.amount }}</div>
             </div>
             <div class="entrust-box3">
               <div class="box-title">
-                <Language resource="business.Fee"/>(EOS)
+                <Language resource="business.Fee"/>({{ priceSymbolName }})
               </div>
-              <div class="box-data">{{tradeItem.fees.amount}}</div>
+              <div class="box-data">{{order.fees.amount}}</div>
             </div>
           </div>
         </div>
       </div>
-      <TradeItem v-for="(item,index) in items" :key="index" :item="item" />
+      <TradeItem v-for="(item,index) in trades" :key="index" :trade="item"/>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator';
-import { getOrderFills } from '@/utils/apis';
+import { getOrderFills, getOrderDetail } from '@/utils/apis';
 import { Observer } from 'mobx-vue';
-import { Orderbook } from '@/define';
+import { Order, Trade } from '@/define';
 import { formatTimes } from '@/utils/formatTime';
 import TradeItem from './trade-item.vue';
 
@@ -76,29 +76,17 @@ import TradeItem from './trade-item.vue';
   },
 })
 export default class BusinessSellDetails extends Vue {
-  // data
-  msg: any = '';
-  orderId: number = 0;
-  items: any = [];
-  dataTime: any = '';
-  thisOrderType: string = '';
-  tradeItem: any = {
-    orderId: 0, // 订单ID
-    marketId: 0, // 市场ID
-    account: '', // 用户名
-    time: '', // 下单时间
-    side: '',
-    type: '',
-    timeInForce: '',
-    status: '',
-    price: { amount: 0 }, // 订单价格
-    size: { amount: 0 }, // 订单数量
-    filled: { amount: 0 }, // 已撮合数量
-    avgPrice: { amount: 0 }, // 订单价格
-    filledQuote: { amount: 0 }, // 订单数量
-    fees: { amount: 0 }, // 已撮合数量
-    trxId: '', // 下单交易哈希
-  };
+  order: Order | null = null;
+
+  trades: Trade[] = [];
+
+  get priceSymbolName() {
+    return this.order && this.order.price.symbol.name;
+  }
+
+  get sizeSymbolName() {
+    return this.order && this.order.size.symbol.name;
+  }
 
   created() {
     this.initData();
@@ -106,25 +94,7 @@ export default class BusinessSellDetails extends Vue {
 
   async initData() {
     const id = parseInt(this.$route.params.id, 10);
-    await Promise.all([getOrderFills(id)]);
-  }
-
-  mounted() {
-    this.orderId = Number(this.$route.params.orderId);
-    this.tradeItem = this.$route.params.tradeItem;
-    console.log(this.tradeItem);
-    this.dataTime = formatTimes(this.tradeItem.time, 'YYYY-MM-DD HH:mm:ss');
-    this.thisOrderType = this.$route.params.type;
-    this.orderFills();
-  }
-
-  orderFills() {
-    getOrderFills(this.orderId).then(res => {
-      this.items = res;
-      console.log(this.items);
-    });
-
-    return this.items;
+    [this.order, this.trades] = await Promise.all([getOrderDetail(id), getOrderFills(id)]);
   }
 }
 </script>

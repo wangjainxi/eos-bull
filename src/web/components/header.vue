@@ -21,8 +21,12 @@
             <img src="@/images/web/ic_eos.svg">
             <span class="text-style">{{ accountName }}</span>
           </span>
-          <span class="text-style switch">{{language.getIntlText('home.Switch')}}</span>
-          <span class="text-style exit">{{language.getIntlText('home.Exit')}}</span>
+          <span class="text-style switch" @click="handleSwitchBtnClick">
+            <Language resource="home.Switch" />
+          </span>
+          <span class="text-style exit" @click="handleExitBtnClick">
+            <Language resource="home.Exit" />
+          </span>
           <router-link to="/orders" class="order-box flex-start">
             <img src="@/images/web/ic_order.svg">
             <span class="text-style exit">{{language.getIntlText('home.Orders')}}</span>
@@ -106,6 +110,9 @@ export default class extends Vue {
   @State('accountName')
   accountName!: string;
 
+  @Action('logout')
+  logout!: Function;
+
   @Action('login')
   login!: Function;
 
@@ -173,6 +180,15 @@ export default class extends Vue {
   changeLanguageType(data: any) {
     language.changeLanguage(this.selectValue);
     this.selectValue = language.currentLocale;
+  }
+
+  handleExitBtnClick() {
+    this.logout();
+  }
+
+  async handleSwitchBtnClick() {
+    await this.logout();
+    this.login();
   }
 }
 </script>
