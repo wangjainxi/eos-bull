@@ -46,7 +46,7 @@
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
         <div class="home-list-page-box" v-for="item in changeRankingList" :key="item.marketId">
-          <MarketItem :market="item" />
+          <MarketItem :market="item"/>
         </div>
         <div class="home-link-to-market-box">
           <router-link to="/markets">
@@ -56,11 +56,7 @@
         </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-        <div
-          class="home-list-page-box"
-          v-for="item in volumeRankingList"
-          :key="item.marketId"
-        >
+        <div class="home-list-page-box" v-for="item in volumeRankingList" :key="item.marketId">
           <MarketItem :market="item"/>
         </div>
         <div class="home-link-to-market-box">
@@ -156,7 +152,6 @@ export default class Home extends Vue {
       font-size: 0.12rem;
       font-weight: bold;
       margin: 0 0.08rem;
-      width: 0.4rem;
     }
     p {
       overflow: hidden;
@@ -179,13 +174,13 @@ export default class Home extends Vue {
     .eos-value {
       font-size: 0.1rem;
       font-family: PingFangSC-Medium;
-      font-weight: 500;
+      font-weight: bold;
       color: rgba(0, 0, 0, 1);
     }
     .EOS-name {
       font-size: 0.11rem;
       font-family: PingFangSC-Medium;
-      font-weight: 500;
+      font-weight: bold;
       color: rgba(0, 0, 0, 1);
     }
     > div {
@@ -231,7 +226,7 @@ export default class Home extends Vue {
       justify-content: center;
       span {
         font-size: 0.16rem !important;
-        font-weight: 500;
+        font-weight: bold;
       }
     }
     .mint-navbar .mint-tab-item.is-selected {

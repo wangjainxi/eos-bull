@@ -19,7 +19,7 @@
     </div>
     <div class="table-box">
       <el-table :data="pendingOrders" style="width: 100%" max-height="250">
-        <el-table-column prop="coin" width="200">
+        <el-table-column prop="coin" width="110">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Coin"/>
           </template>
@@ -38,7 +38,7 @@
             <p :class="props.row.type === 'Buy'?'buy-box':'sell-box'">{{props.row.side}}</p>
           </template>
         </el-table-column>
-        <el-table-column prop="time" align="center" width="200">
+        <el-table-column prop="time" align="center" width="170">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Entrusted_Time"/>
           </template>
@@ -54,7 +54,7 @@
             </p>
           </template>
         </el-table-column>
-        <el-table-column prop="average" align="right">
+        <el-table-column prop="average" align="right" width="130">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Deal_Average"/>
           </template>
@@ -65,7 +65,7 @@
             </p>
           </template>
         </el-table-column>
-        <el-table-column prop="amount" align="right">
+        <el-table-column prop="amount" align="right" width="130">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Entrusted_Amount"/>
           </template>
@@ -76,7 +76,7 @@
             </p>
           </template>
         </el-table-column>
-        <el-table-column prop="dealt" align="right">
+        <el-table-column prop="dealt" align="right" width="130">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Dealt_Num"/>
           </template>
@@ -87,7 +87,7 @@
             </p>
           </template>
         </el-table-column>
-        <el-table-column prop="entrusted" align="right">
+        <el-table-column prop="entrusted" align="right" width="130">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Entrusted_Total"/>
           </template>
