@@ -2,7 +2,7 @@ import { Module } from 'vuex';
 import { UserState } from './types';
 import { RootState } from '../types';
 import { getAccountInfo } from '@/utils/apis';
-import { AccountInfo } from '@/define';
+import { AccountInfo, TokenBalance } from '@/define';
 import { getAccount } from '@/utils/scatter';
 
 let timer: any = null;
@@ -22,7 +22,26 @@ export const user: Module<UserState, RootState> = {
     },
     walletTokens(state) {
       if (!state.accountInfo) return [];
-      return state.accountInfo.tokens;
+      const tokens = state.accountInfo.tokens.slice();
+      const { available, onOrder } = state.accountInfo.eos;
+      tokens.unshift({
+        available: {
+          amount: available.amount,
+          symbol: {
+            contract: 'eostoken.io',
+            symbol: available.symbol,
+          },
+        },
+        onOrder: {
+          amount: onOrder.amount,
+          symbol: {
+            contract: 'eostoken.io',
+            symbol: available.symbol,
+          },
+        },
+        estValue: available,
+      });
+      return tokens;
     },
     totalValuation(state) {
       if (!state.accountInfo) {
