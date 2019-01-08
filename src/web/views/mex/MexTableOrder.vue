@@ -19,7 +19,7 @@
     </div>
     <div class="table-box">
       <el-table :data="pendingOrders" style="width: 100%" max-height="250">
-        <el-table-column prop="coin" width="110">
+        <el-table-column prop="coin" width="110" align="left">
           <template slot="header" slot-scope="scope">
             <Language resource="exchange.Coin"/>
           </template>
@@ -202,6 +202,9 @@ export default class MexOpenOrders extends Vue {
 </script>
 <style lang="scss">
 #mex-table-roder-page {
+  .el-table .cell {
+    padding-right: 0;
+  }
   .table-roder-title {
     display: flex;
     justify-content: space-between;

@@ -102,8 +102,6 @@ export default class BomView extends Vue {
         font-size: 0.2rem;
         height: 0.16rem;
         font-size: 0.14rem;
-        font-family: PingFangSC-Semibold;
-        font-weight: 300;
         color: rgba(141, 141, 141, 1);
         line-height: 0.16rem;
         margin-top: 0.14rem;
