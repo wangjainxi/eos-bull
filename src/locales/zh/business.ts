@@ -31,4 +31,6 @@ export default {
   Favorites: '自选',
   EOS: 'EOS',
   sR: '搜索结果',
+  buyPlace: '以市场最优价格买入',
+  sellPlace: '以市场最优价格卖出',
 };

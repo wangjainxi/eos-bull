@@ -2,10 +2,7 @@
   <div class="business" id="business" v-if="currentMarket">
     <div class="business-coin-title">
       <div class="business-coin-name" @click="showCoinData">
-        <span>
-          {{ currentMarket.pair.baseCurrency.symbol.name }}/
-          {{ currentMarket.pair.quoteCurrency.symbol.name }}
-        </span>
+        <span>{{ baseCurrencyName }}/{{ quoteCurrencyName }}</span>
         <i></i>
       </div>
       <div class="business-coin-image">
@@ -20,38 +17,62 @@
       <div class="business-show-data-left">
         <div class="business-tab">
           <div
-            :class="['business-tab-buy', {active: currrentTab === index}, {tab2: index === 1}]"
-            v-for="(tab,index) in tabs"
-            @click="changeTab(index)"
-            :key="tab"
-          >{{ tab }}</div>
+            :class="['business-tab-buy', {active: orderSide === tab.side}, {tab2: orderSide === 'ask'}]"
+            v-for="(tab, index) in tabs"
+            @click="changeOrderSide(tab.side)"
+            :key="index"
+          >
+            <Language :resource="tab.key"/>
+          </div>
         </div>
         <div class="left-title" @click="showNowPrice">
-          <Language :resource="orderType === 'limit' ? 'business.Limit' : 'business.Market'" />
+          <Language :resource="orderType === 'limit' ? 'business.Limit' : 'business.Market'"/>
           <i></i>
         </div>
-        <div class="business-price">
-          <div class="business-price-down" @click="businessPrice--">-</div>
-          <div class="business-price-show">{{businessPrice}}</div>
-          <div class="business-price-up" @click="businessPrice++">+</div>
+        <div class="business-price" v-if="orderType === 'limit'">
+          <div class="business-price-down" @click="changePrice(0)">-</div>
+          <div class="business-price-show">
+            <input type="number" v-model="businessPrice">
+          </div>
+          <div class="business-price-up" @click="changePrice(1)">+</div>
+        </div>
+        <div
+          class="business-price business-price-market"
+          v-if="orderType === 'market' && orderSide === 'bid'"
+        >
+          <Language resource="business.buyPlace"/>
+        </div>
+        <div
+          class="business-price business-price-market"
+          v-if="orderType === 'market' && orderSide === 'ask'"
+        >
+          <Language resource="business.sellPlace"/>
         </div>
         <div class="business-mount">
-          <input type="text" v-model="inputVal">
-          <span>{{currentMarket.pair.baseCurrency.symbol.name}}</span>
+          <input
+            type="text"
+            :value="inputVal"
+            @change="handleChangeIpt($event)"
+            placeholder="0.0000"
+          >
+          <span>{{ orderType === 'market' && orderSide === 'bid' ? quoteCurrencyName : baseCurrencyName }}</span>
         </div>
-        <div class="business-change-eos">{{`≈${changeEos}EOS`}}</div>
+        <div v-show="orderType === 'limit'" class="business-change-eos">{{`≈${estimatePrice}EOS`}}</div>
         <BusinessRange
-          :currrentTab="currrentTab"
+          :orderSide="orderSide"
           @getRangeValue="getRangeValue"
           :rangeValue="rangeValue"
           :cricleMount="cricleMount"
-        ></BusinessRange>
+        />
         <div class="use-mount">
-          <div class="use-mount-left">{{`${thisBal}EOS：${getUseMount}`}}</div>
+          <div class="use-mount-left">
+            <Language resource="business.Bal"/>
+            {{`${balance.name}: ${balance.amount}`}}
+          </div>
           <div class="use-mount-right">{{`${rangeValue}%`}}</div>
         </div>
 
-        <div v-if="currrentTab === 0" class="goBusiness businessBuy" @click="goBusiness">
+        <div v-if="orderSide === 'bid'" class="goBusiness businessBuy" @click="goBusiness">
           <Language resource="business.Buy"/>
         </div>
         <div v-else class="goBusiness businessSell" @click="goBusiness">
@@ -72,7 +93,7 @@
             <BusinessTradeItem
               :changePriceAndMount="changePriceAndMount"
               :tradeType="'sell'"
-              v-for="(item, index) in orderbook.bids"
+              v-for="(item, index) in orderbook.asks"
               :item="item"
               :key="index"
               :tradeDataMountSum="tradeDataMountSum"
@@ -94,7 +115,7 @@
             <BusinessTradeItem
               :tradeType="'buy'"
               :changePriceAndMount="changePriceAndMount"
-              v-for="(item, index) in orderbook.asks"
+              v-for="(item, index) in orderbook.bids"
               :item="item"
               :key="index"
               :tradeDataMountSum="tradeDataMountSum"
@@ -171,8 +192,8 @@
         </div>
       </div>
     </div>
-    <mt-actionsheet :actions="sheetActions" :cancelText="cancel" v-model="sheetVisible" />
-    <ShowCoinList v-model="popupVisible" :dataCoinList="markets" />
+    <mt-actionsheet :actions="sheetActions" :cancelText="cancel" v-model="sheetVisible"/>
+    <ShowCoinList v-model="popupVisible" :dataCoinList="markets"/>
   </div>
 </template>
 
@@ -187,11 +208,12 @@ import BusinessRange from './components/businessRange.vue';
 import ShowCoinList from './components/businessCoin.vue';
 import { MessageBox, Toast, Loadmore } from 'mint-ui';
 import languageStore from '@/stores/language';
-import { Market, Order, Orderbook, Trade } from '@/define';
+import { Market, Order, Orderbook, Trade, AccountInfo, TokenBalance } from '@/define';
 import { OrderParams } from '@/utils/scatter';
 
 const orderModule = namespace('order');
 const marketModule = namespace('market');
+const userModule = namespace('user');
 
 @Component({
   components: {
@@ -206,6 +228,9 @@ const marketModule = namespace('market');
 export default class Business extends Vue {
   @marketModule.State('markets')
   markets!: Market[];
+
+  @userModule.State('accountInfo')
+  accountInfo!: AccountInfo;
 
   @marketModule.State('orderbook')
   orderbook!: Orderbook;
@@ -225,8 +250,14 @@ export default class Business extends Vue {
   @marketModule.Action('updateMarket')
   updateMarket!: Function;
 
+  @userModule.Getter('walletTokens')
+  walletTokens!: TokenBalance[];
+
   @orderModule.Action('createOrder')
   createOrder!: (params: OrderParams) => Promise<any>;
+
+  orderSide = 'bid';
+  orderType = 'limit'; //限价还是市价
 
   cricleMount = [0, 1, 2, 3, 4];
   rangeValue = 0;
@@ -235,22 +266,30 @@ export default class Business extends Vue {
   cancel = languageStore.getIntlText('business.cancel');
   popupVisible = false; //币种弹
   sheetVisible = false; //价格弹
-  orderType: 'limit' | 'market' = 'limit';
   businessPrice = '0'; //交易价
-  inputVal = '0'; //交易
+  inputVal = ''; //交易
   routeParam: any = '';
   coinName: any = '';
   isFavorite: any = [];
   routeId: number = -1;
-  changeEos = 0.00001;
-  currrentTab = 0;
-  thisBal = languageStore.getIntlText('business.Bal');
-  tabs = [languageStore.getIntlText('business.Buy'), languageStore.getIntlText('business.Sell')];
+  changeEos: any = '0.0000';
+
+  tabs = [
+    {
+      key: 'business.Buy',
+      side: 'bid',
+    },
+    {
+      key: 'business.Sell',
+      side: 'ask',
+    },
+  ];
+
   imgUrl = require('./../../../images/mobile/ic_nodata.png');
   imgMsg = languageStore.getIntlText('business.nodata');
   tradeDataMountSum = 0;
-  useMount = 0;
-  showSheetName = languageStore.getIntlText('business.Limit');
+  priceString = 0; //小数点后的位数
+  baseNum = 0; //价格计算的基数
 
   // 刷新
   bottomStatus = '';
@@ -267,19 +306,61 @@ export default class Business extends Vue {
     },
   ];
 
-  get getUseMount() {
-    this.useMount -= this.rangeValue / 100;
-    return this.useMount.toFixed(5);
+  get baseCurrencyName() {
+    if (!this.currentMarket) return '-';
+    return this.currentMarket.pair.baseCurrency.symbol.name;
+  }
+
+  get quoteCurrencyName() {
+    if (!this.currentMarket) return '-';
+    return this.currentMarket.pair.quoteCurrency.symbol.name;
+  }
+
+  // 页面账户余额计算属性
+  get balance() {
+    if (!this.currentMarket || this.walletTokens.length === 0) return {};
+    const currencyName = this.orderSide === 'bid' ? this.quoteCurrencyName : this.baseCurrencyName;
+    if (currencyName === 'EOS') {
+      return {
+        amount: this.accountInfo.eos.available.amount,
+        name: 'EOS',
+      };
+    }
+    const t = this.walletTokens.find(e => {
+      return e.available.symbol.symbol.name === currencyName;
+    });
+    if (t) {
+      return {
+        amount: t.available.amount,
+        name: currencyName,
+      };
+    }
+    return {};
+  }
+
+  get estimatePrice() {
+    const price = parseFloat(this.businessPrice);
+    const size = parseFloat(this.inputVal);
+    const total = price * size;
+    if (!Number.isFinite(total)) return '0.0000';
+    return total.toFixed(4);
   }
 
   created() {
     const id = parseInt(this.$route.params.id, 10);
     this.updateMarket(id);
+    this.initData();
   }
 
   initData() {
+    if (this.$route.query.side) {
+      this.orderSide = this.$route.query.side as string;
+    }
+
     if (this.currentMarket) {
       this.businessPrice = this.currentMarket.lastPrice;
+      this.priceString = this.currentMarket.lastPrice.split('.')[1].length;
+      this.baseNum = 1 / Math.pow(10, this.priceString);
     }
   }
 
@@ -327,9 +408,10 @@ export default class Business extends Vue {
     // (this.$refs.loadmore as any).onBottomLoaded();
   }
 
-  changeTab(val: any) {
-    this.currrentTab = val;
+  changeOrderSide(side: string) {
+    this.orderSide = side;
   }
+
   changeEntrustType(type: any) {
     // this.entrustType = type;
     // if (type === 0) {
@@ -346,6 +428,8 @@ export default class Business extends Vue {
 
   changePriceAndMount(obj1: any, obj2: any) {
     this.businessPrice = obj1;
+    this.priceString = obj1.split('.')[1].length;
+    this.baseNum = 1 / Math.pow(10, this.priceString);
     this.inputVal = obj2;
   }
   showMsg() {
@@ -366,28 +450,77 @@ export default class Business extends Vue {
   showNowPrice() {
     this.sheetVisible = true;
   }
-  getRangeValue(obj: any) {
+  getRangeValue(obj: number) {
+    if (!this.accountInfo) return;
+    const accountValue = parseFloat(this.balance.amount || '0');
+    const businessPrice = parseFloat(this.businessPrice);
+    const maxCount = Math.floor((accountValue / businessPrice) * 10000) / 10000;
     this.rangeValue = obj;
+    if (obj === 0) {
+      this.changeEos = '0.0000';
+      this.inputVal = '';
+    } else if (
+      (this.orderSide === 'bid' && this.orderType === 'market') ||
+      this.orderType === 'ask'
+    ) {
+      this.inputVal = ((accountValue * obj) / 100).toFixed(4);
+    } else {
+      this.inputVal = ((maxCount * obj) / 100).toFixed(4);
+    }
   }
+
+  changePrice(num: number) {
+    const oldPrice = parseFloat(this.businessPrice);
+    if (num === 0) {
+      this.businessPrice = (oldPrice - this.baseNum).toFixed(6);
+    } else if (num === 1) {
+      this.businessPrice = (oldPrice + this.baseNum).toFixed(6);
+    }
+  }
+
+  handleChangeIpt(e: any) {
+    if (!this.accountInfo) return;
+    const accountValue = parseFloat(this.accountInfo.eos.available.amount);
+    const businessPrice = parseFloat(this.businessPrice);
+    const maxCount = Math.floor((accountValue / businessPrice) * 10000) / 10000;
+    this.inputVal = `${Math.floor(Number(e.target.value) * 10000) / 10000}`;
+    if (!this.inputVal) return;
+    this.changeEos = Math.floor(businessPrice * parseFloat(this.inputVal) * 10000) / 10000;
+  }
+
   changePopupVisible(obj: any) {
     this.popupVisible = obj;
   }
   goBusiness() {
     const market = this.currentMarket!;
     const orderType = this.orderType;
-    const timeInforce = orderType === 'market' ? 'ioc' : 'gtc';
-    const orderSide = this.currrentTab === 0 ? 'bid' : 'ask';
-    const baseName = market.pair.baseCurrency.symbol.name;
+    const timeInforce = orderType === 'market' ? 'fok' : 'gtc';
+    const orderSide = this.orderSide;
+    const baseName = this.baseCurrencyName;
+    const quoteName = this.quoteCurrencyName;
     const baseContract = market.pair.baseCurrency.contract;
-    const quoteName = market.pair.quoteCurrency.symbol.name;
     const quoteContract = market.pair.quoteCurrency.contract;
     const contract = orderSide === 'bid' ? quoteContract : baseContract;
 
     const size = parseFloat(this.inputVal);
     const price = parseFloat(this.businessPrice);
-    const priceAsset = `${price.toFixed(6)} ${quoteName}`;
-    const sizeAsset = `${size.toFixed(4)} ${baseName}`;
-    const quantityAsset = `${(price * size).toFixed(4)} ${quoteName}`;
+    let sizeAsset = `${size.toFixed(4)} ${baseName}`;
+    let priceAsset = `${price.toFixed(6)} ${quoteName}`;
+    let quantityAsset = '';
+
+    if (orderType === 'limit' && orderSide === 'bid') {
+      quantityAsset = `${(size * price).toFixed(4)} ${quoteName}`;
+    } else if (orderType === 'limit' && orderSide === 'ask') {
+      quantityAsset = `${size.toFixed(4)} ${baseName}`;
+    } else if (orderType === 'market' && orderSide === 'bid') {
+      sizeAsset = `0.0000 ${quoteName}`;
+      priceAsset = `0.000000 ${quoteName}`;
+      quantityAsset = `${size.toFixed(4)} ${quoteName}`;
+    } else if (orderType === 'market' && orderSide === 'ask') {
+      sizeAsset = `0.0000 ${baseName}`;
+      priceAsset = `0.000000 ${quoteName}`;
+      quantityAsset = `${size.toFixed(4)} ${baseName}`;
+    }
 
     this.createOrder({
       market_id: market.marketId,
@@ -398,7 +531,7 @@ export default class Business extends Vue {
       order_type: orderType,
       time_in_force: timeInforce,
       post_only: 0,
-      quantity: orderSide === 'bid' ? quantityAsset : sizeAsset,
+      quantity: quantityAsset,
     })
       .then(() => {
         Toast({
@@ -438,6 +571,7 @@ $marginwidth: 0.12rem;
 .business {
   width: 100%;
   position: relative;
+  margin-bottom: 0.5rem;
 }
 .business-coin-title,
 .business-show-data {
@@ -565,6 +699,13 @@ $marginwidth: 0.12rem;
       border-left: 1px solid rgba(216, 216, 215, 1);
     }
   }
+  .business-price-market {
+    display: flex;
+    justify-content: center;
+    > span {
+      color: #8d8d8d;
+    }
+  }
   .business-mount {
     padding: 0 0.08rem;
     margin: 0.26rem 0 0;
@@ -573,7 +714,7 @@ $marginwidth: 0.12rem;
       @include font(400, 0.15rem, 0.21rem, 'PingFangSC-Light');
     }
     input {
-      width: 55%;
+      width: 100%;
       border: none;
       color: rgba(0, 0, 0, 1);
     }

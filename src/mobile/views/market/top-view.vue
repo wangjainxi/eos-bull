@@ -1,26 +1,34 @@
 <template>
   <div class="view-box-top">
     <div class="currency-box flex-row-between" v-if="market">
-      <span class="currency-name">
-        {{ market.pair.baseCurrency.symbol.name }}/{{ market.pair.quoteCurrency.symbol.name }}
-      </span>
+      <span
+        class="currency-name"
+      >{{ market.pair.baseCurrency.symbol.name }}/{{ market.pair.quoteCurrency.symbol.name }}</span>
       <div class="collect-box">
-        <img v-if="market.favourited" @click="collect" src="@/images/mobile/ic_collection_current_s.svg" />
         <img
-          v-else
+          v-if="market.favourited"
           @click="collect"
-          src="@/images/mobile/ic_collection_s.svg"
-        />
+          src="@/images/mobile/ic_collection_current_s.svg"
+        >
+        <img v-else @click="collect" src="@/images/mobile/ic_collection_s.svg">
       </div>
     </div>
     <div class="real-data flex-row-between-start">
       <div class="real-name-box">
-        <span class="real-text green-color">{{ market.lastPrice }}</span>
-        <img src="@/images/mobile/ic_rise.svg" alt>
+        <span :class="changeStyle">{{ market.lastPrice }}</span>
+        <img
+          v-if="parseFloat(market.change) > 0 && parseFloat(market.change) !== 0"
+          src="@/images/mobile/ic_rise.svg"
+          alt
+        >
+        <img
+          v-if="parseFloat(market.change) < 0 && parseFloat(market.change) !== 0"
+          src="@/images/mobile/ic_Fall_s.svg"
+          alt
+        >
       </div>
       <span>
-      <span v-if="Number(market.change) > 0" class="long-text green-color" >{{market.change}}</span>
-      <span v-else class="long-text red-color" >{{ market.change }}</span>
+        <span :class="changeColor">{{ market.change }}</span>
       </span>
     </div>
     <div class="max24-box">
@@ -55,7 +63,10 @@ const marketModule = namespace('market');
 @Component
 export default class MarketInfo extends Vue {
   @Prop()
-  market?: Market;
+  market!: Market;
+
+  baseClass = ['real-text'];
+  baseColor = ['long-text'];
 
   @marketModule.Action('addFavoriteMarket')
   addFavoriteMarket!: Function;
@@ -70,6 +81,26 @@ export default class MarketInfo extends Vue {
     } else {
       this.addFavoriteMarket(this.market.marketId);
     }
+  }
+
+  get changeStyle() {
+    const changeValue = parseFloat(this.market.change);
+    if (changeValue > 0) {
+      this.baseClass.push('green-color');
+    } else if (changeValue < 0) {
+      this.baseClass.push('red-color');
+    }
+    return this.baseClass;
+  }
+
+  get changeColor() {
+    const changeValue = parseFloat(this.market.change);
+    if (changeValue > 0) {
+      this.baseColor.push('green-color');
+    } else if (changeValue < 0) {
+      this.baseColor.push('red-color');
+    }
+    return this.baseColor;
   }
 }
 </script>

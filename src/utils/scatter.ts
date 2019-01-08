@@ -103,9 +103,9 @@ export interface OrderParams {
   price: string;
   referrer?: string;
   size: string;
-  order_side: 'bid' | 'ask';
-  order_type: 'limit' | 'market';
-  time_in_force: 'gtc' | 'fok' | 'ioc';
+  order_side: string; // 'bid' | 'ask'
+  order_type: string; // 'limit' | 'market'
+  time_in_force: string; // 'gtc' | 'fok' | 'ioc'
   post_only: 0 | 1;
   coin_contract: string;
   quantity: string;

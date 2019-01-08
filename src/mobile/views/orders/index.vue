@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import OrderTab from './OrderTab.vue';
+import OrderTab from './order-tab.vue';
 @Component({
   components: {
     OrderTab,

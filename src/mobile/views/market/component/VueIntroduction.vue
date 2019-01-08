@@ -2,18 +2,18 @@
   <div class="intro-box" v-if="tokenInfo">
     <div class="intro-top">
       <div class="name-box">
-        <img class="icon" :src="tokenInfo.icon" />
+        <img class="icon" :src="tokenInfo.icon">
         <div class="name">{{ tokenInfo.symbol.name }}</div>
       </div>
       <p class="introduction">{{ tokenInfo.introduction }}</p>
     </div>
     <div class="intro-bom">
       <p class="base-info">
-        <Language resource="asset.Introduction" />
+        <Language resource="asset.Introduction"/>
       </p>
       <p class="info-title">
         <span>
-          <Language resource="asset.Circulating_Supply" />
+          <Language resource="asset.Circulating_Supply"/>
         </span>
         <span>
           {{ tokenInfo.circulatingSupply.amount }}
@@ -22,7 +22,7 @@
       </p>
       <p class="info-title">
         <span>
-          <Language resource="asset.Max_Supply" />
+          <Language resource="asset.Max_Supply"/>
         </span>
         <span>
           {{ tokenInfo.maxSupply.amount }}
@@ -31,14 +31,12 @@
       </p>
       <p class="info-title">
         <span>
-          <Language resource="asset.Contract" />
+          <Language resource="asset.Contract"/>
         </span>
-        <span>
-          {{ tokenInfo.contract }}
-        </span>
+        <span>{{ tokenInfo.contract }}</span>
       </p>
-      <p class="info-title">
-        <Language resource="asset.Website" />
+      <p :class="['info-title',{'last-info-title':selectValue === 'zh-CN'}]">
+        <Language resource="asset.Website"/>
         <a :href="tokenInfo.website">{{ tokenInfo.website }}</a>
       </p>
     </div>
@@ -48,11 +46,13 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { TokenInfo } from '@/define';
+import language from '@/stores/language';
 
 @Component
 export default class Introduction extends Vue {
   @Prop()
   tokenInfo?: TokenInfo;
+  selectValue = language.currentLocale;
 }
 </script>
 <style lang="scss" scoped>
@@ -76,7 +76,7 @@ export default class Introduction extends Vue {
 }
 
 .introduction {
-  color: #8D8D8D;
+  color: #8d8d8d;
   font-size: 0.14rem;
 }
 
@@ -113,6 +113,12 @@ export default class Introduction extends Vue {
         font-family: PingFangSC-Medium;
         font-weight: 500;
         color: rgba(0, 0, 0, 1);
+      }
+    }
+    .last-info-title {
+      > span:nth-child(1) {
+        margin-right: 0;
+        letter-spacing: 22px;
       }
     }
   }

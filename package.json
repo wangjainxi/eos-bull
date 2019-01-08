@@ -24,6 +24,7 @@
     "mint-ui": "^2.2.13",
     "mobx": "^5.8.0",
     "mobx-vue": "^2.0.8",
+    "normalize.css": "^8.0.1",
     "onfire.js": "^1.0.6",
     "register-service-worker": "^1.5.2",
     "scatterjs-core": "^2.5.0",

@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="['business-range',currrentTab === thisTabLang ? 'business-range-buy' : 'business-range-sell']"
+    :class="['business-range',orderSide === 'bid' ? 'business-range-buy' : 'business-range-sell']"
     :getRangeVal="getRangeVal"
   >
     <i
@@ -9,13 +9,12 @@
       v-for="(item, index) in cricleMount"
       :key="index"
     ></i>
-    <mt-range v-model="rangeVal" :min="0" :max="100" :step="1" :bar-height="5">
-    </mt-range>
+    <mt-range v-model="rangeVal" :min="0" :max="100" :step="1" :bar-height="5"></mt-range>
     <br>
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import { Observer } from 'mobx-vue';
 import languageStore from '@/stores/language';
 
@@ -25,7 +24,7 @@ export default class BusinessRange extends Vue {
   @Prop() rangeValue!: number;
   @Prop() cricleMount!: any;
   @Prop() getRangeValue!: any;
-  @Prop() currrentTab!: any;
+  @Prop() orderSide!: any;
 
   classArr: string[] = ['cricle', 'cricle', 'cricle', 'cricle', 'cricle'];
   rangeVal: number = this.rangeValue;
@@ -35,8 +34,13 @@ export default class BusinessRange extends Vue {
     return this.rangeVal;
   }
 
+  @Watch('rangeValue')
+  handleRangeValueChange() {
+    this.rangeVal = this.rangeValue;
+  }
+
   get getRangeVal() {
-    const thisColor = this.currrentTab === this.thisTabLang ? 'cricle-green' : 'cricle-red';
+    const thisColor = this.orderSide === 'bid' ? 'cricle-green' : 'cricle-red';
     const getCount = Math.floor(this.rangeVal / 25) + 1;
     if (getCount === 0) {
       this.classArr = ['cricle', 'cricle', 'cricle', 'cricle', 'cricle'];
@@ -84,10 +88,10 @@ export default class BusinessRange extends Vue {
   .cricle:nth-child(5) {
     left: 91.89%;
   }
-  .cricle-green{
+  .cricle-green {
     border-color: #07c74e;
   }
-  .cricle-red{
+  .cricle-red {
     border-color: red;
   }
 }

@@ -157,7 +157,7 @@
                 : {{ quoteBalanceAmount }}
               </p>
             </div>
-            <div class="place-order-info-input">
+            <div class="place-order-info-input readonly-input">
               <p>
                 <Language resource="exchange.Buy_In_Price"/>
               </p>
@@ -166,7 +166,6 @@
                 readonly
                 :placeholder="tabName('exchange.Buy_at_the_best_market_price')"
               >
-              <p>EOS</p>
             </div>
             <div class="place-order-info-input">
               <p>
@@ -203,7 +202,7 @@
                 {{ baseBalanceAmount }}
               </p>
             </div>
-            <div class="place-order-info-input">
+            <div class="place-order-info-input readonly-input">
               <p>
                 <Language resource="exchange.Sell_Out_Price"/>
               </p>
@@ -212,7 +211,6 @@
                 readonly
                 :placeholder="tabName('exchange.Sell_at_the_best_market_price')"
               >
-              <p>EOS</p>
             </div>
             <div class="place-order-info-input">
               <p>
@@ -599,6 +597,12 @@ export default class MexPlaceOrder extends Vue {
           flex: 1 1;
         }
       }
+      .readonly-input {
+        background: #12263f;
+        input {
+          background: #12263f;
+        }
+      }
       .slider-box {
         margin-top: 17px;
         display: flex;
@@ -665,30 +669,43 @@ export default class MexPlaceOrder extends Vue {
   .slider-stop-box {
     span {
       position: absolute;
-      bottom: 14px;
-      width: 6px;
-      height: 6px;
+      bottom: 13px;
+      width: 8px;
+      height: 8px;
       left: 0;
       border: 2px solid #fff;
       border-radius: 50%;
       background: #2d7be5;
+      transform: translate(-1px, 0);
+
     }
     span:nth-child(2) {
       left: 25%;
-      transform: translate(-2px, 0);
+      transform: translate(-4px, 0);
     }
     span:nth-child(3) {
       left: 50%;
-      transform: translate(-5px, 0);
+      transform: translate(-6px, 0);
     }
     span:nth-child(4) {
       left: 75%;
-      transform: translate(-8px, 0);
+      transform: translate(-9px, 0);
     }
     span:nth-child(5) {
       left: 100%;
-      transform: translate(-10px, 0);
+      transform: translate(-11px, 0);
     }
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+  }
+  input {
+    color: #ddd;
+  }
+  input::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 14px;
   }
 }
 </style>

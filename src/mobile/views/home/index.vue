@@ -172,7 +172,7 @@ export default class Home extends Vue {
     align-items: center;
     padding: 0 0.2rem;
     .eos-value {
-      font-size: 0.1rem;
+      font-size: 0.12rem;
       font-family: PingFangSC-Medium;
       font-weight: bold;
       color: rgba(0, 0, 0, 1);
@@ -201,6 +201,7 @@ export default class Home extends Vue {
         color: #007aff;
         font-size: 0.18rem;
         margin: 0 0.03rem;
+        font-weight: bold;
       }
     }
   }
@@ -226,7 +227,6 @@ export default class Home extends Vue {
       justify-content: center;
       span {
         font-size: 0.16rem !important;
-        font-weight: bold;
       }
     }
     .mint-navbar .mint-tab-item.is-selected {

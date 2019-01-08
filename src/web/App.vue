@@ -12,61 +12,8 @@ export default {
 </script>
 
 <style lang="scss">
-html {
-  font-family: 'PingFang SC', 'Microsoft Yahei';
-}
-
-html,
-body {
-  height: 100vh;
-  width: 100vw;
-}
-body,
-div,
-html,
-header,
-footer,
-nav,
-section,
-aside,
-article,
-ul,
-dl,
-dt,
-dd,
-li,
-a,
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-i,
-b,
-textarea,
-button,
-input,
-select,
-figure,
-figcaption {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  font-style: normal;
-  text-decoration: none;
-  border: none;
-  font-weight: normal;
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-font-smoothing: antialiased;
-  &:hover {
-    outline: none;
-  }
-}
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'PingFang SC', 'Microsoft Yahei';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -74,44 +21,36 @@ figcaption {
   height: 100%;
   width: 100%;
 }
-input {
-  outline: none;
-  color: #ddd;
-}
-input::-webkit-input-placeholder {
-  color: #ddd;
-}
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-}
 
-input[type='number'] {
-  -moz-appearance: textfield;
-}
 .el-table th,
 .el-table tr,
 .el-table {
   background: none;
   color: #ddd;
 }
+
 .el-table .cell {
   padding-left: 23px;
   font-size: 12px;
 }
+
 .el-table td,
 .el-table th.is-leaf {
   border-bottom: 1px solid #1e3a5d;
 }
+
 .el-table::before {
   display: none;
 }
+
 .el-table__header {
   background: #12263f;
 }
+
 .el-table--enable-row-hover .el-table__body tr:hover > td {
   background: #12263f;
 }
+
 .el-table th {
   padding: 15px 0;
 }
@@ -323,5 +262,21 @@ input[type='number'] {
   img {
     padding-right: 5px;
   }
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+div {
+  box-sizing: border-box;
+}
+input {
+  outline: none;
 }
 </style>

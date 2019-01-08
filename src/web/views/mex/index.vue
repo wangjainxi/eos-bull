@@ -41,7 +41,6 @@ import { namespace } from 'vuex-class';
 import { Observer } from 'mobx-vue';
 import MexCurrentcyList from './MexCurrentcyList.vue';
 import { Market } from '@/define';
-import dataStore from '@/stores/data';
 import MexHeadInfo from './MexHeadInfo.vue';
 import MexKLineChart from './tradingView/index.vue';
 import MexPlaceOrder from './MexPlaceOrder.vue';

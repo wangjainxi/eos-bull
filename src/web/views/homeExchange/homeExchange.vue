@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="package">
     <Top/>
     <el-carousel :interval="5000" arrow="always">
       <el-carousel-item v-for="item in 2" :key="item">
@@ -31,11 +31,11 @@
     </div>
     <div class="market-package">
       <div class="market-box">
-        <Market></Market>
+        <Market/>
         <div class="market-link-box">
-          <p>
+          <router-link to="/market">
             <Language resource="asset.View_More"/>
-          </p>
+          </router-link>
         </div>
       </div>
     </div>
@@ -168,6 +168,19 @@ export default class HomeExchange extends Vue {
 }
 </script>
 <style lang="scss">
+.package {
+  .el-carousel__indicators {
+    bottom: 15px;
+  }
+  .el-carousel__button {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+  }
+  .is-active .el-carousel__button {
+    width: 16px;
+  }
+}
 .market-package {
   width: 100%;
   background: #0d1f35;
@@ -181,7 +194,11 @@ export default class HomeExchange extends Vue {
   width: 100%;
   padding-top: 18px;
   padding-bottom: 60px;
-  p {
+  a {
+    color: #2d7be5;
+    text-decoration: none;
+  }
+  span {
     width: 200px;
     height: 42px;
     border: 1px solid rgb(30, 58, 93);
@@ -189,6 +206,7 @@ export default class HomeExchange extends Vue {
     margin: 0 auto;
     line-height: 42px;
     border-radius: 4px;
+    display: block;
   }
 }
 .notice_package {

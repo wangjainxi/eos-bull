@@ -40,6 +40,6 @@ export default {
   Max_Supply: '发行总量',
   Circulating_Supply: '流通总量',
   Contract: '合约名称',
-  Website: '官  网',
+  Website: '官网',
   search: '搜索',
 };

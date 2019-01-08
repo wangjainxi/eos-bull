@@ -1,3 +1,4 @@
+
 <template>
   <div class="popup-box-out filterPopup"  @touchmove.prevent @click="onCloseMethod">
     <div class="popup-box" @click.stop >

@@ -296,6 +296,7 @@ export default class MarketList extends Vue {
     }
     .special {
       color: #007aff;
+      font-weight: bold;
     }
   }
   .mint-tab-container-item > div:last-child {
