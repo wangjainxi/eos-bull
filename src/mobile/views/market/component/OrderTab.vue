@@ -25,10 +25,10 @@
     </div>
     <div class="order-content">
       <div class="buy-part">
-        <OrderItem :data="orderData.asks"/>
+        <OrderItem :data="orderData.bids"/>
       </div>
       <div class="sell-part">
-        <OrderItem :data="orderData.bids"/>
+        <OrderItem :data="orderData.asks"/>
       </div>
     </div>
   </div>

@@ -102,6 +102,7 @@ export const getOrderDetail = async (orderId: number) => {
  * 获取用户订单历史
  */
 export const getUserHistoryOrders = async (accountName: string, params?: HistoryOrderParams) => {
+  params = Object.assign({ status: '3,4' }, params);
   const res = await instance.get(`/v1/orders/history/${accountName}`, { params });
   const result = resWrapper<{
     list: OrdersWithIcons;
