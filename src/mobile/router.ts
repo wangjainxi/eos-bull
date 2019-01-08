@@ -6,6 +6,7 @@ import MarketSearch from './views/market-search/index.vue';
 import ReportActivity from './views/ReportActivity/index.vue';
 import ReportActivityPage from './views/ReportActivity/report.vue';
 import MarketOptional from './views/markets/MarketOptional.vue';
+import Guide from './views/home/guide-page.vue';
 
 Vue.use(Router);
 
@@ -77,6 +78,11 @@ export default new Router({
       path: '/report-page',
       name: 'report-page',
       component: ReportActivityPage,
+    },
+    {
+      path: '/guide',
+      name: 'guide',
+      component: Guide,
     },
   ],
 });

@@ -10,6 +10,8 @@ import {
   TabContainer,
   TabContainerItem,
   Loadmore,
+  Swipe,
+  SwipeItem,
 } from 'mint-ui';
 
 import 'animate.css';
@@ -36,7 +38,8 @@ Vue.component(TabContainer.name, TabContainer);
 Vue.component(TabContainerItem.name, TabContainerItem);
 Vue.component(Loadmore.name, Loadmore);
 Vue.component(VueHighcharts);
-
+Vue.component(Swipe.name, Swipe);
+Vue.component(SwipeItem.name, SwipeItem);
 Vue.component('Language', Language);
 Vue.component('VueTradingView', VueTradingView);
 Vue.filter('formatDate', formatDate);

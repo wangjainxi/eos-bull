@@ -1,11 +1,25 @@
 <template>
   <div id="home-page">
-    <div class="home-banner-box">
-      <img src="../../../images/mobile/logo_dadex.svg" alt>
-      <p>
-        <Language resource="asset.the_Worlds_1st_Decentralized_EOS_Exchange"/>
-      </p>
+    <div class="home-banner-box-page">
+      <mt-swipe :auto="4000">
+        <mt-swipe-item>
+          <div class="home-banner-box">
+            <img src="../../../images/mobile/logo_dadex.svg" alt>
+            <p>
+              <Language resource="asset.the_Worlds_1st_Decentralized_EOS_Exchange"/>
+            </p>
+          </div>
+        </mt-swipe-item>
+        <mt-swipe-item>
+          <div class="home-banner-boxTwo">
+            <router-link to="/guide">
+              <img src="../../../images/mobile/banner_guide.png" alt>
+            </router-link>
+          </div>
+        </mt-swipe-item>
+      </mt-swipe>
     </div>
+
     <div class="home-notice-box">
       <img src="../../../images/mobile/ic_announcement.svg" alt>
       <h4>
@@ -120,6 +134,10 @@ export default class Home extends Vue {
 <style lang="scss" scoped>
 #home-page {
   padding-bottom: 0.5rem;
+  .home-banner-box-page {
+    width: 100%;
+    height: 1.7rem;
+  }
   .home-banner-box {
     display: flex;
     justify-content: flex-start;
@@ -137,6 +155,12 @@ export default class Home extends Vue {
       color: #fff;
       font-weight: 300;
       margin-top: 0.12rem;
+    }
+  }
+  .home-banner-boxTwo {
+    img {
+      width: 100%;
+      height: 100%;
     }
   }
   .home-notice-box {
