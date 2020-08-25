@@ -19,7 +19,7 @@
     "debug": "^4.1.1",
     "element-ui": "^2.4.11",
     "eosjs": "^16.0.9",
-    "highcharts": "^7.0.1",
+    "highcharts": "^7.2.2",
     "lodash": "^4.17.11",
     "mint-ui": "^2.2.13",
     "mobx": "^5.8.0",
