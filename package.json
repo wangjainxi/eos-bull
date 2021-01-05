@@ -14,7 +14,7 @@
   "dependencies": {
     "@aspnet/signalr": "^1.1.0",
     "animate.css": "^3.7.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "dayjs": "^1.7.8",
     "debug": "^4.1.1",
     "element-ui": "^2.4.11",
